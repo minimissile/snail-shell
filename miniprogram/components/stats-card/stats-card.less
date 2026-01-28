@@ -1,25 +1,19 @@
+@import "../../styles/theme.less";
+
 .card {
-  width: 686rpx;
+  .card(32rpx);
   height: 290rpx;
-  background: #FFFFFF;
-  border-radius: 24rpx;
-  box-shadow: 0 4rpx 16rpx 0 rgba(0, 0, 0, 0.02);
-  padding: 32rpx;
-  box-sizing: border-box;
 }
 
 .row {
-  display: flex;
-  align-items: center;
+  .flex(row, center, flex-start);
   padding-bottom: 32rpx;
   box-sizing: border-box;
 }
 
 .cell {
   flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  .flex(row, center, center);
   gap: 8rpx;
 }
 
@@ -29,19 +23,11 @@
 }
 
 .text {
-  font-family: "PingFang SC";
-  font-weight: 400;
-  font-size: 28rpx;
-  line-height: 48rpx;
-  color: #374151;
+  .font(28rpx, 48rpx, 400, #374151);
 }
 
 .count {
-  font-family: "PingFang SC";
-  font-weight: 400;
-  font-size: 28rpx;
-  line-height: 56rpx;
-  color: #374151;
+  .font(28rpx, 56rpx, 400, #374151);
 }
 
 .divider-v {
@@ -53,5 +39,5 @@
 .divider-h {
   width: 100%;
   height: 2rpx;
-  background: #F3F4F6;
+  background: @color-divider;
 }

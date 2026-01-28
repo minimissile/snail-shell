@@ -1,0 +1,56 @@
+@width-card: 686rpx;
+
+@space-page-x: 32rpx;
+@space-container-y: 200rpx;
+
+@radius-pill: 9999rpx;
+@radius-md: 20rpx;
+@radius-lg: 24rpx;
+
+@color-surface: #FFFFFF;
+@color-page-bg: #F7F9FB;
+@color-text: #000000;
+@color-text-muted: #AAAAAA;
+@color-text-secondary: #4B5563;
+@color-text-tertiary: #6B7280;
+@color-accent: #F97316;
+@color-border: #E5E7EB;
+@color-divider: #F3F4F6;
+
+@shadow-card: 0 4rpx 16rpx 0 rgba(0, 0, 0, 0.02);
+
+.flex(@direction: row, @align: center, @justify: center) {
+  display: flex;
+  flex-direction: @direction;
+  align-items: @align;
+  justify-content: @justify;
+}
+
+.card(@padding: 32rpx, @radius: @radius-lg, @bg: @color-surface, @shadow: @shadow-card) {
+  width: @width-card;
+  background: @bg;
+  border-radius: @radius;
+  box-shadow: @shadow;
+  padding: @padding;
+  box-sizing: border-box;
+}
+
+.font(@size, @lineHeight, @weight: 400, @color: @color-text-secondary, @family: "PingFang SC") {
+  font-family: @family;
+  font-weight: @weight;
+  font-size: @size;
+  line-height: @lineHeight;
+  color: @color;
+}
+
+.safe-bottom(@padding) {
+  padding-bottom: calc(@padding + env(safe-area-inset-bottom));
+}
+
+.hairline-border-top(@color: rgba(0, 0, 0, 0.1)) {
+  border-top: .5px solid @color;
+}
+
+.hairline-border-bottom(@color: rgba(0, 0, 0, 0.1)) {
+  border-bottom: .5px solid @color;
+}

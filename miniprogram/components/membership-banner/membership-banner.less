@@ -1,10 +1,14 @@
+@import "../../styles/theme.less";
+
+@banner-accent: #AA5200;
+
 .banner {
   position: relative;
-  width: 686rpx;
+  width: @width-card;
   height: 164rpx;
-  margin: -36rpx 32rpx 0;
-  border-radius: 20rpx;
-  border: 2rpx solid #FFFFFF;
+  margin: -36rpx @space-page-x 0;
+  border-radius: @radius-md;
+  border: 2rpx solid @color-surface;
   background: linear-gradient(135deg, rgba(255, 210, 94, 1) 1%, rgba(255, 244, 205, 1) 48%, rgba(255, 213, 64, 1) 100%);
   overflow: hidden;
 }
@@ -12,56 +16,46 @@
 .content {
   position: relative;
   z-index: 2;
-  padding: 32rpx 32rpx 0 48rpx;
+  padding: 32rpx @space-page-x 0 48rpx;
   box-sizing: border-box;
   width: 100%;
 }
 
 .greeting {
-  font-family: "PingFang SC";
-  font-weight: 600;
-  font-size: 32rpx;
-  line-height: 56rpx;
-  color: #AA5200;
+  .font(32rpx, 56rpx, 600, @banner-accent);
 }
 
 .benefits {
-  display: flex;
-  align-items: center;
+  .flex(row, center, flex-start);
   gap: 24rpx;
   opacity: 0.9;
 }
 
 .benefit {
-  display: flex;
-  align-items: center;
-}
+  .flex(row, center, flex-start);
 
-.benefit__dot {
-  width: 28rpx;
-  height: 28rpx;
-  border-radius: 50%;
-  margin-right: 8rpx;
-  background: rgba(170, 82, 0, 0.2);
-}
+  &__dot {
+    width: 28rpx;
+    height: 28rpx;
+    border-radius: 50%;
+    margin-right: 8rpx;
+    background: rgba(170, 82, 0, 0.2);
 
-.benefit__dot--accent {
-  background: rgba(170, 82, 0, 0.28);
-}
+    &--accent {
+      background: rgba(170, 82, 0, 0.28);
+    }
+  }
 
-.benefit__label {
-  font-family: "PingFang SC";
-  font-weight: 500;
-  font-size: 24rpx;
-  line-height: 32rpx;
-  color: #AA5200;
-}
+  &__label {
+    .font(24rpx, 32rpx, 500, @banner-accent);
+  }
 
-.benefit__arrow {
-  padding-left: 8rpx;
-  font-size: 28rpx;
-  line-height: 32rpx;
-  color: #AA5200;
+  &__arrow {
+    padding-left: 8rpx;
+    font-size: 28rpx;
+    line-height: 32rpx;
+    color: @banner-accent;
+  }
 }
 
 .badge {
@@ -69,20 +63,20 @@
   top: -8rpx;
   right: 40rpx;
   z-index: 1;
-}
 
-.badge--general {
-  width: 148rpx;
-  height: 176rpx;
-  right: 80rpx;
-  top: -32rpx;
-  opacity: 0.98;
-}
+  &--general {
+    width: 148rpx;
+    height: 176rpx;
+    right: 80rpx;
+    top: -32rpx;
+    opacity: 0.98;
+  }
 
-.badge--gold {
-  width: 198rpx;
-  height: 184rpx;
-  right: 60rpx;
-  top: -30rpx;
-  opacity: 0.98;
+  &--gold {
+    width: 198rpx;
+    height: 184rpx;
+    right: 60rpx;
+    top: -30rpx;
+    opacity: 0.98;
+  }
 }
