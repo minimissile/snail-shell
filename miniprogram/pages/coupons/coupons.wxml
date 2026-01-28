@@ -1,0 +1,80 @@
+<view class="coupons-page">
+  <!-- 状态栏 -->
+  <view class="status-bar" style="height: {{statusBarHeight}}px;"></view>
+  
+  <!-- 导航栏 -->
+  <!-- 导航栏组件，包含居中标题和右侧菜单按钮 -->
+<!-- 
+  @class nav-bar - 导航栏容器
+  @class nav-center - 居中标题容器
+  @class nav-title - 导航标题文本
+  @class nav-right - 右侧菜单容器
+  @class menu-button - 菜单按钮，点击触发onMenu事件
+  @class icon-menu - 菜单图标
+  @event onMenu - 点击菜单按钮时触发的事件
+-->
+<view class="nav-bar">
+    <view class="nav-center">
+      <text class="nav-title">优惠券</text>
+    </view>
+    <view class="nav-right">
+      <view class="menu-button" bindtap="onMenu">
+        <text class="icon-menu">⋮</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 标签栏 -->
+  <scroll-view class="tabs-container" scroll-x enhanced show-scrollbar="{{false}}">
+    <view class="tabs">
+      <view
+        wx:for="{{tabs}}"
+        wx:key="id"
+        class="tab-item {{activeTab === item.id ? 'active' : ''}}"
+        data-id="{{item.id}}"
+        bindtap="onTabChange"
+      >
+        <text class="tab-label">{{item.label}}({{item.count}})</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 优惠券列表 -->
+  <scroll-view class="coupons-container" scroll-y enhanced>
+    <view class="coupon-card" wx:for="{{coupons}}" wx:key="id">
+      <!-- 左侧图标 -->
+      <view class="coupon-icon-wrapper">
+        <image class="coupon-icon" src="{{item.iconSrc}}" mode="aspectFit" />
+      </view>
+
+      <!-- 中间内容 -->
+      <view class="coupon-content">
+        <view class="coupon-header">
+          <view class="coupon-amount-wrapper">
+            <text class="coupon-unit">{{item.unit}}</text>
+            <text class="coupon-amount">{{item.amount}}</text>
+          </view>
+          <view wx:if="{{item.type === 'discount'}}" class="discount-suffix">
+            <text class="discount-text">折</text>
+          </view>
+          <view class="coupon-title-wrapper">
+            <text class="coupon-title">{{item.title}}</text>
+          </view>
+        </view>
+        <view class="coupon-description">
+          <text class="description-text">{{item.description}}</text>
+        </view>
+        <view class="coupon-period">
+          <text class="period-text">{{item.validPeriod}}</text>
+        </view>
+      </view>
+
+      <!-- 右侧按钮 -->
+      <view class="coupon-action">
+        <view class="use-button" data-id="{{item.id}}" bindtap="onUseCoupon">
+          <text class="use-button-text">去使用</text>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

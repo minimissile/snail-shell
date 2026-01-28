@@ -1,0 +1,353 @@
+// 页面容器
+.favorites-page {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #F7F9FB;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+
+  // 状态栏
+  .status-bar {
+    width: 100%;
+    background-color: #FFFFFF;
+  }
+
+  // 导航栏
+  .nav-bar {
+    width: 100%;
+    height: 88rpx;
+    background-color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32rpx;
+    position: relative;
+
+    .nav-left {
+      width: 64rpx;
+      height: 64rpx;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .back-icon {
+      font-size: 48rpx;
+      color: #000000;
+      font-weight: 300;
+      line-height: 1;
+    }
+
+    .nav-center {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .nav-title {
+        font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+        font-weight: 600;
+        font-size: 40rpx;
+        line-height: 56rpx;
+        color: #000000;
+        letter-spacing: -0.025em;
+      }
+    }
+
+    .nav-right {
+      width: 64rpx;
+      height: 64rpx;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .menu-button {
+      width: 64rpx;
+      height: 64rpx;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.6);
+      border: 1rpx solid #E5E7EB;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0px 2rpx 4rpx 0px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease;
+
+      &:active {
+        transform: scale(0.95);
+        opacity: 0.8;
+      }
+
+      .icon-menu {
+        font-size: 32rpx;
+        color: #000000;
+        line-height: 1;
+        font-weight: 900;
+      }
+    }
+  }
+
+  // 标签栏
+  .tabs-container {
+    width: 100%;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    padding: 16rpx 0 24rpx;
+
+    .tab-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rpx 0 12rpx;
+      position: relative;
+      transition: all 0.3s ease;
+
+      &:first-child {
+        padding-right: 0;
+      }
+
+      &:last-child {
+        padding-left: 128rpx;
+      }
+
+      .tab-label {
+        font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+        font-weight: 500;
+        font-size: 32rpx;
+        line-height: 40rpx;
+        color: #6B7280;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+
+      &.active .tab-label {
+        color: #000000;
+        font-weight: 500;
+        font-size: 36rpx;
+      }
+
+      .tab-indicator {
+        position: absolute;
+        bottom: 0;
+        width: 48rpx;
+        height: 6rpx;
+        background-color: #F97316;
+        border-radius: 4rpx;
+      }
+    }
+  }
+
+  // 内容容器
+  .content-container {
+    flex: 1;
+    width: 100%;
+    padding: 32rpx 24rpx 112rpx;
+
+    // 章节标题
+    .section-title {
+      padding: 0 8rpx 24rpx;
+
+      .title-text {
+        font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+        font-weight: 500;
+        font-size: 36rpx;
+        line-height: 56rpx;
+        color: #000000;
+      }
+    }
+
+    // 卡片列表
+    .cards-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24rpx;
+
+      .card-item {
+        width: 100%;
+        background-color: #FFFFFF;
+        border-radius: 24rpx;
+        overflow: hidden;
+        box-shadow: 0px 2rpx 4rpx 0px rgba(0, 0, 0, 0.05);
+        display: flex;
+        flex-direction: row;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+        &:active {
+          transform: scale(0.98);
+          box-shadow: 0px 4rpx 8rpx 0px rgba(0, 0, 0, 0.08);
+        }
+
+        // 左侧图片
+        .card-image {
+          width: 256rpx;
+          height: 341.32rpx;
+          flex-shrink: 0;
+          position: relative;
+
+          .image {
+            width: 100%;
+            height: 100%;
+            display: block;
+          }
+
+          .tag-badge {
+            position: absolute;
+            left: 0;
+            top: 0;
+            padding: 8rpx 16rpx;
+            background-color: #F97316;
+            border-radius: 0 0 16rpx 0;
+
+            .tag-text {
+              font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+              font-weight: 600;
+              font-size: 20rpx;
+              line-height: 30rpx;
+              color: #FFFFFF;
+            }
+          }
+        }
+
+        // 右侧信息
+        .card-info {
+          flex: 1;
+          padding: 24rpx;
+          display: flex;
+          flex-direction: column;
+          gap: 8rpx;
+
+          .info-title {
+            height: 82rpx;
+
+            .title {
+              font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+              font-weight: 500;
+              font-size: 30rpx;
+              line-height: 41.28rpx;
+              color: #111827;
+              display: -webkit-box;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 2;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
+
+          .info-rating {
+            display: flex;
+            align-items: center;
+            gap: 0;
+
+            .rating-value {
+              font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+              font-weight: 600;
+              font-size: 28rpx;
+              line-height: 40rpx;
+              color: #F97316;
+            }
+
+            .rating-unit {
+              font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+              font-weight: 600;
+              font-size: 24rpx;
+              line-height: 32rpx;
+              color: #F97316;
+            }
+
+            .review-count {
+              font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+              font-weight: 200;
+              font-size: 24rpx;
+              line-height: 32rpx;
+              color: #9CA3AF;
+              margin-left: 16rpx;
+            }
+          }
+
+          .info-location {
+            .location {
+              font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+              font-weight: 200;
+              font-size: 24rpx;
+              line-height: 32rpx;
+              color: #6B7280;
+            }
+          }
+
+          .info-footer {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-top: auto;
+
+            .check-in {
+              .check-in-text {
+                font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+                font-weight: 200;
+                font-size: 24rpx;
+                line-height: 32rpx;
+                color: #6B7280;
+              }
+            }
+
+            .price-box {
+              display: flex;
+              align-items: flex-end;
+              height: 56rpx;
+
+              .price-unit {
+                font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+                font-weight: 400;
+                font-size: 24rpx;
+                line-height: 32rpx;
+                color: #FF5500;
+              }
+
+              .price-value {
+                font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+                font-weight: 600;
+                font-size: 40rpx;
+                line-height: 56rpx;
+                color: #FF5500;
+                margin-left: 4rpx;
+              }
+
+              .price-label {
+                font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+                font-weight: 200;
+                font-size: 24rpx;
+                line-height: 32rpx;
+                color: #9CA3AF;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // 没有更多了
+    .no-more {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24rpx 0 0;
+
+      .no-more-text {
+        font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+        font-weight: 400;
+        font-size: 24rpx;
+        line-height: 32rpx;
+        color: #6B7280;
+        text-align: center;
+      }
+    }
+  }
+}

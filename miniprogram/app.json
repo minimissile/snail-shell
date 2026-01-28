@@ -4,6 +4,8 @@
     "pages/me-gold/me-gold",
     "pages/common-info/common-info",
     "pages/orders/orders",
+    "pages/coupons/coupons",
+    "pages/favorites/favorites",
     "pages/logs/logs"
   ],
   "window": {

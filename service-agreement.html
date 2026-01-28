@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>服务协议</title>
+    <style>
+      :root {
+        --page-bg: #f7f9fb;
+        --surface: #ffffff;
+        --text: #000000;
+        --muted: #333333;
+        --border: #e9e9e9;
+        --chip-bg: rgba(255, 255, 255, 0.6);
+        --chip-border: #e5e7eb;
+        --shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        --focus: #111827;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+        background: var(--page-bg);
+        color: var(--text);
+        font-family: "PingFang SC", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial,
+          "Noto Sans CJK SC", "Noto Sans SC", sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      .viewport {
+        min-height: 100%;
+        display: flex;
+        justify-content: center;
+      }
+
+      .screen {
+        width: min(375px, 100vw);
+        min-height: 812px;
+        position: relative;
+      }
+
+      .statusbar {
+        height: 27.41px;
+        position: relative;
+      }
+
+      .sb-time {
+        position: absolute;
+        left: 21px;
+        top: 14.1px;
+        width: 54px;
+        height: 19.14px;
+        display: grid;
+        place-items: center;
+        font-family: Poppins, -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+        font-weight: 600;
+        font-size: 15px;
+        line-height: 22.5px;
+        letter-spacing: -0.3px;
+        color: #000;
+      }
+
+      .sb-icon {
+        position: absolute;
+        display: block;
+        pointer-events: none;
+      }
+
+      .sb-cellular {
+        width: 17px;
+        height: 10.74px;
+        left: 294px;
+        top: 17.8px;
+      }
+
+      .sb-wifi {
+        width: 15.33px;
+        height: 11.08px;
+        left: 316px;
+        top: 17.46px;
+      }
+
+      .sb-battery {
+        width: 24.33px;
+        height: 11.33px;
+        left: 336.33px;
+        top: 17.33px;
+      }
+
+      .topbar {
+        height: 99px;
+        padding: 40px 16px 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .topbar-left {
+        display: flex;
+        align-items: center;
+        gap: 76px;
+        width: 262px;
+      }
+
+      .icon-btn {
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        border: 0;
+        border-radius: 9999px;
+        background: transparent;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .icon-btn:active {
+        background: rgba(0, 0, 0, 0.06);
+      }
+
+      .icon-btn:focus-visible {
+        outline: 2px solid var(--focus);
+        outline-offset: 2px;
+      }
+
+      .back-icon {
+        width: 32px;
+        height: 32px;
+        display: block;
+      }
+
+      .title {
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 28px;
+        letter-spacing: -0.5px;
+        margin: 0;
+      }
+
+      .actions {
+        position: relative;
+        height: 32px;
+        display: flex;
+        align-items: center;
+      }
+
+      .action-chip {
+        height: 32px;
+        padding: 0 12px;
+        display: flex;
+        align-items: center;
+        background: var(--chip-bg);
+        border: 1px solid var(--chip-border);
+        border-radius: 9999px;
+        box-shadow: var(--shadow);
+      }
+
+      .chip-btn {
+        height: 32px;
+        padding: 0;
+        margin: 0;
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+        color: #000;
+        display: grid;
+        place-items: center;
+        min-width: 16px;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .chip-btn:focus-visible {
+        outline: 2px solid var(--focus);
+        outline-offset: 2px;
+      }
+
+      .chip-ellipsis {
+        font-size: 14px;
+        font-weight: 800;
+        line-height: 20px;
+        transform: translateY(-0.5px);
+        letter-spacing: 0;
+      }
+
+      .chip-divider-img {
+        width: 13px;
+        height: 16px;
+        display: block;
+      }
+
+      .chip-close {
+        width: 28px;
+        height: 16px;
+        display: block;
+      }
+
+      .chip-btn:active .chip-close,
+      .chip-btn:active .chip-ellipsis {
+        opacity: 0.7;
+      }
+
+      .main {
+        background: var(--surface);
+        padding: 0 16px;
+        min-height: 713px;
+      }
+
+      .list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .row {
+        width: 100%;
+        text-align: left;
+        padding: 30px 0 29px;
+        border: 0;
+        border-bottom: 1px solid var(--border);
+        background: transparent;
+        color: var(--muted);
+        font-size: 13.9px;
+        font-weight: 400;
+        line-height: 22.5px;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .row:hover {
+        background: rgba(0, 0, 0, 0.015);
+      }
+
+      .row:active {
+        background: rgba(0, 0, 0, 0.04);
+      }
+
+      .row:focus-visible {
+        outline: 2px solid var(--focus);
+        outline-offset: 4px;
+        border-radius: 10px;
+      }
+
+      .menu {
+        position: absolute;
+        top: 40px;
+        right: 0;
+        width: 176px;
+        padding: 10px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.92);
+        border: 1px solid rgba(229, 231, 235, 0.9);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+        opacity: 0;
+        transform: translateY(-8px) scale(0.98);
+        pointer-events: none;
+        transition: opacity 160ms ease, transform 160ms ease;
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+      }
+
+      .menu[data-open="true"] {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        pointer-events: auto;
+      }
+
+      .menu-btn {
+        width: 100%;
+        border: 0;
+        background: transparent;
+        padding: 10px 10px;
+        border-radius: 10px;
+        font-size: 14px;
+        text-align: left;
+        cursor: pointer;
+        color: #111827;
+      }
+
+      .menu-btn:hover {
+        background: rgba(17, 24, 39, 0.06);
+      }
+
+      .menu-btn:active {
+        background: rgba(17, 24, 39, 0.1);
+      }
+
+      .menu-btn:focus-visible {
+        outline: 2px solid var(--focus);
+        outline-offset: 2px;
+      }
+
+      .toast {
+        position: fixed;
+        left: 50%;
+        bottom: 24px;
+        transform: translateX(-50%);
+        padding: 10px 14px;
+        border-radius: 9999px;
+        background: rgba(17, 24, 39, 0.92);
+        color: #fff;
+        font-size: 13px;
+        line-height: 18px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 180ms ease, transform 180ms ease;
+        transform-origin: center;
+      }
+
+      .toast[data-open="true"] {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .menu,
+        .toast {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="viewport">
+      <div class="screen" role="application" aria-label="服务协议页面">
+        <div class="statusbar" aria-hidden="true">
+          <div class="sb-time">9:41</div>
+          <img
+            class="sb-icon sb-battery"
+            src="./miniprogram/assets/figma/sa-statusbar-battery.svg"
+            alt=""
+            aria-hidden="true"
+          />
+          <img
+            class="sb-icon sb-wifi"
+            src="./miniprogram/assets/figma/sa-statusbar-wifi.svg"
+            alt=""
+            aria-hidden="true"
+          />
+          <img
+            class="sb-icon sb-cellular"
+            src="./miniprogram/assets/figma/sa-statusbar-cellular.svg"
+            alt=""
+            aria-hidden="true"
+          />
+        </div>
+
+        <header class="topbar">
+          <div class="topbar-left">
+            <button class="icon-btn" type="button" aria-label="返回" data-action="back">
+              <img
+                class="back-icon"
+                src="./miniprogram/assets/figma/sa-back.svg"
+                alt=""
+                aria-hidden="true"
+              />
+            </button>
+            <h1 class="title">服务协议</h1>
+          </div>
+
+          <div class="actions">
+            <div class="action-chip" role="group" aria-label="更多操作">
+              <button
+                class="chip-btn"
+                type="button"
+                aria-label="打开更多菜单"
+                aria-expanded="false"
+                data-action="menu"
+              >
+                <span class="chip-ellipsis" aria-hidden="true">⋮</span>
+              </button>
+              <img
+                class="chip-divider-img"
+                src="./miniprogram/assets/figma/sa-divider.svg"
+                alt=""
+                aria-hidden="true"
+              />
+              <button class="chip-btn" type="button" aria-label="关闭" data-action="close">
+                <img
+                  class="chip-close"
+                  src="./miniprogram/assets/figma/sa-close.svg"
+                  alt=""
+                  aria-hidden="true"
+                />
+              </button>
+            </div>
+
+            <div class="menu" role="menu" aria-label="更多菜单" data-open="false">
+              <button class="menu-btn" type="button" role="menuitem" data-action="copy">
+                复制页面链接
+              </button>
+              <button class="menu-btn" type="button" role="menuitem" data-action="refresh">
+                刷新
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <main class="main">
+          <nav aria-label="服务协议与政策列表">
+            <ul class="list">
+              <li><button class="row" type="button">证照信息</button></li>
+              <li><button class="row" type="button">服务协议</button></li>
+              <li><button class="row" type="button">权利声明</button></li>
+              <li><button class="row" type="button">知识产权声明</button></li>
+              <li><button class="row" type="button">免责声明</button></li>
+              <li><button class="row" type="button">不良信息处理制度</button></li>
+              <li><button class="row" type="button">平台历史交易规则</button></li>
+              <li><button class="row" type="button">内容平台协议</button></li>
+              <li><button class="row" type="button">隐私政策</button></li>
+              <li><button class="row" type="button">儿童个人信息保护规则及监护人须知</button></li>
+              <li><button class="row" type="button">算法备案信息</button></li>
+              <li><button class="row" type="button">政策协议</button></li>
+            </ul>
+          </nav>
+        </main>
+
+        <div class="toast" role="status" aria-live="polite" aria-atomic="true" data-open="false">
+          已复制链接
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const toast = document.querySelector(".toast");
+      const menu = document.querySelector(".menu");
+      const menuBtn = document.querySelector('[data-action="menu"]');
+      const root = document.querySelector(".screen");
+
+      const setToast = (message) => {
+        if (!toast) return;
+        toast.textContent = message;
+        toast.dataset.open = "true";
+        window.clearTimeout(setToast._t);
+        setToast._t = window.setTimeout(() => {
+          toast.dataset.open = "false";
+        }, 1100);
+      };
+
+      const setMenuOpen = (open) => {
+        if (!menu || !menuBtn) return;
+        menu.dataset.open = open ? "true" : "false";
+        menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+      };
+
+      root?.addEventListener("click", (e) => {
+        const target = e.target instanceof Element ? e.target.closest("[data-action]") : null;
+        const action = target?.getAttribute("data-action");
+        if (!action) return;
+
+        if (action === "back") {
+          history.back();
+          return;
+        }
+
+        if (action === "close") {
+          window.close();
+          setToast("已关闭");
+          return;
+        }
+
+        if (action === "menu") {
+          setMenuOpen(menu?.dataset.open !== "true");
+          return;
+        }
+
+        if (action === "copy") {
+          setMenuOpen(false);
+          const url = location.href;
+          if (navigator.clipboard?.writeText) {
+            navigator.clipboard.writeText(url).then(
+              () => setToast("已复制链接"),
+              () => setToast("复制失败")
+            );
+          } else {
+            setToast("复制失败");
+          }
+          return;
+        }
+
+        if (action === "refresh") {
+          setMenuOpen(false);
+          location.reload();
+        }
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          setMenuOpen(false);
+        }
+      });
+
+      document.addEventListener("click", (e) => {
+        if (!menu || !menuBtn) return;
+        const t = e.target;
+        if (!(t instanceof Element)) return;
+        if (t.closest(".menu") || t.closest('[data-action="menu"]')) return;
+        setMenuOpen(false);
+      });
+    </script>
+  </body>
+</html>

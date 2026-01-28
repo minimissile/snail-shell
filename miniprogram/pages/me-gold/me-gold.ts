@@ -14,10 +14,20 @@ Component({
       wx.showToast({ title: key ? `权益：${key}` : '权益', icon: 'none' })
     },
     onTapCoupon() {
-      wx.showToast({ title: '优惠券', icon: 'none' })
+      wx.navigateTo({
+        url: '/pages/coupons/coupons',
+        fail: () => {
+          wx.showToast({ title: '暂无法打开优惠券页面', icon: 'none' })
+        },
+      })
     },
     onTapFavorites() {
-      wx.showToast({ title: '收藏浏览', icon: 'none' })
+      wx.navigateTo({
+        url: '/pages/favorites/favorites',
+        fail: () => {
+          wx.showToast({ title: '暂无法打开收藏页面', icon: 'none' })
+        },
+      })
     },
     onTapPoints() {
       wx.showToast({ title: '积分', icon: 'none' })
