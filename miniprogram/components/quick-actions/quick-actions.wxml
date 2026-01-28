@@ -1,0 +1,14 @@
+<view class="wrap" aria-label="订单快捷入口">
+  <view
+    wx:for="{{items}}"
+    wx:key="key"
+    class="item"
+    data-key="{{item.key}}"
+    bindtap="onTap"
+    aria-role="button"
+    aria-label="{{item.label}}"
+  >
+    <image class="icon" src="{{item.icon}}" mode="aspectFit" />
+    <text class="label">{{item.label}}</text>
+  </view>
+</view>

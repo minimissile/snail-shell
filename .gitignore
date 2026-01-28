@@ -1,0 +1,24 @@
+.DS_Store
+
+# Dependencies
+node_modules/
+miniprogram/miniprogram_npm/
+miniprogram_npm/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+*.log
+
+# Environment files
+.env*
+!.env.example
+
+# IDE / Editor
+.idea/
+.vscode/
+*.iml
+
+# WeChat Mini Program
+project.private.config.json

@@ -1,0 +1,16 @@
+<view class="card" aria-label="常用功能">
+  <view class="grid">
+    <view
+      wx:for="{{items}}"
+      wx:key="key"
+      class="grid__item"
+      data-key="{{item.key}}"
+      bindtap="onTap"
+      aria-role="button"
+      aria-label="{{item.label}}"
+    >
+      <image class="grid__icon" src="{{item.icon}}" mode="aspectFit" />
+      <text class="grid__label">{{item.label}}</text>
+    </view>
+  </view>
+</view>

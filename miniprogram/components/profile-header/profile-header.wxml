@@ -1,0 +1,17 @@
+<view class="header">
+  <view class="left">
+    <view class="avatar" aria-label="头像">
+      <image class="avatar__img" src="{{avatarSrc}}" mode="aspectFill" lazy-load />
+    </view>
+    <text class="name">{{userName}}</text>
+  </view>
+
+  <view
+    class="menu"
+    bindtap="onMenu"
+    aria-role="button"
+    aria-label="更多操作"
+  >
+    <text class="menu__dots">⋯</text>
+  </view>
+</view>

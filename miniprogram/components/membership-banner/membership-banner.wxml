@@ -1,0 +1,32 @@
+<view class="banner" aria-label="黄金会员信息">
+  <image class="badge badge--general" src="/assets/figma/badge-general.png" mode="aspectFit" aria-hidden="true" />
+  <image class="badge badge--gold" src="/assets/figma/badge-gold-311bcd.png" mode="aspectFit" aria-hidden="true" />
+
+  <view class="content">
+    <text class="greeting">{{greeting}}</text>
+    <view class="benefits">
+      <view
+        class="benefit"
+        data-key="住宿体验价"
+        bindtap="onBenefit"
+        aria-role="button"
+        aria-label="住宿体验价"
+      >
+        <view class="benefit__dot" aria-hidden="true"></view>
+        <text class="benefit__label">住宿体验价</text>
+      </view>
+
+      <view
+        class="benefit benefit--with-arrow"
+        data-key="积分抵现"
+        bindtap="onBenefit"
+        aria-role="button"
+        aria-label="积分抵现"
+      >
+        <view class="benefit__dot benefit__dot--accent" aria-hidden="true"></view>
+        <text class="benefit__label">积分抵现</text>
+        <text class="benefit__arrow" aria-hidden="true">›</text>
+      </view>
+    </view>
+  </view>
+</view>

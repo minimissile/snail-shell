@@ -1,0 +1,31 @@
+<view class="page">
+  <view class="header" aria-label="会员个人中心">
+    <view class="header-bg" aria-hidden="true"></view>
+
+    <profile-header
+      avatar-src="{{avatarSrc}}"
+      user-name="{{userName}}"
+      bind:menu="onOpenHeaderMenu"
+    />
+
+    <membership-banner
+      greeting="{{greeting}}"
+      bind:benefit="onTapBenefit"
+    />
+  </view>
+
+  <view class="content">
+    <stats-card
+      coupon-count="{{couponCount}}"
+      bind:coupon="onTapCoupon"
+      bind:favorites="onTapFavorites"
+      bind:points="onTapPoints"
+    />
+
+    <quick-actions bind:action="onTapQuickAction" />
+
+    <icon-grid bind:item="onTapGridItem" />
+  </view>
+
+  <app-tabbar active="{{activeTab}}" bind:change="onTabChange" />
+</view>
