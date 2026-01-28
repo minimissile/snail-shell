@@ -1,0 +1,391 @@
+.coupon-verify-page {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #F7F9FB;
+
+  // 门店信息区
+  .store-info {
+    width: 100%;
+    padding: 48rpx 40rpx;
+    background-color: #F97316;
+
+    &__content {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 185.5rpx;
+    }
+
+    &__main {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__heading {
+      padding-bottom: 16rpx;
+    }
+
+    &__name {
+      font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 600;
+      font-size: 36rpx;
+      line-height: 45rpx;
+      color: #111827;
+    }
+
+    &__location {
+      display: flex;
+      align-items: center;
+    }
+
+    &__location-icon {
+      width: 32rpx;
+      height: 32rpx;
+      padding-right: 8rpx;
+    }
+
+    &__location-wrapper {
+      display: flex;
+    }
+
+    &__distance {
+      font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 600;
+      font-size: 24rpx;
+      line-height: 32rpx;
+      color: #111827;
+    }
+
+    &__action {
+      padding-top: 8rpx;
+    }
+
+    &__button {
+      display: flex;
+      align-items: center;
+      transition: opacity 0.2s ease;
+
+      &:active {
+        opacity: 0.7;
+      }
+    }
+
+    &__button-text {
+      font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 600;
+      font-size: 26rpx;
+      line-height: 39rpx;
+      text-align: center;
+      color: #333333;
+    }
+
+    &__button-icon {
+      padding: 4rpx 0 0 8rpx;
+    }
+
+    &__button-icon-wrapper {
+      display: flex;
+      align-items: center;
+    }
+
+    &__button-symbol {
+      font-family: 'Font Awesome 5 Free', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 900;
+      font-size: 20rpx;
+      line-height: 20rpx;
+      text-align: center;
+      color: #333333;
+    }
+  }
+
+  // 主要内容区
+  .main-content {
+    padding: 40rpx 32rpx;
+    display: flex;
+    flex-direction: column;
+    gap: 40rpx;
+  }
+
+  // 券码验证区
+  .verify-section {
+    display: flex;
+    flex-direction: column;
+
+    &__header {
+      height: 69rpx;
+      margin-bottom: -2rpx;
+    }
+
+    &__title {
+      font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 600;
+      font-size: 30rpx;
+      line-height: 45rpx;
+      color: #111827;
+    }
+  }
+
+  // 识图验券按钮
+  .verify-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16rpx;
+    background-color: #F97316;
+    border-radius: 16rpx;
+    box-shadow: 0px 2rpx 4rpx 0px rgba(0, 0, 0, 0.05);
+    padding: 30rpx 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:active {
+      transform: scale(0.98);
+      background-color: #EA580C;
+    }
+
+    &__icon {
+      width: 48rpx;
+      height: 50rpx;
+    }
+
+    &__text-wrapper {
+      display: flex;
+      align-items: center;
+    }
+
+    &__text {
+      font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 600;
+      font-size: 34rpx;
+      line-height: 51rpx;
+      text-align: center;
+      color: #FFFFFF;
+    }
+  }
+
+  // 核销流程卡片
+  .process-card {
+    position: relative;
+    background-color: #FFFFFF;
+    border-radius: 32rpx;
+    box-shadow: 0px 2rpx 4rpx 0px rgba(0, 0, 0, 0.05);
+    height: 600rpx;
+    padding: 40rpx;
+
+    &__tag {
+      display: inline-flex;
+      padding: 8rpx 24rpx;
+      background-color: #FED7AA;
+      border-radius: 8rpx;
+    }
+
+    &__tag-text {
+      font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 600;
+      font-size: 24rpx;
+      line-height: 32rpx;
+      color: #111827;
+    }
+
+    &__step {
+      position: absolute;
+      width: 606rpx;
+      height: 128rpx;
+    }
+
+    &__step:nth-child(2) {
+      top: 136rpx;
+      left: 40rpx;
+    }
+
+    &__step:nth-child(4) {
+      top: 284rpx;
+      left: 40rpx;
+    }
+
+    &__step:nth-child(6) {
+      top: 432rpx;
+      left: 40rpx;
+    }
+
+    &__step-content {
+      padding: 23rpx 16rpx 1.38rpx 0;
+    }
+
+    &__step-text {
+      font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 500;
+      font-size: 25.6rpx;
+      line-height: 41.6rpx;
+      color: #1F2937;
+    }
+
+    &__step-image {
+      position: absolute;
+      top: 21rpx;
+      right: 0;
+      width: 148.88rpx;
+      height: 91.84rpx;
+    }
+
+    &__divider {
+      position: absolute;
+      padding-left: 96rpx;
+    }
+
+    &__divider:nth-child(3) {
+      top: 256rpx;
+      left: 40rpx;
+      width: 606rpx;
+    }
+
+    &__divider:nth-child(5) {
+      top: 404rpx;
+      left: 40rpx;
+      width: 606rpx;
+    }
+
+    &__divider-wrapper {
+      display: flex;
+    }
+
+    &__divider-icon {
+      font-family: 'Font Awesome 5 Free', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 900;
+      font-size: 36rpx;
+      line-height: 36rpx;
+      color: #FED7AA;
+    }
+
+    &__step-button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 128rpx;
+      height: 128rpx;
+    }
+
+    &__step-button-bg {
+      position: absolute;
+      top: 4rpx;
+      left: 4rpx;
+      width: 120rpx;
+      height: 120rpx;
+      background-color: #F97316;
+      border-radius: 50%;
+    }
+
+    &__step-button-rect {
+      position: absolute;
+      top: 55rpx;
+      left: 2rpx;
+      width: 122rpx;
+      height: 32rpx;
+      background-color: #FFFFFF;
+      border-radius: 0;
+    }
+
+    &__step-button-content {
+      position: absolute;
+      top: 55rpx;
+      left: 4rpx;
+      width: 121.26rpx;
+      height: 32rpx;
+      display: flex;
+      align-items: center;
+      z-index: 1;
+    }
+
+    &__step-button-icon {
+      width: 22.66rpx;
+      height: 24rpx;
+    }
+
+    &__step-button-text-wrapper {
+      display: flex;
+      align-items: center;
+      margin-left: 8rpx;
+    }
+
+    &__step-button-text {
+      font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 600;
+      font-size: 20rpx;
+      line-height: 51rpx;
+      text-align: center;
+      color: #000000;
+    }
+
+    &__step-album {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 128rpx;
+      height: 128rpx;
+    }
+
+    &__step-album-bg {
+      position: absolute;
+      top: 4rpx;
+      left: 4rpx;
+      width: 120rpx;
+      height: 120rpx;
+      background-color: #000000;
+      border-radius: 50%;
+    }
+
+    &__step-album-text {
+      position: absolute;
+      top: 71rpx;
+      left: 44rpx;
+      font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 600;
+      font-size: 20rpx;
+      line-height: 51rpx;
+      text-align: center;
+      color: #FFFFFF;
+    }
+
+    &__step-album-icon {
+      position: absolute;
+      top: 33rpx;
+      left: 48rpx;
+      width: 32rpx;
+      height: 32rpx;
+    }
+  }
+
+  // 兑换帮助
+  .help-section {
+    padding-top: 16rpx;
+
+    &__content {
+      display: flex;
+      flex-direction: column;
+      gap: 6rpx;
+    }
+
+    &__title-wrapper {
+      display: flex;
+    }
+
+    &__title {
+      font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 400;
+      font-size: 24rpx;
+      line-height: 32rpx;
+      color: #6B7280;
+    }
+
+    &__text-wrapper {
+      padding-bottom: 1.76rpx;
+    }
+
+    &__text {
+      font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 400;
+      font-size: 22rpx;
+      line-height: 35.76rpx;
+      color: #9CA3AF;
+    }
+  }
+}

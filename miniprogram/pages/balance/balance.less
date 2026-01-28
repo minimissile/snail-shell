@@ -1,0 +1,197 @@
+.balance-page {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #F7F9FB;
+
+  // 主要内容区
+  .main-content {
+    padding: 32rpx 48rpx 80rpx;
+    display: flex;
+    flex-direction: column;
+    gap: 40rpx;
+  }
+
+  // 余额卡片
+  .balance-card {
+    position: relative;
+    width: 100%;
+    height: 320rpx;
+    border-radius: 32rpx;
+    padding: 0 64rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: card-fade-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+
+    // 错开动画
+    &:nth-child(1) { animation-delay: 0.1s; }
+    &:nth-child(2) { animation-delay: 0.2s; }
+    &:nth-child(3) { animation-delay: 0.3s; }
+
+    &:active {
+      transform: scale(0.97) translateY(4rpx);
+      
+      .balance-card__arrow {
+        transform: translateX(8rpx);
+      }
+      
+      .balance-card__bg {
+        transform: scale(1.1) rotate(5deg);
+      }
+    }
+
+    // 添加光晕效果
+    &::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+
+    &:active::before {
+      opacity: 1;
+    }
+
+    // 背景图片
+    &__bg {
+      position: absolute;
+      top: -24rpx;
+      right: 0;
+      width: 384rpx;
+      height: 384rpx;
+      opacity: 0.1;
+      pointer-events: none;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    // 内容容器
+    &__content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 24rpx;
+    }
+
+    // 头部标题区
+    &__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      opacity: 0.95;
+    }
+
+    &__title-wrapper {
+      display: flex;
+      align-items: center;
+    }
+
+    &__title {
+      font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 500;
+      font-size: 32rpx;
+      line-height: 48rpx;
+      color: #FFFFFF;
+    }
+
+    &__arrow {
+      width: 48rpx;
+      height: 48rpx;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    // 金额区域
+    &__amount-wrapper {
+      display: flex;
+      align-items: center;
+      height: 120rpx;
+    }
+
+    &__currency {
+      display: flex;
+      align-items: flex-start;
+      padding: 38rpx 12rpx 0 0;
+    }
+
+    &__currency-symbol {
+      font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 400;
+      font-size: 37.8rpx;
+      line-height: 64rpx;
+      color: #FFFFFF;
+    }
+
+    &__amount {
+      font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 400;
+      font-size: 80rpx;
+      line-height: 120rpx;
+      letter-spacing: 0.025em;
+      color: #FFFFFF;
+    }
+
+    // 返现卡片（蓝色渐变）
+    &--cashback {
+      background: linear-gradient(168deg, rgba(0, 154, 255, 1) 0%, rgba(60, 170, 255, 1) 100%);
+      box-shadow: 0px 20rpx 50rpx -10rpx rgba(59, 130, 246, 0.4);
+
+      .balance-card__bg {
+        right: 0;
+        top: -24rpx;
+      }
+
+      .balance-card__amount {
+        font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+    }
+
+    // 余额卡片（青色渐变）
+    &--balance {
+      background: linear-gradient(168deg, rgba(0, 220, 253, 1) 0%, rgba(0, 191, 255, 1) 100%);
+      box-shadow: 0px 20rpx 50rpx -10rpx rgba(6, 182, 212, 0.4);
+
+      .balance-card__bg {
+        right: 0;
+        top: -24rpx;
+      }
+
+      .balance-card__amount {
+        font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+    }
+
+    // 消费金卡片（紫色渐变）
+    &--consumption {
+      background: linear-gradient(168deg, rgba(111, 139, 247, 1) 0%, rgba(128, 156, 252, 1) 100%);
+      box-shadow: 0px 20rpx 50rpx -10rpx rgba(99, 102, 241, 0.4);
+
+      .balance-card__bg {
+        right: 0;
+        top: -12rpx;
+      }
+
+      .balance-card__amount {
+        font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+    }
+  }
+}
+
+// 卡片淡入动画
+@keyframes card-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(40rpx) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

@@ -1,0 +1,61 @@
+<view class="balance-page">
+  <!-- 主要内容区 -->
+  <view class="main-content">
+    <!-- 返现卡片 -->
+    <view class="balance-card balance-card--cashback" bindtap="onCashbackTap">
+      <image class="balance-card__bg" src="/images/balance-yen-bg.png" mode="aspectFit" />
+      <view class="balance-card__content">
+        <view class="balance-card__header">
+          <view class="balance-card__title-wrapper">
+            <text class="balance-card__title">返现</text>
+          </view>
+          <image class="balance-card__arrow" src="/images/angle-right-small.svg" mode="aspectFit" />
+        </view>
+        <view class="balance-card__amount-wrapper">
+          <view class="balance-card__currency">
+            <text class="balance-card__currency-symbol">¥</text>
+          </view>
+          <text class="balance-card__amount">{{cashbackAmount}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 余额卡片 -->
+    <view class="balance-card balance-card--balance" bindtap="onBalanceTap">
+      <image class="balance-card__bg" src="/images/balance-bag-bg.png" mode="aspectFit" />
+      <view class="balance-card__content">
+        <view class="balance-card__header">
+          <view class="balance-card__title-wrapper">
+            <text class="balance-card__title">余额</text>
+          </view>
+          <image class="balance-card__arrow" src="/images/angle-right-small.svg" mode="aspectFit" />
+        </view>
+        <view class="balance-card__amount-wrapper">
+          <view class="balance-card__currency">
+            <text class="balance-card__currency-symbol">¥</text>
+          </view>
+          <text class="balance-card__amount">{{balanceAmount}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 消费金卡片 -->
+    <view class="balance-card balance-card--consumption" bindtap="onConsumptionTap">
+      <image class="balance-card__bg" src="/images/balance-gift-bg.png" mode="aspectFit" />
+      <view class="balance-card__content">
+        <view class="balance-card__header">
+          <view class="balance-card__title-wrapper">
+            <text class="balance-card__title">消费金</text>
+          </view>
+          <image class="balance-card__arrow" src="/images/angle-right-small.svg" mode="aspectFit" />
+        </view>
+        <view class="balance-card__amount-wrapper">
+          <view class="balance-card__currency">
+            <text class="balance-card__currency-symbol">¥</text>
+          </view>
+          <text class="balance-card__amount">{{consumptionAmount}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

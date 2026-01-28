@@ -1,0 +1,15 @@
+<view class="service-agreement-page">
+  <!-- 主要内容区 -->
+  <view class="main-content">
+    <!-- 协议列表 -->
+    <view 
+      wx:for="{{agreementList}}" 
+      wx:key="id" 
+      class="agreement-item"
+      data-id="{{item.id}}"
+      bindtap="onAgreementTap"
+    >
+      <text class="agreement-title">{{item.title}}</text>
+    </view>
+  </view>
+</view>

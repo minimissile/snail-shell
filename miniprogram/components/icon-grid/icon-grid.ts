@@ -3,6 +3,7 @@ type GridKey =
   | '余额'
   | '实名认证'
   | '智能门锁'
+  | '团购验券'
   | '省钱秘籍'
   | '联系客服'
   | '用户服务协议'
@@ -16,6 +17,7 @@ Component({
       { key: '余额', label: '余额', icon: '/assets/figma/grid-wallet.svg' },
       { key: '实名认证', label: '实名认证', icon: '/assets/figma/grid-shield-user.svg' },
       { key: '智能门锁', label: '智能门锁', icon: '/assets/figma/smart-lock/icon-lock-keyhole.svg' },
+      { key: '团购验券', label: '团购验券', icon: '/assets/figma/grid-book-open-text.svg' },
       { key: '省钱秘籍', label: '省钱秘籍', icon: '/assets/figma/grid-book-open-text.svg' },
       { key: '联系客服', label: '联系客服', icon: '/assets/figma/grid-headset.svg' },
       { key: '用户服务协议', label: '用户服务协议', icon: '/assets/figma/grid-folders-check.svg' },

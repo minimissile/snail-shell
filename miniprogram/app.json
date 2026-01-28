@@ -8,6 +8,9 @@
     "pages/favorites/favorites",
     "pages/smart-lock/smart-lock",
     "pages/feedback/feedback",
+    "pages/service-agreement/service-agreement",
+    "pages/balance/balance",
+    "pages/coupon-verify/coupon-verify",
     "pages/logs/logs"
   ],
   "window": {

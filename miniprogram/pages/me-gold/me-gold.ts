@@ -61,6 +61,15 @@ Component({
         })
         return
       }
+      if (key === '余额') {
+        wx.navigateTo({
+          url: '/pages/balance/balance',
+          fail: () => {
+            wx.showToast({ title: '暂无法打开余额页面', icon: 'none' })
+          },
+        })
+        return
+      }
       if (key === '智能门锁') {
         wx.navigateTo({
           url: '/pages/smart-lock/smart-lock',
@@ -70,11 +79,29 @@ Component({
         })
         return
       }
+      if (key === '团购验券') {
+        wx.navigateTo({
+          url: '/pages/coupon-verify/coupon-verify',
+          fail: () => {
+            wx.showToast({ title: '暂无法打开团购验券', icon: 'none' })
+          },
+        })
+        return
+      }
       if (key === '我要反馈') {
         wx.navigateTo({
           url: '/pages/feedback/feedback',
           fail: () => {
             wx.showToast({ title: '暂无法打开反馈页面', icon: 'none' })
+          },
+        })
+        return
+      }
+      if (key === '用户服务协议') {
+        wx.navigateTo({
+          url: '/pages/service-agreement/service-agreement',
+          fail: () => {
+            wx.showToast({ title: '暂无法打开服务协议', icon: 'none' })
           },
         })
         return
