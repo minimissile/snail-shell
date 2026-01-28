@@ -1,6 +1,5 @@
 Component({
   data: {
-    activeTab: 'me',
     avatarSrc: '/assets/figma/avatar.png',
     userName: 'Dimoo旅行家',
     greeting: '尊贵的黄金会员, 下午好',
@@ -25,15 +24,34 @@ Component({
     },
     onTapQuickAction(e: WechatMiniprogram.CustomEvent<{ key: string }>) {
       const key = e.detail?.key || ''
-      wx.showToast({ title: key ? `订单：${key}` : '订单', icon: 'none' })
+      const tab =
+        key === 'pay'
+          ? 'pay'
+          : key === 'use'
+            ? 'use'
+            : key === 'refund'
+              ? 'refund'
+              : 'all'
+      wx.setStorageSync('orders:initialTab', tab)
+      wx.switchTab({
+        url: '/pages/orders/orders',
+        fail: () => {
+          wx.showToast({ title: '暂无法打开订单页', icon: 'none' })
+        },
+      })
     },
     onTapGridItem(e: WechatMiniprogram.CustomEvent<{ key: string }>) {
       const key = e.detail?.key || ''
+      if (key === '常用信息') {
+        wx.navigateTo({
+          url: '/pages/common-info/common-info',
+          fail: () => {
+            wx.showToast({ title: '暂无法打开常用信息', icon: 'none' })
+          },
+        })
+        return
+      }
       wx.showToast({ title: key || '功能', icon: 'none' })
-    },
-    onTabChange(e: WechatMiniprogram.CustomEvent<{ key: string }>) {
-      const key = e.detail?.key || ''
-      wx.showToast({ title: key ? `切换：${key}` : '切换', icon: 'none' })
     },
   },
 })

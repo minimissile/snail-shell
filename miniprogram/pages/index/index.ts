@@ -1,54 +1,38 @@
-// index.ts
-// 获取应用实例
-const app = getApp<IAppOption>()
-const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
-
 Component({
   data: {
-    motto: 'Hello World',
-    userInfo: {
-      avatarUrl: defaultAvatarUrl,
-      nickName: '',
-    },
-    hasUserInfo: false,
-    canIUseGetUserProfile: wx.canIUse('getUserProfile'),
-    canIUseNicknameComp: wx.canIUse('input.type.nickname'),
+    fromCity: '深圳',
+    toPlace: '深圳北站',
+    checkInDateMain: '11月14日',
+    checkInDateSub: '今天',
+    checkOutDateMain: '11月15日',
+    checkOutDateSub: '明天',
+    nights: 1,
+    isSearching: false,
   },
   methods: {
-    // 事件处理函数
-    bindViewTap() {
-      wx.navigateTo({
-        url: '../logs/logs',
-      })
+    onClearToPlace() {
+      if (!this.data.toPlace) return
+      this.setData({ toPlace: '' })
     },
-    onChooseAvatar(e: any) {
-      const { avatarUrl } = e.detail
-      const { nickName } = this.data.userInfo
-      this.setData({
-        "userInfo.avatarUrl": avatarUrl,
-        hasUserInfo: nickName && avatarUrl && avatarUrl !== defaultAvatarUrl,
-      })
+    onUseMyLocation() {
+      wx.showToast({ title: '定位中', icon: 'loading', duration: 800 })
     },
-    onInputChange(e: any) {
-      const nickName = e.detail.value
-      const { avatarUrl } = this.data.userInfo
-      this.setData({
-        "userInfo.nickName": nickName,
-        hasUserInfo: nickName && avatarUrl && avatarUrl !== defaultAvatarUrl,
-      })
+    onOpenPeoplePicker() {
+      wx.showToast({ title: '暂未开放', icon: 'none' })
     },
-    getUserProfile() {
-      // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
-      wx.getUserProfile({
-        desc: '展示用户信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-        success: (res) => {
-          console.log(res)
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-        }
-      })
+    onOpenPricePicker() {
+      wx.showToast({ title: '暂未开放', icon: 'none' })
+    },
+    onSearch() {
+      if (this.data.isSearching) return
+      this.setData({ isSearching: true })
+      wx.showToast({ title: '开始搜索', icon: 'none', duration: 800 })
+      setTimeout(() => {
+        this.setData({ isSearching: false })
+      }, 800)
+    },
+    onGoSelectRoom() {
+      wx.showToast({ title: '去选房', icon: 'none' })
     },
   },
 })

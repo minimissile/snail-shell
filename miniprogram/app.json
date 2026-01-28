@@ -1,12 +1,40 @@
 {
   "pages": [
-    "pages/me-gold/me-gold",
     "pages/index/index",
+    "pages/me-gold/me-gold",
+    "pages/common-info/common-info",
+    "pages/orders/orders",
     "pages/logs/logs"
   ],
   "window": {
     "navigationBarTextStyle": "black",
     "navigationStyle": "custom"
+  },
+  "tabBar": {
+    "color": "#6B7280",
+    "selectedColor": "#F97316",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "assets/figma/tab-home.png",
+        "selectedIconPath": "assets/figma/tab-home-active.png"
+      },
+      {
+        "pagePath": "pages/orders/orders",
+        "text": "订单",
+        "iconPath": "assets/figma/tab-order.png",
+        "selectedIconPath": "assets/figma/tab-order-active.png"
+      },
+      {
+        "pagePath": "pages/me-gold/me-gold",
+        "text": "我的",
+        "iconPath": "assets/figma/tab-me.png",
+        "selectedIconPath": "assets/figma/tab-me-active.png"
+      }
+    ]
   },
   "usingComponents": {
     "t-button": "tdesign-miniprogram/button/button",

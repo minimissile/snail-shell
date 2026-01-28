@@ -26,6 +26,4 @@
 
     <icon-grid bind:item="onTapGridItem" />
   </view>
-
-  <app-tabbar active="{{activeTab}}" bind:change="onTabChange" />
 </view>

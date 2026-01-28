@@ -4,7 +4,6 @@
     "membership-banner": "/components/membership-banner/membership-banner",
     "stats-card": "/components/stats-card/stats-card",
     "quick-actions": "/components/quick-actions/quick-actions",
-    "icon-grid": "/components/icon-grid/icon-grid",
-    "app-tabbar": "/components/app-tabbar/app-tabbar"
+    "icon-grid": "/components/icon-grid/icon-grid"
   }
 }

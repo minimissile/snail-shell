@@ -1,0 +1,116 @@
+<view class="page" aria-label="订单页">
+  <navigation-bar extClass="orders-nav" title="" back="{{false}}" color="#000000" background="transparent">
+    <view
+      slot="left"
+      class="topbar-left"
+      bindtap="onOpenOrderTitle"
+      aria-role="button"
+      aria-label="全部订单"
+    >
+      <text class="topbar-title">全部订单</text>
+      <image
+        class="topbar-title-icon"
+        src="/assets/figma/angle-down-small.svg"
+        mode="aspectFit"
+        aria-hidden="true"
+      />
+    </view>
+
+    <view slot="right" class="topbar-right" aria-label="顶部操作">
+      <view class="topbar-actions">
+        <view
+          class="topbar-action"
+          bindtap="onOpenHeaderMenu"
+          aria-role="button"
+          aria-label="菜单"
+        >
+          <text class="topbar-action-text">⋯</text>
+        </view>
+        <view class="topbar-divider" aria-hidden="true"></view>
+        <view
+          class="topbar-action"
+          bindtap="onCloseTopbar"
+          aria-role="button"
+          aria-label="关闭"
+        >
+          <text class="topbar-action-text">×</text>
+        </view>
+      </view>
+    </view>
+  </navigation-bar>
+
+  <view class="tabs" aria-label="订单状态 Tab">
+    <scroll-view
+      class="tabs__scroll"
+      scroll-x
+      show-scrollbar="{{false}}"
+      enable-flex
+      aria-label="订单状态切换"
+    >
+      <view class="tabs__row">
+        <view
+          wx:for="{{tabs}}"
+          wx:key="key"
+          wx:for-index="i"
+          class="tabs__btn {{activeKey === item.key ? 'is-active' : ''}} {{i === 0 ? 'is-first' : ''}}"
+          data-key="{{item.key}}"
+          bindtap="onTapTab"
+          aria-role="button"
+          aria-label="切换到{{item.label}}"
+        >
+          <text class="tabs__text">{{item.label}}</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <swiper
+    class="swiper"
+    current="{{activeIndex}}"
+    duration="280"
+    easing-function="easeOutCubic"
+    disable-touch="{{true}}"
+    aria-label="订单内容"
+    bindchange="onSwiperChange"
+  >
+    <block wx:for="{{tabs}}" wx:key="key" wx:for-index="tabIndex">
+      <swiper-item>
+        <scroll-view class="panel" scroll-y enable-back-to-top type="list">
+          <view wx:if="{{isLoading}}" class="state state--loading" aria-role="alert" aria-label="加载中">
+            <view class="spinner" aria-role="img" aria-label="加载中"></view>
+            <text class="state__text">加载中…</text>
+          </view>
+
+          <view
+            wx:elif="{{errorMessage}}"
+            class="state state--error"
+            aria-role="alert"
+            aria-label="加载失败"
+          >
+            <text class="state__text">{{errorMessage}}</text>
+            <button class="state__btn" bindtap="onRetry" aria-label="重试">重试</button>
+          </view>
+
+          <view wx:else class="panel__body">
+            <view wx:if="{{ordersCountByIndex[tabIndex]}}" class="list" aria-label="订单列表">
+              <view
+                wx:for="{{ordersByIndex[tabIndex]}}"
+                wx:key="id"
+                class="card"
+                wx:for-item="order"
+                aria-label="订单卡片"
+              >
+                <text class="card__title">{{order.title}}</text>
+                <text class="card__sub">{{order.sub}}</text>
+              </view>
+            </view>
+
+            <view wx:else class="empty" aria-label="暂无订单">
+              <image class="empty__img" src="/assets/figma/orders-empty.svg" mode="aspectFit" aria-hidden="true" />
+            </view>
+          </view>
+        </scroll-view>
+      </swiper-item>
+    </block>
+  </swiper>
+</view>
