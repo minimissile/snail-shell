@@ -1,0 +1,148 @@
+<view class="smart-lock-page">
+  <!-- 状态栏 -->
+  <view class="status-bar" style="height: {{statusBarHeight}}px;"></view>
+
+  <!-- 头部 -->
+  <view class="header">
+    <!-- 渐变背景 -->
+    <view class="header-gradient"></view>
+    
+    <!-- 返回按钮 -->
+    <view class="back-button" bindtap="onBack">
+      <image class="back-icon" src="/assets/figma/smart-lock/icon-back.svg" mode="aspectFit" />
+    </view>
+    
+    <!-- 标题 -->
+    <view class="header-title">
+      <text class="title-text">智能门锁</text>
+    </view>
+    
+    <!-- 设置按钮 -->
+    <view class="settings-button" bindtap="onSettings">
+      <image class="settings-icon" src="/assets/figma/smart-lock/icon-gear-settings.svg" mode="aspectFit" />
+      <view wx:if="{{hasNotification}}" class="notification-badge"></view>
+    </view>
+  </view>
+
+  <!-- 中间开锁/关锁按钮 -->
+  <view class="lock-section">
+    <view class="lock-container">
+      <!-- 外圈渐变 -->
+      <view class="lock-outer {{isLocked ? '' : 'unlocked'}}" bindtap="onToggleLock">
+        <!-- 内圈白色 -->
+        <view class="lock-inner {{isLocked ? '' : 'unlocked'}}">
+          <!-- 锁图标 -->
+          <image 
+            class="lock-icon {{isLocked ? '' : 'unlocked'}}" 
+            src="{{isLocked ? '/assets/figma/smart-lock/lock-simple.svg' : '/assets/figma/smart-lock/unlock-simple.svg'}}" 
+            mode="aspectFit" 
+          />
+          <!-- 文字 -->
+          <view class="lock-text-container">
+            <text class="lock-text">{{isLocked ? '点击开锁' : '点击关锁'}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 电池和WiFi信息 -->
+    <view class="device-info">
+      <!-- 电池 -->
+      <view class="info-item">
+        <image class="info-icon" src="/assets/figma/smart-lock/icon-battery-full.svg" mode="aspectFit" />
+        <view class="info-text-container">
+          <text class="info-text">90%</text>
+        </view>
+      </view>
+      
+      <!-- WiFi -->
+      <view class="info-item">
+        <image class="info-icon" src="/assets/figma/smart-lock/wifi-strong.svg" mode="aspectFit" />
+        <view class="info-text-container">
+          <text class="info-text">强</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能按钮区 -->
+  <view class="nav-section">
+    <view class="nav-grid">
+      <!-- 第一行 -->
+      <view class="nav-row">
+        <view class="nav-button" bindtap="onFingerprint">
+          <view class="button-icon-container">
+            <image class="button-icon" src="/assets/figma/smart-lock/icon-fingerprint.svg" mode="aspectFit" />
+          </view>
+          <view class="button-text-container">
+            <text class="button-text">指纹管理</text>
+          </view>
+        </view>
+        
+        <view class="nav-button" bindtap="onPassword">
+          <view class="button-icon-container">
+            <image class="button-icon" src="/assets/figma/smart-lock/icon-lock-keyhole.svg" mode="aspectFit" />
+          </view>
+          <view class="button-text-container">
+            <text class="button-text">密码管理</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 第二行 -->
+      <view class="nav-row">
+        <view class="nav-button" bindtap="onTempPassword">
+          <view class="button-icon-container">
+            <image class="button-icon" src="/assets/figma/smart-lock/icon-key-message.svg" mode="aspectFit" />
+          </view>
+          <view class="button-text-container">
+            <text class="button-text">临时密码</text>
+          </view>
+        </view>
+        
+        <view class="nav-button" bindtap="onLockEvents">
+          <view class="button-icon-container">
+            <image class="button-icon" src="/assets/figma/smart-lock/icon-page-text.svg" mode="aspectFit" />
+          </view>
+          <view class="button-text-container">
+            <text class="button-text">门锁事件</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部列表区 -->
+  <view class="bottom-section">
+    <view class="bottom-container">
+      <!-- 门卡管理 -->
+      <view class="list-item" bindtap="onCardManagement">
+        <view class="list-left">
+          <image class="list-icon" src="/assets/figma/smart-lock/icon-user-rectangle.svg" mode="aspectFit" />
+          <view class="list-text-container">
+            <text class="list-text">门卡管理</text>
+          </view>
+        </view>
+        <view class="list-right">
+          <text class="list-arrow"></text>
+        </view>
+      </view>
+
+      <!-- 分割线 -->
+      <view class="list-divider"></view>
+
+      <!-- 紧急联系人 -->
+      <view class="list-item" bindtap="onEmergencyContact">
+        <view class="list-left">
+          <image class="list-icon" src="/assets/figma/smart-lock/icon-user-bolt.svg" mode="aspectFit" />
+          <view class="list-text-container">
+            <text class="list-text">紧急联系人</text>
+          </view>
+        </view>
+        <view class="list-right">
+          <text class="list-arrow"></text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

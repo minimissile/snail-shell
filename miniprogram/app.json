@@ -6,6 +6,7 @@
     "pages/orders/orders",
     "pages/coupons/coupons",
     "pages/favorites/favorites",
+    "pages/smart-lock/smart-lock",
     "pages/logs/logs"
   ],
   "window": {

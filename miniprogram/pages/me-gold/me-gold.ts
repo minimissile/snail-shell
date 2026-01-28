@@ -61,6 +61,15 @@ Component({
         })
         return
       }
+      if (key === '智能门锁') {
+        wx.navigateTo({
+          url: '/pages/smart-lock/smart-lock',
+          fail: () => {
+            wx.showToast({ title: '暂无法打开智能门锁', icon: 'none' })
+          },
+        })
+        return
+      }
       wx.showToast({ title: key || '功能', icon: 'none' })
     },
   },
