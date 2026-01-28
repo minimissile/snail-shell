@@ -70,6 +70,15 @@ Component({
         })
         return
       }
+      if (key === '我要反馈') {
+        wx.navigateTo({
+          url: '/pages/feedback/feedback',
+          fail: () => {
+            wx.showToast({ title: '暂无法打开反馈页面', icon: 'none' })
+          },
+        })
+        return
+      }
       wx.showToast({ title: key || '功能', icon: 'none' })
     },
   },

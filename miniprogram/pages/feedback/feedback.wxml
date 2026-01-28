@@ -1,0 +1,96 @@
+<view class="feedback-page">
+  <!-- 主要内容区 -->
+  <view class="main-content">
+    <!-- 问题类型选择 -->
+    <view class="section problem-type" bindtap="onSelectProblemType">
+      <view class="section-left">
+        <text class="section-title">问题类型</text>
+      </view>
+      <view class="section-right">
+        <view class="selected-type">
+          <text class="type-text">{{selectedType}}</text>
+        </view>
+        <view class="arrow-icon">
+          <text class="arrow"></text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 反馈内容 -->
+    <view class="section feedback-content">
+      <view class="content-header">
+        <text class="title-main">反馈内容</text>
+        <text class="title-hint">(请填写反馈内容，必填)</text>
+      </view>
+      <view class="divider"></view>
+      <view class="textarea-container">
+        <textarea
+          class="feedback-textarea"
+          placeholder=""
+          value="{{feedbackContent}}"
+          bindinput="onFeedbackInput"
+          maxlength="500"
+          auto-height
+        />
+        <view class="char-count">
+          <text class="count-text">{{feedbackContent.length}}/500</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 上传凭证 -->
+    <view class="section upload-section">
+      <view class="upload-header">
+        <text class="section-title">上传凭证</text>
+      </view>
+      <view class="divider"></view>
+      <view class="upload-container">
+        <view class="image-list">
+          <!-- 已上传的图片 -->
+          <block wx:for="{{uploadedImages}}" wx:key="index">
+            <view class="image-item">
+              <image class="uploaded-image" src="{{item}}" mode="aspectFill" />
+              <view class="delete-btn" data-index="{{index}}" bindtap="onDeleteImage">
+                <text class="delete-icon">×</text>
+              </view>
+            </view>
+          </block>
+          
+          <!-- 上传按钮 -->
+          <view class="upload-box" wx:if="{{uploadedImages.length < 3}}" bindtap="onUploadImage">
+            <view class="upload-icon">
+              <text class="plus-icon">+</text>
+            </view>
+          </view>
+        </view>
+        <view class="upload-hint">
+          <text class="hint-text">最多上传3张照片，每张限5M（非必填）</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 联系方式 -->
+    <view class="section contact-section">
+      <view class="contact-header">
+        <text class="section-title">联系方式</text>
+      </view>
+      <view class="divider"></view>
+      <view class="input-container">
+        <input
+          class="contact-input"
+          placeholder="请输入联系方式"
+          value="{{contactInfo}}"
+          bindinput="onContactInput"
+          placeholder-class="placeholder"
+        />
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部提交按钮 -->
+  <view class="submit-footer">
+    <view class="submit-button {{canSubmit ? 'active' : ''}}" bindtap="onSubmit">
+      <text class="submit-text">提交</text>
+    </view>
+  </view>
+</view>

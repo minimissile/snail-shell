@@ -1,0 +1,489 @@
+.feedback-page {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #F7F9FB;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 162rpx; // 为底部按钮留空间
+
+  // 主要内容区
+  .main-content {
+    flex: 1;
+    padding: 24rpx 24rpx 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24rpx;
+
+    // 通用section样式
+    .section {
+      background-color: #FFFFFF;
+      border-radius: 24rpx;
+      overflow: hidden;
+
+      // 分割线
+      .divider {
+        width: 100%;
+        height: 2rpx;
+        background-color: #E9E9E9;
+      }
+    }
+
+    // 问题类型选择
+    .problem-type {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 30rpx 32rpx 32rpx;
+      gap: 375rpx;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+
+      // 添加点击波纹效果
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background-color: rgba(249, 115, 22, 0.1);
+        transform: translate(-50%, -50%);
+        transition: width 0.4s ease, height 0.4s ease;
+        pointer-events: none;
+      }
+
+      &:active {
+        background-color: #F9FAFB;
+        transform: scale(0.99);
+
+        &::after {
+          width: 200%;
+          height: 200%;
+        }
+      }
+
+      .section-left {
+        .section-title {
+          font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+          font-weight: 600;
+          font-size: 30rpx;
+          line-height: 45rpx;
+          color: #111827;
+        }
+      }
+
+      .section-right {
+        display: flex;
+        align-items: center;
+
+        .selected-type {
+          padding-right: 16rpx;
+
+          .type-text {
+            font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 400;
+            font-size: 28rpx;
+            line-height: 40rpx;
+            color: #111827;
+          }
+        }
+
+        .arrow-icon {
+          .arrow {
+            font-family: 'Font Awesome 5 Free', sans-serif;
+            font-weight: 900;
+            font-size: 24rpx;
+            line-height: 32rpx;
+            color: #D1D5DB;
+
+            &::before {
+              content: '\f054';
+            }
+          }
+        }
+      }
+    }
+
+    // 反馈内容
+    .feedback-content {
+      display: flex;
+      flex-direction: column;
+      gap: 24rpx;
+      padding: 32rpx;
+
+      .content-header {
+        display: flex;
+        align-items: center;
+        gap: 16.9rpx;
+        padding-bottom: 2rpx;
+
+        .title-main {
+          font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+          font-weight: 600;
+          font-size: 30rpx;
+          line-height: 45rpx;
+          color: #111827;
+        }
+
+        .title-hint {
+          font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+          font-weight: 400;
+          font-size: 27.8rpx;
+          line-height: 40rpx;
+          color: #9CA3AF;
+        }
+      }
+
+      .textarea-container {
+        display: flex;
+        flex-direction: column;
+        gap: 16rpx;
+        position: relative;
+
+        // 添加聚焦边框效果
+        &::before {
+          content: '';
+          position: absolute;
+          bottom: 48rpx;
+          left: 0;
+          width: 0;
+          height: 4rpx;
+          background: linear-gradient(90deg, #F97316 0%, #EA580C 100%);
+          transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          border-radius: 2rpx;
+        }
+
+        &:focus-within::before {
+          width: 100%;
+        }
+
+        .feedback-textarea {
+          width: 100%;
+          min-height: 256rpx;
+          font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+          font-weight: 400;
+          font-size: 30rpx;
+          line-height: 42rpx;
+          color: #111827;
+          padding: 0;
+          transition: all 0.3s ease;
+
+          &:focus {
+            outline: none;
+          }
+        }
+
+        .char-count {
+          display: flex;
+          justify-content: flex-end;
+          opacity: 0.6;
+          transition: opacity 0.3s ease;
+
+          &:hover {
+            opacity: 1;
+          }
+
+          .count-text {
+            font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 400;
+            font-size: 22.6rpx;
+            line-height: 32rpx;
+            color: #9CA3AF;
+            text-align: right;
+            transition: color 0.3s ease;
+
+            &.warning {
+              color: #F97316;
+            }
+          }
+        }
+      }
+    }
+
+    // 上传凭证
+    .upload-section {
+      display: flex;
+      flex-direction: column;
+      gap: 24rpx;
+      padding: 30rpx 32rpx 32rpx;
+
+      .upload-header {
+        .section-title {
+          font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+          font-weight: 600;
+          font-size: 30rpx;
+          line-height: 45rpx;
+          color: #111827;
+          width: 100%;
+        }
+      }
+
+      .upload-container {
+        display: flex;
+        flex-direction: column;
+        padding-top: 8rpx;
+
+        .image-list {
+          display: flex;
+          gap: 16rpx;
+          flex-wrap: wrap;
+          margin-bottom: 16rpx;
+
+          .image-item {
+            width: 160rpx;
+            height: 160rpx;
+            position: relative;
+            animation: image-fade-in 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+            .uploaded-image {
+              width: 100%;
+              height: 100%;
+              border-radius: 16rpx;
+              transition: all 0.3s ease;
+            }
+
+            .delete-btn {
+              position: absolute;
+              top: -8rpx;
+              right: -8rpx;
+              width: 40rpx;
+              height: 40rpx;
+              background-color: rgba(0, 0, 0, 0.6);
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+              transform: scale(0.9);
+              opacity: 0.8;
+
+              &:active {
+                transform: scale(1.1);
+                background-color: #EF4444;
+                opacity: 1;
+              }
+
+              .delete-icon {
+                font-size: 32rpx;
+                color: #FFFFFF;
+                line-height: 1;
+              }
+            }
+          }
+
+          .upload-box {
+            width: 160rpx;
+            height: 160rpx;
+            background-color: #F9FAFB;
+            border: 2rpx dashed #E5E7EB;
+            border-radius: 16rpx;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+
+            // 添加悬停效果
+            &::before {
+              content: '';
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              background: linear-gradient(135deg, rgba(249, 115, 22, 0.05) 0%, rgba(234, 88, 12, 0.05) 100%);
+              opacity: 0;
+              transition: opacity 0.3s ease;
+            }
+
+            &:active {
+              background-color: #F3F4F6;
+              border-color: #F97316;
+              transform: scale(0.98);
+
+              &::before {
+                opacity: 1;
+              }
+
+              .upload-icon .plus-icon {
+                transform: rotate(90deg);
+                color: #F97316;
+              }
+            }
+
+            .upload-icon {
+              .plus-icon {
+                font-family: 'Font Awesome 5 Free', sans-serif;
+                font-weight: 900;
+                font-size: 48rpx;
+                line-height: 64rpx;
+                color: #D1D5DB;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+              }
+            }
+          }
+        }
+
+        .upload-hint {
+          .hint-text {
+            font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 400;
+            font-size: 23.6rpx;
+            line-height: 32rpx;
+            color: #9CA3AF;
+          }
+        }
+      }
+    }
+
+    // 联系方式
+    .contact-section {
+      display: flex;
+      flex-direction: column;
+      gap: 24rpx;
+      padding: 30rpx 32rpx 32rpx;
+
+      .contact-header {
+        .section-title {
+          font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+          font-weight: 600;
+          font-size: 30rpx;
+          line-height: 45rpx;
+          color: #111827;
+          width: 100%;
+        }
+      }
+
+      .input-container {
+        padding: 7rpx 0 3rpx;
+        position: relative;
+
+        // 添加聚焦底部边框
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 0;
+          height: 4rpx;
+          background: linear-gradient(90deg, #F97316 0%, #EA580C 100%);
+          transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          border-radius: 2rpx;
+        }
+
+        &:focus-within::after {
+          width: 100%;
+        }
+
+        .contact-input {
+          width: 100%;
+          font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+          font-weight: 400;
+          font-size: 30rpx;
+          line-height: 42rpx;
+          color: #111827;
+          padding: 0;
+          padding-bottom: 4rpx;
+          transition: all 0.3s ease;
+
+          &:focus {
+            outline: none;
+          }
+        }
+
+        .placeholder {
+          color: #D1D5DB;
+        }
+      }
+    }
+  }
+
+  // 底部提交按钮
+  .submit-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 162rpx;
+    background-color: #FFFFFF;
+    border-top: 2rpx solid #E5E7EB;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 46rpx 32rpx;
+    z-index: 100;
+
+    .submit-button {
+      width: 686rpx;
+      height: 84rpx;
+      background-color: #F97316;
+      border-radius: 16rpx;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 0.5;
+      position: relative;
+      overflow: hidden;
+
+      // 添加闪光效果
+      &::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+          45deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.3) 50%,
+          transparent 70%
+        );
+        transform: translateX(-100%);
+        transition: transform 0.6s ease;
+      }
+
+      &.active {
+        opacity: 1;
+        box-shadow: 0px 4rpx 12rpx 0px rgba(249, 115, 22, 0.3);
+
+        &:hover::before {
+          transform: translateX(100%);
+        }
+
+        &:active {
+          transform: scale(0.98);
+          background-color: #EA580C;
+          box-shadow: 0px 2rpx 8rpx 0px rgba(249, 115, 22, 0.4);
+        }
+      }
+
+      .submit-text {
+        font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+        font-weight: 600;
+        font-size: 32rpx;
+        line-height: 56rpx;
+        color: #FFFFFF;
+        text-align: center;
+        width: 194rpx;
+        height: 38rpx;
+      }
+    }
+  }
+}
+
+// 动画：图片淡入
+@keyframes image-fade-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
