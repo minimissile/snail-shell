@@ -96,12 +96,27 @@
               <view
                 wx:for="{{ordersByIndex[tabIndex]}}"
                 wx:key="id"
-                class="card"
+                class="orders__card"
                 wx:for-item="order"
                 aria-label="订单卡片"
               >
-                <text class="card__title">{{order.title}}</text>
-                <text class="card__sub">{{order.sub}}</text>
+                <view class="orders__card-header">
+                  <view class="orders__card-header-left">
+                    <image class="orders__card-icon" src="/assets/figma/grid-buildings-modern.svg" mode="aspectFit" />
+                    <text class="orders__card-store">{{order.storeName}}</text>
+                  </view>
+                  <text class="orders__card-status" style="{{order.statusColor ? 'color: ' + order.statusColor : ''}}">{{order.status}}</text>
+                </view>
+
+                <view class="orders__card-divider"></view>
+
+                <view class="orders__card-body">
+                  <image class="orders__card-image" src="{{order.image}}" mode="aspectFill" />
+                  <view class="orders__card-info">
+                    <text class="orders__card-quantity">数量: {{order.quantity}}</text>
+                    <text class="orders__card-amount">支付金额: ¥ {{order.amount}}</text>
+                  </view>
+                </view>
               </view>
             </view>
 

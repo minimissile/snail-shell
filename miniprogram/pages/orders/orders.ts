@@ -2,8 +2,13 @@ type OrdersTabKey = 'all' | 'toUse' | 'valid' | 'toPay' | 'refund'
 
 type OrderCard = {
   id: string
-  title: string
-  sub: string
+  storeName: string
+  status: string
+  statusColor?: string
+  image: string
+  quantity: number
+  amount: string
+  countdown?: string
 }
 
 /**
@@ -71,25 +76,27 @@ Component({
     /**
      * 页面挂载时读取入口参数并同步 Tab 状态
      */
-    attached() {
+    attached(this: any) {
       const options = getRouteOptions()
       const initialKey = resolveInitialTabKey(options?.tab || '')
-      const index = this.data.tabs.findIndex((t) => t.key === initialKey)
+      const index = this.data.tabs.findIndex((t: any) => t.key === initialKey)
       const safeIndex = index >= 0 ? index : 0
       this.setData({
         activeKey: this.data.tabs[safeIndex].key,
         activeIndex: safeIndex,
       })
+      // 加载模拟数据
+      this.loadMockData()
     },
   },
   pageLifetimes: {
     /**
      * 页面显示时同步外部指定的 Tab（适配原生 tabBar 的 switchTab）
      */
-    show() {
+    show(this: any) {
       const nextKey = readInitialTabFromStorage()
       if (!nextKey) return
-      const index = this.data.tabs.findIndex((t) => t.key === nextKey)
+      const index = this.data.tabs.findIndex((t: any) => t.key === nextKey)
       const safeIndex = index >= 0 ? index : 0
       if (safeIndex === this.data.activeIndex && nextKey === this.data.activeKey) return
       this.setData({
@@ -117,10 +124,10 @@ Component({
     /**
      * 点击顶部 Tab
      */
-    onTapTab(e: WechatMiniprogram.TouchEvent) {
+    onTapTab(this: any, e: WechatMiniprogram.TouchEvent) {
       const key = (e.currentTarget.dataset?.key || '') as OrdersTabKey
       if (!key || key === this.data.activeKey) return
-      const index = this.data.tabs.findIndex((t) => t.key === key)
+      const index = this.data.tabs.findIndex((t: any) => t.key === key)
       const safeIndex = index >= 0 ? index : 0
       this.setData({
         activeKey: key,
@@ -131,7 +138,7 @@ Component({
     /**
      * 同步 swiper 切换（用户手势已禁用，但程序切换仍会触发）
      */
-    onSwiperChange(e: WechatMiniprogram.SwiperChange) {
+    onSwiperChange(this: any, e: WechatMiniprogram.SwiperChange) {
       const current = Number(e.detail?.current || 0)
       const safeIndex = Math.max(0, Math.min(this.data.tabs.length - 1, Number.isFinite(current) ? current : 0))
       const nextKey = this.data.tabs[safeIndex]?.key || 'all'
@@ -145,8 +152,120 @@ Component({
     /**
      * 失败重试（占位交互）
      */
-    onRetry() {
+    onRetry(this: any) {
       this.setData({ errorMessage: '', isLoading: false })
+    },
+
+    /**
+     * 加载模拟数据
+     */
+    loadMockData(this: any) {
+      const mockOrders: OrderCard[] = [
+        {
+          id: '1',
+          storeName: '蜗壳精选公寓（民治店）',
+          status: '待评价',
+          image: '/images/orders/order-room.png',
+          quantity: 1,
+          amount: '300.00',
+        },
+        {
+          id: '2',
+          storeName: '蜗壳精选公寓（民治店）',
+          status: '待使用',
+          image: '/images/orders/order-room.png',
+          quantity: 1,
+          amount: '300.00',
+        },
+        {
+          id: '3',
+          storeName: '蜗壳精选公寓（民治店）',
+          status: '退款成功',
+          image: '/images/orders/order-room.png',
+          quantity: 1,
+          amount: '300.00',
+        },
+      ]
+
+      const toPayOrders: OrderCard[] = [
+        {
+          id: '4',
+          storeName: '蜗壳精选公寓（民治店）',
+          status: '待支付，剩余30:00',
+          image: '/images/orders/order-room.png',
+          quantity: 1,
+          amount: '300.00',
+          countdown: '30:00',
+        },
+        {
+          id: '5',
+          storeName: '蜗壳精选公寓（民治店）',
+          status: '待支付，剩余30:00',
+          image: '/images/orders/order-room.png',
+          quantity: 1,
+          amount: '300.00',
+          countdown: '30:00',
+        },
+      ]
+
+      const toUseOrders: OrderCard[] = [
+        {
+          id: '6',
+          storeName: '蜗壳精选公寓（民治店）',
+          status: '待使用',
+          image: '/images/orders/order-room.png',
+          quantity: 1,
+          amount: '300.00',
+        },
+        {
+          id: '7',
+          storeName: '蜗壳精选公寓（民治店）',
+          status: '待使用',
+          image: '/images/orders/order-room.png',
+          quantity: 1,
+          amount: '300.00',
+        },
+      ]
+
+      const validOrders: OrderCard[] = [
+        {
+          id: '8',
+          storeName: '蜗壳精选公寓（民治店）',
+          status: '待使用',
+          image: '/images/orders/order-room.png',
+          quantity: 1,
+          amount: '300.00',
+        },
+      ]
+
+      const refundOrders: OrderCard[] = [
+        {
+          id: '9',
+          storeName: '蜗壳精选公寓（民治店）',
+          status: '退款成功',
+          image: '/images/orders/order-room.png',
+          quantity: 1,
+          amount: '300.00',
+        },
+        {
+          id: '10',
+          storeName: '蜗壳精选公寓（民治店）',
+          status: '退款成功',
+          image: '/images/orders/order-room.png',
+          quantity: 1,
+          amount: '300.00',
+        },
+      ]
+
+      this.setData({
+        ordersByIndex: [mockOrders, toUseOrders, validOrders, toPayOrders, refundOrders],
+        ordersCountByIndex: [mockOrders.length, toUseOrders.length, validOrders.length, toPayOrders.length, refundOrders.length],
+        'ordersByTab.all': mockOrders,
+        'ordersByTab.toUse': toUseOrders,
+        'ordersByTab.valid': validOrders,
+        'ordersByTab.toPay': toPayOrders,
+        'ordersByTab.refund': refundOrders,
+      })
     },
   },
 })
