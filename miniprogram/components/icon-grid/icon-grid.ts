@@ -12,6 +12,7 @@ type GridKey =
   | '附近门店'
   | '门店详情'
   | '订单填写'
+  | '实景选房'
 
 Component({
   data: {
@@ -29,6 +30,7 @@ Component({
       { key: '附近门店', label: '附近门店', icon: '/assets/figma/grid-book-open-text.svg' },
       { key: '门店详情', label: '门店详情', icon: '/assets/figma/grid-book-open-text.svg' },
       { key: '订单填写', label: '订单填写', icon: '/assets/figma/grid-book-open-text.svg' },
+      { key: '实景选房', label: '实景选房', icon: '/assets/figma/grid-book-open-text.svg' },
     ] as Array<{ key: GridKey; label: string; icon: string }>,
   },
   methods: {

@@ -14,6 +14,7 @@
     "pages/nearby-stores/nearby-stores",
     "pages/store-detail/store-detail",
     "pages/order-form/order-form",
+    "pages/room-selection/room-selection",
     "pages/logs/logs"
   ],
   "window": {
