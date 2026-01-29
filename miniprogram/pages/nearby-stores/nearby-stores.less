@@ -1,0 +1,385 @@
+// 附近门店页面
+.nearby-stores {
+  min-height: 100vh;
+  background-color: #f7f9fb;
+  padding: 16rpx 24rpx;
+}
+
+// 搜索栏
+.search-bar {
+  display: flex;
+  align-items: center;
+  background-color: #f3f4f6;
+  border-radius: 16rpx;
+  padding: 16rpx;
+  margin-bottom: 16rpx;
+
+  &__location {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4rpx;
+  }
+
+  &__city {
+    font-size: 28rpx;
+    font-weight: 600;
+    color: #000000;
+    line-height: 1.2;
+  }
+
+  &__dates {
+    display: flex;
+    gap: 16rpx;
+  }
+
+  &__date {
+    font-size: 22rpx;
+    color: #6b7280;
+    line-height: 1.2;
+  }
+
+  &__divider {
+    width: 2rpx;
+    height: 64rpx;
+    background-color: #d1d5db;
+    margin: 0 16rpx;
+  }
+
+  &__destination {
+    flex: 2;
+    font-size: 28rpx;
+    color: #1f2937;
+    line-height: 1.5;
+  }
+
+  &__close {
+    width: 40rpx;
+    height: 40rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 8rpx;
+
+    image {
+      width: 32rpx;
+      height: 32rpx;
+    }
+  }
+}
+
+// 筛选按钮栏
+.filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16rpx 0;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 4rpx;
+    font-size: 28rpx;
+    color: #4b5563;
+    line-height: 1.4;
+
+    &--active {
+      color: #ef4444;
+    }
+
+    image {
+      width: 20rpx;
+      height: 20rpx;
+    }
+  }
+}
+
+// 筛选标签
+.filter-tags {
+  display: flex;
+  gap: 16rpx;
+  margin-bottom: 16rpx;
+  overflow-x: auto;
+  white-space: nowrap;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8rpx;
+    padding: 8rpx 16rpx;
+    border-radius: 8rpx;
+    background-color: #f3f4f6;
+    color: #374151;
+    font-size: 24rpx;
+    line-height: 1.2;
+    white-space: nowrap;
+    flex-shrink: 0;
+
+    &--active {
+      background-color: #fff7ed;
+      color: #ea580c;
+    }
+
+    image {
+      width: 20rpx;
+      height: 20rpx;
+    }
+  }
+}
+
+// 优惠券横幅
+.coupon-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(90deg, #fef2f2 0%, #ffffff 100%);
+  border: 2rpx solid #fee2e2;
+  border-radius: 16rpx;
+  padding: 18rpx;
+  margin-bottom: 16rpx;
+
+  &__left {
+    display: flex;
+    align-items: center;
+    gap: 16rpx;
+  }
+
+  &__badge {
+    background-color: #ef4444;
+    color: #ffffff;
+    font-size: 24rpx;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    padding: 4rpx 8rpx;
+    border-radius: 4rpx;
+    line-height: 1;
+  }
+
+  &__text {
+    font-size: 28rpx;
+    color: #b91c1c;
+    line-height: 1.5;
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: 4rpx;
+    font-size: 24rpx;
+    color: #ef4444;
+
+    image {
+      width: 20rpx;
+      height: 20rpx;
+    }
+  }
+}
+
+// 房源列表
+.store-list {
+  display: flex;
+  flex-direction: column;
+  gap: 32rpx;
+}
+
+// 房源卡片
+.store-card {
+  background-color: #ffffff;
+  border-radius: 24rpx;
+  overflow: hidden;
+
+  &__image {
+    position: relative;
+    width: 100%;
+    height: 448rpx;
+
+    image {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__tags {
+    position: absolute;
+    top: 16rpx;
+    left: 16rpx;
+    display: flex;
+    gap: 8rpx;
+  }
+
+  &__tag {
+    padding: 8rpx 48rpx 8rpx 16rpx;
+    border-radius: 4rpx 0 40rpx 4rpx;
+    font-size: 24rpx;
+    color: #ffffff;
+    line-height: 1.2;
+
+    &--gradient {
+      background: linear-gradient(90deg, #fb923c 0%, #fde047 100%);
+      color: #a16207;
+    }
+
+    &--verified {
+      background-color: #1e3a8a;
+    }
+  }
+
+  &__favorite {
+    position: absolute;
+    top: 24rpx;
+    right: 24rpx;
+    width: 64rpx;
+    height: 64rpx;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text {
+      font-size: 32rpx;
+      color: #ffffff;
+    }
+  }
+
+  &__count {
+    position: absolute;
+    bottom: 32rpx;
+    right: 24rpx;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+    font-size: 22rpx;
+    padding: 6rpx 16rpx;
+    border-radius: 9999px;
+    line-height: 1.2;
+  }
+
+  &__rating {
+    position: absolute;
+    bottom: 32rpx;
+    left: 24rpx;
+    right: 100rpx;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 9999rpx;
+    padding: 8rpx 24rpx;
+    display: flex;
+    align-items: center;
+    gap: 8rpx;
+    font-size: 24rpx;
+    color: #ffffff;
+    line-height: 1.2;
+
+    .star {
+      color: #f87171;
+      font-size: 24rpx;
+    }
+
+    .score {
+      font-weight: 600;
+    }
+
+    .count {
+      color: #d1d5db;
+    }
+
+    .comment {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  &__info {
+    padding: 24rpx;
+  }
+
+  &__title {
+    font-size: 32rpx;
+    font-weight: 600;
+    color: #000000;
+    line-height: 1.5;
+    margin-bottom: 16rpx;
+  }
+
+  &__features {
+    display: flex;
+    gap: 16rpx;
+    margin-bottom: 16rpx;
+    overflow-x: auto;
+    white-space: nowrap;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__feature {
+    display: inline-block;
+    padding: 4rpx 16rpx;
+    background-color: #f3f4f6;
+    color: #6b7280;
+    font-size: 24rpx;
+    border-radius: 4rpx;
+    line-height: 1.2;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  &__details {
+    font-size: 24rpx;
+    color: #6b7280;
+    line-height: 1.3;
+    margin-bottom: 16rpx;
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16rpx;
+  }
+
+  &__price {
+    display: flex;
+    align-items: baseline;
+    gap: 0;
+
+    .symbol {
+      font-size: 28rpx;
+      font-weight: 600;
+      color: #000000;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .value {
+      font-size: 56rpx;
+      font-weight: 600;
+      color: #000000;
+      font-family: 'Poppins', sans-serif;
+      line-height: 1;
+    }
+  }
+
+  &__discount {
+    display: flex;
+    align-items: center;
+    gap: 4rpx;
+    padding: 6rpx 4rpx 6rpx 18rpx;
+    background-color: #fffbeb;
+    border: 2rpx solid #fcd34d;
+    border-radius: 4rpx;
+    font-size: 24rpx;
+    color: #a16207;
+    line-height: 1.2;
+
+    image {
+      width: 32rpx;
+      height: 32rpx;
+    }
+  }
+}

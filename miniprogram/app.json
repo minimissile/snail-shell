@@ -11,6 +11,8 @@
     "pages/service-agreement/service-agreement",
     "pages/balance/balance",
     "pages/coupon-verify/coupon-verify",
+    "pages/nearby-stores/nearby-stores",
+    "pages/store-detail/store-detail",
     "pages/logs/logs"
   ],
   "window": {

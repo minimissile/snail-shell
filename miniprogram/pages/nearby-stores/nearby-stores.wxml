@@ -1,0 +1,140 @@
+<view class="nearby-stores">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <view class="search-bar__location">
+      <text class="search-bar__city">{{city}}</text>
+      <view class="search-bar__dates">
+        <text class="search-bar__date">住 {{checkInDate}}</text>
+        <text class="search-bar__date">离 {{checkOutDate}}</text>
+      </view>
+    </view>
+    <view class="search-bar__divider"></view>
+    <view class="search-bar__destination">
+      <text>{{destination}}</text>
+    </view>
+    <view class="search-bar__close" bindtap="onClearSearch">
+      <image src="/images/close-circle.svg" mode="aspectFit" />
+    </view>
+  </view>
+
+  <!-- 筛选按钮栏 -->
+  <view class="filter-bar">
+    <view class="filter-bar__item filter-bar__item--active" bindtap="onSortTap">
+      <text>欢迎度排序</text>
+      <image src="/images/nearby-stores/caret-down.svg" mode="aspectFit" />
+    </view>
+    <view class="filter-bar__item" bindtap="onLocationFilterTap">
+      <text>{{selectedLocation}}</text>
+      <image src="/images/nearby-stores/caret-down.svg" mode="aspectFit" />
+    </view>
+    <view class="filter-bar__item" bindtap="onPriceFilterTap">
+      <text>价格/人数</text>
+      <image src="/images/nearby-stores/caret-down.svg" mode="aspectFit" />
+    </view>
+    <view class="filter-bar__item" bindtap="onMoreFilterTap">
+      <text>筛选</text>
+      <image src="/images/nearby-stores/caret-down.svg" mode="aspectFit" />
+    </view>
+  </view>
+
+  <!-- 筛选标签 -->
+  <scroll-view class="filter-tags" scroll-x="{{true}}" enable-flex="{{true}}">
+    <view class="filter-tags__item filter-tags__item--active">
+      <image src="/images/close-icon.svg" mode="aspectFit" />
+      <text>深圳北站</text>
+    </view>
+    <view class="filter-tags__item">
+      <text>房屋等级</text>
+      <image src="/images/nearby-stores/caret-down.svg" mode="aspectFit" />
+    </view>
+    <view class="filter-tags__item">
+      <image src="/images/points-icon.svg" mode="aspectFit" />
+      <text>积分当钱花</text>
+    </view>
+    <view class="filter-tags__item">
+      <text>实拍看房</text>
+    </view>
+    <view class="filter-tags__item">
+      <text>自助入住</text>
+    </view>
+  </scroll-view>
+
+  <!-- 优惠券横幅 -->
+  <view class="coupon-banner" bindtap="onCouponTap">
+    <view class="coupon-banner__left">
+      <view class="coupon-banner__badge">¥200</view>
+      <text class="coupon-banner__text">连住专享券</text>
+    </view>
+    <view class="coupon-banner__right">
+      <text>查看 </text>
+      <image src="/images/angle-right-small.svg" mode="aspectFit" />
+    </view>
+  </view>
+
+  <!-- 房源列表 -->
+  <view class="store-list">
+    <view 
+      wx:for="{{storeList}}" 
+      wx:key="id" 
+      class="store-card"
+      bindtap="onStoreCardTap"
+      data-id="{{item.id}}"
+    >
+      <view class="store-card__image">
+        <image src="{{item.image}}" mode="aspectFill" />
+        
+        <!-- 标签 -->
+        <view class="store-card__tags">
+          <view class="store-card__tag store-card__tag--gradient" wx:if="{{item.promotionTag}}">{{item.promotionTag}}</view>
+          <view class="store-card__tag store-card__tag--verified" wx:if="{{item.verifiedTag}}">{{item.verifiedTag}}</view>
+        </view>
+
+        <!-- 收藏按钮 -->
+        <view class="store-card__favorite" bindtap="onFavoriteTap" data-id="{{item.id}}" catchtap="onFavoriteTap">
+          <text>{{item.isFavorite ? '♥' : '♡'}}</text>
+        </view>
+
+        <!-- 图片数量 -->
+        <view class="store-card__count">{{item.imageCount}}/{{item.totalImages}}</view>
+
+        <!-- 评分评论 -->
+        <view class="store-card__rating">
+          <text class="star">★</text>
+          <text class="score">{{item.rating}} 超棒</text>
+          <text class="count">{{item.reviewCount}}条</text>
+          <text class="comment">"{{item.highlightComment}}"</text>
+        </view>
+      </view>
+
+      <!-- 房源信息 -->
+      <view class="store-card__info">
+        <view class="store-card__title">{{item.name}}</view>
+
+        <!-- 特点标签 -->
+        <scroll-view class="store-card__features" scroll-x="{{true}}" enable-flex="{{true}}">
+          <view 
+            wx:for="{{item.features}}" 
+            wx:for-item="feature"
+            wx:key="*this" 
+            class="store-card__feature"
+          >{{feature}}</view>
+        </scroll-view>
+
+        <!-- 详情 -->
+        <view class="store-card__details">{{item.details}}</view>
+
+        <!-- 价格区 -->
+        <view class="store-card__footer">
+          <view class="store-card__price">
+            <text class="symbol">¥</text>
+            <text class="value">{{item.price}}</text>
+          </view>
+          <view class="store-card__discount" bindtap="onDiscountTap" data-id="{{item.id}}" catchtap="onDiscountTap">
+            <text>已省¥{{item.savedAmount}} | 钻石会员</text>
+            <image src="/images/angle-right.svg" mode="aspectFit" />
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

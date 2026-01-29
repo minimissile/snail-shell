@@ -9,6 +9,8 @@ type GridKey =
   | '用户服务协议'
   | '我要反馈'
   | '添加福利官'
+  | '附近门店'
+  | '门店详情'
 
 Component({
   data: {
@@ -23,6 +25,8 @@ Component({
       { key: '用户服务协议', label: '用户服务协议', icon: '/assets/figma/grid-folders-check.svg' },
       { key: '我要反馈', label: '我要反馈', icon: '/assets/figma/grid-file-pen.svg' },
       { key: '添加福利官', label: '添加福利官', icon: '/assets/figma/grid-messages-dots.svg' },
+      { key: '附近门店', label: '附近门店', icon: '/assets/figma/grid-book-open-text.svg' },
+      { key: '门店详情', label: '门店详情', icon: '/assets/figma/grid-book-open-text.svg' },
     ] as Array<{ key: GridKey; label: string; icon: string }>,
   },
   methods: {

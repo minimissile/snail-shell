@@ -1,0 +1,199 @@
+<view class="store-detail">
+  <!-- 封面图片区域 -->
+  <view class="cover">
+    <image class="cover__image" src="{{coverImage}}" mode="aspectFill" />
+    
+    <!-- iOS 状态栏占位 -->
+    <view class="cover__status-bar"></view>
+    
+    <!-- 顶部导航栏 -->
+    <view class="cover__nav">
+      <!-- 返回按钮 -->
+      <view class="cover__back" bindtap="onBack">
+        <text class="icon">‹</text>
+      </view>
+      
+      <!-- 右侧按钮组 -->
+      <view class="cover__actions">
+        <view class="cover__favorite" bindtap="onToggleFavorite">
+          <text class="icon">{{isFavorited ? '♥' : '♡'}}</text>
+          <view class="cover__favorite-count">{{favoriteCount}}</view>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 实拍视频入口 -->
+    <view class="cover__video" bindtap="onViewVideo">
+      <image class="cover__video-preview" src="{{videoPreview}}" mode="aspectFill" />
+      <view class="cover__video-overlay">
+        <text class="icon">▶</text>
+        <text class="text">实拍看房</text>
+      </view>
+      <view class="cover__video-expand">
+        <text class="icon">⛶</text>
+      </view>
+    </view>
+    
+    <!-- 亮点标签 -->
+    <view class="cover__highlights">
+      <view class="cover__highlights-bg"></view>
+      <view class="cover__highlight" wx:for="{{highlights}}" wx:key="*this" wx:for-item="highlight" bindtap="onViewHighlight" data-highlight="{{highlight}}">
+        <text>{{highlight}}</text>
+        <image wx:if="{{highlight === '相册'}}" src="/images/angle-right.svg" mode="aspectFit" />
+      </view>
+    </view>
+  </view>
+
+  <!-- 房屋基本信息 -->
+  <view class="info">
+    <view class="info__header">
+      <text class="info__title">{{title}}</text>
+      <text class="info__share-icon">{{shareIcon}}</text>
+    </view>
+    
+    <!-- 地址区域 -->
+    <view class="info__address">
+      <view class="info__address-content">
+        <text class="info__address-text">{{address}}</text>
+      </view>
+      <view class="info__map" bindtap="onViewMap">
+        <image class="info__map-preview" src="{{mapPreview}}" mode="aspectFill" />
+        <text class="info__map-text">地图</text>
+      </view>
+    </view>
+    
+    <!-- 蜗壳精选标签 -->
+    <view class="info__selected" bindtap="onViewSelectedDetail">
+      <view class="info__selected-badge">{{selectedBadge}}</view>
+      <text class="info__selected-desc">{{selectedDesc}}</text>
+      <image src="/images/angle-right.svg" mode="aspectFit" />
+    </view>
+    
+    <!-- 房屋标签 -->
+    <view class="info__tags">
+      <view class="info__tag" wx:for="{{tags}}" wx:key="*this">{{item}}</view>
+    </view>
+    
+    <!-- 评分信息 -->
+    <view class="info__rating" bindtap="onViewRating">
+      <view class="info__rating-content">
+        <text class="star">★</text>
+        <text class="score">{{rating}}超棒</text>
+        <text class="count">{{reviewCount}}条 </text>
+        <image src="/images/angle-right.svg" mode="aspectFit" />
+      </view>
+      <view class="info__rating-comment">"{{highlightComment}}"</view>
+    </view>
+  </view>
+
+  <!-- 房型详情 -->
+  <view class="room-types">
+    <view 
+      class="room-type" 
+      wx:for="{{roomTypes}}" 
+      wx:key="id" 
+      wx:for-item="room"
+    >
+      <image class="room-type__image" src="{{room.image}}" mode="aspectFill" />
+      
+      <view class="room-type__content">
+        <view class="room-type__header" bindtap="onViewRoomDetail" data-id="{{room.id}}">
+          <text class="room-type__name">{{room.name}}</text>
+          <image src="/images/angle-right.svg" mode="aspectFit" />
+        </view>
+        
+        <text class="room-type__beds">{{room.beds}} {{room.capacity}}人 整套{{room.area}}㎡</text>
+        <text class="room-type__policy">{{room.meal}} {{room.cancelPolicy}}</text>
+        
+        <view class="room-type__footer">
+          <view class="room-type__tags">
+            <view class="room-type__tag" wx:for="{{room.tags}}" wx:key="*this">{{item}}</view>
+          </view>
+          
+          <view class="room-type__price-group">
+            <view class="room-type__prices">
+              <text class="original">¥{{room.originalPrice}}</text>
+              <text class="discount">¥{{room.discountPrice}}</text>
+            </view>
+            
+            <view class="room-type__savings">
+              <view class="room-type__savings-badge">
+                <text>已省¥{{room.savings}}</text>
+                <image src="/images/angle-right-small.svg" mode="aspectFit" />
+              </view>
+              <text class="room-type__savings-label">首单特惠</text>
+            </view>
+          </view>
+          
+          <view class="room-type__book" bindtap="onBookRoom" data-id="{{room.id}}">
+            <text>订</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 金刚区 -->
+  <view class="services">
+    <view 
+      class="service-item" 
+      wx:for="{{serviceItems}}" 
+      wx:key="id"
+      bindtap="onServiceItemTap"
+      data-id="{{item.id}}"
+      style="background: {{item.bgColor}}"
+    >
+      <text class="service-item__name">{{item.name}}</text>
+      <text class="service-item__desc">{{item.desc}}</text>
+      <image class="service-item__icon" src="{{item.icon}}" mode="aspectFit" />
+    </view>
+  </view>
+
+  <!-- 入住时间 -->
+  <view class="check-time">
+    <view class="check-time__item">
+      <text class="date">{{checkInDate}}</text>
+      <text class="day">{{checkInDay}}</text>
+    </view>
+    <view class="check-time__item">
+      <text class="date">{{checkOutDate}}</text>
+      <text class="day">{{checkOutDay}}</text>
+    </view>
+    <view class="check-time__nights">
+      <text>{{nights}}</text>
+    </view>
+  </view>
+
+  <!-- 优惠券横幅 -->
+  <view class="coupon-banner" bindtap="onViewCoupon">
+    <view class="coupon-banner__left">
+      <view class="coupon-banner__badge">¥{{couponAmount}}</view>
+      <text>{{couponDesc}}</text>
+    </view>
+    <view class="coupon-banner__right">
+      <text>查看 </text>
+      <image src="/images/angle-right-small.svg" mode="aspectFit" />
+    </view>
+  </view>
+
+  <!-- 底部预订按钮 -->
+  <view class="booking-bar">
+    <view class="booking-bar__date" bindtap="onChangeDateTap">
+      <text class="in">{{bookingDate}}</text>
+      <text class="out">{{bookingCheckout}}</text>
+      <text class="icon">‹</text>
+    </view>
+    
+    <view class="booking-bar__action-view" bindtap="onRealViewTap">
+      <text>实景选房</text>
+    </view>
+    
+    <view class="booking-bar__action-book" bindtap="onBookNow">
+      <text class="label">立即预订</text>
+      <view class="price">
+        <text class="current">¥{{finalPrice}}</text>
+        <text class="original">¥{{originalPriceBottom}}</text>
+      </view>
+    </view>
+  </view>
+</view>

@@ -106,6 +106,24 @@ Component({
         })
         return
       }
+      if (key === '附近门店') {
+        wx.navigateTo({
+          url: '/pages/nearby-stores/nearby-stores',
+          fail: () => {
+            wx.showToast({ title: '暂无法打开附近门店', icon: 'none' })
+          },
+        })
+        return
+      }
+      if (key === '门店详情') {
+        wx.navigateTo({
+          url: '/pages/store-detail/store-detail',
+          fail: () => {
+            wx.showToast({ title: '暂无法打开门店详情', icon: 'none' })
+          },
+        })
+        return
+      }
       wx.showToast({ title: key || '功能', icon: 'none' })
     },
   },
