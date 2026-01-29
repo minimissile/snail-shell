@@ -6,6 +6,7 @@
     "pages/orders/orders",
     "pages/coupons/coupons",
     "pages/favorites/favorites",
+    "pages/messages/messages",
     "pages/smart-lock/smart-lock",
     "pages/feedback/feedback",
     "pages/service-agreement/service-agreement",
@@ -30,20 +31,32 @@
       {
         "pagePath": "pages/index/index",
         "text": "首页",
-        "iconPath": "assets/figma/tab-home.png",
-        "selectedIconPath": "assets/figma/tab-home-active.png"
+        "iconPath": "assets/tabbar/tab-home.png",
+        "selectedIconPath": "assets/tabbar/tab-home-active.png"
+      },
+      {
+        "pagePath": "pages/favorites/favorites",
+        "text": "收藏",
+        "iconPath": "assets/tabbar/tab-favorites.png",
+        "selectedIconPath": "assets/tabbar/tab-favorites-active.png"
       },
       {
         "pagePath": "pages/orders/orders",
         "text": "订单",
-        "iconPath": "assets/figma/tab-order.png",
-        "selectedIconPath": "assets/figma/tab-order-active.png"
+        "iconPath": "assets/tabbar/tab-order.png",
+        "selectedIconPath": "assets/tabbar/tab-order-active.png"
+      },
+      {
+        "pagePath": "pages/messages/messages",
+        "text": "消息",
+        "iconPath": "assets/tabbar/tab-messages.png",
+        "selectedIconPath": "assets/tabbar/tab-messages-active.png"
       },
       {
         "pagePath": "pages/me-gold/me-gold",
         "text": "我的",
-        "iconPath": "assets/figma/tab-me.png",
-        "selectedIconPath": "assets/figma/tab-me-active.png"
+        "iconPath": "assets/tabbar/tab-me.png",
+        "selectedIconPath": "assets/tabbar/tab-me-active.png"
       }
     ]
   },

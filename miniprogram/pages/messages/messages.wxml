@@ -1,0 +1,5 @@
+<view class="messages">
+  <view class="messages__empty">
+    <text class="messages__empty-text">暂无消息</text>
+  </view>
+</view>

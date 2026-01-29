@@ -1,0 +1,16 @@
+@import "../../styles/theme.less";
+
+.messages {
+  min-height: 100vh;
+  background: @color-page-bg;
+  .flex(column, center, center);
+  padding: 96rpx 32rpx;
+}
+
+.messages__empty {
+  .flex(column, center, center);
+}
+
+.messages__empty-text {
+  .font(28rpx, 40rpx, 400, @color-text-secondary);
+}
