@@ -1,6 +1,6 @@
 Component({
   data: {
-    avatarSrc: '/assets/figma/avatar.png',
+    avatarSrc: '/assets/figma/avatar.jpg',
     userName: 'Dimoo旅行家',
     greeting: '尊贵的黄金会员, 下午好',
     couponCount: 1,
