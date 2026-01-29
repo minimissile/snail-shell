@@ -13,6 +13,7 @@
     "pages/coupon-verify/coupon-verify",
     "pages/nearby-stores/nearby-stores",
     "pages/store-detail/store-detail",
+    "pages/order-form/order-form",
     "pages/logs/logs"
   ],
   "window": {

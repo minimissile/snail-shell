@@ -1,0 +1,181 @@
+<view class="order-form">
+  <!-- 状态栏 -->
+  <view class="status-bar">
+    <text class="status-bar__time">9:41</text>
+  </view>
+
+  <!-- 导航栏 -->
+  <view class="navbar">
+    <view class="navbar__back" bindtap="onGoBack">
+      <text class="navbar__back-icon">‹</text>
+    </view>
+    <text class="navbar__title">订单填写</text>
+    <view class="navbar__wechat">
+      <view class="navbar__wechat-icon"></view>
+    </view>
+  </view>
+
+  <!-- 智能门锁提示 -->
+  <view class="smart-lock">
+    <text class="smart-lock__icon"></text>
+    <text class="smart-lock__text">配备智能门锁, 入住更安心</text>
+  </view>
+
+  <!-- 预订详情卡片 -->
+  <view class="booking-card">
+    <view class="booking-card__content">
+      <image class="booking-card__image" src="{{roomImage}}" mode="aspectFill" />
+      <view class="booking-card__info">
+        <view class="booking-card__header">
+          <text class="booking-card__title">{{roomType}}</text>
+          <view class="booking-card__rules" bindtap="onViewAllRules">
+            <text class="booking-card__rules-text">全部须知</text>
+            <text class="booking-card__rules-arrow">›</text>
+          </view>
+        </view>
+        <text class="booking-card__details">{{roomInfo}}</text>
+        <view class="booking-card__packages">
+          <view class="booking-card__package" wx:for="{{packages}}" wx:key="type">
+            <view class="booking-card__package-badge">
+              <text class="booking-card__package-icon">{{item.icon}}</text>
+            </view>
+            <text class="booking-card__package-name">{{item.name}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    
+    <view class="booking-card__divider"></view>
+    
+    <view class="booking-card__date">
+      <text class="booking-card__date-text">{{checkInDate}} – {{checkOutDate}}</text>
+      <view class="booking-card__nights" bindtap="onChangeDate">
+        <text class="booking-card__nights-text">共{{nights}}晚</text>
+        <text class="booking-card__nights-arrow">›</text>
+      </view>
+    </view>
+    
+    <view class="booking-card__policies">
+      <view class="booking-card__policy">
+        <text class="booking-card__policy-icon"></text>
+        <text class="booking-card__policy-text">{{cancelPolicy}}</text>
+      </view>
+      <view class="booking-card__policy">
+        <text class="booking-card__policy-icon booking-card__policy-icon--confirm"></text>
+        <text class="booking-card__policy-text booking-card__policy-text--confirm">立即确认</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 入住信息卡片 -->
+  <view class="guest-card">
+    <text class="guest-card__heading">入住信息</text>
+    
+    <view class="guest-card__item guest-card__item--border">
+      <view class="guest-card__label">
+        <text class="guest-card__label-text">房间套数</text>
+        <text class="guest-card__label-tip">(最多可订{{maxRoomCount}}套)</text>
+      </view>
+      <view class="guest-card__counter">
+        <view class="guest-card__counter-btn" bindtap="onDecreaseRoom">
+          <text class="guest-card__counter-icon">-</text>
+        </view>
+        <text class="guest-card__counter-value">{{roomCount}}套</text>
+        <view class="guest-card__counter-btn guest-card__counter-btn--active" bindtap="onIncreaseRoom">
+          <text class="guest-card__counter-icon">+</text>
+        </view>
+      </view>
+    </view>
+    
+    <view class="guest-card__item guest-card__item--border">
+      <view class="guest-card__label">
+        <text class="guest-card__label-text">住客姓名</text>
+        <text class="guest-card__info-icon"></text>
+      </view>
+      <view class="guest-card__input-wrapper">
+        <input 
+          class="guest-card__input" 
+          placeholder="请填写住客姓名" 
+          value="{{guestName}}"
+          bindinput="onInputGuestName"
+        />
+      </view>
+    </view>
+    
+    <view class="guest-card__item guest-card__item--border">
+      <view class="guest-card__label">
+        <text class="guest-card__label-text">身份证</text>
+        <text class="guest-card__id-icon"></text>
+      </view>
+      <input 
+        class="guest-card__input" 
+        placeholder="请填写证件号码" 
+        value="{{idCard}}"
+        bindinput="onInputIdCard"
+      />
+    </view>
+    
+    <view class="guest-card__item">
+      <text class="guest-card__label-text">联系电话</text>
+      <view class="guest-card__phone">
+        <text class="guest-card__phone-code">{{countryCode}}</text>
+        <text class="guest-card__phone-arrow"></text>
+        <text class="guest-card__phone-number">{{phone}}</text>
+        <view class="guest-card__phone-call" bindtap="onCallPhone">
+          <text class="guest-card__phone-icon"></text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 优惠区域 -->
+  <view class="discount-card">
+    <text class="discount-card__heading">本单可享</text>
+    
+    <view class="discount-card__item">
+      <text class="discount-card__label">下单优惠</text>
+      <view class="discount-card__value">
+        <text class="discount-card__amount">-¥{{orderDiscount}}.00</text>
+        <view class="discount-card__badge">
+          <text class="discount-card__badge-text">已享最大优惠</text>
+        </view>
+        <text class="discount-card__more" bindtap="onViewDiscountDetail"></text>
+      </view>
+    </view>
+    
+    <view class="discount-card__details">
+      <view class="discount-card__detail-item">
+        <text class="discount-card__detail-label">促销优惠</text>
+        <text class="discount-card__detail-value">房费优惠-¥{{promotionDiscount}}</text>
+      </view>
+      <view class="discount-card__detail-item">
+        <text class="discount-card__detail-sublabel">优享会贵宾-¥{{vipDiscount}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部提交栏 -->
+  <view class="submit-bar">
+    <view class="submit-bar__price">
+      <view class="submit-bar__total">
+        <text class="submit-bar__total-amount">¥{{totalPrice}}</text>
+        <text class="submit-bar__total-decimal">.00</text>
+      </view>
+      <view class="submit-bar__saved">
+        <text class="submit-bar__saved-text">已省¥{{savedAmount}}</text>
+      </view>
+    </view>
+    
+    <view class="submit-bar__detail" bindtap="onViewPriceDetail">
+      <text class="submit-bar__detail-text">明细</text>
+      <text class="submit-bar__detail-arrow">‹</text>
+    </view>
+    
+    <view class="submit-bar__action" bindtap="onSubmitOrder">
+      <text class="submit-bar__btn-text">提交订单</text>
+      <view class="submit-bar__remaining">
+        <text class="submit-bar__remaining-text">仅剩{{remainingRooms}}间</text>
+      </view>
+    </view>
+  </view>
+</view>

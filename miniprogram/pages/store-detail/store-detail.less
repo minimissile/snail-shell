@@ -1,788 +1,896 @@
-// 门店详情页面
+// 门店详情页面样式
 .store-detail {
   min-height: 100vh;
   background-color: #f7f9fb;
-  padding-bottom: 162rpx;
+  padding-bottom: 162rpx; // 底部固定栏高度
 }
 
-// 封面区域
+// 封面部分
 .cover {
   position: relative;
-  width: 100%;
+  width: 750rpx;
   height: 640rpx;
-
+  
   &__image {
     width: 100%;
     height: 100%;
   }
-
+  
+  // 状态栏
   &__status-bar {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     height: 88rpx;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0) 100%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28rpx 42rpx;
+    color: #000000;
   }
-
-  &__nav {
+  
+  &__time {
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 30rpx;
+    line-height: 1.5em;
+    letter-spacing: -2%;
+  }
+  
+  &__icons {
+    display: flex;
+    gap: 12rpx;
+    align-items: center;
+  }
+  
+  &__icon-cell,
+  &__icon-wifi,
+  &__icon-battery {
+    width: 34rpx;
+    height: 22rpx;
+    background: #000000;
+    border-radius: 4rpx;
+  }
+  
+  // 操作按钮
+  &__actions {
     position: absolute;
     top: 88rpx;
     left: 0;
     right: 0;
     display: flex;
-    align-items: center;
     justify-content: space-between;
     padding: 0 32rpx;
-    height: 88rpx;
   }
-
+  
   &__back {
     width: 64rpx;
     height: 64rpx;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 9999rpx;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4rpx 12rpx -8rpx rgba(0, 0, 0, 0.1), 0 8rpx 12rpx -2rpx rgba(0, 0, 0, 0.1);
-
-    .icon {
-      font-size: 48rpx;
-      color: #000000;
-      font-weight: 300;
-    }
+    box-shadow: 0px 4rpx 8rpx -4rpx rgba(0, 0, 0, 0.1), 0px 8rpx 12rpx -2rpx rgba(0, 0, 0, 0.1);
   }
-
-  &__actions {
+  
+  &__back-icon {
+    font-size: 48rpx;
+    font-weight: 300;
+    color: #000000;
+  }
+  
+  &__favorites {
     display: flex;
+    align-items: center;
     gap: 16rpx;
   }
-
-  &__favorite {
-    position: relative;
+  
+  &__favorite-btn {
     width: 80rpx;
     height: 80rpx;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 9999rpx;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4rpx 12rpx -8rpx rgba(0, 0, 0, 0.1), 0 8rpx 12rpx -2rpx rgba(0, 0, 0, 0.1);
-
-    .icon {
-      font-size: 40rpx;
-      color: #1f2937;
-    }
+    box-shadow: 0px 4rpx 8rpx -4rpx rgba(0, 0, 0, 0.1), 0px 8rpx 12rpx -2rpx rgba(0, 0, 0, 0.1);
   }
-
+  
+  &__favorite-icon {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 400;
+    font-size: 40rpx;
+    color: #1f2937;
+  }
+  
   &__favorite-count {
-    position: absolute;
-    right: -10rpx;
-    bottom: 0;
-    min-width: 44rpx;
-    height: 44rpx;
-    padding: 0 8rpx;
-    border-radius: 100rpx;
-    background-color: #ffffff;
+    background: #ffffff;
     border: 2rpx solid #cccccc;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24rpx;
-    font-weight: 600;
-    color: #000000;
-    font-family: 'Poppins', sans-serif;
+    border-radius: 200rpx;
+    padding: 10rpx 12rpx;
   }
-
+  
+  &__favorite-count-text {
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 24rpx;
+    line-height: 1.6666em;
+    color: #000000;
+  }
+  
+  // 实拍看房视频
   &__video {
     position: absolute;
+    bottom: 72rpx;
     right: 32rpx;
-    bottom: 80rpx;
     width: 224rpx;
     height: 160rpx;
-    border-radius: 16rpx;
-    overflow: hidden;
   }
-
-  &__video-preview {
+  
+  &__video-thumbnail {
     width: 100%;
     height: 100%;
     border: 4rpx solid #ffffff;
     border-radius: 16rpx;
   }
-
+  
   &__video-overlay {
     position: absolute;
     top: 4rpx;
     left: 4rpx;
     right: 4rpx;
     bottom: 4rpx;
-    background-color: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.3);
     border-radius: 12rpx;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 8rpx;
-
-    .icon {
-      font-size: 48rpx;
-      color: #ffffff;
-    }
-
-    .text {
-      font-size: 24rpx;
-      font-weight: 500;
-      color: #ffffff;
-      font-family: 'Poppins', sans-serif;
-    }
+    color: #ffffff;
   }
-
+  
+  &__video-icon {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    font-size: 48rpx;
+    line-height: 1.3333em;
+  }
+  
+  &__video-text {
+    font-family: Poppins;
+    font-weight: 500;
+    font-size: 24rpx;
+    line-height: 1.3333em;
+    margin-top: 8rpx;
+  }
+  
   &__video-expand {
     position: absolute;
     top: 8rpx;
     right: 8rpx;
     width: 40rpx;
     height: 40rpx;
-    border-radius: 50%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 9999rpx;
     display: flex;
     align-items: center;
     justify-content: center;
-
-    .icon {
-      font-size: 24rpx;
-      color: #ffffff;
-    }
   }
-
-  &__highlights {
+  
+  &__expand-icon {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    font-size: 24rpx;
+    color: #ffffff;
+  }
+  
+  // 图片分类标签
+  &__tabs {
     position: absolute;
     bottom: 32rpx;
     left: 32rpx;
     display: flex;
     align-items: center;
-    gap: 16rpx;
-    height: 72rpx;
-    padding: 0 16rpx;
-    background-color: rgba(0, 0, 0, 0.6);
+    gap: 8rpx;
+    background: rgba(0, 0, 0, 0.6);
     border-radius: 9999rpx;
+    padding: 8rpx 8rpx;
   }
-
-  &__highlights-bg {
-    position: absolute;
-    left: 28rpx;
-    top: 4rpx;
-    width: 88rpx;
-    height: 66rpx;
-    background-color: #ffffff;
-    border-radius: 35rpx;
+  
+  &__tab {
+    padding: 8rpx 16rpx;
+    
+    &--active {
+      background: #ffffff;
+      border-radius: 35rpx;
+    }
   }
-
-  &__highlight {
+  
+  &__tab-text {
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 20rpx;
+    line-height: 2em;
+    color: #ffffff;
+  }
+  
+  &__tab--active &__tab-text {
+    color: #000000;
+  }
+  
+  &__tab-more {
     display: flex;
     align-items: center;
-    gap: 8rpx;
+    gap: 4rpx;
+  }
+  
+  &__tab-arrow {
     font-size: 20rpx;
     color: #ffffff;
-    font-family: 'Poppins', sans-serif;
-    z-index: 1;
-
-    &:first-child {
-      font-size: 20rpx;
-      color: #000000;
-      font-weight: 400;
-    }
-
-    image {
-      width: 24rpx;
-      height: 24rpx;
-    }
   }
 }
 
-// 房屋信息区域
+// 房屋基本信息
 .info {
-  background-color: #ffffff;
+  background: #ffffff;
   border-radius: 32rpx;
-  margin: 0 32rpx;
-  margin-top: -32rpx;
   padding: 32rpx;
+  margin: -32rpx 32rpx 24rpx;
   position: relative;
-  z-index: 1;
-
+  
   &__header {
     display: flex;
-    align-items: flex-start;
     justify-content: space-between;
+    align-items: flex-start;
     gap: 28rpx;
-    margin-bottom: 32rpx;
-  }
-
-  &__title {
-    flex: 1;
-    font-size: 32rpx;
-    font-weight: 600;
-    color: #000000;
-    line-height: 1.5;
-    font-family: 'Poppins', sans-serif;
-  }
-
-  &__share-icon {
-    font-size: 32rpx;
-    color: #9ca3af;
-  }
-
-  &__address {
-    display: flex;
-    gap: 16rpx;
     margin-bottom: 16rpx;
   }
-
-  &__address-content {
+  
+  &__title {
     flex: 1;
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 32rpx;
+    line-height: 1.5625em;
+    color: #000000;
   }
-
-  &__address-text {
-    font-size: 24rpx;
-    font-weight: 100;
-    color: #4b5563;
-    line-height: 1.375;
-    font-family: 'Noto Sans SC', sans-serif;
+  
+  &__star {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    font-size: 32rpx;
+    line-height: 1em;
+    color: #9ca3af;
+    padding-top: 60rpx;
   }
-
-  &__map {
-    width: 394rpx;
-    height: 136rpx;
-    border-radius: 16rpx;
-    border: 2rpx solid #e9e9e9;
-    overflow: hidden;
+  
+  // 地址信息
+  &__address {
     position: relative;
+    height: 136rpx;
+    border: 2rpx solid #e9e9e9;
+    border-radius: 16rpx;
+    overflow: hidden;
+    margin-bottom: 16rpx;
   }
-
-  &__map-preview {
+  
+  &__address-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
+    opacity: 0.3;
   }
-
-  &__map-text {
+  
+  &__address-text {
     position: absolute;
+    top: 16rpx;
     left: 16rpx;
-    bottom: 32rpx;
+    right: 80rpx;
+    font-family: 'Noto Sans SC';
+    font-weight: 100;
     font-size: 24rpx;
-    color: #6e9fd3;
-    font-family: 'Poppins', sans-serif;
+    line-height: 1.375em;
+    color: #4b5563;
   }
-
+  
+  &__map {
+    position: absolute;
+    right: 16rpx;
+    top: 32rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8rpx;
+  }
+  
+  &__map-icon {
+    width: 40rpx;
+    height: 40rpx;
+    background: #6e9fd3;
+    border-radius: 50%;
+  }
+  
+  &__map-text {
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 24rpx;
+    line-height: 1.375em;
+    color: #6e9fd3;
+  }
+  
+  // 蜗壳精选
   &__selected {
     display: flex;
     align-items: center;
-    gap: 32rpx;
+    gap: 16rpx;
     padding: 16rpx;
-    background: linear-gradient(90deg, rgba(243, 232, 255, 1) 0%, rgba(224, 231, 255, 1) 100%);
+    background: linear-gradient(90deg, #f3e8ff 0%, #e0e7ff 100%);
     border-radius: 16rpx;
     margin-bottom: 16rpx;
-
-    image {
-      width: 24rpx;
-      height: 24rpx;
-    }
   }
-
+  
   &__selected-badge {
+    background: #6366f1;
+    border-radius: 0;
     padding: 8rpx 16rpx;
-    background-color: #6366f1;
-    color: #ffffff;
-    font-size: 28rpx;
-    border-radius: 4rpx;
-    font-family: 'Poppins', sans-serif;
   }
-
+  
+  &__selected-badge-text {
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 28rpx;
+    line-height: 1.4285em;
+    color: #ffffff;
+  }
+  
   &__selected-desc {
     flex: 1;
-    font-size: 24rpx;
+    font-family: Poppins;
     font-weight: 500;
+    font-size: 24rpx;
+    line-height: 1.6666em;
     color: #4b5563;
-    font-family: 'Poppins', sans-serif;
   }
-
+  
+  &__selected-arrow {
+    font-size: 24rpx;
+    color: #9ca3af;
+  }
+  
+  // 标签列表
   &__tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 16rpx;
+    gap: 16rpx 12rpx;
     margin-bottom: 16rpx;
   }
-
+  
   &__tag {
-    padding: 10rpx 18rpx;
     border: 2rpx solid #eaddd3;
     border-radius: 12rpx;
-    font-size: 24rpx;
-    color: #8e6b52;
-    font-family: 'Poppins', sans-serif;
+    padding: 10rpx 18rpx;
   }
-
+  
+  &__tag-text {
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 24rpx;
+    line-height: 1.3333em;
+    color: #8e6b52;
+  }
+  
+  // 评分
   &__rating {
-    display: flex;
-    flex-direction: column;
-    gap: 16rpx;
-    padding: 16rpx;
-    background-color: #f3f4f6;
     border: 2rpx solid #e9e9e9;
     border-radius: 16rpx;
+    padding: 16rpx;
   }
-
+  
   &__rating-content {
     display: flex;
     align-items: center;
     gap: 8rpx;
+    margin-bottom: 16rpx;
+  }
+  
+  &__rating-star {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    font-size: 24rpx;
+    color: #f97316;
+  }
+  
+  &__rating-score {
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 28rpx;
+    line-height: 2em;
+    color: #000000;
+  }
+  
+  &__rating-count {
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 24rpx;
+    line-height: 1.3333em;
+    color: #9ca3af;
+    margin-right: 4rpx;
+  }
+  
+  &__rating-arrow {
+    font-size: 24rpx;
+    color: #9ca3af;
+    margin-left: auto;
+  }
+  
+  &__rating-comment {
+    background: #f3f4f6;
+    border-radius: 12rpx;
+    padding: 0 12rpx;
+  }
+  
+  &__rating-comment-text {
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 24rpx;
+    line-height: 1.3333em;
+    color: #4b5563;
+  }
+}
 
-    .star {
-      color: #f97316;
-      font-size: 24rpx;
+// 入住时间
+.checkin {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 56rpx;
+  margin-bottom: 24rpx;
+  
+  &__item {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  &__date {
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 32rpx;
+    line-height: 1.5em;
+    color: #000000;
+  }
+  
+  &__day {
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 24rpx;
+    line-height: 2em;
+    color: #999999;
+    margin-top: 10rpx;
+  }
+  
+  &__nights {
+    border: 2rpx solid #cccccc;
+    border-radius: 32rpx;
+    padding: 8rpx 14rpx;
+  }
+  
+  &__nights-text {
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 24rpx;
+    line-height: 2em;
+    color: #000000;
+  }
+}
+
+// 金刚区
+.diamond {
+  display: flex;
+  gap: 24rpx;
+  padding: 0 32rpx;
+  margin-bottom: 24rpx;
+  
+  &__item {
+    flex: 1;
+    position: relative;
+    height: 252rpx;
+    border: 2rpx solid #ffffff;
+    border-radius: 32rpx;
+    padding: 24rpx;
+    box-shadow: 0px 8rpx 12rpx -2rpx rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  &__title {
+    font-family: OPPOSans;
+    font-weight: 400;
+    font-size: 32rpx;
+    line-height: 1.5em;
+    color: #000000;
+    display: block;
+    margin-bottom: 8rpx;
+  }
+  
+  &__subtitle {
+    font-family: Poppins;
+    font-weight: 500;
+    font-size: 24rpx;
+    line-height: 2em;
+    color: #9ca3af;
+    display: block;
+  }
+  
+  &__circle {
+    position: absolute;
+    border-radius: 50%;
+    
+    &--1 {
+      width: 108rpx;
+      height: 108rpx;
+      bottom: 0;
+      right: 0;
     }
-
-    .score {
-      font-size: 28rpx;
-      font-weight: 600;
-      color: #000000;
-      font-family: 'Poppins', sans-serif;
-    }
-
-    .count {
-      font-size: 24rpx;
-      color: #9ca3af;
-      font-family: 'Poppins', sans-serif;
-    }
-
-    image {
-      width: 24rpx;
-      height: 24rpx;
-      margin-left: auto;
+    
+    &--2 {
+      width: 66rpx;
+      height: 66rpx;
+      bottom: 42rpx;
+      right: 42rpx;
     }
   }
+  
+  &__icon {
+    position: absolute;
+    bottom: 32rpx;
+    left: 32rpx;
+    width: 142rpx;
+    height: 108rpx;
+  }
+}
 
-  &__rating-comment {
-    padding: 12rpx;
-    background-color: #f3f4f6;
-    border-radius: 12rpx;
+// 优惠券横幅
+.coupon {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 18rpx;
+  margin: 0 32rpx 24rpx;
+  background: linear-gradient(90deg, #fef2f2 0%, #ffffff 100%);
+  border: 2rpx solid #fee2e2;
+  border-radius: 16rpx;
+  
+  &__badge {
+    background: #ef4444;
+    border-radius: 4rpx;
+    padding: 4rpx 8rpx;
+  }
+  
+  &__amount {
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 23.6rpx;
+    line-height: 1.3559em;
+    color: #ffffff;
+  }
+  
+  &__text {
+    flex: 1;
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 28rpx;
+    line-height: 1.4285em;
+    color: #b91c1c;
+    padding-left: 16rpx;
+  }
+  
+  &__action {
+    display: flex;
+    align-items: center;
+    gap: 4rpx;
+  }
+  
+  &__action-text {
+    font-family: Poppins;
+    font-weight: 400;
     font-size: 24rpx;
-    color: #4b5563;
-    font-family: 'Poppins', sans-serif;
+    line-height: 1.3333em;
+    color: #ef4444;
+  }
+  
+  &__action-arrow {
+    font-size: 20rpx;
+    color: #ef4444;
   }
 }
 
 // 房型详情
-.room-types {
-  margin: 32rpx;
-  background: linear-gradient(180deg, rgba(247, 249, 251, 1) 0%, rgba(255, 255, 255, 1) 100%);
-  border-radius: 0 0 32rpx 32rpx;
-  overflow: hidden;
-}
-
-.room-type {
+.room {
   display: flex;
   gap: 24rpx;
   padding: 32rpx;
-
+  margin: 0 32rpx 24rpx;
+  background: linear-gradient(180deg, #f7f9fb 0%, #ffffff 100%);
+  border-radius: 0 0 32rpx 32rpx;
+  
   &__image {
     width: 184rpx;
     height: 252rpx;
     border-radius: 8rpx;
-    flex-shrink: 0;
   }
-
+  
   &__content {
     flex: 1;
     display: flex;
     flex-direction: column;
   }
-
+  
   &__header {
     display: flex;
     align-items: center;
-    margin-bottom: 8rpx;
-
-    image {
-      width: 24rpx;
-      height: 24rpx;
-    }
-  }
-
-  &__name {
-    flex: 1;
-    font-size: 32rpx;
-    color: #000000;
-    font-family: 'Poppins', sans-serif;
-  }
-
-  &__beds {
-    font-size: 24rpx;
-    color: #6b7280;
-    margin-bottom: 8rpx;
-    font-family: 'Poppins', sans-serif;
-  }
-
-  &__policy {
-    font-size: 24rpx;
-    font-weight: 100;
-    color: #6b7280;
-    margin-bottom: 16rpx;
-    font-family: 'Noto Sans SC', sans-serif;
-  }
-
-  &__footer {
-    display: flex;
-    gap: 16rpx;
-    margin-top: auto;
-  }
-
-  &__tags {
-    display: flex;
     gap: 8rpx;
+    margin-bottom: 8rpx;
   }
-
-  &__tag {
-    padding: 4rpx 8rpx;
-    background-color: #e9e9e9;
-    border-radius: 4rpx;
-    font-size: 20rpx;
+  
+  &__type {
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 32rpx;
+    line-height: 1.5em;
+    color: #000000;
+  }
+  
+  &__arrow {
+    font-size: 24rpx;
     color: #9ca3af;
-    font-family: 'Poppins', sans-serif;
   }
-
-  &__price-group {
+  
+  &__details {
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 24rpx;
+    line-height: 1.3333em;
+    color: #6b7280;
+    margin-bottom: 12rpx;
+  }
+  
+  &__rule {
+    font-family: 'Noto Sans SC';
+    font-weight: 100;
+    font-size: 24rpx;
+    line-height: 1.3333em;
+    color: #6b7280;
+    margin-bottom: 24rpx;
+  }
+  
+  &__price {
+    display: flex;
+    align-items: center;
+    gap: 12rpx;
+  }
+  
+  &__price-tag {
+    background: #e9e9e9;
+    border-radius: 4rpx;
+    padding: 4rpx 8rpx;
+  }
+  
+  &__price-tag-text {
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 20rpx;
+    line-height: 1.6em;
+    color: #9ca3af;
+  }
+  
+  &__price-info {
     flex: 1;
     display: flex;
     flex-direction: column;
     gap: 8rpx;
   }
-
-  &__prices {
+  
+  &__price-group {
     display: flex;
     align-items: baseline;
     gap: 8rpx;
-
-    .original {
-      font-size: 24rpx;
-      color: #9ca3af;
-      text-decoration: line-through;
-      font-family: 'Poppins', sans-serif;
-    }
-
-    .discount {
-      font-size: 32rpx;
-      font-weight: 600;
-      color: #f97316;
-      font-family: 'Poppins', sans-serif;
-    }
   }
-
-  &__savings {
+  
+  &__price-original {
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 24rpx;
+    line-height: 1.6666em;
+    color: #9ca3af;
+    text-decoration: line-through;
+  }
+  
+  &__price-current {
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 32rpx;
+    line-height: 1.25em;
+    color: #f97316;
+  }
+  
+  &__price-badge {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 8rpx;
+    height: 32rpx;
   }
-
-  &__savings-badge {
+  
+  &__price-badge-left {
+    width: 110rpx;
+    height: 32rpx;
+    background: #ffebeb;
+    border-radius: 4rpx 0 0 4rpx;
+  }
+  
+  &__price-badge-right {
+    width: 88rpx;
+    height: 32rpx;
+    border: 2rpx solid #ffebeb;
+    border-radius: 0 4rpx 4rpx 0;
+    border-left: none;
+  }
+  
+  &__price-saved {
+    position: absolute;
+    left: 4rpx;
+    top: 0;
     display: flex;
     align-items: center;
     gap: 4rpx;
-    padding: 6rpx 4rpx 6rpx 18rpx;
-    background: linear-gradient(90deg, #ffebeb 0%, transparent 100%);
-    border: 2rpx solid #ffebeb;
-    border-radius: 4rpx 0 0 4rpx;
-    font-size: 20rpx;
-    color: #ef4444;
-    font-family: 'Poppins', sans-serif;
-
-    image {
-      width: 20rpx;
-      height: 20rpx;
-    }
   }
-
-  &__savings-label {
+  
+  &__price-saved-text {
+    font-family: Poppins;
+    font-weight: 400;
     font-size: 20rpx;
+    line-height: 1.6em;
     color: #ef4444;
-    font-family: 'Poppins', sans-serif;
   }
-
-  &__book {
+  
+  &__price-saved-arrow {
+    font-size: 20rpx;
+    color: #ea580c;
+  }
+  
+  &__price-label {
+    position: absolute;
+    right: 4rpx;
+    top: 0;
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 20rpx;
+    line-height: 1.6em;
+    color: #ef4444;
+  }
+  
+  &__book-btn {
     width: 80rpx;
     height: 80rpx;
+    background: #f97316;
     border-radius: 16rpx;
-    background-color: #f97316;
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  
+  &__book-text {
+    font-family: Poppins;
+    font-weight: 600;
     font-size: 40rpx;
-    font-weight: 600;
+    line-height: 1.4em;
     color: #ffffff;
-    font-family: 'Poppins', sans-serif;
-  }
-}
-
-// 金刚区
-.services {
-  display: flex;
-  gap: 24rpx;
-  padding: 0 32rpx;
-  margin-bottom: 32rpx;
-}
-
-.service-item {
-  position: relative;
-  flex: 1;
-  height: 252rpx;
-  border-radius: 32rpx;
-  border: 2rpx solid #ffffff;
-  padding: 24rpx;
-  overflow: hidden;
-  box-shadow: 0 8rpx 12rpx -2rpx rgba(0, 0, 0, 0.1);
-
-  &__name {
-    display: block;
-    font-size: 32rpx;
-    color: #000000;
-    font-family: 'OPPOSans', sans-serif;
-    margin-bottom: 8rpx;
-  }
-
-  &__desc {
-    display: block;
-    font-size: 24rpx;
-    font-weight: 500;
-    color: #9ca3af;
-    font-family: 'Poppins', sans-serif;
-  }
-
-  &__icon {
-    position: absolute;
-    bottom: 32rpx;
-    right: 32rpx;
-    width: 142rpx;
-    height: 108rpx;
-  }
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    border-radius: 50%;
-  }
-
-  &::before {
-    right: 112rpx;
-    bottom: 162rpx;
-    width: 108rpx;
-    height: 108rpx;
-  }
-
-  &::after {
-    right: 154rpx;
-    bottom: 204rpx;
-    width: 66rpx;
-    height: 66rpx;
-  }
-
-  &:nth-child(1)::before {
-    background-color: #fff7e1;
-  }
-
-  &:nth-child(1)::after {
-    background-color: #fefcf1;
-  }
-
-  &:nth-child(2)::before {
-    background-color: #fffbd5;
-  }
-
-  &:nth-child(2)::after {
-    background-color: #fffde9;
-  }
-
-  &:nth-child(3)::before {
-    background-color: #e5f9ff;
-  }
-
-  &:nth-child(3)::after {
-    background-color: #f1fcff;
-  }
-}
-
-// 入住时间
-.check-time {
-  display: flex;
-  align-items: center;
-  gap: 32rpx;
-  padding: 0 56rpx;
-  margin-bottom: 32rpx;
-
-  &__item {
-    display: flex;
-    flex-direction: column;
-    gap: 4rpx;
-
-    .date {
-      font-size: 32rpx;
-      font-weight: 600;
-      color: #000000;
-      font-family: 'Poppins', sans-serif;
-    }
-
-    .day {
-      font-size: 24rpx;
-      font-weight: 600;
-      color: #999999;
-      font-family: 'Poppins', sans-serif;
-    }
-  }
-
-  &__nights {
-    padding: 8rpx 14rpx;
-    border: 2rpx solid #cccccc;
-    border-radius: 32rpx;
-    font-size: 24rpx;
-    font-weight: 600;
-    color: #000000;
-    font-family: 'Poppins', sans-serif;
-  }
-}
-
-// 优惠券横幅
-.coupon-banner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 374rpx;
-  padding: 18rpx;
-  margin: 0 64rpx 32rpx;
-  background: linear-gradient(90deg, rgba(254, 242, 242, 1) 0%, rgba(255, 255, 255, 1) 100%);
-  border: 2rpx solid #fee2e2;
-  border-radius: 16rpx;
-
-  &__left {
-    display: flex;
-    align-items: center;
-    gap: 16rpx;
-  }
-
-  &__badge {
-    padding: 4rpx 8rpx;
-    background-color: #ef4444;
-    color: #ffffff;
-    font-size: 24rpx;
-    font-weight: 600;
-    border-radius: 4rpx;
-    font-family: 'Poppins', sans-serif;
-  }
-
-  &__right {
-    display: flex;
-    align-items: center;
-    gap: 8rpx;
-    font-size: 24rpx;
-    color: #ef4444;
-    font-family: 'Poppins', sans-serif;
-
-    image {
-      width: 20rpx;
-      height: 20rpx;
-    }
   }
 }
 
 // 底部预订栏
-.booking-bar {
+.footer {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
+  background: #ffffff;
+  border-top: 2rpx solid #e5e7eb;
+  padding: 32rpx;
   display: flex;
   align-items: center;
-  gap: 16rpx;
-  padding: 32rpx;
-  background-color: #ffffff;
-  border-top: 2rpx solid #e5e7eb;
-  z-index: 100;
-
+  gap: 24rpx;
+  
   &__date {
     display: flex;
     flex-direction: column;
-    gap: -1rpx;
-    padding: 16rpx 0;
-
-    .in {
-      font-size: 20rpx;
-      color: #000000;
-      font-family: 'Inter', sans-serif;
-    }
-
-    .out {
-      font-size: 24rpx;
-      color: #000000;
-      font-family: 'Poppins', sans-serif;
-    }
-
-    .icon {
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 24rpx;
-      color: #000000;
-    }
+    gap: -0.5rpx;
   }
-
-  &__action-view {
-    padding: 16rpx 64rpx;
-    border: 2rpx solid #f97316;
-    border-radius: 16rpx;
-    font-size: 32rpx;
-    font-weight: 600;
+  
+  &__date-text {
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 20rpx;
+    line-height: 1.75em;
     color: #000000;
-    text-align: center;
-    font-family: 'Poppins', sans-serif;
-    box-shadow: 0 0 2rpx 0 rgba(249, 115, 22, 1), 0 4rpx 6rpx 2rpx rgba(249, 115, 22, 0.08);
+    
+    &:nth-child(2) {
+      font-size: 24rpx;
+      line-height: 1.4583em;
+    }
   }
-
-  &__action-book {
+  
+  &__date-arrow {
+    font-size: 20rpx;
+    color: #000000;
+    margin-left: 8rpx;
+  }
+  
+  &__actions {
     flex: 1;
-    padding: 16rpx 64rpx;
-    background-color: #f97316;
+    display: flex;
+    gap: 16rpx;
+  }
+  
+  &__btn {
+    flex: 1;
+    height: 98rpx;
     border-radius: 16rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    &--outline {
+      border: 2rpx solid #f97316;
+      background: transparent;
+      box-shadow: 0px 0px 2rpx 0px rgba(249, 115, 22, 1), 0px 4rpx 6rpx 2rpx rgba(249, 115, 22, 0.08);
+    }
+    
+    &--primary {
+      background: #f97316;
+    }
+  }
+  
+  &__btn-text {
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 32rpx;
+    line-height: 1.75em;
     text-align: center;
-
-    .label {
-      display: block;
-      font-size: 32rpx;
-      font-weight: 600;
+    
+    .footer__btn--outline & {
+      color: #000000;
+    }
+    
+    .footer__btn--primary & {
       color: #ffffff;
-      font-family: 'Poppins', sans-serif;
-      margin-bottom: 4rpx;
     }
-
-    .price {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8rpx;
-
-      .current {
-        font-size: 28rpx;
-        font-weight: 600;
-        color: #ffffff;
-        font-family: 'Poppins', sans-serif;
-      }
-
-      .original {
-        font-size: 24rpx;
-        color: #fed7aa;
-        text-decoration: line-through;
-        font-family: 'Poppins', sans-serif;
-      }
-    }
+  }
+  
+  &__price {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8rpx;
+  }
+  
+  &__price-current {
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 28rpx;
+    line-height: 1.4285em;
+    color: #ffffff;
+  }
+  
+  &__price-original {
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 24rpx;
+    line-height: 1.6666em;
+    color: #fed7aa;
   }
 }

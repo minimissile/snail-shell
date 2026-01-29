@@ -124,6 +124,15 @@ Component({
         })
         return
       }
+      if (key === '订单填写') {
+        wx.navigateTo({
+          url: '/pages/order-form/order-form',
+          fail: () => {
+            wx.showToast({ title: '暂无法打开订单填写', icon: 'none' })
+          },
+        })
+        return
+      }
       wx.showToast({ title: key || '功能', icon: 'none' })
     },
   },
