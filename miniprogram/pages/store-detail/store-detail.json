@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "",
   "navigationStyle": "custom",
-  "usingComponents": {}
+  "enablePullDownRefresh": false,
+  "backgroundTextStyle": "dark"
 }

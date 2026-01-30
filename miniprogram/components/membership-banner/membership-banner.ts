@@ -10,7 +10,7 @@ Component({
     },
   },
   methods: {
-    onBenefit(e: any) {
+    onBenefit(this: WechatMiniprogram.Component.Instance<{}, {}, {}>, e: any) {
       // 安全的事件对象检查
       if (!e || !e.currentTarget) {
         console.warn('membership-banner: Invalid event object', e)

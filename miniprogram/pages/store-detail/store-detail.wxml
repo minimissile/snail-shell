@@ -1,205 +1,345 @@
 <view class="store-detail">
-  <!-- 封面部分 -->
-  <view class="cover">
-    <image class="cover__image" src="{{coverImage}}" mode="aspectFill" />
-
-    <!-- 状态栏 -->
-    <view class="cover__status-bar">
-      <text class="cover__time">9:41</text>
-      <view class="cover__icons">
-        <view class="cover__icon-cell"></view>
-        <view class="cover__icon-wifi"></view>
-        <view class="cover__icon-battery"></view>
-      </view>
-    </view>
-
-    <!-- 返回按钮和收藏按钮 -->
-    <view class="cover__actions">
-      <view class="cover__back" bindtap="onGoBack">
-        <text class="cover__back-icon">‹</text>
-      </view>
-      <view class="cover__favorites">
-        <view class="cover__favorite-btn" bindtap="onToggleFavorite">
-          <text class="cover__favorite-icon">{{isFavorite ? '' : ''}}</text>
-        </view>
-        <view class="cover__favorite-count">
-          <text class="cover__favorite-count-text">{{favoriteCount}}</text>
-        </view>
-      </view>
-    </view>
-
-    <!-- 实拍看房 -->
-    <view class="cover__video" bindtap="onViewVideo">
-      <image class="cover__video-thumbnail" src="{{videoThumbnail}}" mode="aspectFill" />
-      <view class="cover__video-overlay">
-        <text class="cover__video-icon"></text>
-        <text class="cover__video-text">实拍看房</text>
-      </view>
-      <view class="cover__video-expand">
-        <text class="cover__expand-icon"></text>
-      </view>
-    </view>
-
-    <!-- 图片分类标签 -->
-    <view class="cover__tabs">
-      <view class="cover__tab cover__tab--active">
-        <text class="cover__tab-text">封面</text>
-      </view>
-      <text class="cover__tab-text">WOW亮点!</text>
-      <text class="cover__tab-text">卧室</text>
-      <text class="cover__tab-text">厨房｜</text>
-      <view class="cover__tab-more">
-        <text class="cover__tab-text">相册</text>
-        <text class="cover__tab-arrow">›</text>
+  <!-- 状态栏 (y=0, height=44.32px) -->
+  <view class="store-detail__status-bar">
+    <view class="store-detail__status-bar-bg"></view>
+    <view class="store-detail__status-content">
+      <text class="store-detail__status-time">9:41</text>
+      <view class="store-detail__status-icons">
+        <view class="store-detail__status-cellular"></view>
+        <view class="store-detail__status-wifi"></view>
+        <view class="store-detail__status-battery"></view>
       </view>
     </view>
   </view>
 
-  <!-- 房屋基本信息 -->
-  <view class="info">
-    <view class="info__header">
-      <text class="info__title">{{propertyTitle}}</text>
-      <text class="info__star"></text>
-    </view>
-
-    <!-- 地址信息 -->
-    <view class="info__address">
-      <image class="info__address-bg" src="{{mapThumbnail}}" mode="aspectFill" />
-      <text class="info__address-text">{{address}}</text>
-      <view class="info__map" bindtap="onViewMap">
-        <text class="info__map-icon"></text>
-        <text class="info__map-text">地图</text>
+  <!-- Header (y=45px, padding=10px 0px) -->
+  <view class="store-detail__header">
+    <!-- Header Actions (padding=10px 0px) -->
+    <view class="store-detail__header-actions">
+      <!-- Go back button (32x32px) -->
+      <view class="store-detail__back-btn" bindtap="onGoBack">
+        <image class="store-detail__back-icon" src="/images/store-detail/angle-left.svg" mode="aspectFit"></image>
       </view>
-    </view>
 
-    <!-- 蜗壳精选标签 -->
-    <view class="info__selected" bindtap="onViewSelectedTag">
-      <view class="info__selected-badge">
-        <text class="info__selected-badge-text">蜗壳精选</text>
-      </view>
-      <text class="info__selected-desc">实拍视频有保障, 入住不满意必赔</text>
-      <text class="info__selected-arrow">›</text>
-    </view>
-
-    <!-- 标签列表 -->
-    <view class="info__tags">
-      <view class="info__tag" wx:for="{{tags}}" wx:key="index">
-        <text class="info__tag-text">{{item}}</text>
-      </view>
-    </view>
-
-    <!-- 评分信息 -->
-    <view class="info__rating" bindtap="onViewReviews">
-      <view class="info__rating-content">
-        <text class="info__rating-star"></text>
-        <text class="info__rating-score">{{rating}}超棒</text>
-        <text class="info__rating-count">{{reviewCount}}条</text>
-        <text class="info__rating-arrow">›</text>
-      </view>
-      <view class="info__rating-comment">
-        <text class="info__rating-comment-text">"{{highlightComment}}"</text>
-      </view>
-    </view>
-  </view>
-
-  <!-- 入住时间 -->
-  <view class="checkin">
-    <view class="checkin__item">
-      <text class="checkin__date">{{checkInDate}}</text>
-      <text class="checkin__day">{{checkInDay}} 入住</text>
-    </view>
-    <view class="checkin__item">
-      <text class="checkin__date">{{checkOutDate}}</text>
-      <text class="checkin__day">{{checkOutDay}} 离开</text>
-    </view>
-    <view class="checkin__nights" bindtap="onChangeDate">
-      <text class="checkin__nights-text">共{{totalNights}}晚</text>
-    </view>
-  </view>
-
-  <!-- 金刚区 -->
-  <view class="diamond">
-    <view
-      class="diamond__item"
-      wx:for="{{diamondItems}}"
-      wx:key="id"
-      data-id="{{item.id}}"
-      bindtap="onDiamondItemTap"
-      style="background: {{item.bgColor}}"
-    >
-      <text class="diamond__title">{{item.title}}</text>
-      <text class="diamond__subtitle">{{item.subtitle}}</text>
-      <view class="diamond__circle diamond__circle--1" style="background: {{item.circleColor1}}"></view>
-      <view class="diamond__circle diamond__circle--2" style="background: {{item.circleColor2}}"></view>
-      <image class="diamond__icon" src="{{item.icon}}" mode="aspectFit" />
-    </view>
-  </view>
-
-  <!-- 优惠券横幅 -->
-  <view class="coupon" bindtap="onViewCoupon">
-    <view class="coupon__badge">
-      <text class="coupon__amount">¥200</text>
-    </view>
-    <text class="coupon__text">连住专享券</text>
-    <view class="coupon__action">
-      <text class="coupon__action-text">查看</text>
-      <text class="coupon__action-arrow">›</text>
-    </view>
-  </view>
-
-  <!-- 房型详情 -->
-  <view class="room">
-    <image class="room__image" src="{{roomImage}}" mode="aspectFill" />
-    <view class="room__content">
-      <view class="room__header" bindtap="onViewRoomDetails">
-        <text class="room__type">{{roomType}}</text>
-        <text class="room__arrow">›</text>
-      </view>
-      <text class="room__details">{{roomDetails}}</text>
-      <text class="room__rule">{{checkInRule}}</text>
-
-      <view class="room__price">
-        <view class="room__price-tag">
-          <text class="room__price-tag-text">立即确认</text>
-        </view>
-        <view class="room__price-info">
-          <view class="room__price-group">
-            <text class="room__price-original">¥{{originalPrice}}</text>
-            <text class="room__price-current">¥{{currentPrice}}</text>
+      <!-- Right actions group (width=215px) -->
+      <view class="store-detail__actions-group">
+        <!-- 收藏组 (width=56px, height=49px) -->
+        <view class="store-detail__favorite-wrapper">
+          <!-- Like button (40x40px, x=0, y=9) -->
+          <view class="store-detail__favorite-btn" bindtap="onToggleFavorite">
+            <text class="store-detail__favorite-icon">{{isFavorite ? '♥' : '♡'}}</text>
           </view>
-          <view class="room__price-badge">
-            <view class="room__price-badge-left"></view>
-            <view class="room__price-badge-right"></view>
-            <view class="room__price-saved" bindtap="onViewSavedAmount">
-              <text class="room__price-saved-text">已省¥{{savedAmount}}</text>
-              <text class="room__price-saved-arrow">›</text>
+          <!-- Badge (34x22px, x=22, y=0) -->
+          <view class="store-detail__favorite-badge">
+            <text class="store-detail__favorite-count">{{favoriteCount}}</text>
+          </view>
+        </view>
+
+        <!-- WeChat button (87x32px, x=128, y=9) -->
+        <view class="store-detail__wechat-btn" bindtap="onOpenWechat">
+          <view class="store-detail__wechat-bg"></view>
+          <view class="store-detail__wechat-icon"></view>
+        </view>
+      </view>
+    </view>
+
+    <!-- Nav (padding=0px 16px) -->
+    <view class="store-detail__nav">
+      <view
+        wx:for="{{tabs}}"
+        wx:key="id"
+        class="store-detail__nav-item-wrapper {{activeTab === item.id ? 'store-detail__nav-item-wrapper--active' : ''}}"
+      >
+        <view
+          class="store-detail__nav-item {{activeTab === item.id ? 'store-detail__nav-item--active' : ''}}"
+          data-tab="{{item.id}}"
+          bindtap="onSwitchTab"
+        >
+          <text class="store-detail__nav-text">{{item.name}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- Container (y=157px, padding=16px) -->
+  <view class="store-detail__container">
+    <!-- Background Card (height=336px, border-radius=12px) -->
+    <view class="store-detail__cost-card" wx:if="{{activeTab === 'cost'}}">
+      <!-- Header (x=16, y=16, width=311px) -->
+      <view class="store-detail__cost-header">
+        <view class="store-detail__cost-title-wrapper">
+          <text class="store-detail__cost-title">费用须知</text>
+        </view>
+        <view class="store-detail__cost-link" bindtap="onViewAllRules">
+          <text class="store-detail__cost-link-text">全部须知</text>
+          <image
+            class="store-detail__arrow-right-icon"
+            src="/images/store-detail/angle-right-small.svg"
+            mode="aspectFit"
+          ></image>
+        </view>
+      </view>
+
+      <!-- Tip container (x=16, y=52, width=311px) -->
+      <view class="store-detail__cost-tip">
+        <view class="store-detail__info-icon-wrapper">
+          <image class="store-detail__info-icon" src="/images/store-detail/info-circle.svg" mode="aspectFit"></image>
+        </view>
+        <text class="store-detail__cost-tip-text">以下规则由房东制定，请仔细阅读并遵守</text>
+      </view>
+
+      <!-- Rules container (x=16, y=76, width=311px, height=120px, padding=12px 0px) -->
+      <view class="store-detail__rules-container">
+        <!-- 押金 -->
+        <view class="store-detail__rule-row">
+          <view class="store-detail__rule-label-wrapper">
+            <text class="store-detail__rule-label">押金</text>
+          </view>
+          <view class="store-detail__rule-content">
+            <image
+              class="store-detail__info-circle-icon"
+              src="/images/store-detail/info-circle.svg"
+              mode="aspectFit"
+            ></image>
+            <text class="store-detail__rule-text"
+              >¥200，下单后入住前通过平台支付，离店后{{'\n'}}原路退还，无纠纷不扣押</text
+            >
+          </view>
+        </view>
+
+        <!-- Line (width=311px, height=1px) -->
+        <view class="store-detail__rule-divider"></view>
+
+        <!-- 加人 -->
+        <view class="store-detail__rule-row">
+          <view class="store-detail__rule-label-wrapper store-detail__rule-label-wrapper--narrow">
+            <text class="store-detail__rule-label">加人</text>
+          </view>
+          <view class="store-detail__rule-value">
+            <view class="store-detail__rule-value-inner">
+              <text class="store-detail__rule-value-text">标准入住6人，不可加人</text>
             </view>
-            <text class="room__price-label">首单特惠</text>
           </view>
         </view>
-        <view class="room__book-btn" bindtap="onBookNow">
-          <text class="room__book-text">订</text>
+      </view>
+
+      <!-- Other rules (x=16, y=196, width=311px, height=24px) -->
+      <view class="store-detail__other-rules">
+        <view class="store-detail__other-label-wrapper">
+          <text class="store-detail__other-label">其他</text>
+        </view>
+        <view class="store-detail__other-content">
+          <view class="store-detail__other-tag-wrapper">
+            <!-- 接待港澳台标签 (width=132px, height=10px) -->
+          </view>
+          <view class="store-detail__other-text-wrapper">
+            <text class="store-detail__other-text">请仔细阅读房东其他要求</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 体验流程卡片 (activeTab === 'process') - height=461px (922rpx) -->
+    <view class="store-detail__process-card" wx:if="{{activeTab === 'process'}}">
+      <!-- Header (x=16, y=16, width=311px) -->
+      <view class="store-detail__process-header">
+        <view class="store-detail__process-title-wrapper">
+          <text class="store-detail__process-title">体验流程</text>
+        </view>
+        <view class="store-detail__process-link" bindtap="onViewAllProcess">
+          <text class="store-detail__process-link-text">全部流程</text>
+          <image
+            class="store-detail__arrow-right-icon"
+            src="/images/store-detail/angle-right-small.svg"
+            mode="aspectFit"
+          ></image>
+        </view>
+      </view>
+
+      <!-- Tip container (x=16, y=52, width=311px) -->
+      <view class="store-detail__process-tip">
+        <view class="store-detail__info-icon-wrapper">
+          <image class="store-detail__info-icon" src="/images/store-detail/info-circle.svg" mode="aspectFit"></image>
+        </view>
+        <text class="store-detail__process-tip-text">以下规则由房东制定，请仔细阅读并遵守</text>
+      </view>
+
+      <!-- Process container (x=16, y=76, width=311px, height=120px, padding=12px 0) -->
+      <view class="store-detail__process-list">
+        <!-- 入离 -->
+        <view class="store-detail__process-row">
+          <view class="store-detail__process-label-wrapper">
+            <text class="store-detail__process-label">入离</text>
+          </view>
+          <view class="store-detail__process-value">
+            <text class="store-detail__process-text">14:00-24:00入住, 12:00前退房</text>
+          </view>
+        </view>
+
+        <!-- Line (width=311px, height=1px) -->
+        <view class="store-detail__process-divider"></view>
+
+        <!-- 退订 -->
+        <view class="store-detail__process-row">
+          <view class="store-detail__process-label-wrapper store-detail__process-label-wrapper--narrow">
+            <text class="store-detail__process-label">退订</text>
+          </view>
+          <view class="store-detail__process-value-col">
+            <view class="store-detail__process-value-item">
+              <text class="store-detail__process-text store-detail__process-text--green">30分钟内免费取消</text>
+            </view>
+            <view class="store-detail__process-value-item">
+              <text class="store-detail__process-text-small">订单确认30分钟后, 取消订单将扣除全部房费</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- Refund table (x=16, y=195, width=311px, height=141px) -->
+      <view class="store-detail__refund-table">
+        <!-- 表头背景 (height=40px, x=1, y=1, width=309px) -->
+        <view class="store-detail__refund-header-bg"></view>
+
+        <!-- Header (x=12, y=12, width=287px, height=17px) -->
+        <view class="store-detail__refund-header">
+          <view class="store-detail__refund-header-left">
+            <text class="store-detail__refund-header-text">退订时间</text>
+          </view>
+          <view class="store-detail__refund-header-right">
+            <text class="store-detail__refund-header-text">退订费用</text>
+          </view>
+        </view>
+
+        <!-- Body (x=12, y=41, width=287px, height=64px) -->
+        <view class="store-detail__refund-body">
+          <!-- Row 1 (y=12) -->
+          <view class="store-detail__refund-row">
+            <view class="store-detail__refund-time">
+              <view class="store-detail__refund-badge">
+                <text class="store-detail__refund-badge-text">当前阶段</text>
+              </view>
+              <text class="store-detail__refund-text">预订成功后30分钟内</text>
+            </view>
+            <view class="store-detail__refund-fee">
+              <text class="store-detail__refund-text">免费取消</text>
+            </view>
+          </view>
+
+          <!-- Row 2 (y=64) -->
+          <view class="store-detail__refund-row store-detail__refund-row--last">
+            <view class="store-detail__refund-time-simple">
+              <text class="store-detail__refund-text">11月19日16:21后</text>
+            </view>
+            <view class="store-detail__refund-fee-simple">
+              <text class="store-detail__refund-text">取消扣全款</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- Bottom divider (y=98, height=1px, x=1, width=310px) -->
+        <view class="store-detail__refund-divider"></view>
+      </view>
+
+      <!-- Requirements (x=16, y=368, width=311px, padding=17px 0 0) -->
+      <view class="store-detail__requirement-section">
+        <view class="store-detail__requirement-label-wrapper">
+          <text class="store-detail__requirement-label">要求</text>
+        </view>
+        <view class="store-detail__requirement-content">
+          <!-- Row 1 (y=50) -->
+          <view class="store-detail__requirement-row">
+            <view class="store-detail__requirement-item">
+              <image
+                class="store-detail__check-icon"
+                src="/images/store-detail/check-circle.svg"
+                mode="aspectFit"
+              ></image>
+              <text class="store-detail__requirement-text">接待婴儿</text>
+            </view>
+            <view class="store-detail__requirement-item">
+              <image
+                class="store-detail__check-icon"
+                src="/images/store-detail/check-circle.svg"
+                mode="aspectFit"
+              ></image>
+              <text class="store-detail__requirement-text">接待儿童</text>
+            </view>
+          </view>
+
+          <!-- Row 2 (y=26) -->
+          <view class="store-detail__requirement-row">
+            <view class="store-detail__requirement-item">
+              <image
+                class="store-detail__xmark-icon"
+                src="/images/store-detail/xmark-circle.svg"
+                mode="aspectFit"
+              ></image>
+              <text class="store-detail__requirement-text">接待老人</text>
+            </view>
+            <view class="store-detail__requirement-item">
+              <image
+                class="store-detail__check-icon"
+                src="/images/store-detail/check-circle.svg"
+                mode="aspectFit"
+              ></image>
+              <text class="store-detail__requirement-text">接待海外</text>
+            </view>
+          </view>
+
+          <!-- Row 3 (y=2) -->
+          <view class="store-detail__requirement-row">
+            <view class="store-detail__requirement-item">
+              <image
+                class="store-detail__check-icon"
+                src="/images/store-detail/check-circle.svg"
+                mode="aspectFit"
+              ></image>
+              <text class="store-detail__requirement-text">接待港澳台</text>
+            </view>
+            <view class="store-detail__requirement-item">
+              <image
+                class="store-detail__xmark-icon"
+                src="/images/store-detail/xmark-circle.svg"
+                mode="aspectFit"
+              ></image>
+              <text class="store-detail__requirement-text">带宠物</text>
+            </view>
+          </view>
         </view>
       </view>
     </view>
   </view>
 
-  <!-- 底部预订栏 -->
-  <view class="footer">
-    <view class="footer__date" bindtap="onChangeDate">
-      <text class="footer__date-text">住 11-19</text>
-      <text class="footer__date-text">离 11-20</text>
-      <text class="footer__date-arrow">‹</text>
+  <!-- Section (x=32, y=415, width=311px, height=53px, padding=16px, border-radius=12px) -->
+  <view class="store-detail__tip-section">
+    <view class="store-detail__tip-container">
+      <text class="store-detail__tip-text">温馨提示：民宿不能聚会吵闹，不能做饭。因深圳天气炎热...</text>
     </view>
-    <view class="footer__actions">
-      <view class="footer__btn footer__btn--outline" bindtap="onRealSceneRoomSelection">
-        <text class="footer__btn-text">实景选房</text>
+  </view>
+
+  <!-- 预订按钮 (y=790px, width=375px, height=81px) -->
+  <view class="store-detail__footer">
+    <!-- 日期选择 (x=164, y=30) -->
+    <view class="store-detail__date-picker" bindtap="onSelectDate">
+      <text class="store-detail__date-checkin">住 11-19</text>
+      <view class="store-detail__date-checkout-wrapper">
+        <text class="store-detail__date-checkout">离 11-20</text>
+        <view class="store-detail__caret-icon"></view>
       </view>
-      <view class="footer__btn footer__btn--primary" bindtap="onBookNow">
-        <text class="footer__btn-text">立即预订</text>
-        <view class="footer__price">
-          <text class="footer__price-current">¥{{currentPrice}}</text>
-          <text class="footer__price-original">¥{{originalPrice}}</text>
+    </view>
+
+    <!-- 实景选房按钮 (x=223, y=16, width=136px, height=49px) -->
+    <view class="store-detail__scene-btn" bindtap="onSceneSelection">
+      <text class="store-detail__scene-btn-text">实景选房</text>
+    </view>
+
+    <!-- 立即预订按钮 (x=16, y=16, width=136px) -->
+    <view class="store-detail__book-btn" bindtap="onBookNow">
+      <text class="store-detail__book-btn-text">立即预订</text>
+      <view class="store-detail__price-wrapper">
+        <text class="store-detail__current-price">¥468</text>
+        <view class="store-detail__original-price-wrapper">
+          <text class="store-detail__original-price">¥669</text>
         </view>
       </view>
     </view>

@@ -1,7 +1,10 @@
 <view class="room-selection">
   <!-- 状态栏 -->
   <view class="room-selection__status-bar">
-    <text class="room-selection__status-time">9:41</text>
+    <view class="room-selection__status-bar-bg"></view>
+    <view class="room-selection__status-bar-content">
+      <text class="room-selection__status-time">9:41</text>
+    </view>
   </view>
 
   <!-- 导航栏头部 -->
@@ -9,18 +12,21 @@
     <!-- 返回和微信按钮 -->
     <view class="room-selection__header-top">
       <view class="room-selection__back-btn" bindtap="onGoBack">
-        <image class="room-selection__back-icon" src="/images/room-selection/icon-angle-left.svg" />
+        <view class="room-selection__back-icon"></view>
       </view>
 
       <view class="room-selection__header-actions">
-        <view class="room-selection__favorite-btn" bindtap="onToggleFavorite">
-          <text class="room-selection__favorite-icon"></text>
+        <view class="room-selection__favorite-group">
+          <view class="room-selection__favorite-btn" bindtap="onToggleFavorite">
+            <text class="room-selection__favorite-icon"></text>
+          </view>
           <view class="room-selection__favorite-badge">
             <text class="room-selection__favorite-count">{{favoriteCount}}</text>
           </view>
         </view>
 
         <view class="room-selection__wechat-btn" bindtap="onOpenWechat">
+          <view class="room-selection__wechat-bg"></view>
           <view class="room-selection__wechat-icon"></view>
         </view>
       </view>
@@ -28,19 +34,18 @@
 
     <!-- 门店名称和营业时间 -->
     <view class="room-selection__nav">
-      <view class="room-selection__store-name">{{storeName}}</view>
-      <view class="room-selection__business-hours">{{businessHours}}</view>
+      <text class="room-selection__store-name">{{storeName}}</text>
+      <view class="room-selection__nav-spacer"></view>
+      <text class="room-selection__business-hours">{{businessHours}}</text>
     </view>
 
     <!-- 预订方式切换 -->
     <view class="room-selection__booking-mode">
       <view class="room-selection__booking-label">
         <text class="room-selection__booking-label-text">预定方式</text>
-        <image
-          class="room-selection__booking-info-icon"
-          src="/images/room-selection/icon-info-circle.svg"
-          bindtap="onViewBookingInfo"
-        />
+        <view class="room-selection__booking-info-icon" bindtap="onViewBookingInfo">
+          <view class="room-selection__info-circle"></view>
+        </view>
       </view>
 
       <view class="room-selection__booking-tabs">
@@ -126,18 +131,14 @@
   <!-- 已选信息提示 -->
   <view class="room-selection__selected-info">
     <view class="room-selection__selected-item">
-      <image
-        class="room-selection__selected-icon"
-        src="/images/room-selection/icon-info-circle.svg"
-        bindtap="onViewSelectedInfo"
-      />
-      <text class="room-selection__selected-text room-selection__selected-text--highlight">
+      <view class="room-selection__info-icon" bindtap="onViewSelectedInfo"></view>
+      <text class="room-selection__selected-text">
         已选:{{bookingMode === 'day' ? selectedDays : bookingMode === 'hour' ? selectedHours : selectedMonths}}
       </text>
     </view>
 
     <view class="room-selection__booking-tip">
-      <image class="room-selection__tip-icon" src="/images/room-selection/icon-clock.svg" />
+      <view class="room-selection__clock-icon"></view>
       <text class="room-selection__tip-text">{{bookingTip}}</text>
     </view>
   </view>
@@ -145,9 +146,17 @@
   <!-- 床位图例 -->
   <view class="room-selection__legend">
     <view class="room-selection__legend-items">
-      <view class="room-selection__legend-item" wx:for="{{legendItems}}" wx:key="label">
-        <view class="room-selection__legend-color" style="background-color: {{item.color}};"></view>
-        <text class="room-selection__legend-label">{{item.label}}</text>
+      <view class="room-selection__legend-item">
+        <view class="room-selection__legend-color room-selection__legend-color--selected"></view>
+        <text class="room-selection__legend-label">当前已选</text>
+      </view>
+      <view class="room-selection__legend-item">
+        <view class="room-selection__legend-color room-selection__legend-color--available"></view>
+        <text class="room-selection__legend-label">可选</text>
+      </view>
+      <view class="room-selection__legend-item">
+        <view class="room-selection__legend-color room-selection__legend-color--unavailable"></view>
+        <text class="room-selection__legend-label">不可选</text>
       </view>
     </view>
 
@@ -175,13 +184,15 @@
       <!-- 上铺图片 -->
       <image
         class="room-selection__bed-image room-selection__bed-image--upper"
-        src="/images/room-selection/bed-upper.png"
+        src="/assets/figma/room-selection/bed-upper.png"
+        mode="aspectFit"
       />
 
       <!-- 下铺图片 -->
       <image
         class="room-selection__bed-image room-selection__bed-image--lower"
-        src="/images/room-selection/bed-lower.png"
+        src="/assets/figma/room-selection/bed-lower.png"
+        mode="aspectFit"
       />
 
       <!-- 床位中间分隔线 -->
@@ -189,7 +200,7 @@
 
       <!-- 4个床位 -->
       <view
-        class="room-selection__bed-item room-selection__bed-item--top-left 
+        class="room-selection__bed-item room-selection__bed-item--top-left
                    {{group.beds[1].status === 'selected' ? 'room-selection__bed-item--selected' : ''}}
                    {{group.beds[1].status === 'unavailable' ? 'room-selection__bed-item--unavailable' : ''}}"
         data-group-index="{{groupIndex}}"
@@ -280,12 +291,6 @@
   <view class="room-selection__footer">
     <view class="room-selection__book-btn" bindtap="onBookNow">
       <text class="room-selection__book-btn-text">立即预订</text>
-      <view class="room-selection__price-container">
-        <text class="room-selection__total-price">¥{{totalPrice}}</text>
-        <view class="room-selection__original-price-container">
-          <text class="room-selection__original-price">¥{{originalPrice}}</text>
-        </view>
-      </view>
     </view>
   </view>
 </view>

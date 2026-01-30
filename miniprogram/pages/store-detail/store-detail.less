@@ -1,902 +1,1045 @@
-// 门店详情页面样式
+// 门店详情页 - 100% Figma 精确还原
+// 转换规则: 1px = 2rpx
+
 .store-detail {
+  width: 100%;
   min-height: 100vh;
-  background-color: #f7f9fb;
-  padding-bottom: 162rpx; // 底部固定栏高度
-}
-
-// 封面部分
-.cover {
+  background: #f7f9fb;
   position: relative;
-  width: 750rpx;
-  height: 640rpx;
+  padding-bottom: 162rpx; // 81px
 
-  &__image {
-    width: 100%;
-    height: 100%;
-  }
-
-  // 状态栏
+  // ==================== 状态栏 ====================
+  // y=0, height=44.32px (88.64rpx ≈ 88rpx)
   &__status-bar {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
-    right: 0;
+    width: 100%;
     height: 88rpx;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 28rpx 42rpx;
-    color: #000000;
+    z-index: 1000;
   }
 
-  &__time {
-    font-family: Poppins;
+  &__status-bar-bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+  }
+
+  &__status-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 42rpx; // 21px
+  }
+
+  // Time: Poppins 600, 15px (30rpx), letter-spacing: -2%
+  &__status-time {
+    font-family: Poppins, sans-serif;
     font-weight: 600;
     font-size: 30rpx;
     line-height: 1.5em;
-    letter-spacing: -2%;
-  }
-
-  &__icons {
-    display: flex;
-    gap: 12rpx;
-    align-items: center;
-  }
-
-  &__icon-cell,
-  &__icon-wifi,
-  &__icon-battery {
-    width: 34rpx;
-    height: 22rpx;
-    background: #000000;
-    border-radius: 4rpx;
-  }
-
-  // 操作按钮
-  &__actions {
-    position: absolute;
-    top: 88rpx;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 32rpx;
-  }
-
-  &__back {
-    width: 64rpx;
-    height: 64rpx;
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 9999rpx;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow:
-      0px 4rpx 8rpx -4rpx rgba(0, 0, 0, 0.1),
-      0px 8rpx 12rpx -2rpx rgba(0, 0, 0, 0.1);
-  }
-
-  &__back-icon {
-    font-size: 48rpx;
-    font-weight: 300;
+    letter-spacing: -0.02em;
     color: #000000;
   }
 
-  &__favorites {
+  &__status-icons {
     display: flex;
     align-items: center;
-    gap: 16rpx;
+    gap: 12rpx; // 6px
   }
 
+  // 状态图标 CSS 绘制
+  &__status-cellular,
+  &__status-wifi,
+  &__status-battery {
+    width: 34rpx; // 17px
+    height: 22rpx; // 11px
+    position: relative;
+  }
+
+  &__status-battery {
+    width: 49rpx; // 24.33px
+    height: 23rpx; // 11.33px
+    border: 2rpx solid #000000;
+    border-radius: 4rpx;
+    background: #000000;
+
+    &::after {
+      content: '';
+      position: absolute;
+      right: -3rpx;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3rpx;
+      height: 8rpx;
+      background: #000000;
+      border-radius: 0 2rpx 2rpx 0;
+    }
+  }
+
+  // ==================== Header ====================
+  // y=45px (90rpx)
+  &__header {
+    position: fixed;
+    top: 88rpx;
+    left: 0;
+    width: 100%;
+    background: #ffffff;
+    z-index: 999;
+  }
+
+  // padding=10px 0px (20rpx 0)
+  &__header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20rpx 0;
+    margin: 0 32rpx; // 添加左右边距以匹配返回按钮位置
+  }
+
+  // Go back button: 32x32px (64rpx), padding=8px (16rpx)
+  &__back-btn {
+    width: 64rpx;
+    height: 64rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16rpx;
+    border-radius: 9999px;
+  }
+
+  // 返回箭头图标: 24x24px (48rpx) - 占位图标
+  &__back-icon {
+    width: 48rpx;
+    height: 48rpx;
+  }
+
+  // Actions group: width=215px (430rpx), height=49px (98rpx)
+  &__actions-group {
+    width: 430rpx;
+    height: 98rpx;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  // 收藏组: width=56px (112rpx), height=49px (98rpx)
+  &__favorite-wrapper {
+    width: 112rpx;
+    height: 98rpx;
+    position: relative;
+    margin-right: 144rpx; // 留出微信按钮的空间 (128 + 16)
+  }
+
+  // Like button: 40x40px (80rpx), x=0, y=9 (18rpx)
   &__favorite-btn {
+    position: absolute;
+    left: 0;
+    top: 18rpx;
     width: 80rpx;
     height: 80rpx;
     background: rgba(255, 255, 255, 0.8);
-    border-radius: 9999rpx;
+    border: 1rpx solid #e9e9e9;
+    border-radius: 50%;
     display: flex;
-    align-items: center;
     justify-content: center;
-    box-shadow:
-      0px 4rpx 8rpx -4rpx rgba(0, 0, 0, 0.1),
-      0px 8rpx 12rpx -2rpx rgba(0, 0, 0, 0.1);
+    align-items: center;
   }
 
+  // Font Awesome 5 Free, 20px (40rpx)
   &__favorite-icon {
-    font-family: 'Font Awesome 5 Free';
-    font-weight: 400;
     font-size: 40rpx;
+    line-height: 1.4em;
     color: #1f2937;
   }
 
-  &__favorite-count {
-    background: #ffffff;
-    border: 2rpx solid #cccccc;
-    border-radius: 200rpx;
-    padding: 10rpx 12rpx;
-  }
-
-  &__favorite-count-text {
-    font-family: Poppins;
-    font-weight: 600;
-    font-size: 24rpx;
-    line-height: 1.6666em;
-    color: #000000;
-  }
-
-  // 实拍看房视频
-  &__video {
+  // Badge: 34x22px (68rpx x 44rpx), x=22 (44rpx), y=0
+  &__favorite-badge {
     position: absolute;
-    bottom: 72rpx;
-    right: 32rpx;
-    width: 224rpx;
-    height: 160rpx;
-  }
-
-  &__video-thumbnail {
-    width: 100%;
-    height: 100%;
-    border: 4rpx solid #ffffff;
-    border-radius: 16rpx;
-  }
-
-  &__video-overlay {
-    position: absolute;
-    top: 4rpx;
-    left: 4rpx;
-    right: 4rpx;
-    bottom: 4rpx;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 12rpx;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: #ffffff;
-  }
-
-  &__video-icon {
-    font-family: 'Font Awesome 5 Free';
-    font-weight: 900;
-    font-size: 48rpx;
-    line-height: 1.3333em;
-  }
-
-  &__video-text {
-    font-family: Poppins;
-    font-weight: 500;
-    font-size: 24rpx;
-    line-height: 1.3333em;
-    margin-top: 8rpx;
-  }
-
-  &__video-expand {
-    position: absolute;
-    top: 8rpx;
-    right: 8rpx;
-    width: 40rpx;
-    height: 40rpx;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 9999rpx;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  &__expand-icon {
-    font-family: 'Font Awesome 5 Free';
-    font-weight: 900;
-    font-size: 24rpx;
-    color: #ffffff;
-  }
-
-  // 图片分类标签
-  &__tabs {
-    position: absolute;
-    bottom: 32rpx;
-    left: 32rpx;
-    display: flex;
-    align-items: center;
-    gap: 8rpx;
-    background: rgba(0, 0, 0, 0.6);
-    border-radius: 9999rpx;
-    padding: 8rpx 8rpx;
-  }
-
-  &__tab {
-    padding: 8rpx 16rpx;
-
-    &--active {
-      background: #ffffff;
-      border-radius: 35rpx;
-    }
-  }
-
-  &__tab-text {
-    font-family: Poppins;
-    font-weight: 400;
-    font-size: 20rpx;
-    line-height: 2em;
-    color: #ffffff;
-  }
-
-  &__tab--active &__tab-text {
-    color: #000000;
-  }
-
-  &__tab-more {
-    display: flex;
-    align-items: center;
-    gap: 4rpx;
-  }
-
-  &__tab-arrow {
-    font-size: 20rpx;
-    color: #ffffff;
-  }
-}
-
-// 房屋基本信息
-.info {
-  background: #ffffff;
-  border-radius: 32rpx;
-  padding: 32rpx;
-  margin: -32rpx 32rpx 24rpx;
-  position: relative;
-
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 28rpx;
-    margin-bottom: 16rpx;
-  }
-
-  &__title {
-    flex: 1;
-    font-family: Poppins;
-    font-weight: 600;
-    font-size: 32rpx;
-    line-height: 1.5625em;
-    color: #000000;
-  }
-
-  &__star {
-    font-family: 'Font Awesome 5 Free';
-    font-weight: 900;
-    font-size: 32rpx;
-    line-height: 1em;
-    color: #9ca3af;
-    padding-top: 60rpx;
-  }
-
-  // 地址信息
-  &__address {
-    position: relative;
-    height: 136rpx;
-    border: 2rpx solid #e9e9e9;
-    border-radius: 16rpx;
-    overflow: hidden;
-    margin-bottom: 16rpx;
-  }
-
-  &__address-bg {
-    position: absolute;
+    left: 44rpx;
     top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.3;
-  }
-
-  &__address-text {
-    position: absolute;
-    top: 16rpx;
-    left: 16rpx;
-    right: 80rpx;
-    font-family: 'Noto Sans SC';
-    font-weight: 100;
-    font-size: 24rpx;
-    line-height: 1.375em;
-    color: #4b5563;
-  }
-
-  &__map {
-    position: absolute;
-    right: 16rpx;
-    top: 32rpx;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8rpx;
-  }
-
-  &__map-icon {
-    width: 40rpx;
-    height: 40rpx;
-    background: #6e9fd3;
-    border-radius: 50%;
-  }
-
-  &__map-text {
-    font-family: Poppins;
-    font-weight: 400;
-    font-size: 24rpx;
-    line-height: 1.375em;
-    color: #6e9fd3;
-  }
-
-  // 蜗壳精选
-  &__selected {
+    min-width: 68rpx;
+    height: 44rpx;
+    background: #ffffff;
+    border: 1rpx solid #cccccc;
+    border-radius: 100rpx;
     display: flex;
     align-items: center;
-    gap: 16rpx;
-    padding: 16rpx;
-    background: linear-gradient(90deg, #f3e8ff 0%, #e0e7ff 100%);
-    border-radius: 16rpx;
-    margin-bottom: 16rpx;
-  }
-
-  &__selected-badge {
-    background: #6366f1;
-    border-radius: 0;
-    padding: 8rpx 16rpx;
-  }
-
-  &__selected-badge-text {
-    font-family: Poppins;
-    font-weight: 400;
-    font-size: 28rpx;
-    line-height: 1.4285em;
-    color: #ffffff;
-  }
-
-  &__selected-desc {
-    flex: 1;
-    font-family: Poppins;
-    font-weight: 500;
-    font-size: 24rpx;
-    line-height: 1.6666em;
-    color: #4b5563;
-  }
-
-  &__selected-arrow {
-    font-size: 24rpx;
-    color: #9ca3af;
-  }
-
-  // 标签列表
-  &__tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16rpx 12rpx;
-    margin-bottom: 16rpx;
-  }
-
-  &__tag {
-    border: 2rpx solid #eaddd3;
-    border-radius: 12rpx;
-    padding: 10rpx 18rpx;
-  }
-
-  &__tag-text {
-    font-family: Poppins;
-    font-weight: 400;
-    font-size: 24rpx;
-    line-height: 1.3333em;
-    color: #8e6b52;
-  }
-
-  // 评分
-  &__rating {
-    border: 2rpx solid #e9e9e9;
-    border-radius: 16rpx;
-    padding: 16rpx;
-  }
-
-  &__rating-content {
-    display: flex;
-    align-items: center;
-    gap: 8rpx;
-    margin-bottom: 16rpx;
-  }
-
-  &__rating-star {
-    font-family: 'Font Awesome 5 Free';
-    font-weight: 900;
-    font-size: 24rpx;
-    color: #f97316;
-  }
-
-  &__rating-score {
-    font-family: Poppins;
-    font-weight: 600;
-    font-size: 28rpx;
-    line-height: 2em;
-    color: #000000;
-  }
-
-  &__rating-count {
-    font-family: Poppins;
-    font-weight: 400;
-    font-size: 24rpx;
-    line-height: 1.3333em;
-    color: #9ca3af;
-    margin-right: 4rpx;
-  }
-
-  &__rating-arrow {
-    font-size: 24rpx;
-    color: #9ca3af;
-    margin-left: auto;
-  }
-
-  &__rating-comment {
-    background: #f3f4f6;
-    border-radius: 12rpx;
+    justify-content: center;
     padding: 0 12rpx;
   }
 
-  &__rating-comment-text {
-    font-family: Poppins;
-    font-weight: 400;
-    font-size: 24rpx;
-    line-height: 1.3333em;
-    color: #4b5563;
-  }
-}
-
-// 入住时间
-.checkin {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 56rpx;
-  margin-bottom: 24rpx;
-
-  &__item {
-    display: flex;
-    flex-direction: column;
-  }
-
-  &__date {
-    font-family: Poppins;
+  // Poppins 600, 12px (24rpx)
+  &__favorite-count {
+    font-family: Poppins, sans-serif;
     font-weight: 600;
-    font-size: 32rpx;
-    line-height: 1.5em;
+    font-size: 24rpx;
+    line-height: 1.6666666666666667em;
     color: #000000;
   }
 
-  &__day {
-    font-family: Poppins;
-    font-weight: 600;
-    font-size: 24rpx;
-    line-height: 2em;
-    color: #999999;
-    margin-top: 10rpx;
-  }
-
-  &__nights {
-    border: 2rpx solid #cccccc;
-    border-radius: 32rpx;
-    padding: 8rpx 14rpx;
-  }
-
-  &__nights-text {
-    font-family: Poppins;
-    font-weight: 600;
-    font-size: 24rpx;
-    line-height: 2em;
-    color: #000000;
-  }
-}
-
-// 金刚区
-.diamond {
-  display: flex;
-  gap: 24rpx;
-  padding: 0 32rpx;
-  margin-bottom: 24rpx;
-
-  &__item {
-    flex: 1;
-    position: relative;
-    height: 252rpx;
-    border: 2rpx solid #ffffff;
-    border-radius: 32rpx;
-    padding: 24rpx;
-    box-shadow: 0px 8rpx 12rpx -2rpx rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-  }
-
-  &__title {
-    font-family: OPPOSans;
-    font-weight: 400;
-    font-size: 32rpx;
-    line-height: 1.5em;
-    color: #000000;
-    display: block;
-    margin-bottom: 8rpx;
-  }
-
-  &__subtitle {
-    font-family: Poppins;
-    font-weight: 500;
-    font-size: 24rpx;
-    line-height: 2em;
-    color: #9ca3af;
-    display: block;
-  }
-
-  &__circle {
+  // WeChat button: 87x32px (174rpx x 64rpx), x=128 (256rpx), y=9 (18rpx)
+  &__wechat-btn {
     position: absolute;
-    border-radius: 50%;
+    right: 0;
+    top: 18rpx;
+    width: 174rpx;
+    height: 64rpx;
+    position: relative;
+  }
 
-    &--1 {
-      width: 108rpx;
-      height: 108rpx;
-      bottom: 0;
-      right: 0;
-    }
+  &__wechat-bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1rpx solid rgba(151, 151, 151, 0.2);
+    border-radius: 50rpx;
+  }
 
-    &--2 {
-      width: 66rpx;
-      height: 66rpx;
-      bottom: 42rpx;
-      right: 42rpx;
+  &__wechat-icon {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 34rpx;
+    height: 34rpx;
+    // 微信图标 CSS 绘制
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 34rpx;
+      height: 34rpx;
+      background: #07c160;
+      border-radius: 50%;
     }
   }
 
-  &__icon {
-    position: absolute;
-    bottom: 32rpx;
-    left: 32rpx;
-    width: 142rpx;
-    height: 108rpx;
-  }
-}
-
-// 优惠券横幅
-.coupon {
-  display: flex;
-  align-items: center;
-  gap: 16rpx;
-  padding: 18rpx;
-  margin: 0 32rpx 24rpx;
-  background: linear-gradient(90deg, #fef2f2 0%, #ffffff 100%);
-  border: 2rpx solid #fee2e2;
-  border-radius: 16rpx;
-
-  &__badge {
-    background: #ef4444;
-    border-radius: 4rpx;
-    padding: 4rpx 8rpx;
-  }
-
-  &__amount {
-    font-family: Poppins;
-    font-weight: 600;
-    font-size: 23.6rpx;
-    line-height: 1.3559em;
-    color: #ffffff;
-  }
-
-  &__text {
-    flex: 1;
-    font-family: Poppins;
-    font-weight: 400;
-    font-size: 28rpx;
-    line-height: 1.4285em;
-    color: #b91c1c;
-    padding-left: 16rpx;
-  }
-
-  &__action {
+  // ==================== Nav ====================
+  // padding=0px 16px (0 32rpx)
+  &__nav {
     display: flex;
-    align-items: center;
-    gap: 4rpx;
+    overflow-x: auto;
+    padding: 0 32rpx;
+    white-space: nowrap;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
-  &__action-text {
-    font-family: Poppins;
-    font-weight: 400;
-    font-size: 24rpx;
-    line-height: 1.3333em;
-    color: #ef4444;
+  // Nav item wrapper: height=42px (84rpx)
+  &__nav-item-wrapper {
+    height: 84rpx;
+    flex-shrink: 0;
+
+    // 激活状态底部边框: stroke-weight=0px 0px 2px, color=#F97316
+    &--active {
+      border-bottom: 4rpx solid #f97316;
+    }
   }
 
-  &__action-arrow {
-    font-size: 20rpx;
-    color: #ef4444;
-  }
-}
-
-// 房型详情
-.room {
-  display: flex;
-  gap: 24rpx;
-  padding: 32rpx;
-  margin: 0 32rpx 24rpx;
-  background: linear-gradient(180deg, #f7f9fb 0%, #ffffff 100%);
-  border-radius: 0 0 32rpx 32rpx;
-
-  &__image {
-    width: 184rpx;
-    height: 252rpx;
-    border-radius: 8rpx;
-  }
-
-  &__content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-
-  &__header {
-    display: flex;
-    align-items: center;
-    gap: 8rpx;
-    margin-bottom: 8rpx;
-  }
-
-  &__type {
-    font-family: Poppins;
-    font-weight: 400;
-    font-size: 32rpx;
-    line-height: 1.5em;
-    color: #000000;
-  }
-
-  &__arrow {
-    font-size: 24rpx;
-    color: #9ca3af;
-  }
-
-  &__details {
-    font-family: Poppins;
-    font-weight: 400;
-    font-size: 24rpx;
-    line-height: 1.3333em;
-    color: #6b7280;
-    margin-bottom: 12rpx;
-  }
-
-  &__rule {
-    font-family: 'Noto Sans SC';
-    font-weight: 100;
-    font-size: 24rpx;
-    line-height: 1.3333em;
-    color: #6b7280;
-    margin-bottom: 24rpx;
-  }
-
-  &__price {
-    display: flex;
-    align-items: center;
-    gap: 12rpx;
-  }
-
-  &__price-tag {
-    background: #e9e9e9;
-    border-radius: 4rpx;
-    padding: 4rpx 8rpx;
-  }
-
-  &__price-tag-text {
-    font-family: Poppins;
-    font-weight: 400;
-    font-size: 20rpx;
-    line-height: 1.6em;
-    color: #9ca3af;
-  }
-
-  &__price-info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 8rpx;
-  }
-
-  &__price-group {
-    display: flex;
-    align-items: baseline;
-    gap: 8rpx;
-  }
-
-  &__price-original {
-    font-family: Poppins;
-    font-weight: 400;
-    font-size: 24rpx;
-    line-height: 1.6666em;
-    color: #9ca3af;
-    text-decoration: line-through;
-  }
-
-  &__price-current {
-    font-family: Poppins;
-    font-weight: 600;
-    font-size: 32rpx;
-    line-height: 1.25em;
-    color: #f97316;
-  }
-
-  &__price-badge {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 8rpx;
-    height: 32rpx;
-  }
-
-  &__price-badge-left {
-    width: 110rpx;
-    height: 32rpx;
-    background: #ffebeb;
-    border-radius: 4rpx 0 0 4rpx;
-  }
-
-  &__price-badge-right {
-    width: 88rpx;
-    height: 32rpx;
-    border: 2rpx solid #ffebeb;
-    border-radius: 0 4rpx 4rpx 0;
-    border-left: none;
-  }
-
-  &__price-saved {
-    position: absolute;
-    left: 4rpx;
-    top: 0;
-    display: flex;
-    align-items: center;
-    gap: 4rpx;
-  }
-
-  &__price-saved-text {
-    font-family: Poppins;
-    font-weight: 400;
-    font-size: 20rpx;
-    line-height: 1.6em;
-    color: #ef4444;
-  }
-
-  &__price-saved-arrow {
-    font-size: 20rpx;
-    color: #ea580c;
-  }
-
-  &__price-label {
-    position: absolute;
-    right: 4rpx;
-    top: 0;
-    font-family: Poppins;
-    font-weight: 400;
-    font-size: 20rpx;
-    line-height: 1.6em;
-    color: #ef4444;
-  }
-
-  &__book-btn {
-    width: 80rpx;
-    height: 80rpx;
-    background: #f97316;
-    border-radius: 16rpx;
+  // Nav item: padding=8px 10px (16rpx 20rpx), height=42px (84rpx)
+  &__nav-item {
+    height: 84rpx;
+    padding: 16rpx 20rpx;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  &__book-text {
-    font-family: Poppins;
+  // Poppins 400, 16px (32rpx)
+  &__nav-text {
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
+    font-size: 32rpx;
+    line-height: 1.5em;
+    color: #4b5563;
+  }
+
+  // 激活状态文字颜色
+  &__nav-item--active &__nav-text {
     font-weight: 600;
+    color: #000000;
+  }
+
+  // ==================== Container ====================
+  // y=157px (314rpx), padding=16px (32rpx)
+  &__container {
+    position: absolute;
+    left: 0;
+    top: 314rpx;
+    width: 100%;
+    padding: 32rpx;
+  }
+
+  // ==================== Cost Card ====================
+  // height=336px (672rpx), border-radius=12px (24rpx)
+  &__cost-card {
+    width: 100%;
+    min-height: 672rpx;
+    background: #ffffff;
+    border-radius: 24rpx;
+  }
+
+  // Header: x=16 (32rpx), y=16 (32rpx), width=311px (622rpx)
+  &__cost-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 32rpx;
+    gap: 326rpx; // 162.92px
+  }
+
+  &__cost-title-wrapper {
+    flex-shrink: 0;
+  }
+
+  // Roboto 700, 20px (40rpx), line-height=1.4em
+  &__cost-title {
+    font-family: Roboto, sans-serif;
+    font-weight: 700;
     font-size: 40rpx;
     line-height: 1.4em;
-    color: #ffffff;
+    color: #000000;
   }
-}
 
-// 底部预订栏
-.footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: #ffffff;
-  border-top: 2rpx solid #e5e7eb;
-  padding: 32rpx;
-  display: flex;
-  align-items: center;
-  gap: 24rpx;
+  // Link: width=70px (140rpx)
+  &__cost-link {
+    width: 140rpx;
+    display: flex;
+    align-items: center;
+    gap: 4rpx;
+  }
 
-  &__date {
+  // Poppins 400, 14px (28rpx), line-height≈1.14em
+  &__cost-link-text {
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
+    font-size: 28rpx;
+    line-height: 1.1428571428571428em;
+    color: #6e9fd3;
+  }
+
+  // 右箭头图标: 16x16px (32rpx) - 占位图标
+  &__arrow-right-icon {
+    width: 32rpx;
+    height: 32rpx;
+  }
+
+  // Tip: x=16 (32rpx), y=52 (104rpx), width=311px (622rpx)
+  &__cost-tip {
+    display: flex;
+    align-items: center;
+    padding: 0 32rpx;
+    margin-bottom: 24rpx; // 距离下方规则列表
+  }
+
+  &__info-icon-wrapper {
+    padding-right: 8rpx;
+    flex-shrink: 0;
+  }
+
+  // Info icon 占位图标: 12x12px (24rpx)
+  &__info-icon {
+    width: 24rpx;
+    height: 24rpx;
+  }
+
+  // Roboto 400, 10px (20rpx), line-height=1.6em
+  &__cost-tip-text {
+    font-family: Roboto, sans-serif;
+    font-weight: 400;
+    font-size: 20rpx;
+    line-height: 1.6em;
+    color: #999999;
+  }
+
+  // ==================== Rules Container ====================
+  // x=16 (32rpx), y=76 (152rpx), width=311px (622rpx), height=120px (240rpx), padding=12px 0 (24rpx 0)
+  &__rules-container {
+    padding: 24rpx 32rpx;
+    display: flex;
+    flex-direction: column;
+    gap: 32rpx;
+  }
+
+  &__rule-row {
+    display: flex;
+    width: 100%;
+  }
+
+  &__rule-label-wrapper {
+    flex-shrink: 0;
+    display: flex;
+    align-items: stretch;
+
+    // 默认宽度不固定
+    &--narrow {
+      width: 96rpx; // 48px
+    }
+  }
+
+  // Poppins 600, 14px (28rpx), line-height≈1.43em
+  &__rule-label {
+    font-family: Poppins, sans-serif;
+    font-weight: 600;
+    font-size: 28rpx;
+    line-height: 1.4285714285714286em;
+    color: #333333;
+  }
+
+  &__rule-content {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    gap: 8rpx;
+  }
+
+  // Info circle icon 占位图标: 16x16px (32rpx)
+  &__info-circle-icon {
+    width: 32rpx;
+    height: 32rpx;
+    flex-shrink: 0;
+  }
+
+  // Poppins 400, 13px (26rpx), line-height≈1.54em
+  &__rule-text {
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
+    font-size: 26rpx;
+    line-height: 1.5384615384615385em;
+    color: #000000;
+  }
+
+  // Line: width=311px (622rpx), height=1px (2rpx)
+  &__rule-divider {
+    width: 100%;
+    height: 2rpx;
+    background: #e9e9e9;
+  }
+
+  &__rule-value {
+    flex: 1;
+    display: flex;
+  }
+
+  &__rule-value-inner {
+    flex: 1;
+  }
+
+  // Poppins 400, 14px (28rpx), line-height≈1.43em
+  &__rule-value-text {
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
+    font-size: 28rpx;
+    line-height: 1.4285714285714286em;
+    color: #1f2937;
+  }
+
+  // ==================== Other Rules ====================
+  // x=16 (32rpx), y=196 (392rpx), width=311px (622rpx), height=24px (48rpx)
+  &__other-rules {
+    display: flex;
+    padding: 0 32rpx;
+    margin-top: 24rpx;
+  }
+
+  &__other-label-wrapper {
+    width: 96rpx; // 48px
+    flex-shrink: 0;
+  }
+
+  // Poppins 600, 16px (32rpx), line-height=1.5em
+  &__other-label {
+    font-family: Poppins, sans-serif;
+    font-weight: 600;
+    font-size: 32rpx;
+    line-height: 1.5em;
+    color: #333333;
+  }
+
+  &__other-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+
+  &__other-tag-wrapper {
+    width: 264rpx; // 132px
+    height: 20rpx; // 10px
+    margin-right: 8rpx;
+  }
+
+  &__other-text-wrapper {
+    width: 308rpx; // 154px
+    height: 40rpx; // 20px
+  }
+
+  // Poppins 400, 14px (28rpx), line-height≈1.43em
+  &__other-text {
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
+    font-size: 28rpx;
+    line-height: 1.4285714285714286em;
+    color: #000000;
+  }
+
+  // ==================== Process Card ====================
+  // height=461px (922rpx), border-radius=12px (24rpx)
+  &__process-card {
+    width: 100%;
+    min-height: 922rpx;
+    background: #ffffff;
+    border-radius: 24rpx;
+  }
+
+  // Header: x=16 (32rpx), y=16 (32rpx), width=311px (622rpx)
+  &__process-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 32rpx;
+    gap: 326rpx; // 162.92px
+  }
+
+  &__process-title-wrapper {
+    flex-shrink: 0;
+  }
+
+  // Roboto 700, 20px (40rpx), line-height=1.4em
+  &__process-title {
+    font-family: Roboto, sans-serif;
+    font-weight: 700;
+    font-size: 40rpx;
+    line-height: 1.4em;
+    color: #000000;
+  }
+
+  // Link: width=70px (140rpx)
+  &__process-link {
+    width: 140rpx;
+    display: flex;
+    align-items: center;
+    gap: 4rpx;
+  }
+
+  // Poppins 400, 14px (28rpx), line-height≈1.14em
+  &__process-link-text {
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
+    font-size: 28rpx;
+    line-height: 1.1428571428571428em;
+    color: #6e9fd3;
+  }
+
+  // Tip: x=16 (32rpx), y=52 (104rpx), width=311px (622rpx)
+  &__process-tip {
+    display: flex;
+    align-items: center;
+    padding: 0 32rpx;
+    margin-bottom: 24rpx; // 距离下方流程列表
+  }
+
+  // Roboto 400, 10px (20rpx), line-height=1.6em
+  &__process-tip-text {
+    font-family: Roboto, sans-serif;
+    font-weight: 400;
+    font-size: 20rpx;
+    line-height: 1.6em;
+    color: #999999;
+  }
+
+  // ==================== Process List ====================
+  // x=16 (32rpx), y=76 (152rpx), width=311px (622rpx), height=120px (240rpx), padding=12px 0 (24rpx 0)
+  &__process-list {
+    padding: 24rpx 32rpx;
+    display: flex;
+    flex-direction: column;
+    gap: 32rpx;
+  }
+
+  &__process-row {
+    display: flex;
+    width: 100%;
+  }
+
+  &__process-label-wrapper {
+    flex-shrink: 0;
+    display: flex;
+    align-items: stretch;
+
+    &--narrow {
+      width: 96rpx; // 48px
+    }
+  }
+
+  // Poppins 600, 14px (28rpx), line-height≈1.43em
+  &__process-label {
+    font-family: Poppins, sans-serif;
+    font-weight: 600;
+    font-size: 28rpx;
+    line-height: 1.4285714285714286em;
+    color: #333333;
+  }
+
+  &__process-value {
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+
+  // Poppins 400, 14px (28rpx), line-height≈1.43em
+  &__process-text {
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
+    font-size: 28rpx;
+    line-height: 1.4285714285714286em;
+    color: #000000;
+
+    // Green text: Poppins 600, color=#16A34A
+    &--green {
+      font-weight: 600;
+      color: #16a34a;
+    }
+  }
+
+  &__process-value-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__process-value-item {
+    width: 100%;
+  }
+
+  // Poppins 400, 13px (26rpx), line-height≈1.54em
+  &__process-text-small {
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
+    font-size: 26rpx;
+    line-height: 1.5384615384615385em;
+    color: #1f2937;
+  }
+
+  // Line: width=311px (622rpx), height=1px (2rpx)
+  &__process-divider {
+    width: 100%;
+    height: 2rpx;
+    background: #e9e9e9;
+  }
+
+  // ==================== Refund Table ====================
+  // x=16 (32rpx), y=195 (390rpx), width=311px (622rpx), height=141px (282rpx)
+  &__refund-table {
+    position: relative;
+    width: 622rpx;
+    height: 282rpx;
+    margin: 0 32rpx;
+    margin-top: 16rpx;
+    background: #ffffff;
+    border: 2rpx solid #e9e9e9;
+    border-radius: 16rpx;
+  }
+
+  // 表头背景: height=40px (80rpx), x=1 (2rpx), y=1 (2rpx), width=309px (618rpx)
+  &__refund-header-bg {
+    position: absolute;
+    left: 2rpx;
+    top: 2rpx;
+    width: 618rpx;
+    height: 80rpx;
+    background: #f7f8fc;
+    border-radius: 14rpx 14rpx 0 0;
+  }
+
+  // Header: x=12 (24rpx), y=12 (24rpx), width=287px (574rpx), height=17px (34rpx)
+  &__refund-header {
+    position: absolute;
+    left: 24rpx;
+    top: 24rpx;
+    width: 574rpx;
+    height: 34rpx;
+    display: flex;
+    justify-content: space-between;
+    z-index: 1;
+  }
+
+  &__refund-header-left {
+    width: 418rpx; // 209px
+    height: 16rpx; // 8px
+  }
+
+  &__refund-header-right {
+    width: 112rpx; // 56px
+    height: 32rpx; // 16px
+  }
+
+  // Roboto 400, 14px (28rpx), line-height≈1.43em, color=#6B7280
+  &__refund-header-text {
+    font-family: Roboto, sans-serif;
+    font-weight: 400;
+    font-size: 28rpx;
+    line-height: 1.4285714285714286em;
+    color: #6b7280;
+  }
+
+  // Body: x=12 (24rpx), y=41 (82rpx), width=287px (574rpx), height=64px (128rpx)
+  &__refund-body {
+    position: absolute;
+    left: 24rpx;
+    top: 82rpx;
+    width: 574rpx;
+    height: 128rpx;
+  }
+
+  &__refund-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 24rpx; // 12px
+
+    &--last {
+      margin-top: 40rpx; // y=64 - y=12 = 52px, 但需要考虑上一个元素高度
+      margin-bottom: 0;
+    }
+  }
+
+  // 时间列 (x=0, y=12) - 包含当前阶段徽章
+  &__refund-time {
+    display: flex;
+    flex-direction: column;
+    gap: 8rpx; // 4px
+    padding-right: 16rpx; // 8px
+    width: 288rpx; // 144px
+  }
+
+  // Badge: width=56px (112rpx), height=12px (24rpx)
+  &__refund-badge {
+    width: 112rpx;
+    height: 24rpx;
+    background: #fff1e5;
+    border-radius: 4rpx;
+    display: flex;
+    align-items: center;
+    padding: 0 8rpx;
+  }
+
+  // Roboto 400, 12px (24rpx), line-height≈1.33em, color=#F97316
+  &__refund-badge-text {
+    font-family: Roboto, sans-serif;
+    font-weight: 400;
+    font-size: 24rpx;
+    line-height: 1.3333333333333333em;
+    color: #f97316;
+  }
+
+  // Roboto 400, 14px (28rpx), line-height≈1.43em, color=#1F2937
+  &__refund-text {
+    font-family: Roboto, sans-serif;
+    font-weight: 400;
+    font-size: 28rpx;
+    line-height: 1.4285714285714286em;
+    color: #1f2937;
+  }
+
+  // 费用列 (x=160, y=28) - 右对齐
+  &__refund-fee {
+    width: 156rpx; // 78px
+    height: 40rpx; // 20px
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  // 简单时间列 (y=64)
+  &__refund-time-simple {
+    flex: 1;
+  }
+
+  // 简单费用列
+  &__refund-fee-simple {
+    width: 156rpx; // 78px
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  // Bottom divider: y=98 (196rpx), height=1px (2rpx), x=1 (2rpx), width=310px (620rpx)
+  &__refund-divider {
+    position: absolute;
+    left: 2rpx;
+    top: 196rpx;
+    width: 620rpx;
+    height: 2rpx;
+    background: #e9e9e9;
+  }
+
+  // ==================== Requirement Section ====================
+  // x=16 (32rpx), y=368 (736rpx), width=311px (622rpx), padding=17px 0 0 (34rpx 0 0)
+  &__requirement-section {
+    display: flex;
+    padding: 34rpx 32rpx 0;
+  }
+
+  &__requirement-label-wrapper {
+    width: 96rpx; // 48px
+    flex-shrink: 0;
+  }
+
+  // Poppins 600, 16px (32rpx), line-height=1.5em
+  &__requirement-label {
+    font-family: Poppins, sans-serif;
+    font-weight: 600;
+    font-size: 32rpx;
+    line-height: 1.5em;
+    color: #333333;
+  }
+
+  &__requirement-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column-reverse; // 反向排列，因为Figma中y坐标是从下往上
+    gap: 24rpx;
+  }
+
+  &__requirement-row {
+    display: flex;
+    gap: 0; // 两个item间没有gap
+  }
+
+  &__requirement-item {
+    width: 262rpx; // 131px
+    display: flex;
+    align-items: center;
+    gap: 12rpx; // 6px
+    margin-bottom: 4rpx; // 给图标留出一点空间
+  }
+
+  // Check icon (green): 16x16px (32rpx)
+  &__check-icon {
+    width: 32rpx;
+    height: 32rpx;
+    flex-shrink: 0;
+  }
+
+  // Xmark icon (brown): 16x16px (32rpx)
+  &__xmark-icon {
+    width: 32rpx;
+    height: 32rpx;
+    flex-shrink: 0;
+  }
+
+  // Poppins 400, 14px (28rpx), line-height≈1.43em
+  &__requirement-text {
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
+    font-size: 28rpx;
+    line-height: 1.4285714285714286em;
+    color: #000000;
+  }
+
+  // ==================== Tip Section ====================
+  // x=32px (64rpx), y=415px (830rpx), width=311px (622rpx), height=53px (106rpx)
+  // padding=16px (32rpx), border-radius=12px (24rpx)
+  &__tip-section {
+    position: absolute;
+    left: 64rpx;
+    top: 830rpx;
+    width: 622rpx;
+    min-height: 106rpx;
+    background: #f7f8fc;
+    border-radius: 24rpx;
+    padding: 32rpx;
+  }
+
+  &__tip-container {
+    width: 590rpx; // 295px
+  }
+
+  // Roboto 400, 10px (20rpx), line-height=1.6em
+  &__tip-text {
+    font-family: Roboto, sans-serif;
+    font-weight: 400;
+    font-size: 20rpx;
+    line-height: 1.6em;
+    color: #999999;
+  }
+
+  // ==================== Footer ====================
+  // y=790px (1580rpx), width=375px (750rpx), height=81px (162rpx)
+  &__footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 162rpx;
+    background: #ffffff;
+    border-top: 1rpx solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 32rpx;
+    z-index: 998;
+  }
+
+  // 日期选择器: x=164px (328rpx), y=30px (60rpx)
+  &__date-picker {
+    position: absolute;
+    left: 328rpx;
+    top: 60rpx;
     display: flex;
     flex-direction: column;
     gap: -0.5rpx;
   }
 
-  &__date-text {
-    font-family: Poppins;
+  // Inter 400, 10px (20rpx), line-height=1.75em
+  &__date-checkin {
+    font-family: Inter, sans-serif;
     font-weight: 400;
     font-size: 20rpx;
     line-height: 1.75em;
     color: #000000;
+    width: 72rpx; // 36px
+    height: 22rpx; // 11px
+  }
 
-    &:nth-child(2) {
-      font-size: 24rpx;
-      line-height: 1.4583em;
+  &__date-checkout-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 4rpx;
+  }
+
+  // Poppins 400, 12px (24rpx), line-height≈1.46em
+  &__date-checkout {
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
+    font-size: 24rpx;
+    line-height: 1.4583333333333333em;
+    color: #000000;
+    width: 76rpx; // 38px
+    height: 20rpx; // 10px
+  }
+
+  // Caret icon: 10x10px (20rpx)
+  &__caret-icon {
+    width: 20rpx;
+    height: 20rpx;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 4rpx;
+      top: 5rpx;
+      width: 10rpx;
+      height: 10rpx;
+      border-right: 2rpx solid #000000;
+      border-bottom: 2rpx solid #000000;
+      transform: rotate(45deg);
     }
   }
 
-  &__date-arrow {
-    font-size: 20rpx;
-    color: #000000;
-    margin-left: 8rpx;
-  }
-
-  &__actions {
-    flex: 1;
-    display: flex;
-    gap: 16rpx;
-  }
-
-  &__btn {
-    flex: 1;
+  // 实景选房按钮: x=223px (446rpx), y=16px (32rpx), width=136px (272rpx), height=49px (98rpx)
+  &__scene-btn {
+    position: absolute;
+    right: 32rpx;
+    top: 32rpx;
+    width: 272rpx;
     height: 98rpx;
+    background: transparent;
+    border: 2rpx solid #f97316;
     border-radius: 16rpx;
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-
-    &--outline {
-      border: 2rpx solid #f97316;
-      background: transparent;
-      box-shadow:
-        0px 0px 2rpx 0px rgba(249, 115, 22, 1),
-        0px 4rpx 6rpx 2rpx rgba(249, 115, 22, 0.08);
-    }
-
-    &--primary {
-      background: #f97316;
-    }
+    align-items: center;
+    box-shadow:
+      0px 0px 1px 0px rgba(249, 115, 22, 1),
+      0px 2px 3px 1px rgba(249, 115, 22, 0.08);
   }
 
-  &__btn-text {
-    font-family: Poppins;
+  // Poppins 600, 16px (32rpx), line-height=1.75em
+  &__scene-btn-text {
+    font-family: Poppins, sans-serif;
     font-weight: 600;
     font-size: 32rpx;
     line-height: 1.75em;
     text-align: center;
-
-    .footer__btn--outline & {
-      color: #000000;
-    }
-
-    .footer__btn--primary & {
-      color: #ffffff;
-    }
+    color: #000000;
+    width: 128rpx; // 64px
+    height: 38rpx; // 19px
   }
 
-  &__price {
+  // 立即预订按钮: x=16px (32rpx), y=16px (32rpx), width=136px (272rpx)
+  &__book-btn {
+    position: absolute;
+    left: 32rpx;
+    top: 32rpx;
+    width: 272rpx;
+    background: #f97316;
+    border-radius: 16rpx;
     display: flex;
+    flex-direction: column;
     align-items: center;
+    padding: 16rpx 64rpx;
+  }
+
+  // Poppins 600, 16px (32rpx), line-height=1.75em
+  &__book-btn-text {
+    font-family: Poppins, sans-serif;
+    font-weight: 600;
+    font-size: 32rpx;
+    line-height: 1.75em;
+    text-align: center;
+    color: #ffffff;
+    width: 128rpx; // 64px
+    height: 38rpx; // 19px
+  }
+
+  &__price-wrapper {
+    display: flex;
     justify-content: center;
+    align-items: center;
     gap: 8rpx;
   }
 
-  &__price-current {
-    font-family: Poppins;
+  // Poppins 600, 14px (28rpx), line-height≈1.43em
+  &__current-price {
+    font-family: Poppins, sans-serif;
     font-weight: 600;
     font-size: 28rpx;
-    line-height: 1.4285em;
+    line-height: 1.4285714285714286em;
+    text-align: center;
     color: #ffffff;
+    width: 76rpx; // 38px
+    height: 28rpx; // 14px
   }
 
-  &__price-original {
-    font-family: Poppins;
+  &__original-price-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  // Poppins 400, 12px (24rpx), line-height≈1.67em
+  &__original-price {
+    font-family: Poppins, sans-serif;
     font-weight: 400;
     font-size: 24rpx;
-    line-height: 1.6666em;
+    line-height: 1.6666666666666667em;
+    text-align: center;
     color: #fed7aa;
+    width: 62rpx; // 31px
+    height: 28rpx; // 14px
+    text-decoration: line-through;
   }
 }

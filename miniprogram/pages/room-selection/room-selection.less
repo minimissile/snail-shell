@@ -2,16 +2,33 @@
   width: 100%;
   min-height: 100vh;
   background: #f7f9fb;
+  overflow-y: scroll;
   padding-bottom: 162rpx;
 
-  // ==================== 状态栏 ====================
+  // ====================状态栏 ====================
   &__status-bar {
+    position: relative;
+    width: 100%;
+    height: 88rpx;
+  }
+
+  &__status-bar-bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
     height: 88rpx;
     background: #ffffff;
+  }
+
+  &__status-bar-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
-    padding-top: 28rpx;
+    padding-bottom: 8rpx;
   }
 
   &__status-time {
@@ -21,19 +38,19 @@
     line-height: 1.5em;
     letter-spacing: -0.02em;
     color: #000000;
+    text-align: center;
   }
 
   // ==================== 导航栏头部 ====================
   &__header {
     background: #ffffff;
-    padding: 0 32rpx;
+    padding: 20rpx 32rpx 0;
   }
 
   &__header-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20rpx 0;
   }
 
   &__back-btn {
@@ -45,23 +62,45 @@
   }
 
   &__back-icon {
-    width: 24rpx;
-    height: 24rpx;
+    width: 20rpx;
+    height: 36rpx;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 14rpx;
+      top: 6rpx;
+      width: 20rpx;
+      height: 36rpx;
+      border-left: 3rpx solid #1f2937;
+      border-top: 3rpx solid #1f2937;
+      transform: rotate(-45deg);
+      transform-origin: left top;
+    }
   }
 
   &__header-actions {
     display: flex;
     align-items: center;
-    gap: 72rpx;
+    gap: 128rpx;
+  }
+
+  &__favorite-group {
+    position: relative;
+    width: 112rpx;
+    height: 98rpx;
   }
 
   &__favorite-btn {
-    position: relative;
+    position: absolute;
+    left: 0;
+    top: 18rpx;
     width: 80rpx;
     height: 80rpx;
     background: rgba(255, 255, 255, 0.8);
     border: 1rpx solid #e9e9e9;
-    border-radius: 9999rpx;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -73,12 +112,16 @@
     font-size: 40rpx;
     line-height: 1.4em;
     color: #1f2937;
+
+    &::before {
+      content: '♥';
+    }
   }
 
   &__favorite-badge {
     position: absolute;
+    left: 44rpx;
     top: 0;
-    right: -12rpx;
     min-width: 68rpx;
     height: 44rpx;
     background: #ffffff;
@@ -99,17 +142,27 @@
   }
 
   &__wechat-btn {
+    position: relative;
     width: 174rpx;
     height: 64rpx;
-    background: rgba(255, 255, 255, 0.6);
-    border: 0.5rpx solid rgba(151, 151, 151, 0.2);
-    border-radius: 25rpx;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
+  &__wechat-bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1rpx solid rgba(151, 151, 151, 0.2);
+    border-radius: 50rpx;
+  }
+
   &__wechat-icon {
+    position: relative;
     width: 34rpx;
     height: 34rpx;
     background: #07c160;
@@ -120,9 +173,9 @@
   &__nav {
     display: flex;
     align-items: center;
-    gap: 24rpx;
-    padding-bottom: 16rpx;
+    padding: 16rpx 0;
     overflow-x: auto;
+    white-space: nowrap;
   }
 
   &__store-name {
@@ -131,7 +184,11 @@
     font-size: 32rpx;
     line-height: 1.5em;
     color: #000000;
-    white-space: nowrap;
+  }
+
+  &__nav-spacer {
+    width: 324rpx;
+    height: 1rpx;
   }
 
   &__business-hours {
@@ -140,7 +197,6 @@
     font-size: 24rpx;
     line-height: 2em;
     color: #999999;
-    white-space: nowrap;
   }
 
   // ==================== 预订方式切换 ====================
@@ -148,7 +204,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 16rpx;
+    padding-bottom: 32rpx;
   }
 
   &__booking-label {
@@ -168,6 +224,29 @@
   &__booking-info-icon {
     width: 32rpx;
     height: 32rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__info-circle {
+    width: 32rpx;
+    height: 32rpx;
+    border-radius: 50%;
+    border: 2rpx solid #cccccc;
+    position: relative;
+
+    &::before {
+      content: 'i';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-family: PingFang SC;
+      font-weight: 600;
+      font-size: 20rpx;
+      color: #cccccc;
+    }
   }
 
   &__booking-tabs {
@@ -176,7 +255,7 @@
   }
 
   &__booking-tab {
-    padding: 8rpx 24rpx;
+    padding: 9rpx 24rpx 10rpx;
     border: 1rpx solid #e9e9e9;
     border-radius: 999rpx;
     background: transparent;
@@ -204,7 +283,7 @@
   &__date-section,
   &__time-section,
   &__month-section {
-    padding: 32rpx;
+    padding: 0 32rpx;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -235,7 +314,7 @@
     border-radius: 4rpx;
     display: flex;
     align-items: center;
-    gap: 4rpx;
+    gap: 0;
   }
 
   &__date-value,
@@ -293,12 +372,27 @@
   &__selected-item {
     display: flex;
     align-items: center;
-    gap: 4rpx;
+    gap: 3rpx;
   }
 
-  &__selected-icon {
+  &__info-icon {
     width: 32rpx;
     height: 32rpx;
+    border-radius: 50%;
+    border: 2rpx solid #cccccc;
+    position: relative;
+
+    &::before {
+      content: 'i';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-family: PingFang SC;
+      font-weight: 600;
+      font-size: 20rpx;
+      color: #cccccc;
+    }
   }
 
   &__selected-text {
@@ -306,10 +400,6 @@
     font-weight: 400;
     font-size: 24rpx;
     line-height: 1.3333333333333333em;
-    color: #9ca3af;
-  }
-
-  &__selected-text--highlight {
     color: #ef4444;
   }
 
@@ -319,9 +409,34 @@
     gap: 8rpx;
   }
 
-  &__tip-icon {
+  &__clock-icon {
     width: 32rpx;
     height: 32rpx;
+    border-radius: 50%;
+    border: 2rpx solid #cccccc;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 40%;
+      width: 2rpx;
+      height: 8rpx;
+      background: #cccccc;
+      transform: translate(-50%, -100%);
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 8rpx;
+      height: 2rpx;
+      background: #cccccc;
+      transform: translate(-50%, -50%);
+    }
   }
 
   &__tip-text {
@@ -355,6 +470,18 @@
     width: 24rpx;
     height: 24rpx;
     border-radius: 2rpx;
+
+    &--selected {
+      background: #f97316;
+    }
+
+    &--available {
+      background: #f2e9ae;
+    }
+
+    &--unavailable {
+      background: #999999;
+    }
   }
 
   &__legend-label {
@@ -680,54 +807,32 @@
     bottom: 0;
     left: 0;
     right: 0;
+    width: 100%;
+    height: 162rpx;
     background: #ffffff;
     border-top: 1rpx solid #e5e7eb;
-    padding: 32rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 46rpx 32rpx;
   }
 
   &__book-btn {
-    width: 100%;
+    width: 686rpx;
+    height: 84rpx;
     background: #f97316;
     border-radius: 8rpx;
-    padding: 16rpx 64rpx;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    padding: 16rpx 64rpx;
   }
 
   &__book-btn-text {
     font-family: Poppins;
     font-weight: 600;
     font-size: 32rpx;
-    line-height: 1.75em;
+    line-height: 1.1875em;
     color: #ffffff;
-  }
-
-  &__price-container {
-    display: flex;
-    align-items: center;
-    gap: 8rpx;
-  }
-
-  &__total-price {
-    font-family: Poppins;
-    font-weight: 600;
-    font-size: 28rpx;
-    line-height: 1.4285714285714286em;
-    color: #ffffff;
-  }
-
-  &__original-price-container {
-    display: flex;
-    align-items: center;
-  }
-
-  &__original-price {
-    font-family: Poppins;
-    font-weight: 400;
-    font-size: 24rpx;
-    line-height: 1.6666666666666667em;
-    color: #fed7aa;
-    text-decoration: line-through;
   }
 }
