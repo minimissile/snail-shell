@@ -2,5 +2,9 @@
   "navigationBarTitleText": "常用信息",
   "navigationBarBackgroundColor": "#F7F9FB",
   "navigationBarTextStyle": "black",
-  "usingComponents": {}
+  "usingComponents": {
+    "t-popup": "tdesign-miniprogram/popup/popup",
+    "t-input": "tdesign-miniprogram/input/input",
+    "t-button": "tdesign-miniprogram/button/button"
+  }
 }

@@ -1,6 +1,45 @@
 /**app.wxss**/
 @import "./styles/theme.less";
 
+/* 覆盖 TDesign 主题色，使用项目的橙色主题 */
+page {
+  /* 主色调 - 橙色系列 */
+  --td-brand-color-1: #FFF7ED;
+  --td-brand-color-2: #FFEDD5;
+  --td-brand-color-3: #FED7AA;
+  --td-brand-color-4: #FDBA74;
+  --td-brand-color-5: #FB923C;
+  --td-brand-color-6: #F97316;  /* 主题色 */
+  --td-brand-color-7: #EA580C;
+  --td-brand-color-8: #C2410C;
+  --td-brand-color-9: #9A3412;
+  --td-brand-color-10: #7C2D12;
+  
+  /* Primary 色相关 */
+  --td-primary-color-1: var(--td-brand-color-1);
+  --td-primary-color-2: var(--td-brand-color-2);
+  --td-primary-color-3: var(--td-brand-color-3);
+  --td-primary-color-4: var(--td-brand-color-4);
+  --td-primary-color-5: var(--td-brand-color-5);
+  --td-primary-color-6: var(--td-brand-color-6);
+  --td-primary-color-7: var(--td-brand-color-7);
+  --td-primary-color-8: var(--td-brand-color-8);
+  --td-primary-color-9: var(--td-brand-color-9);
+  --td-primary-color-10: var(--td-brand-color-10);
+  
+  /* 品牌色 - 使用橙色 */
+  --td-brand-color: #F97316;
+  --td-brand-color-focus: var(--td-brand-color-1);
+  --td-brand-color-active: var(--td-brand-color-8);
+  --td-brand-color-disabled: var(--td-brand-color-3);
+  --td-brand-color-light: var(--td-brand-color-1);
+  --td-brand-color-light-active: var(--td-brand-color-2);
+  
+  /* 文字品牌色 */
+  --td-text-color-brand: #F97316;
+  --td-text-color-link: #F97316;
+}
+
 .container {
   height: 100%;
   .flex(column, center, space-between);

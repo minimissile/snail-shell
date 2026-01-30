@@ -1,16 +1,29 @@
 <view class="page" aria-label="常用信息">
   <view class="content" aria-label="内容">
-    <view class="card" bindtap="onOpenCard" aria-role="button" aria-label="常用信息卡片">
+    <!-- 列表为空时显示提示 -->
+    <view wx:if="{{travelers.length === 0}}" class="empty" aria-label="空状态">
+      <text class="empty__text">暂无常用旅客</text>
+      <text class="empty__tip">点击下方按钮添加常用旅客信息</text>
+    </view>
+
+    <!-- 常用旅客列表 -->
+    <view 
+      wx:for="{{travelers}}" 
+      wx:key="id" 
+      class="card" 
+      data-id="{{item.id}}"
+      bindtap="onOpenCard"
+      aria-label="常用信息卡片">
       <view class="card__main">
-        <text class="card__name">{{name}}</text>
+        <text class="card__name">{{item.name}}</text>
         <view class="card__rows" aria-label="信息列表">
           <view class="card__row">
             <text class="card__label">手机号</text>
-            <text class="card__value">{{phone}}</text>
+            <text class="card__value">{{item.phone}}</text>
           </view>
           <view class="card__row">
             <text class="card__label">身份证</text>
-            <text class="card__value">{{idCard}}</text>
+            <text class="card__value">{{item.idCard}}</text>
           </view>
         </view>
       </view>
@@ -22,4 +35,92 @@
   <view class="footer" aria-label="底部操作">
     <button class="cta" bindtap="onAddTraveler" aria-label="添加常用旅客">添加常用旅客</button>
   </view>
+
+  <!-- 编辑/添加弹窗 -->
+  <t-popup
+    visible="{{showEditPopup}}"
+    placement="bottom"
+    bind:visible-change="onPopupVisibleChange"
+  >
+    <view class="popup">
+      <!-- 弹窗头部 -->
+      <view class="popup__header">
+        <view class="popup__header-left">
+          <text 
+            class="popup__cancel" 
+            bindtap="onCancelEdit"
+          >取消</text>
+        </view>
+        <text class="popup__title">{{isEditMode ? '编辑旅客' : '添加旅客'}}</text>
+        <view class="popup__header-right">
+          <text 
+            wx:if="{{isEditMode}}" 
+            class="popup__delete" 
+            bindtap="onDeleteTraveler"
+          >删除</text>
+        </view>
+      </view>
+
+      <!-- 表单内容 -->
+      <view class="popup__content">
+        <view class="form">
+          <!-- 姓名 -->
+          <view class="form__item">
+            <view class="form__label">
+              <text class="form__label-text">姓名</text>
+              <text class="form__required">*</text>
+            </view>
+            <t-input
+              value="{{formData.name}}"
+              placeholder="请输入姓名"
+              clearable
+              bind:change="onNameChange"
+              class="form__input"
+            />
+          </view>
+
+          <!-- 手机号 -->
+          <view class="form__item">
+            <view class="form__label">
+              <text class="form__label-text">手机号</text>
+              <text class="form__required">*</text>
+            </view>
+            <t-input
+              value="{{formData.phone}}"
+              placeholder="请输入手机号"
+              type="number"
+              clearable
+              bind:change="onPhoneChange"
+              class="form__input"
+            />
+          </view>
+
+          <!-- 身份证号 -->
+          <view class="form__item">
+            <view class="form__label">
+              <text class="form__label-text">身份证号</text>
+              <text class="form__required">*</text>
+            </view>
+            <t-input
+              value="{{formData.idCard}}"
+              placeholder="请输入身份证号"
+              clearable
+              bind:change="onIdCardChange"
+              class="form__input"
+            />
+          </view>
+        </view>
+      </view>
+
+      <!-- 弹窗底部按钮 -->
+      <view class="popup__footer">
+        <t-button
+          theme="primary"
+          size="large"
+          block
+          bind:tap="onConfirmEdit"
+        >确定</t-button>
+      </view>
+    </view>
+  </t-popup>
 </view>
