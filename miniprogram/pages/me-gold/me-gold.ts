@@ -2,12 +2,26 @@ Component({
   data: {
     avatarSrc: '/assets/figma/avatar.jpg',
     userName: 'Dimoo旅行家',
-    greeting: '尊贵的黄金会员, 下午好',
+    greeting: '尊贵的大众会员, 下午好',
     couponCount: 1,
+    memberType: 'general', // 'gold' | 'general'
   },
   methods: {
     onOpenHeaderMenu() {
-      wx.showToast({ title: '菜单', icon: 'none' })
+      // 切换会员类型用于测试
+      const currentType = this.data.memberType
+      const newType = currentType === 'gold' ? 'general' : 'gold'
+      const newGreeting = newType === 'gold' ? '尊贵的黄金会员, 下午好' : '尊贵的大众会员, 下午好'
+
+      this.setData({
+        memberType: newType,
+        greeting: newGreeting,
+      })
+
+      wx.showToast({
+        title: newType === 'gold' ? '切换到黄金会员' : '切换到大众会员',
+        icon: 'none',
+      })
     },
     onTapBenefit(e: WechatMiniprogram.CustomEvent<{ key: string }>) {
       const key = e.detail?.key || ''

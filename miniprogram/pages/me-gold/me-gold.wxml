@@ -4,7 +4,7 @@
 
     <profile-header avatar-src="{{avatarSrc}}" user-name="{{userName}}" bind:menu="onOpenHeaderMenu" />
 
-    <membership-banner greeting="{{greeting}}" bind:benefit="onTapBenefit" />
+    <membership-banner greeting="{{greeting}}" member-type="{{memberType}}" bind:benefit="onTapBenefit" />
   </view>
 
   <view class="content">

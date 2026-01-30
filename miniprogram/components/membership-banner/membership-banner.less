@@ -1,6 +1,7 @@
 @import '../../styles/theme.less';
 
-@banner-accent: #aa5200;
+@banner-accent-gold: #aa5200;
+@banner-accent-general: #909090;
 
 .banner {
   position: relative;
@@ -12,6 +13,27 @@
   background: linear-gradient(135deg, rgba(255, 210, 94, 1) 1%, rgba(255, 244, 205, 1) 48%, rgba(255, 213, 64, 1) 100%);
   // overflow: hidden;
   margin-top: 0rpx;
+
+  &--general {
+    background: linear-gradient(
+      135deg,
+      rgba(215, 215, 215, 1) 1%,
+      rgba(243, 243, 243, 1) 48%,
+      rgba(185, 185, 185, 1) 100%
+    );
+
+    .greeting {
+      color: @banner-accent-general;
+    }
+
+    .benefit__label {
+      color: @banner-accent-general;
+    }
+
+    .benefit__arrow {
+      color: @banner-accent-general;
+    }
+  }
 }
 
 .content {
@@ -23,7 +45,7 @@
 }
 
 .greeting {
-  .font(32rpx, 56rpx, 600, @banner-accent);
+  .font(32rpx, 56rpx, 600, @banner-accent-gold);
 }
 
 .benefits {
@@ -55,14 +77,14 @@
   }
 
   &__label {
-    .font(24rpx, 32rpx, 500, @banner-accent);
+    .font(24rpx, 32rpx, 500, @banner-accent-gold);
   }
 
   &__arrow {
     padding-left: 8rpx;
     font-size: 28rpx;
     line-height: 32rpx;
-    color: @banner-accent;
+    color: @banner-accent-gold;
   }
 }
 
@@ -73,6 +95,14 @@
   z-index: 1;
 
   &--general {
+    width: 164rpx;
+    height: 176rpx;
+    right: 32rpx;
+    top: -42rpx;
+    opacity: 0.98;
+  }
+
+  &--general-bg {
     width: 148rpx;
     height: 176rpx;
     right: 50rpx;

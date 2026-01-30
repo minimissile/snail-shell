@@ -1,12 +1,44 @@
-<view class="banner" aria-label="黄金会员信息">
-  <image class="badge badge--general" src="/assets/figma/badge-general.png" mode="aspectFit" aria-hidden="true" />
-  <image class="badge badge--gold" src="/assets/figma/badge-gold-311bcd.png" mode="aspectFit" aria-hidden="true" />
+<view class="banner banner--{{memberType}}" aria-label="会员信息">
+  <image
+    wx:if="{{memberType === 'general'}}"
+    class="badge badge--general"
+    src="/assets/figma/badge-general-2d3956.png"
+    mode="aspectFit"
+    aria-hidden="true"
+  />
+  <image
+    wx:if="{{memberType === 'gold'}}"
+    class="badge badge--general-bg"
+    src="/assets/figma/badge-general.png"
+    mode="aspectFit"
+    aria-hidden="true"
+  />
+  <image
+    wx:if="{{memberType === 'gold'}}"
+    class="badge badge--gold"
+    src="/assets/figma/badge-gold-311bcd.png"
+    mode="aspectFit"
+    aria-hidden="true"
+  />
 
   <view class="content">
     <text class="greeting">{{greeting}}</text>
     <view class="benefits">
       <view class="benefit" data-key="住宿体验价" bindtap="onBenefit" aria-role="button" aria-label="住宿体验价">
-        <image class="benefit__icon" src="/assets/figma/membership-tag.svg" mode="aspectFit" aria-hidden="true" />
+        <image
+          wx:if="{{memberType === 'gold'}}"
+          class="benefit__icon"
+          src="/assets/figma/membership-tag.svg"
+          mode="aspectFit"
+          aria-hidden="true"
+        />
+        <image
+          wx:if="{{memberType === 'general'}}"
+          class="benefit__icon"
+          src="/assets/figma/membership-tag-general.svg"
+          mode="aspectFit"
+          aria-hidden="true"
+        />
         <text class="benefit__label">住宿体验价</text>
       </view>
 

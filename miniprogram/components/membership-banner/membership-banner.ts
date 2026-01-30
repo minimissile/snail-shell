@@ -4,6 +4,10 @@ Component({
       type: String,
       value: '',
     },
+    memberType: {
+      type: String,
+      value: 'general', // 'gold' | 'general'
+    },
   },
   methods: {
     onBenefit(e: any) {
