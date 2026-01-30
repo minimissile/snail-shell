@@ -10,9 +10,7 @@
         <view class="selected-type">
           <text class="type-text">{{selectedType}}</text>
         </view>
-        <view class="arrow-icon">
-          <text class="arrow"></text>
-        </view>
+        <view class="arrow-icon"></view>
       </view>
     </view>
 
