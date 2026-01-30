@@ -73,7 +73,7 @@ Component({
     onOpenCard(this: any, e: WechatMiniprogram.TouchEvent) {
       const id = e.currentTarget.dataset.id
       const traveler = this.data.travelers.find((t: Traveler) => t.id === id)
-      
+
       if (!traveler) return
 
       // 设置为编辑模式
@@ -230,7 +230,7 @@ Component({
         success: (res) => {
           if (res.confirm) {
             const travelers = this.data.travelers.filter((t: Traveler) => t.id !== editingId)
-            this.setData({ 
+            this.setData({
               travelers,
               showEditPopup: false,
             })

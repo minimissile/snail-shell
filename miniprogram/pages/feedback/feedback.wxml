@@ -55,7 +55,7 @@
               </view>
             </view>
           </block>
-          
+
           <!-- 上传按钮 -->
           <view class="upload-box" wx:if="{{uploadedImages.length < 3}}" bindtap="onUploadImage">
             <view class="upload-icon">

@@ -1,38 +1,17 @@
 <view class="page" aria-label="订单页">
   <navigation-bar extClass="orders-nav" title="" back="{{false}}" color="#000000" background="transparent">
-    <view
-      slot="left"
-      class="topbar-left"
-      bindtap="onOpenOrderTitle"
-      aria-role="button"
-      aria-label="全部订单"
-    >
+    <view slot="left" class="topbar-left" bindtap="onOpenOrderTitle" aria-role="button" aria-label="全部订单">
       <text class="topbar-title">全部订单</text>
-      <image
-        class="topbar-title-icon"
-        src="/assets/figma/angle-down-small.svg"
-        mode="aspectFit"
-        aria-hidden="true"
-      />
+      <image class="topbar-title-icon" src="/assets/figma/angle-down-small.svg" mode="aspectFit" aria-hidden="true" />
     </view>
 
     <view slot="right" class="topbar-right" aria-label="顶部操作">
       <view class="topbar-actions">
-        <view
-          class="topbar-action"
-          bindtap="onOpenHeaderMenu"
-          aria-role="button"
-          aria-label="菜单"
-        >
+        <view class="topbar-action" bindtap="onOpenHeaderMenu" aria-role="button" aria-label="菜单">
           <text class="topbar-action-text">⋯</text>
         </view>
         <view class="topbar-divider" aria-hidden="true"></view>
-        <view
-          class="topbar-action"
-          bindtap="onCloseTopbar"
-          aria-role="button"
-          aria-label="关闭"
-        >
+        <view class="topbar-action" bindtap="onCloseTopbar" aria-role="button" aria-label="关闭">
           <text class="topbar-action-text">×</text>
         </view>
       </view>
@@ -40,13 +19,7 @@
   </navigation-bar>
 
   <view class="tabs" aria-label="订单状态 Tab">
-    <scroll-view
-      class="tabs__scroll"
-      scroll-x
-      show-scrollbar="{{false}}"
-      enable-flex
-      aria-label="订单状态切换"
-    >
+    <scroll-view class="tabs__scroll" scroll-x show-scrollbar="{{false}}" enable-flex aria-label="订单状态切换">
       <view class="tabs__row">
         <view
           wx:for="{{tabs}}"
@@ -81,12 +54,7 @@
             <text class="state__text">加载中…</text>
           </view>
 
-          <view
-            wx:elif="{{errorMessage}}"
-            class="state state--error"
-            aria-role="alert"
-            aria-label="加载失败"
-          >
+          <view wx:elif="{{errorMessage}}" class="state state--error" aria-role="alert" aria-label="加载失败">
             <text class="state__text">{{errorMessage}}</text>
             <button class="state__btn" bindtap="onRetry" aria-label="重试">重试</button>
           </view>
@@ -105,7 +73,9 @@
                     <image class="orders__card-icon" src="/assets/figma/grid-buildings-modern.svg" mode="aspectFit" />
                     <text class="orders__card-store">{{order.storeName}}</text>
                   </view>
-                  <text class="orders__card-status" style="{{order.statusColor ? 'color: ' + order.statusColor : ''}}">{{order.status}}</text>
+                  <text class="orders__card-status" style="{{order.statusColor ? 'color: ' + order.statusColor : ''}}"
+                    >{{order.status}}</text
+                  >
                 </view>
 
                 <view class="orders__card-divider"></view>

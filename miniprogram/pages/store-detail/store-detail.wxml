@@ -2,7 +2,7 @@
   <!-- 封面部分 -->
   <view class="cover">
     <image class="cover__image" src="{{coverImage}}" mode="aspectFill" />
-    
+
     <!-- 状态栏 -->
     <view class="cover__status-bar">
       <text class="cover__time">9:41</text>
@@ -12,7 +12,7 @@
         <view class="cover__icon-battery"></view>
       </view>
     </view>
-    
+
     <!-- 返回按钮和收藏按钮 -->
     <view class="cover__actions">
       <view class="cover__back" bindtap="onGoBack">
@@ -27,7 +27,7 @@
         </view>
       </view>
     </view>
-    
+
     <!-- 实拍看房 -->
     <view class="cover__video" bindtap="onViewVideo">
       <image class="cover__video-thumbnail" src="{{videoThumbnail}}" mode="aspectFill" />
@@ -39,7 +39,7 @@
         <text class="cover__expand-icon"></text>
       </view>
     </view>
-    
+
     <!-- 图片分类标签 -->
     <view class="cover__tabs">
       <view class="cover__tab cover__tab--active">
@@ -61,7 +61,7 @@
       <text class="info__title">{{propertyTitle}}</text>
       <text class="info__star"></text>
     </view>
-    
+
     <!-- 地址信息 -->
     <view class="info__address">
       <image class="info__address-bg" src="{{mapThumbnail}}" mode="aspectFill" />
@@ -71,7 +71,7 @@
         <text class="info__map-text">地图</text>
       </view>
     </view>
-    
+
     <!-- 蜗壳精选标签 -->
     <view class="info__selected" bindtap="onViewSelectedTag">
       <view class="info__selected-badge">
@@ -80,14 +80,14 @@
       <text class="info__selected-desc">实拍视频有保障, 入住不满意必赔</text>
       <text class="info__selected-arrow">›</text>
     </view>
-    
+
     <!-- 标签列表 -->
     <view class="info__tags">
       <view class="info__tag" wx:for="{{tags}}" wx:key="index">
         <text class="info__tag-text">{{item}}</text>
       </view>
     </view>
-    
+
     <!-- 评分信息 -->
     <view class="info__rating" bindtap="onViewReviews">
       <view class="info__rating-content">
@@ -119,9 +119,9 @@
 
   <!-- 金刚区 -->
   <view class="diamond">
-    <view 
-      class="diamond__item" 
-      wx:for="{{diamondItems}}" 
+    <view
+      class="diamond__item"
+      wx:for="{{diamondItems}}"
       wx:key="id"
       data-id="{{item.id}}"
       bindtap="onDiamondItemTap"
@@ -157,7 +157,7 @@
       </view>
       <text class="room__details">{{roomDetails}}</text>
       <text class="room__rule">{{checkInRule}}</text>
-      
+
       <view class="room__price">
         <view class="room__price-tag">
           <text class="room__price-tag-text">立即确认</text>

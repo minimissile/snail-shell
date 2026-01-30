@@ -1,0 +1,16 @@
+# 依赖
+node_modules/
+miniprogram_npm/
+
+# 构建产物
+dist/
+build/
+
+# 配置文件
+*.config.js
+project.config.json
+sitemap.json
+
+# 其他
+.DS_Store
+*.log

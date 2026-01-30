@@ -73,20 +73,18 @@
 
   <!-- 房源列表 -->
   <view class="store-list">
-    <view 
-      wx:for="{{storeList}}" 
-      wx:key="id" 
-      class="store-card"
-      bindtap="onStoreCardTap"
-      data-id="{{item.id}}"
-    >
+    <view wx:for="{{storeList}}" wx:key="id" class="store-card" bindtap="onStoreCardTap" data-id="{{item.id}}">
       <view class="store-card__image">
         <image src="{{item.image}}" mode="aspectFill" />
-        
+
         <!-- 标签 -->
         <view class="store-card__tags">
-          <view class="store-card__tag store-card__tag--gradient" wx:if="{{item.promotionTag}}">{{item.promotionTag}}</view>
-          <view class="store-card__tag store-card__tag--verified" wx:if="{{item.verifiedTag}}">{{item.verifiedTag}}</view>
+          <view class="store-card__tag store-card__tag--gradient" wx:if="{{item.promotionTag}}"
+            >{{item.promotionTag}}</view
+          >
+          <view class="store-card__tag store-card__tag--verified" wx:if="{{item.verifiedTag}}"
+            >{{item.verifiedTag}}</view
+          >
         </view>
 
         <!-- 收藏按钮 -->
@@ -112,12 +110,9 @@
 
         <!-- 特点标签 -->
         <scroll-view class="store-card__features" scroll-x="{{true}}" enable-flex="{{true}}">
-          <view 
-            wx:for="{{item.features}}" 
-            wx:for-item="feature"
-            wx:key="*this" 
-            class="store-card__feature"
-          >{{feature}}</view>
+          <view wx:for="{{item.features}}" wx:for-item="feature" wx:key="*this" class="store-card__feature"
+            >{{feature}}</view
+          >
         </scroll-view>
 
         <!-- 详情 -->

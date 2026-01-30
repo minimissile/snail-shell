@@ -6,17 +6,17 @@
   <view class="header">
     <!-- 渐变背景 -->
     <view class="header-gradient"></view>
-    
+
     <!-- 返回按钮 -->
     <view class="back-button" bindtap="onBack">
       <image class="back-icon" src="/assets/figma/smart-lock/icon-back.svg" mode="aspectFit" />
     </view>
-    
+
     <!-- 标题 -->
     <view class="header-title">
       <text class="title-text">智能门锁</text>
     </view>
-    
+
     <!-- 设置按钮 -->
     <view class="settings-button" bindtap="onSettings">
       <image class="settings-icon" src="/assets/figma/smart-lock/icon-gear-settings.svg" mode="aspectFit" />
@@ -32,10 +32,10 @@
         <!-- 内圈白色 -->
         <view class="lock-inner {{isLocked ? '' : 'unlocked'}}">
           <!-- 锁图标 -->
-          <image 
-            class="lock-icon {{isLocked ? '' : 'unlocked'}}" 
-            src="{{isLocked ? '/assets/figma/smart-lock/lock-simple.svg' : '/assets/figma/smart-lock/unlock-simple.svg'}}" 
-            mode="aspectFit" 
+          <image
+            class="lock-icon {{isLocked ? '' : 'unlocked'}}"
+            src="{{isLocked ? '/assets/figma/smart-lock/lock-simple.svg' : '/assets/figma/smart-lock/unlock-simple.svg'}}"
+            mode="aspectFit"
           />
           <!-- 文字 -->
           <view class="lock-text-container">
@@ -54,7 +54,7 @@
           <text class="info-text">90%</text>
         </view>
       </view>
-      
+
       <!-- WiFi -->
       <view class="info-item">
         <image class="info-icon" src="/assets/figma/smart-lock/wifi-strong.svg" mode="aspectFit" />
@@ -78,7 +78,7 @@
             <text class="button-text">指纹管理</text>
           </view>
         </view>
-        
+
         <view class="nav-button" bindtap="onPassword">
           <view class="button-icon-container">
             <image class="button-icon" src="/assets/figma/smart-lock/icon-lock-keyhole.svg" mode="aspectFit" />
@@ -99,7 +99,7 @@
             <text class="button-text">临时密码</text>
           </view>
         </view>
-        
+
         <view class="nav-button" bindtap="onLockEvents">
           <view class="button-icon-container">
             <image class="button-icon" src="/assets/figma/smart-lock/icon-page-text.svg" mode="aspectFit" />

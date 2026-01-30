@@ -1,7 +1,7 @@
 interface AgreementItem {
-  id: string;
-  title: string;
-  url?: string;
+  id: string
+  title: string
+  url?: string
 }
 
 Page({
@@ -18,8 +18,8 @@ Page({
       { id: 'privacy', title: '隐私政策' },
       { id: 'children-protection', title: '儿童个人信息保护规则及监护人须知' },
       { id: 'algorithm', title: '算法备案信息' },
-      { id: 'policy', title: '政策协议' }
-    ] as AgreementItem[]
+      { id: 'policy', title: '政策协议' },
+    ] as AgreementItem[],
   },
 
   onLoad() {
@@ -28,19 +28,19 @@ Page({
 
   // 点击协议项
   onAgreementTap(e: WechatMiniprogram.TouchEvent) {
-    const id = e.currentTarget.dataset.id as string;
-    const item = this.data.agreementList.find(a => a.id === id);
-    
-    if (!item) return;
+    const id = e.currentTarget.dataset.id as string
+    const item = this.data.agreementList.find((a) => a.id === id)
+
+    if (!item) return
 
     wx.showToast({
       title: item.title,
-      icon: 'none'
-    });
+      icon: 'none',
+    })
 
     // TODO: 跳转到具体的协议详情页
     // wx.navigateTo({
     //   url: `/pages/agreement-detail/agreement-detail?id=${id}`
     // });
-  }
-});
+  },
+})

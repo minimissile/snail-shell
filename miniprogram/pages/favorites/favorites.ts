@@ -1,18 +1,18 @@
 interface FavoriteItem {
-  id: string;
-  title: string;
-  rating: number;
-  reviewCount: number;
-  location: string;
-  checkInDate: string;
-  price: number;
-  image: string;
-  tag: string;
+  id: string
+  title: string
+  rating: number
+  reviewCount: number
+  location: string
+  checkInDate: string
+  price: number
+  image: string
+  tag: string
 }
 
 interface TabItem {
-  id: string;
-  label: string;
+  id: string
+  label: string
 }
 
 Page({
@@ -21,7 +21,7 @@ Page({
     activeTab: 'favorites', // 'favorites' | 'footprints'
     tabs: [
       { id: 'favorites', label: '收藏' },
-      { id: 'footprints', label: '足迹' }
+      { id: 'footprints', label: '足迹' },
     ] as TabItem[],
     todayLabel: '今天',
     favoritesList: [
@@ -34,7 +34,7 @@ Page({
         checkInDate: '01-27至01-28入住',
         price: 330,
         image: '/assets/figma/favorites/item-1.png',
-        tag: '蜗壳精选'
+        tag: '蜗壳精选',
       },
       {
         id: '2',
@@ -45,7 +45,7 @@ Page({
         checkInDate: '01-27至01-28入住',
         price: 330,
         image: '/assets/figma/favorites/item-1.png',
-        tag: '蜗壳精选'
+        tag: '蜗壳精选',
       },
       {
         id: '3',
@@ -56,43 +56,43 @@ Page({
         checkInDate: '01-27至01-28入住',
         price: 330,
         image: '/assets/figma/favorites/item-1.png',
-        tag: '蜗壳精选'
-      }
+        tag: '蜗壳精选',
+      },
     ] as FavoriteItem[],
-    footprintsList: [] as FavoriteItem[]
+    footprintsList: [] as FavoriteItem[],
   },
 
   onLoad() {
-    const systemInfo = wx.getSystemInfoSync();
+    const systemInfo = wx.getSystemInfoSync()
     this.setData({
       statusBarHeight: systemInfo.statusBarHeight || 0,
-      footprintsList: this.data.favoritesList // 足迹使用相同数据演示
-    });
+      footprintsList: this.data.favoritesList, // 足迹使用相同数据演示
+    })
   },
 
   onTabChange(e: WechatMiniprogram.CustomEvent) {
-    const { id } = e.currentTarget.dataset;
+    const { id } = e.currentTarget.dataset
     this.setData({
-      activeTab: id
-    });
+      activeTab: id,
+    })
   },
 
   onCardTap(e: WechatMiniprogram.CustomEvent) {
-    const { id } = e.currentTarget.dataset;
+    const { id } = e.currentTarget.dataset
     wx.showToast({
       title: '查看详情',
-      icon: 'none'
-    });
+      icon: 'none',
+    })
   },
 
   onBack() {
-    wx.navigateBack();
+    wx.navigateBack()
   },
 
   onMenu() {
     wx.showToast({
       title: '菜单',
-      icon: 'none'
-    });
-  }
-});
+      icon: 'none',
+    })
+  },
+})

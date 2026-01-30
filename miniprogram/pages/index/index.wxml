@@ -16,26 +16,24 @@
           <view class="booking-card__route">
             <text class="booking-card__route-city">{{fromCity}}</text>
             <image class="booking-card__route-icon" src="/assets/figma/home-route-icon-1.svg" mode="aspectFit" />
-            <image class="booking-card__route-icon booking-card__route-icon--wide" src="/assets/figma/home-route-icon-2.svg" mode="aspectFit" />
+            <image
+              class="booking-card__route-icon booking-card__route-icon--wide"
+              src="/assets/figma/home-route-icon-2.svg"
+              mode="aspectFit"
+            />
             <text class="booking-card__route-city booking-card__route-city--to">{{toPlace}}</text>
           </view>
           <view class="booking-card__route-actions">
-            <view
-              class="booking-card__icon-btn"
-              bindtap="onClearToPlace"
-              aria-role="button"
-              aria-label="清除目的地"
-            >
+            <view class="booking-card__icon-btn" bindtap="onClearToPlace" aria-role="button" aria-label="清除目的地">
               <image class="booking-card__icon" src="/assets/figma/home-close.svg" mode="aspectFit" />
             </view>
             <view class="booking-card__route-spacer"></view>
-            <view
-              class="booking-card__locate"
-              bindtap="onUseMyLocation"
-              aria-role="button"
-              aria-label="使用我的位置"
-            >
-              <image class="booking-card__icon booking-card__icon--gps" src="/assets/figma/home-gps.svg" mode="aspectFit" />
+            <view class="booking-card__locate" bindtap="onUseMyLocation" aria-role="button" aria-label="使用我的位置">
+              <image
+                class="booking-card__icon booking-card__icon--gps"
+                src="/assets/figma/home-gps.svg"
+                mode="aspectFit"
+              />
               <text class="booking-card__locate-text">我的位置</text>
             </view>
           </view>
@@ -57,22 +55,12 @@
         </view>
 
         <view class="booking-card__row booking-card__row--border booking-card__row--meta">
-          <view
-            class="booking-card__meta"
-            bindtap="onOpenPeoplePicker"
-            aria-role="button"
-            aria-label="选择人数和床数"
-          >
+          <view class="booking-card__meta" bindtap="onOpenPeoplePicker" aria-role="button" aria-label="选择人数和床数">
             <text class="booking-card__meta-text">人数 / 床数</text>
             <image class="booking-card__meta-icon" src="/assets/figma/home-caret-down.svg" mode="aspectFit" />
           </view>
           <view class="booking-card__meta-divider"></view>
-          <view
-            class="booking-card__meta"
-            bindtap="onOpenPricePicker"
-            aria-role="button"
-            aria-label="选择价格"
-          >
+          <view class="booking-card__meta" bindtap="onOpenPricePicker" aria-role="button" aria-label="选择价格">
             <text class="booking-card__price-text">价格</text>
           </view>
         </view>
@@ -100,12 +88,7 @@
           </scroll-view>
         </view>
 
-        <button
-          class="booking-card__search-btn"
-          bindtap="onSearch"
-          disabled="{{isSearching}}"
-          aria-label="开始搜索"
-        >
+        <button class="booking-card__search-btn" bindtap="onSearch" disabled="{{isSearching}}" aria-label="开始搜索">
           <text class="booking-card__search-text">开始搜索</text>
         </button>
       </view>
@@ -124,18 +107,31 @@
           <text class="promo__title">百元红包</text>
           <text class="promo__desc">社群专属福利</text>
           <view class="promo__badge promo__badge--red"></view>
-          <image class="promo__image promo__image--redpacket" src="/assets/figma/home-promo-redpacket.png" mode="aspectFit" />
+          <image
+            class="promo__image promo__image--redpacket"
+            src="/assets/figma/home-promo-redpacket.png"
+            mode="aspectFit"
+          />
         </view>
 
         <view class="promo promo--groupbuy" aria-label="团购验券">
           <text class="promo__title">团购验券</text>
           <text class="promo__desc">订青旅折上折</text>
           <view class="promo__badge promo__badge--yellow"></view>
-          <image class="promo__image promo__image--groupbuy" src="/assets/figma/home-promo-groupbuy.png" mode="aspectFill" />
+          <image
+            class="promo__image promo__image--groupbuy"
+            src="/assets/figma/home-promo-groupbuy.png"
+            mode="aspectFill"
+          />
         </view>
       </view>
 
-      <image class="invite-banner" src="/assets/figma/home-invite-banner.jpg" mode="aspectFill" aria-label="邀请好友活动" />
+      <image
+        class="invite-banner"
+        src="/assets/figma/home-invite-banner.jpg"
+        mode="aspectFill"
+        aria-label="邀请好友活动"
+      />
 
       <view class="recommend-title" aria-label="推荐区域">
         <text class="recommend-title__text">安心订 · 省心住</text>

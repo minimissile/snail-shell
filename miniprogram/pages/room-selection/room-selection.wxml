@@ -11,7 +11,7 @@
       <view class="room-selection__back-btn" bindtap="onGoBack">
         <image class="room-selection__back-icon" src="/images/room-selection/icon-angle-left.svg" />
       </view>
-      
+
       <view class="room-selection__header-actions">
         <view class="room-selection__favorite-btn" bindtap="onToggleFavorite">
           <text class="room-selection__favorite-icon"></text>
@@ -19,109 +19,129 @@
             <text class="room-selection__favorite-count">{{favoriteCount}}</text>
           </view>
         </view>
-        
+
         <view class="room-selection__wechat-btn" bindtap="onOpenWechat">
           <view class="room-selection__wechat-icon"></view>
         </view>
       </view>
     </view>
-    
+
     <!-- 门店名称和营业时间 -->
     <view class="room-selection__nav">
       <view class="room-selection__store-name">{{storeName}}</view>
       <view class="room-selection__business-hours">{{businessHours}}</view>
     </view>
-    
+
     <!-- 预订方式切换 -->
     <view class="room-selection__booking-mode">
       <view class="room-selection__booking-label">
         <text class="room-selection__booking-label-text">预定方式</text>
-        <image class="room-selection__booking-info-icon" src="/images/room-selection/icon-info-circle.svg" bindtap="onViewBookingInfo" />
+        <image
+          class="room-selection__booking-info-icon"
+          src="/images/room-selection/icon-info-circle.svg"
+          bindtap="onViewBookingInfo"
+        />
       </view>
-      
+
       <view class="room-selection__booking-tabs">
-        <view class="room-selection__booking-tab {{bookingMode === 'day' ? 'room-selection__booking-tab--active' : ''}}" data-mode="day" bindtap="onSwitchBookingMode">
+        <view
+          class="room-selection__booking-tab {{bookingMode === 'day' ? 'room-selection__booking-tab--active' : ''}}"
+          data-mode="day"
+          bindtap="onSwitchBookingMode"
+        >
           <text class="room-selection__booking-tab-text">按天</text>
         </view>
-        <view class="room-selection__booking-tab {{bookingMode === 'hour' ? 'room-selection__booking-tab--active' : ''}}" data-mode="hour" bindtap="onSwitchBookingMode">
+        <view
+          class="room-selection__booking-tab {{bookingMode === 'hour' ? 'room-selection__booking-tab--active' : ''}}"
+          data-mode="hour"
+          bindtap="onSwitchBookingMode"
+        >
           <text class="room-selection__booking-tab-text">按小时</text>
         </view>
-        <view class="room-selection__booking-tab {{bookingMode === 'month' ? 'room-selection__booking-tab--active' : ''}}" data-mode="month" bindtap="onSwitchBookingMode">
+        <view
+          class="room-selection__booking-tab {{bookingMode === 'month' ? 'room-selection__booking-tab--active' : ''}}"
+          data-mode="month"
+          bindtap="onSwitchBookingMode"
+        >
           <text class="room-selection__booking-tab-text">按月</text>
         </view>
       </view>
     </view>
   </view>
-  
+
   <!-- 日期选择区域 -->
   <view class="room-selection__date-section">
     <text class="room-selection__section-label">预定日期</text>
-    
+
     <view class="room-selection__date-picker">
       <view class="room-selection__date-input" bindtap="onChangeStartDate">
         <text class="room-selection__date-value">{{startDate}}</text>
         <text class="room-selection__date-week">{{startDayOfWeek}}</text>
       </view>
-      
+
       <text class="room-selection__date-separator">至</text>
-      
+
       <view class="room-selection__date-input" wx:if="{{bookingMode !== 'month'}}" bindtap="onChangeEndDate">
         <text class="room-selection__date-value">{{endDate}}</text>
         <text class="room-selection__date-week">{{endDayOfWeek}}</text>
       </view>
     </view>
   </view>
-  
+
   <!-- 按小时 - 时段选择 -->
   <view class="room-selection__time-section" wx:if="{{bookingMode === 'hour'}}">
     <text class="room-selection__section-label">预定时段</text>
-    
+
     <view class="room-selection__time-picker">
       <view class="room-selection__time-input" bindtap="onChangeStartTime">
         <text class="room-selection__time-value">{{startTime}}</text>
         <image class="room-selection__time-icon" src="/images/room-selection/icon-sort.svg" />
       </view>
-      
+
       <text class="room-selection__time-separator">至</text>
-      
+
       <view class="room-selection__time-input" bindtap="onChangeEndTime">
         <text class="room-selection__time-value">{{endTime}}</text>
         <image class="room-selection__time-icon" src="/images/room-selection/icon-sort.svg" />
       </view>
     </view>
   </view>
-  
+
   <!-- 按月 - 月份选择 -->
   <view class="room-selection__month-section" wx:if="{{bookingMode === 'month'}}">
     <text class="room-selection__section-label">选择月份</text>
-    
+
     <view class="room-selection__month-picker">
       <view class="room-selection__month-input" bindtap="onChangeMonth">
         <text class="room-selection__month-value">{{monthCount}}</text>
         <image class="room-selection__month-icon" src="/images/room-selection/icon-sort.svg" />
       </view>
-      
+
       <text class="room-selection__month-separator">至</text>
-      
+
       <text class="room-selection__month-end-date">结束日期\n{{monthEndDate}}</text>
     </view>
   </view>
-  
+
   <!-- 已选信息提示 -->
   <view class="room-selection__selected-info">
     <view class="room-selection__selected-item">
-      <image class="room-selection__selected-icon" src="/images/room-selection/icon-info-circle.svg" bindtap="onViewSelectedInfo" />
+      <image
+        class="room-selection__selected-icon"
+        src="/images/room-selection/icon-info-circle.svg"
+        bindtap="onViewSelectedInfo"
+      />
       <text class="room-selection__selected-text room-selection__selected-text--highlight">
         已选:{{bookingMode === 'day' ? selectedDays : bookingMode === 'hour' ? selectedHours : selectedMonths}}
       </text>
     </view>
-    
+
     <view class="room-selection__booking-tip">
       <image class="room-selection__tip-icon" src="/images/room-selection/icon-clock.svg" />
       <text class="room-selection__tip-text">{{bookingTip}}</text>
     </view>
   </view>
-  
+
   <!-- 床位图例 -->
   <view class="room-selection__legend">
     <view class="room-selection__legend-items">
@@ -130,97 +150,117 @@
         <text class="room-selection__legend-label">{{item.label}}</text>
       </view>
     </view>
-    
+
     <view class="room-selection__price-info-btn" bindtap="onViewPriceInfo">
       <text class="room-selection__price-info-text">价格说明</text>
     </view>
   </view>
-  
+
   <!-- 床位选择区域 -->
   <view class="room-selection__beds-container">
     <view class="room-selection__beds-bg"></view>
     <view class="room-selection__beds-divider"></view>
-    
+
     <!-- 床位组 -->
-    <view class="room-selection__bed-group" 
-          wx:for="{{bedGroups}}" 
-          wx:for-item="group" 
-          wx:for-index="groupIndex" 
-          wx:key="id"
-          style="left: {{group.position.x}}rpx; top: {{group.position.y}}rpx;">
+    <view
+      class="room-selection__bed-group"
+      wx:for="{{bedGroups}}"
+      wx:for-item="group"
+      wx:for-index="groupIndex"
+      wx:key="id"
+      style="left: {{group.position.x}}rpx; top: {{group.position.y}}rpx;"
+    >
       <view class="room-selection__bed-frame"></view>
-      
+
       <!-- 上铺图片 -->
-      <image class="room-selection__bed-image room-selection__bed-image--upper" src="/images/room-selection/bed-upper.png" />
-      
+      <image
+        class="room-selection__bed-image room-selection__bed-image--upper"
+        src="/images/room-selection/bed-upper.png"
+      />
+
       <!-- 下铺图片 -->
-      <image class="room-selection__bed-image room-selection__bed-image--lower" src="/images/room-selection/bed-lower.png" />
-      
+      <image
+        class="room-selection__bed-image room-selection__bed-image--lower"
+        src="/images/room-selection/bed-lower.png"
+      />
+
       <!-- 床位中间分隔线 -->
       <view class="room-selection__bed-separator"></view>
-      
+
       <!-- 4个床位 -->
-      <view class="room-selection__bed-item room-selection__bed-item--top-left 
+      <view
+        class="room-selection__bed-item room-selection__bed-item--top-left 
                    {{group.beds[1].status === 'selected' ? 'room-selection__bed-item--selected' : ''}}
                    {{group.beds[1].status === 'unavailable' ? 'room-selection__bed-item--unavailable' : ''}}"
-            data-group-index="{{groupIndex}}"
-            data-bed-index="1"
-            bindtap="onToggleBed">
+        data-group-index="{{groupIndex}}"
+        data-bed-index="1"
+        bindtap="onToggleBed"
+      >
         <text class="room-selection__bed-id">{{group.beds[1].id}}</text>
       </view>
-      
-      <view class="room-selection__bed-item room-selection__bed-item--top-right
+
+      <view
+        class="room-selection__bed-item room-selection__bed-item--top-right
                    {{group.beds[0].status === 'selected' ? 'room-selection__bed-item--selected' : ''}}
                    {{group.beds[0].status === 'unavailable' ? 'room-selection__bed-item--unavailable' : ''}}"
-            data-group-index="{{groupIndex}}"
-            data-bed-index="0"
-            bindtap="onToggleBed">
+        data-group-index="{{groupIndex}}"
+        data-bed-index="0"
+        bindtap="onToggleBed"
+      >
         <text class="room-selection__bed-id">{{group.beds[0].id}}</text>
       </view>
-      
-      <view class="room-selection__bed-item room-selection__bed-item--bottom-left
+
+      <view
+        class="room-selection__bed-item room-selection__bed-item--bottom-left
                    {{group.beds[3].status === 'selected' ? 'room-selection__bed-item--selected' : ''}}
                    {{group.beds[3].status === 'unavailable' ? 'room-selection__bed-item--unavailable' : ''}}"
-            data-group-index="{{groupIndex}}"
-            data-bed-index="3"
-            bindtap="onToggleBed">
+        data-group-index="{{groupIndex}}"
+        data-bed-index="3"
+        bindtap="onToggleBed"
+      >
         <text class="room-selection__bed-id">{{group.beds[3].id}}</text>
       </view>
-      
-      <view class="room-selection__bed-item room-selection__bed-item--bottom-right
+
+      <view
+        class="room-selection__bed-item room-selection__bed-item--bottom-right
                    {{group.beds[2].status === 'selected' ? 'room-selection__bed-item--selected' : ''}}
                    {{group.beds[2].status === 'unavailable' ? 'room-selection__bed-item--unavailable' : ''}}"
-            data-group-index="{{groupIndex}}"
-            data-bed-index="2"
-            bindtap="onToggleBed">
+        data-group-index="{{groupIndex}}"
+        data-bed-index="2"
+        bindtap="onToggleBed"
+      >
         <text class="room-selection__bed-id">{{group.beds[2].id}}</text>
       </view>
     </view>
   </view>
-  
+
   <!-- 已选床位卡片（取消选房状态） -->
   <view class="room-selection__selected-card" wx:if="{{selectedBeds.length > 0}}">
     <view class="room-selection__card-header">
       <text class="room-selection__card-date">{{currentDay}}</text>
       <text class="room-selection__card-time">{{roomDate}}</text>
     </view>
-    
+
     <view class="room-selection__card-divider"></view>
-    
+
     <text class="room-selection__card-room-type">{{roomType}}</text>
-    
+
     <view class="room-selection__card-divider"></view>
-    
+
     <view class="room-selection__card-tip">
-      <image class="room-selection__card-tip-icon" src="/images/room-selection/icon-volume-high.svg" bindtap="onPlayAudio" />
+      <image
+        class="room-selection__card-tip-icon"
+        src="/images/room-selection/icon-volume-high.svg"
+        bindtap="onPlayAudio"
+      />
       <text class="room-selection__card-tip-text">{{smartLockTip}}</text>
     </view>
-    
+
     <view class="room-selection__card-action" bindtap="onSwitchRoomType">
       <text class="room-selection__card-action-text">切换房型</text>
       <text class="room-selection__card-action-icon"></text>
     </view>
-    
+
     <!-- 已选床位列表 -->
     <view class="room-selection__selected-bed-list">
       <view class="room-selection__selected-bed" wx:for="{{selectedBeds}}" wx:key="id">
@@ -235,7 +275,7 @@
       </view>
     </view>
   </view>
-  
+
   <!-- 底部预订按钮 -->
   <view class="room-selection__footer">
     <view class="room-selection__book-btn" bindtap="onBookNow">

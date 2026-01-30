@@ -5,13 +5,7 @@
   <view class="content">
     <text class="greeting">{{greeting}}</text>
     <view class="benefits">
-      <view
-        class="benefit"
-        data-key="住宿体验价"
-        bindtap="onBenefit"
-        aria-role="button"
-        aria-label="住宿体验价"
-      >
+      <view class="benefit" data-key="住宿体验价" bindtap="onBenefit" aria-role="button" aria-label="住宿体验价">
         <view class="benefit__dot" aria-hidden="true"></view>
         <text class="benefit__label">住宿体验价</text>
       </view>

@@ -34,14 +34,7 @@ Component({
     },
     onTapQuickAction(e: WechatMiniprogram.CustomEvent<{ key: string }>) {
       const key = e.detail?.key || ''
-      const tab =
-        key === 'pay'
-          ? 'pay'
-          : key === 'use'
-            ? 'use'
-            : key === 'refund'
-              ? 'refund'
-              : 'all'
+      const tab = key === 'pay' ? 'pay' : key === 'use' ? 'use' : key === 'refund' ? 'refund' : 'all'
       wx.setStorageSync('orders:initialTab', tab)
       wx.switchTab({
         url: '/pages/orders/orders',

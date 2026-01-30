@@ -46,7 +46,7 @@
       <view class="process-card__tag">
         <text class="process-card__tag-text">核销流程</text>
       </view>
-      
+
       <!-- 步骤1 -->
       <view class="process-card__step">
         <view class="process-card__step-content">

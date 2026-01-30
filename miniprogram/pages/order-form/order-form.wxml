@@ -44,9 +44,9 @@
         </view>
       </view>
     </view>
-    
+
     <view class="booking-card__divider"></view>
-    
+
     <view class="booking-card__date">
       <text class="booking-card__date-text">{{checkInDate}} – {{checkOutDate}}</text>
       <view class="booking-card__nights" bindtap="onChangeDate">
@@ -54,7 +54,7 @@
         <text class="booking-card__nights-arrow">›</text>
       </view>
     </view>
-    
+
     <view class="booking-card__policies">
       <view class="booking-card__policy">
         <text class="booking-card__policy-icon"></text>
@@ -70,7 +70,7 @@
   <!-- 入住信息卡片 -->
   <view class="guest-card">
     <text class="guest-card__heading">入住信息</text>
-    
+
     <view class="guest-card__item guest-card__item--border">
       <view class="guest-card__label">
         <text class="guest-card__label-text">房间套数</text>
@@ -86,35 +86,30 @@
         </view>
       </view>
     </view>
-    
+
     <view class="guest-card__item guest-card__item--border">
       <view class="guest-card__label">
         <text class="guest-card__label-text">住客姓名</text>
         <text class="guest-card__info-icon"></text>
       </view>
       <view class="guest-card__input-wrapper">
-        <input 
-          class="guest-card__input" 
-          placeholder="请填写住客姓名" 
+        <input
+          class="guest-card__input"
+          placeholder="请填写住客姓名"
           value="{{guestName}}"
           bindinput="onInputGuestName"
         />
       </view>
     </view>
-    
+
     <view class="guest-card__item guest-card__item--border">
       <view class="guest-card__label">
         <text class="guest-card__label-text">身份证</text>
         <text class="guest-card__id-icon"></text>
       </view>
-      <input 
-        class="guest-card__input" 
-        placeholder="请填写证件号码" 
-        value="{{idCard}}"
-        bindinput="onInputIdCard"
-      />
+      <input class="guest-card__input" placeholder="请填写证件号码" value="{{idCard}}" bindinput="onInputIdCard" />
     </view>
-    
+
     <view class="guest-card__item">
       <text class="guest-card__label-text">联系电话</text>
       <view class="guest-card__phone">
@@ -131,7 +126,7 @@
   <!-- 优惠区域 -->
   <view class="discount-card">
     <text class="discount-card__heading">本单可享</text>
-    
+
     <view class="discount-card__item">
       <text class="discount-card__label">下单优惠</text>
       <view class="discount-card__value">
@@ -142,7 +137,7 @@
         <text class="discount-card__more" bindtap="onViewDiscountDetail"></text>
       </view>
     </view>
-    
+
     <view class="discount-card__details">
       <view class="discount-card__detail-item">
         <text class="discount-card__detail-label">促销优惠</text>
@@ -165,12 +160,12 @@
         <text class="submit-bar__saved-text">已省¥{{savedAmount}}</text>
       </view>
     </view>
-    
+
     <view class="submit-bar__detail" bindtap="onViewPriceDetail">
       <text class="submit-bar__detail-text">明细</text>
       <text class="submit-bar__detail-arrow">‹</text>
     </view>
-    
+
     <view class="submit-bar__action" bindtap="onSubmitOrder">
       <text class="submit-bar__btn-text">提交订单</text>
       <view class="submit-bar__remaining">

@@ -1,19 +1,19 @@
 interface StoreItem {
-  id: string;
-  name: string;
-  image: string;
-  promotionTag?: string;
-  verifiedTag?: string;
-  isFavorite: boolean;
-  imageCount: number;
-  totalImages: number;
-  rating: number;
-  reviewCount: number;
-  highlightComment: string;
-  features: string[];
-  details: string;
-  price: number;
-  savedAmount: number;
+  id: string
+  name: string
+  image: string
+  promotionTag?: string
+  verifiedTag?: string
+  isFavorite: boolean
+  imageCount: number
+  totalImages: number
+  rating: number
+  reviewCount: number
+  highlightComment: string
+  features: string[]
+  details: string
+  price: number
+  savedAmount: number
 }
 
 Page({
@@ -39,7 +39,7 @@ Page({
         features: ['专业保洁', '网红INS风', '实拍看房', '免费瓶装水', '干湿分离', '5星卫生分'],
         details: '5居5床10-14人·整套188㎡ | 距深圳北站直线1.9公里',
         price: 180,
-        savedAmount: 199
+        savedAmount: 199,
       },
       {
         id: '2',
@@ -56,9 +56,9 @@ Page({
         features: ['超赞房东', '私家花园', '实拍看房', '免费瓶装水', '干湿分离', '5星卫生分'],
         details: '5居5床10-14人·整套188㎡ | 距深圳北站直线1.9公里',
         price: 180,
-        savedAmount: 199
-      }
-    ] as StoreItem[]
+        savedAmount: 199,
+      },
+    ] as StoreItem[],
   },
 
   onLoad() {
@@ -68,83 +68,83 @@ Page({
   // 清空搜索
   onClearSearch() {
     this.setData({
-      destination: ''
-    });
+      destination: '',
+    })
   },
 
   // 排序
   onSortTap() {
     wx.showToast({
       title: '排序选项',
-      icon: 'none'
-    });
+      icon: 'none',
+    })
   },
 
   // 位置筛选
   onLocationFilterTap() {
     wx.showToast({
       title: '位置筛选',
-      icon: 'none'
-    });
+      icon: 'none',
+    })
   },
 
   // 价格筛选
   onPriceFilterTap() {
     wx.showToast({
       title: '价格/人数筛选',
-      icon: 'none'
-    });
+      icon: 'none',
+    })
   },
 
   // 更多筛选
   onMoreFilterTap() {
     wx.showToast({
       title: '更多筛选',
-      icon: 'none'
-    });
+      icon: 'none',
+    })
   },
 
   // 优惠券点击
   onCouponTap() {
     wx.showToast({
       title: '查看优惠券',
-      icon: 'none'
-    });
+      icon: 'none',
+    })
   },
 
   // 房源卡片点击
   onStoreCardTap(e: WechatMiniprogram.TouchEvent) {
-    const id = e.currentTarget.dataset.id;
+    const id = e.currentTarget.dataset.id
     wx.showToast({
       title: `查看房源 ${id}`,
-      icon: 'none'
-    });
+      icon: 'none',
+    })
     // TODO: 跳转到房源详情页
   },
 
   // 收藏切换
   onFavoriteTap(e: WechatMiniprogram.TouchEvent) {
-    const id = e.currentTarget.dataset.id;
-    const storeList = this.data.storeList.map(item => {
+    const id = e.currentTarget.dataset.id
+    const storeList = this.data.storeList.map((item) => {
       if (item.id === id) {
-        return { ...item, isFavorite: !item.isFavorite };
+        return { ...item, isFavorite: !item.isFavorite }
       }
-      return item;
-    });
-    this.setData({ storeList });
-    
+      return item
+    })
+    this.setData({ storeList })
+
     wx.showToast({
-      title: storeList.find(item => item.id === id)?.isFavorite ? '已收藏' : '已取消收藏',
-      icon: 'none'
-    });
+      title: storeList.find((item) => item.id === id)?.isFavorite ? '已收藏' : '已取消收藏',
+      icon: 'none',
+    })
   },
 
   // 会员优惠点击
   onDiscountTap(e: WechatMiniprogram.TouchEvent) {
-    const id = e.currentTarget.dataset.id;
+    const id = e.currentTarget.dataset.id
     wx.showToast({
       title: '查看会员优惠',
-      icon: 'none'
-    });
-  }
-});
+      icon: 'none',
+    })
+  },
+})

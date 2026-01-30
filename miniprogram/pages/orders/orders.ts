@@ -259,7 +259,13 @@ Component({
 
       this.setData({
         ordersByIndex: [mockOrders, toUseOrders, validOrders, toPayOrders, refundOrders],
-        ordersCountByIndex: [mockOrders.length, toUseOrders.length, validOrders.length, toPayOrders.length, refundOrders.length],
+        ordersCountByIndex: [
+          mockOrders.length,
+          toUseOrders.length,
+          validOrders.length,
+          toPayOrders.length,
+          refundOrders.length,
+        ],
         'ordersByTab.all': mockOrders,
         'ordersByTab.toUse': toUseOrders,
         'ordersByTab.valid': validOrders,

@@ -1,4 +1,4 @@
-@import "../../styles/theme.less";
+@import '../../styles/theme.less';
 
 .page {
   min-height: 100vh;
@@ -34,11 +34,14 @@
     padding: 12rpx 32rpx;
     box-sizing: border-box;
     border-radius: @radius-pill;
-    background: #FFFFFF;
+    background: #ffffff;
     box-shadow: 0 2rpx 4rpx 0 rgba(0, 0, 0, 0.05);
     .flex(row, center, center);
     margin-left: 24rpx;
-    transition: background-color 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+    transition:
+      background-color 220ms ease,
+      border-color 220ms ease,
+      box-shadow 220ms ease;
   }
 
   &__btn.is-first {
@@ -46,14 +49,16 @@
   }
 
   &__btn.is-active {
-    background: #FED7AA;
+    background: #fed7aa;
     border: 2rpx solid @color-accent;
     box-shadow: none;
   }
 
   &__text {
     .font(28rpx, 40rpx, 500, @color-text-secondary);
-    transition: color 220ms ease, font-weight 220ms ease;
+    transition:
+      color 220ms ease,
+      font-weight 220ms ease;
   }
 
   &__btn.is-active &__text {
@@ -92,7 +97,7 @@
     height: 72rpx;
     border-radius: @radius-pill;
     background: @color-accent;
-    color: #FFFFFF;
+    color: #ffffff;
     font-size: 28rpx;
     line-height: 72rpx;
     padding: 0 28rpx;
@@ -180,7 +185,7 @@
 .topbar-divider {
   width: 2rpx;
   height: 32rpx;
-  background: #D1D5DB;
+  background: #d1d5db;
   margin: 0 24rpx;
 }
 
@@ -195,7 +200,7 @@
 
 .orders__card {
   width: 100%;
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: @radius-lg;
   padding: 32rpx;
   box-sizing: border-box;
@@ -247,7 +252,7 @@
   height: 160rpx;
   border-radius: @radius-md;
   flex-shrink: 0;
-  background: #F3F4F6;
+  background: #f3f4f6;
 }
 
 .orders__card-info {

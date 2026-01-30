@@ -1,7 +1,7 @@
 <view class="favorites-page">
   <!-- 状态栏 -->
   <view class="status-bar" style="height: {{statusBarHeight}}px;"></view>
-  
+
   <!-- 导航栏 -->
   <view class="nav-bar">
     <view class="nav-left" bindtap="onBack">
@@ -40,13 +40,7 @@
 
     <!-- 收藏列表 -->
     <view wx:if="{{activeTab === 'favorites'}}" class="cards-list">
-      <view
-        wx:for="{{favoritesList}}"
-        wx:key="id"
-        class="card-item"
-        data-id="{{item.id}}"
-        bindtap="onCardTap"
-      >
+      <view wx:for="{{favoritesList}}" wx:key="id" class="card-item" data-id="{{item.id}}" bindtap="onCardTap">
         <view class="card-image">
           <image src="{{item.image}}" mode="aspectFill" class="image" />
           <view class="tag-badge">
@@ -81,13 +75,7 @@
 
     <!-- 足迹列表 -->
     <view wx:if="{{activeTab === 'footprints'}}" class="cards-list">
-      <view
-        wx:for="{{footprintsList}}"
-        wx:key="id"
-        class="card-item"
-        data-id="{{item.id}}"
-        bindtap="onCardTap"
-      >
+      <view wx:for="{{footprintsList}}" wx:key="id" class="card-item" data-id="{{item.id}}" bindtap="onCardTap">
         <view class="card-image">
           <image src="{{item.image}}" mode="aspectFill" class="image" />
           <view class="tag-badge">

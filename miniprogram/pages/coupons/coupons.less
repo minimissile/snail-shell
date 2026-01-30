@@ -2,7 +2,7 @@
 .coupons-page {
   width: 100%;
   min-height: 100vh;
-  background-color: #F7F9FB;
+  background-color: #f7f9fb;
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
@@ -10,77 +10,77 @@
   // 状态栏
   .status-bar {
     width: 100%;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
   }
 
   // 导航栏
-  .nav-bar {
-    width: 100%;
-    height: 88rpx;
-    background-color: #FFFFFF;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 32rpx;
-    position: relative;
+  // .nav-bar {
+  //   width: 100%;
+  //   height: 88rpx;
+  //   background-color: #FFFFFF;
+  //   display: flex;
+  //   align-items: center;
+  //   justify-content: center;
+  //   padding: 0 32rpx;
+  //   position: relative;
 
-    .nav-center {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+  //   .nav-center {
+  //     display: flex;
+  //     align-items: center;
+  //     justify-content: center;
+  //   }
 
-    .nav-right {
-      position: absolute;
-      right: 32rpx;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 64rpx;
-      height: 64rpx;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+  //   .nav-right {
+  //     position: absolute;
+  //     right: 32rpx;
+  //     top: 50%;
+  //     transform: translateY(-50%);
+  //     width: 64rpx;
+  //     height: 64rpx;
+  //     display: flex;
+  //     align-items: center;
+  //     justify-content: center;
+  //   }
 
-    .nav-title {
-      font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
-      font-weight: 600;
-      font-size: 40rpx;
-      line-height: 56rpx;
-      color: #1F2937;
-      letter-spacing: -0.025em;
-    }
+  //   .nav-title {
+  //     font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+  //     font-weight: 600;
+  //     font-size: 40rpx;
+  //     line-height: 56rpx;
+  //     color: #1F2937;
+  //     letter-spacing: -0.025em;
+  //   }
 
-    .menu-button {
-      width: 64rpx;
-      height: 64rpx;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.6);
-      border: 1rpx solid #E5E7EB;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0px 2rpx 4rpx 0px rgba(0, 0, 0, 0.05);
-      transition: all 0.2s ease;
+  //   .menu-button {
+  //     width: 64rpx;
+  //     height: 64rpx;
+  //     border-radius: 50%;
+  //     background: rgba(255, 255, 255, 0.6);
+  //     border: 1rpx solid #E5E7EB;
+  //     display: flex;
+  //     align-items: center;
+  //     justify-content: center;
+  //     box-shadow: 0px 2rpx 4rpx 0px rgba(0, 0, 0, 0.05);
+  //     transition: all 0.2s ease;
 
-      &:active {
-        transform: scale(0.95);
-        opacity: 0.8;
-      }
+  //     &:active {
+  //       transform: scale(0.95);
+  //       opacity: 0.8;
+  //     }
 
-      .icon-menu {
-        font-size: 32rpx;
-        color: #1F2937;
-        line-height: 1;
-        font-weight: 900;
-      }
-    }
-  }
+  //     .icon-menu {
+  //       font-size: 32rpx;
+  //       color: #1F2937;
+  //       line-height: 1;
+  //       font-weight: 900;
+  //     }
+  //   }
+  // }
 
   // 标签栏
   .tabs-container {
     width: 100%;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     white-space: nowrap;
     padding: 24rpx 32rpx;
 
@@ -97,17 +97,21 @@
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
       .tab-label {
-        font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+        font-family:
+          'PingFang SC',
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
         font-weight: 500;
         font-size: 28rpx;
         line-height: 40rpx;
-        color: #4B5563;
+        color: #4b5563;
         text-align: center;
         transition: color 0.3s ease;
       }
 
       &.active .tab-label {
-        color: #F97316;
+        color: #f97316;
         font-weight: 600;
       }
     }
@@ -123,7 +127,7 @@
     // 优惠券卡片
     .coupon-card {
       width: 100%;
-      background-color: #FFFFFF;
+      background-color: #ffffff;
       border-radius: 24rpx;
       padding: 32rpx;
       margin-bottom: 24rpx;
@@ -175,20 +179,28 @@
             flex-shrink: 0;
 
             .coupon-unit {
-              font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+              font-family:
+                'PingFang SC',
+                -apple-system,
+                BlinkMacSystemFont,
+                sans-serif;
               font-weight: 600;
               font-size: 28rpx;
               line-height: 40rpx;
-              color: #FF6600;
+              color: #ff6600;
               margin-right: 0;
             }
 
             .coupon-amount {
-              font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+              font-family:
+                'PingFang SC',
+                -apple-system,
+                BlinkMacSystemFont,
+                sans-serif;
               font-weight: 600;
               font-size: 48rpx;
               line-height: 64rpx;
-              color: #FF6600;
+              color: #ff6600;
             }
           }
 
@@ -198,11 +210,15 @@
             flex-shrink: 0;
 
             .discount-text {
-              font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+              font-family:
+                'PingFang SC',
+                -apple-system,
+                BlinkMacSystemFont,
+                sans-serif;
               font-weight: 600;
               font-size: 28rpx;
               line-height: 40rpx;
-              color: #FF6600;
+              color: #ff6600;
             }
           }
 
@@ -214,11 +230,15 @@
             min-width: 0;
 
             .coupon-title {
-              font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+              font-family:
+                'PingFang SC',
+                -apple-system,
+                BlinkMacSystemFont,
+                sans-serif;
               font-weight: 600;
               font-size: 30rpx;
               line-height: 45rpx;
-              color: #1F2937;
+              color: #1f2937;
               white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;
@@ -231,11 +251,15 @@
           margin-top: 0;
 
           .description-text {
-            font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family:
+              'PingFang SC',
+              -apple-system,
+              BlinkMacSystemFont,
+              sans-serif;
             font-weight: 400;
             font-size: 24rpx;
             line-height: 32rpx;
-            color: #6B7280;
+            color: #6b7280;
             display: block;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -248,11 +272,15 @@
           padding-top: 4rpx;
 
           .period-text {
-            font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family:
+              'PingFang SC',
+              -apple-system,
+              BlinkMacSystemFont,
+              sans-serif;
             font-weight: 400;
             font-size: 20rpx;
             line-height: 30rpx;
-            color: #9CA3AF;
+            color: #9ca3af;
           }
         }
       }
@@ -263,7 +291,7 @@
 
         .use-button {
           padding: 12rpx 32rpx;
-          background-color: #FF7F24;
+          background-color: #ff7f24;
           border-radius: 999rpx;
           display: flex;
           align-items: center;
@@ -272,15 +300,19 @@
 
           &:active {
             transform: scale(0.95);
-            background-color: #FF6600;
+            background-color: #ff6600;
           }
 
           .use-button-text {
-            font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family:
+              'PingFang SC',
+              -apple-system,
+              BlinkMacSystemFont,
+              sans-serif;
             font-weight: 600;
             font-size: 26rpx;
             line-height: 39rpx;
-            color: #FFFFFF;
+            color: #ffffff;
             text-align: center;
           }
         }
