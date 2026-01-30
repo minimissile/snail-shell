@@ -51,6 +51,297 @@
 
   <!-- Container (y=157px, padding=16px) -->
   <view class="store-detail__container">
+    <!-- Feature Card - 特点卡片 (height=618px, border-radius=12px) -->
+    <view class="store-detail__feature-card" wx:if="{{activeTab === 'feature'}}">
+      <!-- Header - 房屋特色 (x=16, y=16) -->
+      <view class="store-detail__feature-header">
+        <text class="store-detail__feature-title">房屋特色</text>
+      </view>
+
+      <!-- Title with Icon (x=143, y=232) -->
+      <view class="store-detail__feature-name-wrapper">
+        <image class="store-detail__snail-icon" src="/images/store-detail/snail-icon.png" mode="aspectFit"></image>
+        <text class="store-detail__feature-name">蜗壳青旅</text>
+      </view>
+
+      <!-- Description Text (x=32, y=268, width=311px, height=351px) -->
+      <view class="store-detail__feature-description">
+        <text class="store-detail__feature-text">
+          蜗壳青旅是一处为旅人打造的静心居所，我们希望每一位入住者都能在城市的节奏中找到片刻宁静。四人位安静区房型，专为好友出行或轻度社交旅客设计，在共享空间中保留足够的私密与安静。
+        </text>
+        <text class="store-detail__feature-text">
+          房间面积约二十六平方米，设有两组上下铺，可同时容纳四位客人。每个床位配备独立阅读灯、隐私帘和储物柜，床垫柔软舒适，床品干净整洁。房间采用原木与米色调的简约设计风格，光线柔和，空气清新，让人放松安心。
+        </text>
+        <text class="store-detail__feature-text">
+          该房型位于青旅的安静楼层，远离街道与公共活动区，使用静音门锁和隔音墙体，确保夜间安睡无扰。房间配备空调、新风系统和高速无线网络，并提供公共卫浴设施，每日定时清洁。
+        </text>
+      </view>
+
+      <!-- Feature Image (x=26, y=635, width=317px, height=211px) -->
+      <view class="store-detail__feature-image-wrapper">
+        <image
+          class="store-detail__feature-image"
+          src="/images/store-detail/feature-image.png"
+          mode="aspectFill"
+        ></image>
+      </view>
+
+      <!-- Blur Background (x=24, y=696, width=317px, height=118px) -->
+      <view class="store-detail__feature-blur"></view>
+
+      <!-- View All Button (x=138, y=760) -->
+      <view class="store-detail__feature-expand" bindtap="onExpandFeature">
+        <text class="store-detail__feature-expand-text">展开查看全部 </text>
+        <image class="store-detail__angle-down-icon" src="/images/store-detail/angle-down.svg" mode="aspectFit"></image>
+      </view>
+    </view>
+
+    <!-- Facility Card - 设施卡片 -->
+    <view class="store-detail__facility-card" wx:if="{{activeTab === 'facility'}}">
+      <!-- Header - 服务/设施 (padding=16px) -->
+      <view class="store-detail__facility-header">
+        <text class="store-detail__facility-title">服务/设施</text>
+        <view class="store-detail__facility-link" bindtap="onViewAllFacilities">
+          <text class="store-detail__facility-link-text">全部设施 </text>
+          <image
+            class="store-detail__arrow-right-icon"
+            src="/images/store-detail/angle-right-small.svg"
+            mode="aspectFit"
+          ></image>
+        </view>
+      </view>
+
+      <!-- 服务 Section -->
+      <view class="store-detail__facility-section">
+        <view class="store-detail__facility-category">
+          <text class="store-detail__facility-category-title">服务</text>
+        </view>
+        <view class="store-detail__facility-items">
+          <view class="store-detail__facility-item">
+            <image
+              class="store-detail__facility-icon store-detail__facility-icon--available"
+              src="/images/store-detail/check-circle-regular.svg"
+              mode="aspectFit"
+            ></image>
+            <text class="store-detail__facility-text">免费停车位</text>
+          </view>
+          <view class="store-detail__facility-item">
+            <image
+              class="store-detail__facility-icon store-detail__facility-icon--unavailable"
+              src="/images/store-detail/xmark-circle-regular.svg"
+              mode="aspectFit"
+            ></image>
+            <text class="store-detail__facility-text">付费停车位</text>
+          </view>
+          <view class="store-detail__facility-item">
+            <image
+              class="store-detail__facility-icon store-detail__facility-icon--available"
+              src="/images/store-detail/check-circle-regular.svg"
+              mode="aspectFit"
+            ></image>
+            <text class="store-detail__facility-text">行李寄存</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 基础 Section -->
+      <view class="store-detail__facility-section">
+        <view class="store-detail__facility-category">
+          <text class="store-detail__facility-category-title">基础</text>
+        </view>
+        <view class="store-detail__facility-items">
+          <view class="store-detail__facility-item">
+            <image
+              class="store-detail__facility-icon store-detail__facility-icon--available"
+              src="/images/store-detail/check-circle-regular.svg"
+              mode="aspectFit"
+            ></image>
+            <text class="store-detail__facility-text">无线网络</text>
+          </view>
+          <view class="store-detail__facility-item">
+            <image
+              class="store-detail__facility-icon store-detail__facility-icon--unavailable"
+              src="/images/store-detail/xmark-circle-regular.svg"
+              mode="aspectFit"
+            ></image>
+            <text class="store-detail__facility-text">电梯</text>
+          </view>
+          <view class="store-detail__facility-item">
+            <image
+              class="store-detail__facility-icon store-detail__facility-icon--available"
+              src="/images/store-detail/check-circle-regular.svg"
+              mode="aspectFit"
+            ></image>
+            <text class="store-detail__facility-text">窗户</text>
+          </view>
+          <view class="store-detail__facility-item">
+            <image
+              class="store-detail__facility-icon store-detail__facility-icon--unavailable"
+              src="/images/store-detail/xmark-circle-regular.svg"
+              mode="aspectFit"
+            ></image>
+            <text class="store-detail__facility-text">空调-冷暖</text>
+          </view>
+          <view class="store-detail__facility-item">
+            <image
+              class="store-detail__facility-icon store-detail__facility-icon--available"
+              src="/images/store-detail/check-circle-regular.svg"
+              mode="aspectFit"
+            ></image>
+            <text class="store-detail__facility-text">暖气</text>
+          </view>
+          <view class="store-detail__facility-item">
+            <image
+              class="store-detail__facility-icon store-detail__facility-icon--unavailable"
+              src="/images/store-detail/xmark-circle-regular.svg"
+              mode="aspectFit"
+            ></image>
+            <text class="store-detail__facility-text">凉衣架</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 卫浴 Section -->
+      <view class="store-detail__facility-section">
+        <view class="store-detail__facility-category">
+          <text class="store-detail__facility-category-title">卫浴</text>
+        </view>
+        <view class="store-detail__facility-items">
+          <view class="store-detail__facility-item">
+            <image
+              class="store-detail__facility-icon store-detail__facility-icon--available"
+              src="/images/store-detail/check-circle-regular.svg"
+              mode="aspectFit"
+            ></image>
+            <text class="store-detail__facility-text">热水</text>
+          </view>
+          <view class="store-detail__facility-item">
+            <image
+              class="store-detail__facility-icon store-detail__facility-icon--unavailable"
+              src="/images/store-detail/xmark-circle-regular.svg"
+              mode="aspectFit"
+            ></image>
+            <text class="store-detail__facility-text">独立卫浴</text>
+          </view>
+          <view class="store-detail__facility-item">
+            <image
+              class="store-detail__facility-icon store-detail__facility-icon--available"
+              src="/images/store-detail/check-circle-regular.svg"
+              mode="aspectFit"
+            ></image>
+            <text class="store-detail__facility-text">电吹风</text>
+          </view>
+          <view class="store-detail__facility-item">
+            <image
+              class="store-detail__facility-icon store-detail__facility-icon--unavailable"
+              src="/images/store-detail/xmark-circle-regular.svg"
+              mode="aspectFit"
+            ></image>
+            <text class="store-detail__facility-text">洗浴用品</text>
+          </view>
+          <view class="store-detail__facility-item">
+            <image
+              class="store-detail__facility-icon store-detail__facility-icon--available"
+              src="/images/store-detail/check-circle-regular.svg"
+              mode="aspectFit"
+            ></image>
+            <text class="store-detail__facility-text">牙具</text>
+          </view>
+          <view class="store-detail__facility-item">
+            <image
+              class="store-detail__facility-icon store-detail__facility-icon--unavailable"
+              src="/images/store-detail/xmark-circle-regular.svg"
+              mode="aspectFit"
+            ></image>
+            <text class="store-detail__facility-text">浴巾</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- Landlord Card - 房东介绍卡片 -->
+    <view class="store-detail__landlord-card" wx:if="{{activeTab === 'landlord'}}">
+      <!-- Header - 房东介绍 -->
+      <view class="store-detail__landlord-header">
+        <text class="store-detail__landlord-title">房东介绍</text>
+        <view class="store-detail__landlord-link" bindtap="onViewLandlordPage">
+          <text class="store-detail__landlord-link-text">房东主页 </text>
+          <image
+            class="store-detail__arrow-right-icon"
+            src="/images/store-detail/angle-right-small.svg"
+            mode="aspectFit"
+          ></image>
+        </view>
+      </view>
+
+      <!-- Landlord Info -->
+      <view class="store-detail__landlord-info">
+        <view class="store-detail__landlord-profile">
+          <image
+            class="store-detail__landlord-avatar"
+            src="/images/store-detail/landlord-avatar.svg"
+            mode="aspectFit"
+          ></image>
+          <view class="store-detail__landlord-details">
+            <text class="store-detail__landlord-name">蜗壳旗舰店</text>
+            <view class="store-detail__landlord-badge">
+              <text class="store-detail__landlord-badge-text">自然人房东｜实名验证｜1套房屋</text>
+            </view>
+          </view>
+        </view>
+        <view class="store-detail__landlord-contact" bindtap="onContactLandlord">
+          <text class="store-detail__landlord-contact-text">联系房东</text>
+        </view>
+      </view>
+
+      <!-- Landlord Stats -->
+      <view class="store-detail__landlord-stats">
+        <view class="store-detail__landlord-stat-row">
+          <view class="store-detail__landlord-stat-item">
+            <text class="store-detail__landlord-stat-label">好评率</text>
+          </view>
+          <view class="store-detail__landlord-stat-item">
+            <text class="store-detail__landlord-stat-value">暂无</text>
+          </view>
+          <view class="store-detail__landlord-stat-item">
+            <text class="store-detail__landlord-stat-subtitle">共30条点评</text>
+          </view>
+        </view>
+        <view class="store-detail__landlord-stat-row">
+          <view class="store-detail__landlord-stat-item">
+            <text class="store-detail__landlord-stat-label">订单确认率</text>
+          </view>
+          <view class="store-detail__landlord-stat-item">
+            <text class="store-detail__landlord-stat-value store-detail__landlord-stat-value--highlight">100%</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- Process Card - 体验流程卡片 (简版) -->
+    <view class="store-detail__process-simple-card" wx:if="{{activeTab === 'landlord'}}">
+      <!-- Header - 体验流程 -->
+      <view class="store-detail__process-simple-header">
+        <text class="store-detail__process-simple-title">体验流程</text>
+        <view class="store-detail__process-simple-link" bindtap="onViewAllProcess">
+          <text class="store-detail__process-simple-link-text">全部流程 </text>
+          <image
+            class="store-detail__arrow-right-icon"
+            src="/images/store-detail/angle-right-small.svg"
+            mode="aspectFit"
+          ></image>
+        </view>
+      </view>
+
+      <!-- Tip -->
+      <view class="store-detail__process-simple-tip">
+        <view class="store-detail__info-icon-wrapper">
+          <text class="store-detail__info-icon-text"></text>
+        </view>
+        <text class="store-detail__process-simple-tip-text">以下规则由房东制定，请仔细阅读并遵守</text>
+      </view>
+    </view>
+
     <!-- Background Card (height=336px, border-radius=12px) -->
     <view class="store-detail__cost-card" wx:if="{{activeTab === 'cost'}}">
       <!-- Header (x=16, y=16, width=311px) -->

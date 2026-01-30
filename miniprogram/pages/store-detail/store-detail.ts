@@ -127,6 +127,42 @@ Page({
     })
   },
 
+  // 展开查看特点全部内容
+  onExpandFeature() {
+    wx.showToast({
+      title: '展开查看全部特点',
+      icon: 'none',
+      duration: 1500,
+    })
+  },
+
+  // 查看全部设施
+  onViewAllFacilities() {
+    wx.showToast({
+      title: '查看全部设施',
+      icon: 'none',
+      duration: 1500,
+    })
+  },
+
+  // 查看房东主页
+  onViewLandlordPage() {
+    wx.showToast({
+      title: '查看房东主页',
+      icon: 'none',
+      duration: 1500,
+    })
+  },
+
+  // 联系房东
+  onContactLandlord() {
+    wx.showToast({
+      title: '联系房东',
+      icon: 'none',
+      duration: 1500,
+    })
+  },
+
   // 选择日期
   onSelectDate() {
     wx.showToast({

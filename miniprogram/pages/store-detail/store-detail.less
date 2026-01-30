@@ -320,6 +320,489 @@
     padding: 32rpx;
   }
 
+  // ==================== Feature Card - 特点卡片 ====================
+  // height=618px (1236rpx), border-radius=12px (24rpx)
+  &__feature-card {
+    width: 100%;
+    min-height: 1236rpx;
+    background: #ffffff;
+    border-radius: 24rpx;
+    box-shadow: 0px 2rpx 4rpx 0px rgba(0, 0, 0, 0.05);
+    position: relative;
+    padding: 32rpx;
+    padding-bottom: 64rpx;
+  }
+
+  // Header - 房屋特色 (x=16, y=16)
+  &__feature-header {
+    margin-bottom: 400rpx; // 216px - 16px = 200px -> 400rpx
+  }
+
+  // Poppins 600, 20px (40rpx), line-height=1.4em
+  &__feature-title {
+    font-family: Poppins, sans-serif;
+    font-weight: 600;
+    font-size: 40rpx;
+    line-height: 1.4em;
+    color: #000000;
+  }
+
+  // Title with Icon (x=143, y=232) - 相对于卡片左上角
+  &__feature-name-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8rpx;
+    margin-bottom: 72rpx; // 268px - 232px - 20px = 16px -> 32rpx, 但要让文字离近一些
+    justify-content: center;
+  }
+
+  // Snail Icon: width=24px (48rpx), height=20px (40rpx)
+  &__snail-icon {
+    width: 48rpx;
+    height: 40rpx;
+  }
+
+  // Poppins 600, 16px (32rpx), line-height=1.75em
+  &__feature-name {
+    font-family: Poppins, sans-serif;
+    font-weight: 600;
+    font-size: 32rpx;
+    line-height: 1.75em;
+    color: #000000;
+  }
+
+  // Description (x=32, y=268, width=311px, height=351px)
+  &__feature-description {
+    display: flex;
+    flex-direction: column;
+    gap: 0; // 段落间没有额外间距
+    margin-bottom: 32rpx;
+  }
+
+  // OPPOSans 400, 14px (28rpx), line-height=2em, text-align=justified
+  &__feature-text {
+    font-family: OPPOSans, sans-serif;
+    font-weight: 400;
+    font-size: 28rpx;
+    line-height: 2em;
+    text-align: justify;
+    color: #999999;
+  }
+
+  // Feature Image (x=26, y=635, width=317px, height=211px)
+  &__feature-image-wrapper {
+    width: 634rpx; // 317px
+    height: 422rpx; // 211px
+    border-radius: 8rpx;
+    overflow: hidden;
+    margin-left: -12rpx; // 26px - 16px = 10px -> 20rpx, 但向左偏移
+    margin-right: -12rpx;
+    margin-bottom: 32rpx;
+  }
+
+  &__feature-image {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  // Blur Background (x=24, y=696, width=317px, height=118px)
+  &__feature-blur {
+    position: absolute;
+    left: 48rpx; // 24px
+    bottom: 200rpx; // 从底部往上
+    width: 634rpx; // 317px
+    height: 236rpx; // 118px
+    background: #ffffff;
+    filter: blur(160rpx); // 80px
+    pointer-events: none;
+  }
+
+  // View All Button (x=138, y=760)
+  &__feature-expand {
+    position: absolute;
+    left: 50%;
+    bottom: 80rpx;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 0;
+    cursor: pointer;
+  }
+
+  // Poppins 400, 14px (28rpx), line-height=1.142857em
+  &__feature-expand-text {
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
+    font-size: 28rpx;
+    line-height: 1.142857em;
+    color: #6e9fd3;
+  }
+
+  // angle-down icon: width=16px (32rpx), height=16px (32rpx)
+  &__angle-down-icon {
+    width: 32rpx;
+    height: 32rpx;
+  }
+
+  // ==================== Facility Card - 设施卡片 ====================
+  // border-radius=12px (24rpx), padding=16px (32rpx)
+  &__facility-card {
+    width: 100%;
+    background: #ffffff;
+    border-radius: 24rpx;
+    box-shadow: 0px 2rpx 4rpx 0px rgba(0, 0, 0, 0.05);
+    padding: 32rpx;
+  }
+
+  // Header - 服务/设施
+  &__facility-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32rpx;
+  }
+
+  // Poppins 600, 20px (40rpx), line-height=1.4em, color=#1F2937
+  &__facility-title {
+    font-family: Poppins, sans-serif;
+    font-weight: 600;
+    font-size: 40rpx;
+    line-height: 1.4em;
+    color: #1f2937;
+  }
+
+  // 全部设施链接
+  &__facility-link {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  // Poppins 400, 14px (28rpx), line-height=1.142857em, color=#6E9FD3
+  &__facility-link-text {
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
+    font-size: 28rpx;
+    line-height: 1.142857em;
+    color: #6e9fd3;
+  }
+
+  // 设施分类 Section
+  &__facility-section {
+    display: flex;
+    border-bottom: 1rpx solid #f3f4f6;
+    padding-bottom: 32rpx;
+    margin-bottom: 32rpx;
+
+    &:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+  }
+
+  // 分类标题区域 (width=62.19px -> 124rpx)
+  &__facility-category {
+    width: 124rpx;
+    flex-shrink: 0;
+  }
+
+  // Poppins 500, 14px (28rpx), line-height=1.428571em, color=#111827
+  &__facility-category-title {
+    font-family: Poppins, sans-serif;
+    font-weight: 500;
+    font-size: 28rpx;
+    line-height: 1.428571em;
+    color: #111827;
+  }
+
+  // 设施项目容器 (width=248.8px -> ~498rpx)
+  &__facility-items {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16rpx;
+  }
+
+  // 单个设施项 (height=20px -> 40rpx, padding-right=32rpx, padding-bottom=16rpx)
+  &__facility-item {
+    display: flex;
+    align-items: center;
+    height: 40rpx;
+    padding-right: 32rpx;
+    padding-bottom: 16rpx;
+  }
+
+  // 设施图标: width=18px (36rpx), padding-right=12rpx
+  &__facility-icon {
+    width: 32rpx; // 16px -> 32rpx (调整为实际图标尺寸)
+    height: 32rpx;
+    margin-right: 12rpx;
+    flex-shrink: 0;
+
+    // 可用状态 - 绿色
+    &--available {
+      // SVG 图标颜色已在文件中定义
+    }
+
+    // 不可用状态 - 红色
+    &--unavailable {
+      // SVG 图标颜色已在文件中定义
+    }
+  }
+
+  // Poppins 400, 12px (24rpx), line-height=1.666667em, color=#1F2937
+  &__facility-text {
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
+    font-size: 24rpx;
+    line-height: 1.666667em;
+    color: #1f2937;
+  }
+
+  // ==================== Landlord Card - 房东介绍卡片 ====================
+  // border-radius=12px (24rpx), padding=16px (32rpx)
+  &__landlord-card {
+    width: 100%;
+    background: #ffffff;
+    border-radius: 24rpx;
+    box-shadow: 0px 2rpx 4rpx 0px rgba(0, 0, 0, 0.05);
+    padding: 32rpx;
+    margin-bottom: 32rpx;
+  }
+
+  // Header - 房东介绍
+  &__landlord-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32rpx;
+  }
+
+  // Poppins 600, 20px (40rpx), line-height=1.4em, color=#1F2937
+  &__landlord-title {
+    font-family: Poppins, sans-serif;
+    font-weight: 600;
+    font-size: 40rpx;
+    line-height: 1.4em;
+    color: #1f2937;
+  }
+
+  // 房东主页链接
+  &__landlord-link {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  // Poppins 400, 14px (28rpx), line-height=1.142857em, color=#6E9FD3
+  &__landlord-link-text {
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
+    font-size: 28rpx;
+    line-height: 1.142857em;
+    color: #6e9fd3;
+  }
+
+  // 房东信息区域
+  &__landlord-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16rpx;
+  }
+
+  // 房东资料
+  &__landlord-profile {
+    display: flex;
+    align-items: center;
+    gap: 24rpx;
+  }
+
+  // 房东头像: width=56px (112rpx), height=56px (112rpx)
+  &__landlord-avatar {
+    width: 112rpx;
+    height: 112rpx;
+    flex-shrink: 0;
+  }
+
+  // 房东详情
+  &__landlord-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8rpx;
+  }
+
+  // Poppins 600, 16px (32rpx), line-height=1.5em, color=#1F2937
+  &__landlord-name {
+    font-family: Poppins, sans-serif;
+    font-weight: 600;
+    font-size: 32rpx;
+    line-height: 1.5em;
+    color: #1f2937;
+  }
+
+  // 认证徽章: width=154px (308rpx), padding=3px 7.56px 3px 5px
+  &__landlord-badge {
+    width: 308rpx;
+    padding: 6rpx 15rpx 6rpx 10rpx;
+    background: #fff7ed;
+    border: 1rpx solid #fed7aa;
+    border-radius: 4rpx;
+  }
+
+  // Poppins 400, 10px (20rpx), line-height=1.6em, color=#FB923C
+  &__landlord-badge-text {
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
+    font-size: 20rpx;
+    line-height: 1.6em;
+    color: #fb923c;
+  }
+
+  // 联系房东按钮: padding=6px 12px (12rpx 24rpx)
+  &__landlord-contact {
+    padding: 12rpx 24rpx;
+    background: #f97316;
+    border-radius: 8rpx;
+    cursor: pointer;
+  }
+
+  // Poppins 400, 14px (28rpx), line-height=1.428571em, color=#FFFFFF
+  &__landlord-contact-text {
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
+    font-size: 28rpx;
+    line-height: 1.428571em;
+    color: #ffffff;
+  }
+
+  // 房东统计数据: padding=8px 0px 0px (16rpx 0 0)
+  &__landlord-stats {
+    display: flex;
+    padding-top: 16rpx;
+    gap: 0;
+  }
+
+  // 统计数据行
+  &__landlord-stat-row {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8rpx;
+  }
+
+  // 统计数据项
+  &__landlord-stat-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  // Poppins 400, 14px (28rpx), line-height=1.428571em, color=#6B7280
+  &__landlord-stat-label {
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
+    font-size: 28rpx;
+    line-height: 1.428571em;
+    color: #6b7280;
+    text-align: center;
+  }
+
+  // Poppins 600, 24px (48rpx), line-height=1.333333em, color=#1F2937
+  &__landlord-stat-value {
+    font-family: Poppins, sans-serif;
+    font-weight: 600;
+    font-size: 48rpx;
+    line-height: 1.333333em;
+    color: #1f2937;
+    text-align: center;
+
+    // 高亮值 (100%)
+    &--highlight {
+      font-size: 47rpx; // 23.6px -> 47.2rpx
+      line-height: 1.355932em;
+    }
+  }
+
+  // Poppins 400, 12px (24rpx), line-height=1.333333em, color=#9CA3AF
+  &__landlord-stat-subtitle {
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
+    font-size: 24rpx;
+    line-height: 1.333333em;
+    color: #9ca3af;
+    text-align: center;
+  }
+
+  // ==================== Process Simple Card - 体验流程简版卡片 ====================
+  // border-radius=12px 12px 0px 0px (24rpx 24rpx 0 0), padding=16px (32rpx)
+  &__process-simple-card {
+    width: 100%;
+    background: #ffffff;
+    border-radius: 24rpx 24rpx 0 0;
+    box-shadow: 0px 2rpx 4rpx 0px rgba(0, 0, 0, 0.05);
+    padding: 32rpx;
+  }
+
+  // Header - 体验流程
+  &__process-simple-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16rpx;
+  }
+
+  // Poppins 600, 20px (40rpx), line-height=1.4em, color=#1F2937
+  &__process-simple-title {
+    font-family: Poppins, sans-serif;
+    font-weight: 600;
+    font-size: 40rpx;
+    line-height: 1.4em;
+    color: #1f2937;
+  }
+
+  // 全部流程链接
+  &__process-simple-link {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  // Poppins 400, 14px (28rpx), line-height=1.142857em, color=#9CA3AF
+  &__process-simple-link-text {
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
+    font-size: 28rpx;
+    line-height: 1.142857em;
+    color: #9ca3af;
+  }
+
+  // 提示信息
+  &__process-simple-tip {
+    display: flex;
+    align-items: center;
+  }
+
+  // Font Awesome 5 Free, 12px (24rpx), line-height=1em, color=#6B7280
+  &__info-icon-text {
+    font-family: 'Font Awesome 5 Free', sans-serif;
+    font-weight: 400;
+    font-size: 24rpx;
+    line-height: 1em;
+    color: #6b7280;
+  }
+
+  // Poppins 400, 12px (24rpx), line-height=1.333333em, color=#6B7280
+  &__process-simple-tip-text {
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
+    font-size: 24rpx;
+    line-height: 1.333333em;
+    color: #6b7280;
+  }
+
   // ==================== Cost Card ====================
   // height=336px (672rpx), border-radius=12px (24rpx)
   &__cost-card {
