@@ -5,8 +5,4 @@
     </view>
     <text class="name">{{userName}}</text>
   </view>
-
-  <view class="menu" bindtap="onMenu" aria-role="button" aria-label="更多操作">
-    <text class="menu__dots">⋯</text>
-  </view>
 </view>

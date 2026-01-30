@@ -15,7 +15,7 @@
       bind:points="onTapPoints"
     />
 
-    <quick-actions bind:action="onTapQuickAction" />
+    <!-- <quick-actions bind:action="onTapQuickAction" /> -->
 
     <icon-grid bind:item="onTapGridItem" />
   </view>

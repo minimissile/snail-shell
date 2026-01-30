@@ -1,4 +1,5 @@
 {
+  "navigationStyle": "custom",
   "usingComponents": {
     "profile-header": "/components/profile-header/profile-header",
     "membership-banner": "/components/membership-banner/membership-banner",

@@ -18,7 +18,7 @@ page {
   position: relative;
   height: 674rpx;
   overflow: hidden;
-  background: linear-gradient(180deg, rgba(89, 169, 220, 1) 0%, rgba(222, 236, 246, 1) 100%);
+  // background: linear-gradient(180deg, #59a9dc 0%, #deecf6 100%);
 }
 
 .home__header-overlay {
@@ -27,7 +27,7 @@ page {
   top: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(180deg, rgba(18, 151, 237, 1) 0%, rgba(235, 242, 249, 0) 100%);
+  background: linear-gradient(180deg, #1297ed 0%, rgba(235, 242, 249, 0) 100%);
 }
 
 .home__title-wrap {
@@ -64,14 +64,15 @@ page {
 }
 
 .booking-card {
-  width: 686rpx;
+  width: 100%;
+  max-width: @width-card;
   padding: 32rpx;
   border-radius: 32rpx;
   border: 2rpx solid #ffffff;
-  background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(207, 233, 250, 1) 100%);
+  background: linear-gradient(0deg, #ffffff 0%, #cfe9fa 100%);
   box-shadow:
-    0 8rpx 12rpx -8rpx rgba(0, 0, 0, 0.1),
-    0 20rpx 30rpx -6rpx rgba(0, 0, 0, 0.1);
+    0rpx 4rpx 6rpx -4rpx rgba(0, 0, 0, 0.1),
+    0rpx 10rpx 15rpx -3rpx rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
 }
 
@@ -81,7 +82,7 @@ page {
 }
 
 .booking-card__row--border {
-  border-bottom: 2rpx solid #e9e9e9;
+  border-bottom: 1rpx solid #e9e9e9;
 }
 
 .booking-card__route {
@@ -293,11 +294,17 @@ page {
   width: 100%;
   padding: 24rpx 0;
   border-radius: 9999rpx;
-  background: linear-gradient(90deg, rgba(255, 141, 0, 1) 0%, rgba(255, 97, 0, 1) 100%);
+  background: linear-gradient(90deg, #ff8d00 0%, #ff6100 100%);
   box-shadow:
-    0 4rpx 8rpx -4rpx rgba(254, 215, 170, 1),
-    0 8rpx 12rpx -2rpx rgba(254, 215, 170, 1);
+    0rpx 2rpx 4rpx -2rpx #fed7aa,
+    0rpx 4rpx 6rpx -1rpx #fed7aa;
   border: none;
+  transition: all 0.3s ease;
+
+  &:active {
+    transform: scale(0.98);
+    opacity: 0.9;
+  }
 }
 
 .booking-card__search-btn[disabled] {
@@ -314,7 +321,8 @@ page {
 
 .promo-row {
   margin-top: 40rpx;
-  width: 686rpx;
+  width: 100%;
+  max-width: @width-card;
   height: 252rpx;
   .flex(row, stretch, space-between);
   gap: 24rpx;
@@ -352,7 +360,7 @@ page {
 }
 
 .promo--house {
-  background: linear-gradient(140deg, rgba(221, 243, 252, 1) 0%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(140deg, #ddf3fc 0%, rgba(255, 255, 255, 0) 100%);
 }
 
 .promo__image--house {
@@ -384,12 +392,12 @@ page {
 }
 
 .promo--redpacket {
-  background: linear-gradient(125deg, rgba(255, 255, 255, 1) 0%, rgba(254, 242, 242, 1) 100%);
+  background: linear-gradient(125deg, #ffffff 0%, #fef2f2 100%);
   text-align: center;
 }
 
 .promo--groupbuy {
-  background: linear-gradient(125deg, rgba(255, 255, 255, 1) 0%, rgba(254, 252, 232, 1) 100%);
+  background: linear-gradient(125deg, #ffffff 0%, #fefce8 100%);
   text-align: right;
 }
 
@@ -403,13 +411,13 @@ page {
 .promo__badge--red {
   left: 26rpx;
   top: 36rpx;
-  background: linear-gradient(180deg, rgba(255, 237, 213, 1) 0%, rgba(255, 182, 192, 1) 100%);
+  background: linear-gradient(180deg, #ffedd5 0%, #ffb6c0 100%);
 }
 
 .promo__badge--yellow {
   right: 16rpx;
   top: 41rpx;
-  background: linear-gradient(180deg, rgba(255, 242, 220, 1) 0%, rgba(253, 221, 165, 1) 100%);
+  background: linear-gradient(180deg, #fff2dc 0%, #fddda5 100%);
   border-radius: 9999rpx;
 }
 
@@ -432,14 +440,16 @@ page {
 
 .invite-banner {
   margin-top: 40rpx;
-  width: 686rpx;
+  width: 100%;
+  max-width: @width-card;
   height: 192rpx;
   border-radius: 24rpx;
 }
 
 .recommend-title {
   margin-top: 32rpx;
-  width: 686rpx;
+  width: 100%;
+  max-width: @width-card;
   .flex(row, center, center);
 }
 

@@ -2,7 +2,7 @@
   <view class="row">
     <view class="cell" bindtap="onCoupon" aria-role="button" aria-label="优惠券">
       <image class="icon" src="/assets/figma/stat-coupon.svg" mode="aspectFit" />
-      <text class="text">优惠券_</text>
+      <text class="text">优惠券</text>
       <text class="count">{{couponCount}}</text>
     </view>
 
@@ -22,4 +22,6 @@
   </view>
 
   <view class="divider-h" aria-hidden="true"></view>
+
+  <quick-actions bind:action="onTapQuickAction" />
 </view>

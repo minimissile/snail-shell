@@ -10,7 +10,8 @@
   border-radius: @radius-md;
   border: 2rpx solid @color-surface;
   background: linear-gradient(135deg, rgba(255, 210, 94, 1) 1%, rgba(255, 244, 205, 1) 48%, rgba(255, 213, 64, 1) 100%);
-  overflow: hidden;
+  // overflow: hidden;
+  margin-top: 0rpx;
 }
 
 .content {
@@ -27,12 +28,19 @@
 
 .benefits {
   .flex(row, center, flex-start);
-  gap: 24rpx;
+  gap: 32rpx;
   opacity: 0.9;
+  margin-top: 4rpx;
 }
 
 .benefit {
   .flex(row, center, flex-start);
+
+  &__icon {
+    width: 28rpx;
+    height: 28rpx;
+    margin-right: 8rpx;
+  }
 
   &__dot {
     width: 28rpx;
@@ -67,16 +75,16 @@
   &--general {
     width: 148rpx;
     height: 176rpx;
-    right: 80rpx;
-    top: -32rpx;
+    right: 50rpx;
+    top: -40rpx;
     opacity: 0.98;
   }
 
   &--gold {
     width: 198rpx;
     height: 184rpx;
-    right: 60rpx;
-    top: -30rpx;
+    right: 30rpx;
+    top: -38rpx;
     opacity: 0.98;
   }
 }
