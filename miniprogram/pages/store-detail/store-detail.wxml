@@ -43,22 +43,10 @@
       </view>
     </view>
 
-    <!-- Nav (padding=0px 16px) -->
-    <view class="store-detail__nav">
-      <view
-        wx:for="{{tabs}}"
-        wx:key="id"
-        class="store-detail__nav-item-wrapper {{activeTab === item.id ? 'store-detail__nav-item-wrapper--active' : ''}}"
-      >
-        <view
-          class="store-detail__nav-item {{activeTab === item.id ? 'store-detail__nav-item--active' : ''}}"
-          data-tab="{{item.id}}"
-          bindtap="onSwitchTab"
-        >
-          <text class="store-detail__nav-text">{{item.name}}</text>
-        </view>
-      </view>
-    </view>
+    <!-- 标签导航栏 - 使用 TDesign Tabs 组件 -->
+    <t-tabs value="{{activeTab}}" bind:change="onTabChange" theme="line" class="store-detail__tabs">
+      <t-tab-panel wx:for="{{tabs}}" wx:key="id" label="{{item.name}}" value="{{item.id}}" />
+    </t-tabs>
   </view>
 
   <!-- Container (y=157px, padding=16px) -->

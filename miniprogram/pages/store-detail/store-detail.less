@@ -195,6 +195,42 @@
     position: relative;
   }
 
+  // TDesign Tabs 组件样式自定义
+  &__tabs {
+    width: 100%;
+    background: transparent;
+    padding: 0 32rpx;
+
+    // 覆盖 TDesign 默认样式
+    :deep(.t-tabs__scroll) {
+      background: transparent;
+    }
+
+    :deep(.t-tabs__nav) {
+      background: transparent;
+      padding: 0;
+    }
+
+    :deep(.t-tabs__item) {
+      font-family: Poppins, sans-serif;
+      font-weight: 600;
+      font-size: 28rpx;
+      line-height: 1.4285714285714286em;
+      color: #9ca3af;
+      padding: 16rpx 24rpx;
+    }
+
+    :deep(.t-tabs__item--active) {
+      color: #000000;
+    }
+
+    :deep(.t-tabs__track) {
+      height: 4rpx;
+      background: #000000;
+      border-radius: 2rpx;
+    }
+  }
+
   &__wechat-bg {
     position: absolute;
     left: 0;

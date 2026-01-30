@@ -61,7 +61,18 @@ Page({
     })
   },
 
-  // 切换标签页
+  // 切换标签页 - TDesign Tabs 组件事件
+  onTabChange(event: any) {
+    const { value } = event.detail
+    this.setData({
+      activeTab: value,
+    })
+
+    // TODO: 根据标签页加载对应内容
+    console.log('切换到标签页:', value)
+  },
+
+  // 旧的切换方法(保留兼容)
   onSwitchTab(e: any) {
     const { tab } = e.currentTarget.dataset
     this.setData({
