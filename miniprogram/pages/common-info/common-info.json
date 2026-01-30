@@ -1,5 +1,6 @@
 {
-  "usingComponents": {
-    "navigation-bar": "/components/navigation-bar/navigation-bar"
-  }
+  "navigationBarTitleText": "常用信息",
+  "navigationBarBackgroundColor": "#F7F9FB",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {}
 }
