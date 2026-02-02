@@ -492,7 +492,7 @@
   &__facility-section {
     display: flex;
     border-bottom: 1rpx solid #f3f4f6;
-    padding-bottom: 32rpx;
+    padding-bottom: 16rpx; // 减少底部内边距
     margin-bottom: 32rpx;
 
     &:last-child {
@@ -502,9 +502,9 @@
     }
   }
 
-  // 分类标题区域 (width=62.19px -> 124rpx)
+  // 分类标题区域 (width=39px -> 78rpx)
   &__facility-category {
-    width: 124rpx;
+    width: 78rpx; // 减小宽度，给设施项更多空间
     flex-shrink: 0;
   }
 
@@ -522,23 +522,23 @@
     flex: 1;
     display: flex;
     flex-wrap: wrap;
-    gap: 16rpx;
+    align-content: flex-start;
   }
 
-  // 单个设施项 (height=20px -> 40rpx, padding-right=32rpx, padding-bottom=16rpx)
+  // 单个设施项 (height=20px -> 40rpx)
   &__facility-item {
     display: flex;
     align-items: center;
     height: 40rpx;
-    padding-right: 32rpx;
-    padding-bottom: 16rpx;
+    width: 50%; // 固定每行2个
+    margin-bottom: 16rpx;
   }
 
-  // 设施图标: width=18px (36rpx), padding-right=12rpx
+  // 设施图标: width=16px (32rpx)
   &__facility-icon {
-    width: 32rpx; // 16px -> 32rpx (调整为实际图标尺寸)
+    width: 32rpx;
     height: 32rpx;
-    margin-right: 12rpx;
+    margin-right: 8rpx; // 减小间距
     flex-shrink: 0;
 
     // 可用状态 - 绿色
@@ -559,6 +559,9 @@
     font-size: 24rpx;
     line-height: 1.666667em;
     color: #1f2937;
+    white-space: nowrap; // 不换行
+    overflow: hidden;
+    text-overflow: ellipsis; // 超出显示省略号
   }
 
   // ==================== Landlord Card - 房东介绍卡片 ====================
