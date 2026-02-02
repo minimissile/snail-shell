@@ -9,11 +9,12 @@
   <view class="tabs" aria-label="订单状态 Tab">
     <scroll-view
       class="tabs__scroll"
-      scroll-x
+      scroll-x="{{true}}"
       scroll-left="{{scrollLeft}}"
       scroll-with-animation="{{true}}"
       show-scrollbar="{{false}}"
-      enable-flex
+      enable-flex="{{true}}"
+      enhanced="{{true}}"
       aria-label="订单状态切换"
     >
       <view class="tabs__row">
@@ -56,7 +57,11 @@
           </view>
 
           <view wx:else class="panel__body">
-            <view wx:if="{{ordersCountByIndex[tabIndex]}}" class="list" aria-label="订单列表">
+            <view
+              wx:if="{{ordersByIndex[tabIndex] && ordersByIndex[tabIndex].length > 0}}"
+              class="list"
+              aria-label="订单列表"
+            >
               <view
                 wx:for="{{ordersByIndex[tabIndex]}}"
                 wx:key="id"
