@@ -97,7 +97,7 @@
         <view class="promo promo--house" aria-label="品质好房">
           <text class="promo__title">品质好房</text>
           <text class="promo__desc">平台验真 入住无忧</text>
-          <!-- <image class="promo__image promo__image&#45;&#45;house" src="/assets/figma/home-promo-house.jpg" mode="aspectFill" /> -->
+          <image class="promo__image promo__image--house" src="/assets/figma/home-promo-house.png" mode="aspectFill" />
           <view class="promo__link" bindtap="onGoSelectRoom" aria-role="button" aria-label="去选房">
             <text class="promo__link-text">去选房</text>
           </view>
@@ -134,7 +134,10 @@
       />
 
       <view class="recommend-title" aria-label="推荐区域">
-        <text class="recommend-title__text">安心订 · 省心住</text>
+        <text class="recommend-title__text">
+          安<text class="recommend-title__highlight">心</text>订 · 省<text class="recommend-title__highlight">心</text
+          >住
+        </text>
       </view>
     </view>
   </view>

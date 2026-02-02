@@ -337,7 +337,7 @@ page {
   box-shadow:
     0 4rpx 8rpx -4rpx rgba(0, 0, 0, 0.1),
     0 8rpx 12rpx -2rpx rgba(0, 0, 0, 0.1);
-  padding: 16rpx;
+  padding: 24rpx;
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -361,44 +361,51 @@ page {
 
 .promo--house {
   background: linear-gradient(140deg, #ddf3fc 0%, rgba(255, 255, 255, 0) 100%);
+  display: flex;
+  flex-direction: column;
 }
 
 .promo__image--house {
   position: absolute;
-  left: 126rpx;
-  top: 146rpx;
+  right: -40rpx;
+  bottom: 20rpx;
   width: 112rpx;
   height: 110rpx;
   border-radius: 200rpx;
 }
 
 .promo__link {
-  position: absolute;
-  left: 16rpx;
-  bottom: 16rpx;
+  // position: absolute;
+  // left: 16rpx;
+  // bottom: 16rpx;
+  margin-top: 8rpx;
   padding: 8rpx 16rpx;
   border-radius: 16rpx;
   background: #ffffff;
   border: 2rpx solid #a2dcff;
   box-sizing: border-box;
+  margin-right: auto;
 }
 
 .promo__link-text {
   font-family: Poppins;
   font-weight: 600;
   font-size: 24rpx;
-  line-height: 32rpx;
+  line-height: 1;
   color: #3b82f6;
 }
 
 .promo--redpacket {
   background: linear-gradient(125deg, #ffffff 0%, #fef2f2 100%);
-  text-align: center;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
 }
 
 .promo--groupbuy {
   background: linear-gradient(125deg, #ffffff 0%, #fefce8 100%);
-  text-align: right;
+  display: flex;
+  flex-direction: column;
 }
 
 .promo__badge {
@@ -409,30 +416,33 @@ page {
 }
 
 .promo__badge--red {
-  left: 26rpx;
-  top: 36rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  right: 0;
+  bottom: 20rpx;
   background: linear-gradient(180deg, #ffedd5 0%, #ffb6c0 100%);
 }
 
 .promo__badge--yellow {
-  right: 16rpx;
-  top: 41rpx;
+  right: 0rpx;
+  bottom: 20rpx;
   background: linear-gradient(180deg, #fff2dc 0%, #fddda5 100%);
   border-radius: 9999rpx;
 }
 
 .promo__image--redpacket {
   position: absolute;
-  left: 22rpx;
-  top: 50rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 28rpx;
   width: 118rpx;
   height: 82rpx;
 }
 
 .promo__image--groupbuy {
   position: absolute;
-  right: 24rpx;
-  top: 80rpx;
+  right: 0rpx;
+  bottom: 24rpx;
   width: 112rpx;
   height: 112rpx;
   border-radius: 16rpx;
@@ -447,7 +457,6 @@ page {
 }
 
 .recommend-title {
-  margin-top: 32rpx;
   width: 100%;
   max-width: @width-card;
   .flex(row, center, center);
@@ -459,4 +468,8 @@ page {
   font-size: 40rpx;
   line-height: 40rpx;
   color: #999999;
+}
+
+.recommend-title__highlight {
+  color: @color-accent;
 }
