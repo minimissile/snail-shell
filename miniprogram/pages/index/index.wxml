@@ -114,7 +114,7 @@
           />
         </view>
 
-        <view class="promo promo--groupbuy" aria-label="团购验券">
+        <view class="promo promo--groupbuy" aria-label="团购验券" bindtap="onGoGroupBuy">
           <text class="promo__title">团购验券</text>
           <text class="promo__desc">订青旅折上折</text>
           <view class="promo__badge promo__badge--yellow"></view>

@@ -17,9 +17,7 @@
         <view class="store-info__button" bindtap="onChangeStore">
           <text class="store-info__button-text">更换门店</text>
           <view class="store-info__button-icon">
-            <view class="store-info__button-icon-wrapper">
-              <text class="store-info__button-symbol"></text>
-            </view>
+            <image class="store-info__button-symbol" src="/assets/figma/arrow-right-icon.svg" mode="aspectFit" />
           </view>
         </view>
       </view>
@@ -34,7 +32,7 @@
         <text class="verify-section__title">券码验证</text>
       </view>
       <view class="verify-button" bindtap="onImageRecognition">
-        <image class="verify-button__icon" src="/images/group-749.svg" mode="aspectFit" />
+        <image class="verify-button__icon" src="/assets/figma/image-recognition-icon.svg" mode="aspectFit" />
         <view class="verify-button__text-wrapper">
           <text class="verify-button__text">识图验券</text>
         </view>
@@ -58,7 +56,7 @@
       <!-- 分隔线1 -->
       <view class="process-card__divider">
         <view class="process-card__divider-wrapper">
-          <text class="process-card__divider-icon"></text>
+          <image class="process-card__divider-icon" src="/assets/figma/arrow-down-divider.svg" mode="aspectFit" />
         </view>
       </view>
 
@@ -82,7 +80,7 @@
       <!-- 分隔线2 -->
       <view class="process-card__divider">
         <view class="process-card__divider-wrapper">
-          <text class="process-card__divider-icon"></text>
+          <image class="process-card__divider-icon" src="/assets/figma/arrow-down-divider.svg" mode="aspectFit" />
         </view>
       </view>
 

@@ -92,25 +92,14 @@
     }
 
     &__button-icon {
+      display: flex;
+      align-items: center;
       padding: 4rpx 0 0 8rpx;
     }
 
-    &__button-icon-wrapper {
-      display: flex;
-      align-items: center;
-    }
-
     &__button-symbol {
-      font-family:
-        'Font Awesome 5 Free',
-        -apple-system,
-        BlinkMacSystemFont,
-        sans-serif;
-      font-weight: 900;
-      font-size: 20rpx;
-      line-height: 20rpx;
-      text-align: center;
-      color: #333333;
+      width: 12rpx;
+      height: 18rpx;
     }
   }
 
@@ -218,12 +207,15 @@
       position: absolute;
       width: 606rpx;
       height: 128rpx;
+      display: flex;
+      align-items: center;
     }
 
     &__step:nth-child(2) {
       top: 136rpx;
       left: 40rpx;
     }
+
 
     &__step:nth-child(4) {
       top: 284rpx;
@@ -262,6 +254,8 @@
     &__divider {
       position: absolute;
       padding-left: 96rpx;
+        // margin-bottom: 24rpx;
+        margin: 8rpx 0;
     }
 
     &__divider:nth-child(3) {
@@ -281,15 +275,8 @@
     }
 
     &__divider-icon {
-      font-family:
-        'Font Awesome 5 Free',
-        -apple-system,
-        BlinkMacSystemFont,
-        sans-serif;
-      font-weight: 900;
-      font-size: 36rpx;
-      line-height: 36rpx;
-      color: #fed7aa;
+      width: 36rpx;
+      height: 36rpx;
     }
 
     &__step-button {
@@ -375,26 +362,31 @@
 
     &__step-album-text {
       position: absolute;
-      top: 71rpx;
-      left: 44rpx;
-      font-family:
-        'PingFang SC',
-        -apple-system,
-        BlinkMacSystemFont,
-        sans-serif;
+      // top: 71rpx;
+      // left: 44rpx;
+      // font-family:
+      //   'PingFang SC',
+      //   -apple-system,
+      //   BlinkMacSystemFont,
+      //   sans-serif;
       font-weight: 600;
       font-size: 20rpx;
       line-height: 51rpx;
       text-align: center;
       color: #ffffff;
+      bottom: 20rpx;
+      left: 50%;
+      transform: translateX(-50%);
     }
 
     &__step-album-icon {
       position: absolute;
       top: 33rpx;
-      left: 48rpx;
       width: 32rpx;
       height: 32rpx;
+      bottom: 20rpx;
+      left: 50%;
+      transform: translateX(-50%);
     }
   }
 
