@@ -7,95 +7,6 @@
   flex-direction: column;
   overflow-x: hidden;
 
-  // 状态栏
-  .status-bar {
-    width: 100%;
-    background-color: #ffffff;
-  }
-
-  // 导航栏
-  .nav-bar {
-    width: 100%;
-    height: 88rpx;
-    background-color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 32rpx;
-    position: relative;
-
-    .nav-left {
-      width: 64rpx;
-      height: 64rpx;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .back-icon {
-      font-size: 48rpx;
-      color: #000000;
-      font-weight: 300;
-      line-height: 1;
-    }
-
-    .nav-center {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      .nav-title {
-        font-family:
-          'PingFang SC',
-          -apple-system,
-          BlinkMacSystemFont,
-          sans-serif;
-        font-weight: 600;
-        font-size: 40rpx;
-        line-height: 56rpx;
-        color: #000000;
-        letter-spacing: -0.025em;
-      }
-    }
-
-    .nav-right {
-      width: 64rpx;
-      height: 64rpx;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .menu-button {
-      width: 64rpx;
-      height: 64rpx;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.6);
-      border: 1rpx solid #e5e7eb;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0px 2rpx 4rpx 0px rgba(0, 0, 0, 0.05);
-      transition: all 0.2s ease;
-
-      &:active {
-        transform: scale(0.95);
-        opacity: 0.8;
-      }
-
-      .icon-menu {
-        font-size: 32rpx;
-        color: #000000;
-        line-height: 1;
-        font-weight: 900;
-      }
-    }
-  }
-
   // 标签栏
   .tabs-container {
     width: 100%;
@@ -103,7 +14,7 @@
     display: flex;
     justify-content: center;
     gap: 0;
-    padding: 16rpx 0 24rpx;
+    padding: 24rpx 0 12rpx;
 
     .tab-item {
       display: flex;
@@ -112,7 +23,7 @@
       justify-content: center;
       padding: 4rpx 0 12rpx;
       position: relative;
-      transition: all 0.3s ease;
+      transition: all 200ms ease-in-out;
 
       &:first-child {
         padding-right: 0;
@@ -133,13 +44,12 @@
         line-height: 40rpx;
         color: #6b7280;
         text-align: center;
-        transition: all 0.3s ease;
       }
 
       &.active .tab-label {
         color: #000000;
         font-weight: 500;
-        font-size: 36rpx;
+        // font-size: 36rpx;
       }
 
       .tab-indicator {
@@ -149,7 +59,20 @@
         height: 6rpx;
         background-color: #f97316;
         border-radius: 4rpx;
+        animation: indicatorAppear 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       }
+    }
+  }
+
+  // 指示器出现动画
+  @keyframes indicatorAppear {
+    0% {
+      transform: scaleX(0.3);
+      opacity: 0;
+    }
+    100% {
+      transform: scaleX(1);
+      opacity: 1;
     }
   }
 
@@ -190,12 +113,6 @@
         box-shadow: 0px 2rpx 4rpx 0px rgba(0, 0, 0, 0.05);
         display: flex;
         flex-direction: row;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-        &:active {
-          transform: scale(0.98);
-          box-shadow: 0px 4rpx 8rpx 0px rgba(0, 0, 0, 0.08);
-        }
 
         // 左侧图片
         .card-image {
@@ -214,19 +131,16 @@
             position: absolute;
             left: 0;
             top: 0;
-            padding: 8rpx 16rpx;
+            padding: 0 24rpx;
+            height: 44rpx;
+            line-height: 1;
             background-color: #f97316;
             border-radius: 0 0 16rpx 0;
 
             .tag-text {
-              font-family:
-                'PingFang SC',
-                -apple-system,
-                BlinkMacSystemFont,
-                sans-serif;
               font-weight: 600;
               font-size: 20rpx;
-              line-height: 30rpx;
+              // line-height: ;
               color: #ffffff;
             }
           }
@@ -340,8 +254,10 @@
 
             .price-box {
               display: flex;
-              align-items: flex-end;
-              height: 56rpx;
+              // align-items: ;
+              // height: 56rpx;
+              // justify-content: flex-start;
+              align-items: baseline;
 
               .price-unit {
                 font-family:
@@ -351,7 +267,7 @@
                   sans-serif;
                 font-weight: 400;
                 font-size: 24rpx;
-                line-height: 32rpx;
+                line-height: 1;
                 color: #ff5500;
               }
 
@@ -363,7 +279,7 @@
                   sans-serif;
                 font-weight: 600;
                 font-size: 40rpx;
-                line-height: 56rpx;
+                line-height: 1;
                 color: #ff5500;
                 margin-left: 4rpx;
               }
@@ -376,7 +292,7 @@
                   sans-serif;
                 font-weight: 200;
                 font-size: 24rpx;
-                line-height: 32rpx;
+                line-height: 1;
                 color: #9ca3af;
               }
             }

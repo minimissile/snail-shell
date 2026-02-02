@@ -1,4 +1,4 @@
 {
-  "usingComponents": {},
-  "navigationStyle": "custom"
+  "navigationBarTitleText": "收藏/足迹",
+  "usingComponents": {}
 }
