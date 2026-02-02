@@ -124,7 +124,10 @@
 
       <text class="room-selection__month-separator">至</text>
 
-      <text class="room-selection__month-end-date">结束日期\n{{monthEndDate}}</text>
+      <view class="room-selection__month-end-wrapper">
+        <text class="room-selection__month-end-label">结束日期</text>
+        <text class="room-selection__month-end-value">{{monthEndDate}}</text>
+      </view>
     </view>
   </view>
 
@@ -132,9 +135,7 @@
   <view class="room-selection__selected-info">
     <view class="room-selection__selected-item">
       <view class="room-selection__info-icon" bindtap="onViewSelectedInfo"></view>
-      <text class="room-selection__selected-text">
-        已选:{{bookingMode === 'day' ? selectedDays : bookingMode === 'hour' ? selectedHours : selectedMonths}}
-      </text>
+      <text class="room-selection__selected-text">已选:{{bookingMode === 'day' ? selectedDays : bookingMode === 'hour' ? selectedHours : selectedMonths}}</text>
     </view>
 
     <view class="room-selection__booking-tip">
@@ -200,9 +201,7 @@
 
       <!-- 4个床位 -->
       <view
-        class="room-selection__bed-item room-selection__bed-item--top-left
-                   {{group.beds[1].status === 'selected' ? 'room-selection__bed-item--selected' : ''}}
-                   {{group.beds[1].status === 'unavailable' ? 'room-selection__bed-item--unavailable' : ''}}"
+        class="room-selection__bed-item room-selection__bed-item--top-left {{group.beds[1].status === 'selected' ? 'room-selection__bed-item--selected' : ''}} {{group.beds[1].status === 'unavailable' ? 'room-selection__bed-item--unavailable' : ''}}"
         data-group-index="{{groupIndex}}"
         data-bed-index="1"
         bindtap="onToggleBed"
@@ -211,9 +210,7 @@
       </view>
 
       <view
-        class="room-selection__bed-item room-selection__bed-item--top-right
-                   {{group.beds[0].status === 'selected' ? 'room-selection__bed-item--selected' : ''}}
-                   {{group.beds[0].status === 'unavailable' ? 'room-selection__bed-item--unavailable' : ''}}"
+        class="room-selection__bed-item room-selection__bed-item--top-right {{group.beds[0].status === 'selected' ? 'room-selection__bed-item--selected' : ''}} {{group.beds[0].status === 'unavailable' ? 'room-selection__bed-item--unavailable' : ''}}"
         data-group-index="{{groupIndex}}"
         data-bed-index="0"
         bindtap="onToggleBed"
@@ -222,9 +219,7 @@
       </view>
 
       <view
-        class="room-selection__bed-item room-selection__bed-item--bottom-left
-                   {{group.beds[3].status === 'selected' ? 'room-selection__bed-item--selected' : ''}}
-                   {{group.beds[3].status === 'unavailable' ? 'room-selection__bed-item--unavailable' : ''}}"
+        class="room-selection__bed-item room-selection__bed-item--bottom-left {{group.beds[3].status === 'selected' ? 'room-selection__bed-item--selected' : ''}} {{group.beds[3].status === 'unavailable' ? 'room-selection__bed-item--unavailable' : ''}}"
         data-group-index="{{groupIndex}}"
         data-bed-index="3"
         bindtap="onToggleBed"
@@ -233,9 +228,7 @@
       </view>
 
       <view
-        class="room-selection__bed-item room-selection__bed-item--bottom-right
-                   {{group.beds[2].status === 'selected' ? 'room-selection__bed-item--selected' : ''}}
-                   {{group.beds[2].status === 'unavailable' ? 'room-selection__bed-item--unavailable' : ''}}"
+        class="room-selection__bed-item room-selection__bed-item--bottom-right {{group.beds[2].status === 'selected' ? 'room-selection__bed-item--selected' : ''}} {{group.beds[2].status === 'unavailable' ? 'room-selection__bed-item--unavailable' : ''}}"
         data-group-index="{{groupIndex}}"
         data-bed-index="2"
         bindtap="onToggleBed"

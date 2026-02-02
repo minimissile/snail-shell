@@ -53,8 +53,8 @@ Page({
       wx.showActionSheet({
         itemList: ['1人', '2人', '3人', '4人'],
         success: (res) => {
-          const peopleCount = parseInt(res.tapIndex) + 1
-          wx.showToast({ title: `已选择${peopleCount}人`, icon: 'none' })
+          // const peopleCount = parseInt(res.tapIndex) + 1
+          // wx.showToast({ title: `已选择${peopleCount}人`, icon: 'none' })
         },
         fail: () => {
           wx.showToast({ title: '取消选择', icon: 'none' })

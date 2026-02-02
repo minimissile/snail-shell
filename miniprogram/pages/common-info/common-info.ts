@@ -245,7 +245,7 @@ Component({
       wx.navigateBack({
         delta: 1,
         fail: () => {
-          wx.switchTab({ url: '/pages/me-gold/me-gold' })
+          wx.switchTab({ url: '/pages/mine/mine' })
         },
       })
     },
@@ -256,7 +256,7 @@ Component({
       wx.navigateBack({
         delta: 1,
         fail: () => {
-          wx.switchTab({ url: '/pages/me-gold/me-gold' })
+          wx.switchTab({ url: '/pages/mine/mine' })
         },
       })
     },

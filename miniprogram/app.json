@@ -1,7 +1,7 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/me-gold/me-gold",
+    "pages/mine/mine",
     "pages/common-info/common-info",
     "pages/orders/orders",
     "pages/coupons/coupons",
@@ -55,7 +55,7 @@
         "selectedIconPath": "assets/tabbar/tab-messages-active.png"
       },
       {
-        "pagePath": "pages/me-gold/me-gold",
+        "pagePath": "pages/mine/mine",
         "text": "我的",
         "iconPath": "assets/tabbar/tab-me.png",
         "selectedIconPath": "assets/tabbar/tab-me-active.png"

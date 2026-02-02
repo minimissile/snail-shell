@@ -33,7 +33,7 @@ Page({
         location: '阿勒泰地区 · 近哈纳斯新村 · 喀纳斯风景区',
         checkInDate: '01-27至01-28入住',
         price: 330,
-        image: '/assets/figma/favorites/item-1.png',
+        image: '/assets/figma/favorites/item-1.jpg',
         tag: '蜗壳精选',
       },
       {
@@ -44,7 +44,7 @@ Page({
         location: '阿勒泰地区 · 近哈纳斯新村 · 喀纳斯风景区',
         checkInDate: '01-27至01-28入住',
         price: 330,
-        image: '/assets/figma/favorites/item-1.png',
+        image: '/assets/figma/favorites/item-1.jpg',
         tag: '蜗壳精选',
       },
       {
@@ -55,7 +55,7 @@ Page({
         location: '阿勒泰地区 · 近哈纳斯新村 · 喀纳斯风景区',
         checkInDate: '01-27至01-28入住',
         price: 330,
-        image: '/assets/figma/favorites/item-1.png',
+        image: '/assets/figma/favorites/item-1.jpg',
         tag: '蜗壳精选',
       },
     ] as FavoriteItem[],
@@ -79,6 +79,7 @@ Page({
 
   onCardTap(e: WechatMiniprogram.CustomEvent) {
     const { id } = e.currentTarget.dataset
+    console.log('点击了收藏项', id)
     wx.showToast({
       title: '查看详情',
       icon: 'none',

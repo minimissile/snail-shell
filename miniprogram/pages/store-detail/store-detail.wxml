@@ -60,7 +60,7 @@
 
       <!-- Title with Icon (x=143, y=232) -->
       <view class="store-detail__feature-name-wrapper">
-        <image class="store-detail__snail-icon" src="/images/store-detail/snail-icon.png" mode="aspectFit"></image>
+        <image class="store-detail__snail-icon" src="/images/store-detail/snail.png" mode="aspectFit"></image>
         <text class="store-detail__feature-name">蜗壳青旅</text>
       </view>
 
@@ -279,7 +279,7 @@
         <view class="store-detail__landlord-profile">
           <image
             class="store-detail__landlord-avatar"
-            src="/images/store-detail/landlord-avatar.svg"
+            src="/images/store-detail/snail.png"
             mode="aspectFit"
           ></image>
           <view class="store-detail__landlord-details">

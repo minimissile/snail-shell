@@ -351,12 +351,30 @@
     height: 32rpx;
   }
 
-  &__month-end-date {
+  &__month-end-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8rpx 24rpx;
+    background: rgba(255, 247, 237, 0.5);
+    border: 1rpx solid #f97316;
+    border-radius: 4rpx;
+    gap: 4rpx;
+  }
+
+  &__month-end-label {
     font-family: PingFang SC;
     font-weight: 400;
-    font-size: 28rpx;
+    font-size: 24rpx;
     line-height: 1.2em;
-    text-align: center;
+    color: #666666;
+  }
+
+  &__month-end-value {
+    font-family: D-DIN-PRO;
+    font-weight: 400;
+    font-size: 28rpx;
+    line-height: 1.4285714285714286em;
     color: #000000;
   }
 
