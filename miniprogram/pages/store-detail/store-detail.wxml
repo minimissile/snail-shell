@@ -18,7 +18,11 @@
     <view class="store-detail__header-actions">
       <!-- Go back button (32x32px) -->
       <view class="store-detail__back-btn" bindtap="onGoBack">
-        <image class="store-detail__back-icon" src="/images/store-detail/angle-right-small.svg" mode="aspectFit"></image>
+        <image
+          class="store-detail__back-icon"
+          src="/images/store-detail/angle-right-small.svg"
+          mode="aspectFit"
+        ></image>
       </view>
 
       <!-- Right actions group (width=215px) -->
@@ -277,11 +281,7 @@
       <!-- Landlord Info -->
       <view class="store-detail__landlord-info">
         <view class="store-detail__landlord-profile">
-          <image
-            class="store-detail__landlord-avatar"
-            src="/images/store-detail/snail.png"
-            mode="aspectFit"
-          ></image>
+          <image class="store-detail__landlord-avatar" src="/images/store-detail/snail.png" mode="aspectFit"></image>
           <view class="store-detail__landlord-details">
             <text class="store-detail__landlord-name">蜗壳旗舰店</text>
             <view class="store-detail__landlord-badge">

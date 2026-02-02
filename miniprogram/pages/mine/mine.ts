@@ -70,7 +70,7 @@ Page({
   onTapGridItem(e: any) {
     const key = e.detail?.key || ''
     console.log('onTapGridItem called with key:', key) // 添加调试日志
-    
+
     if (key === '常用信息') {
       wx.navigateTo({
         url: '/pages/common-info/common-info',

@@ -12,13 +12,14 @@ page {
 .home {
   min-height: 100vh;
   background: @color-page-bg;
+  z-index: 1;
+  position: relative;
 }
 
 .home__header {
   position: relative;
   height: 674rpx;
   overflow: hidden;
-  // background: linear-gradient(180deg, #59a9dc 0%, #deecf6 100%);
 }
 
 .home__header-overlay {
@@ -28,6 +29,7 @@ page {
   right: 0;
   bottom: 0;
   background: linear-gradient(180deg, #1297ed 0%, rgba(235, 242, 249, 0) 100%);
+  z-index: -1;
 }
 
 .home__title-wrap {
@@ -74,6 +76,7 @@ page {
     0rpx 4rpx 6rpx -4rpx rgba(0, 0, 0, 0.1),
     0rpx 10rpx 15rpx -3rpx rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
+  z-index: 100;
 }
 
 .booking-card__row {
@@ -292,7 +295,8 @@ page {
 .booking-card__search-btn {
   margin-top: 24rpx;
   width: 100%;
-  padding: 24rpx 0;
+  height: 104rpx;
+  // padding: 24rpx 0;
   border-radius: 9999rpx;
   background: linear-gradient(90deg, #ff8d00 0%, #ff6100 100%);
   box-shadow:
@@ -315,7 +319,7 @@ page {
   font-family: Poppins;
   font-weight: 600;
   font-size: 36rpx;
-  line-height: 56rpx;
+  line-height: 104rpx;
   color: #ffffff;
 }
 

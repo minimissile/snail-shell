@@ -8,7 +8,6 @@
   </view>
 
   <view class="content">
-
     <stats-card
       coupon-count="{{couponCount}}"
       bind:coupon="onTapCoupon"
@@ -16,8 +15,7 @@
       bind:points="onTapPoints"
     />
 
-
-  <!-- 金刚区 -->
+    <!-- 金刚区 -->
     <icon-grid bind:item="onTapGridItem" />
   </view>
 </view>

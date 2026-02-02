@@ -35,7 +35,7 @@ Page({
       success: (res) => {
         console.log('扫码成功，结果：', res)
         const { result, scanType, charSet, path } = res
-        
+
         // 显示加载提示
         wx.showLoading({ title: '验证中...' })
 
@@ -43,16 +43,16 @@ Page({
         // 这里先模拟验证过程，实际应该调用后端API验证result中的券码
         setTimeout(() => {
           wx.hideLoading()
-          
+
           // 临时显示扫码结果（开发调试用）
           console.log('券码内容:', result)
           console.log('扫码类型:', scanType)
-          
+
           wx.showToast({
             title: '验证成功',
             icon: 'success',
           })
-          
+
           // TODO: 根据验证结果跳转到验券结果页或显示验证信息
           // wx.navigateTo({
           //   url: `/pages/verify-result/verify-result?code=${result}`
@@ -61,7 +61,7 @@ Page({
       },
       fail: (err) => {
         console.log('扫码失败或取消：', err)
-        
+
         // 用户取消扫码
         if (err.errMsg.includes('cancel')) {
           wx.showToast({
