@@ -27,6 +27,15 @@
     padding: 0 32rpx;
     box-sizing: border-box;
     .flex(row, center, flex-start);
+
+    // 添加右侧间距，防止tab滚动到最右边时贴边
+    &::after {
+      content: '';
+      display: block;
+      width: 32rpx; // 微小的占位，实际间距由padding控制
+      height: 1rpx;
+      flex-shrink: 0;
+    }
   }
 
   &__btn {
@@ -38,6 +47,7 @@
     box-shadow: 0 2rpx 4rpx 0 rgba(0, 0, 0, 0.05);
     .flex(row, center, center);
     margin-left: 24rpx;
+    flex-shrink: 0; // 防止被压缩
     transition:
       background-color 220ms ease,
       border-color 220ms ease,
@@ -56,6 +66,7 @@
 
   &__text {
     .font(28rpx, 40rpx, 500, @color-text-secondary);
+    white-space: nowrap; // 文字不换行
     transition:
       color 220ms ease,
       font-weight 220ms ease;

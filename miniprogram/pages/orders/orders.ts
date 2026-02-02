@@ -60,6 +60,7 @@ Component({
     ] as Array<{ key: OrdersTabKey; label: string }>,
     activeKey: 'all' as OrdersTabKey,
     activeIndex: 0,
+    scrollLeft: 0, // tabs滚动位置
     isLoading: false,
     errorMessage: '',
     ordersByIndex: [[], [], [], [], []] as Array<OrderCard[]>,
@@ -129,9 +130,43 @@ Component({
       if (!key || key === this.data.activeKey) return
       const index = this.data.tabs.findIndex((t: any) => t.key === key)
       const safeIndex = index >= 0 ? index : 0
-      this.setData({
-        activeKey: key,
-        activeIndex: safeIndex,
+      this.setData(
+        {
+          activeKey: key,
+          activeIndex: safeIndex,
+        },
+        () => {
+          // 滚动到选中的tab居中位置
+          this.scrollTabIntoView(safeIndex)
+        }
+      )
+    },
+
+    /**
+     * 滚动到指定tab居中位置
+     */
+    scrollTabIntoView(this: any, index: number) {
+      const query = this.createSelectorQuery()
+      query.select('.tabs__scroll').boundingClientRect()
+      query.selectAll('.tabs__btn').boundingClientRect()
+      query.exec((res: any) => {
+        if (!res || !res[0] || !res[1] || !res[1][index]) return
+
+        const scrollView = res[0]
+        const buttons = res[1]
+        const targetButton = buttons[index]
+
+        // 计算目标tab的中心位置
+        const buttonCenter = targetButton.left - scrollView.left + targetButton.width / 2
+        // 计算屏幕中心位置
+        const screenCenter = scrollView.width / 2
+        // 计算需要滚动的距离
+        const scrollLeft = buttonCenter - screenCenter
+
+        // 执行滚动
+        this.setData({
+          scrollLeft: Math.max(0, scrollLeft),
+        })
       })
     },
 

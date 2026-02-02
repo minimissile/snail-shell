@@ -18,7 +18,7 @@
     <view class="store-detail__header-actions">
       <!-- Go back button (32x32px) -->
       <view class="store-detail__back-btn" bindtap="onGoBack">
-        <image class="store-detail__back-icon" src="/images/store-detail/angle-left.svg" mode="aspectFit"></image>
+        <image class="store-detail__back-icon" src="/images/store-detail/angle-right-small.svg" mode="aspectFit"></image>
       </view>
 
       <!-- Right actions group (width=215px) -->
