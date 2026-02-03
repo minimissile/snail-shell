@@ -1,0 +1,25 @@
+/* 让 page 为纵向 flex 布局，使 swiper 占满剩余高度 */
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* 占满视口高度 */
+}
+
+/* tabs 保持自身高度，swiper 占满剩余空间 */
+.tabs {
+  flex-shrink: 0;
+}
+
+.swiper {
+  flex: 1;
+  min-height: 0; /* 重要：让 swiper 在 flex 容器中可收缩 */
+}
+
+/* 让 scroll-view 占满 swiper-item */
+.swiper-item {
+  height: 100%;
+}
+
+.panel {
+  height: 100%;
+}

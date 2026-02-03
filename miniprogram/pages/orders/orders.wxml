@@ -1,20 +1,13 @@
 <view class="page" aria-label="订单页">
-  <!-- <navigation-bar extClass="orders-nav" title="" back="{{false}}" color="#000000" background="transparent">
-    <view slot="left" class="topbar-left" bindtap="onOpenOrderTitle" aria-role="button" aria-label="全部订单">
-      <text class="topbar-title">全部订单</text>
-      <image class="topbar-title-icon" src="/assets/figma/angle-down-small.svg" mode="aspectFit" aria-hidden="true" />
-    </view>
-  </navigation-bar> -->
-
   <view class="tabs" aria-label="订单状态 Tab">
     <scroll-view
       class="tabs__scroll"
-      scroll-x="{{true}}"
+      scroll-x
       scroll-left="{{scrollLeft}}"
-      scroll-with-animation="{{true}}"
+      scroll-with-animation
       show-scrollbar="{{false}}"
-      enable-flex="{{true}}"
-      enhanced="{{true}}"
+      enable-flex
+      enhanced
       aria-label="订单状态切换"
     >
       <view class="tabs__row">
@@ -22,8 +15,8 @@
           wx:for="{{tabs}}"
           wx:key="key"
           wx:for-index="i"
-          class="tabs__btn {{activeKey === item.key ? 'is-active' : ''}} {{i === 0 ? 'is-first' : ''}}"
-          data-key="{{item.key}}"
+          class="tabs__btn {{activeIndex === i ? 'is-active' : ''}} {{i === 0 ? 'is-first' : ''}}"
+          data-index="{{i}}"
           bindtap="onTapTab"
           aria-role="button"
           aria-label="切换到{{item.label}}"
@@ -34,69 +27,234 @@
     </scroll-view>
   </view>
 
-  <swiper
-    class="swiper"
-    current="{{activeIndex}}"
-    duration="280"
-    easing-function="easeOutCubic"
-    disable-touch="{{true}}"
-    aria-label="订单内容"
-    bindchange="onSwiperChange"
-  >
-    <block wx:for="{{tabs}}" wx:key="key" wx:for-index="tabIndex">
-      <swiper-item>
-        <scroll-view class="panel" scroll-y enable-back-to-top type="list">
-          <view wx:if="{{isLoading}}" class="state state--loading" aria-role="alert" aria-label="加载中">
-            <view class="spinner" aria-role="img" aria-label="加载中"></view>
-            <text class="state__text">加载中…</text>
-          </view>
+  <view class="panel" aria-label="订单内容">
+    <view wx:if="{{isLoading}}" class="state state--loading" aria-role="alert" aria-label="加载中">
+      <view class="spinner" aria-role="img" aria-label="加载中"></view>
+      <text class="state__text">加载中…</text>
+    </view>
 
-          <view wx:elif="{{errorMessage}}" class="state state--error" aria-role="alert" aria-label="加载失败">
-            <text class="state__text">{{errorMessage}}</text>
-            <button class="state__btn" bindtap="onRetry" aria-label="重试">重试</button>
-          </view>
+    <view wx:elif="{{errorMessage}}" class="state state--error" aria-role="alert" aria-label="加载失败">
+      <text class="state__text">{{errorMessage}}</text>
+      <button class="state__btn" bindtap="onRetry" aria-label="重试">重试</button>
+    </view>
 
-          <view wx:else class="panel__body">
+    <view wx:else class="panel__body">
+      <!-- 全部 -->
+      <scroll-view
+        wx:if="{{activeIndex === 0}}"
+        class="list-scroll"
+        scroll-y
+        enable-back-to-top
+        type="list"
+        aria-label="全部订单列表"
+      >
+        <view>
+          <view wx:if="{{ordersCountByIndex[0] > 0}}" class="list" aria-label="订单列表">
             <view
-              wx:if="{{ordersByIndex[tabIndex] && ordersByIndex[tabIndex].length > 0}}"
-              class="list"
-              aria-label="订单列表"
+              wx:for="{{ordersByIndex[0]}}"
+              wx:key="id"
+              class="orders__card"
+              wx:for-item="order"
+              aria-label="订单卡片"
             >
-              <view
-                wx:for="{{ordersByIndex[tabIndex]}}"
-                wx:key="id"
-                class="orders__card"
-                wx:for-item="order"
-                aria-label="订单卡片"
-              >
-                <view class="orders__card-header">
-                  <view class="orders__card-header-left">
-                    <image class="orders__card-icon" src="/assets/figma/grid-buildings-modern.svg" mode="aspectFit" />
-                    <text class="orders__card-store">{{order.storeName}}</text>
-                  </view>
-                  <text class="orders__card-status" style="{{order.statusColor ? 'color: ' + order.statusColor : ''}}"
-                    >{{order.status}}</text
-                  >
+              <view class="orders__card-header">
+                <view class="orders__card-header-left">
+                  <image class="orders__card-icon" src="/assets/figma/buildings-modern.png" mode="aspectFit" />
+                  <text class="orders__card-store">{{order.storeName}}</text>
                 </view>
-
-                <view class="orders__card-divider"></view>
-
-                <view class="orders__card-body">
-                  <image class="orders__card-image" src="{{order.image}}" mode="aspectFill" />
-                  <view class="orders__card-info">
-                    <text class="orders__card-quantity">数量: {{order.quantity}}</text>
-                    <text class="orders__card-amount">支付金额: ¥ {{order.amount}}</text>
-                  </view>
+                <text class="orders__card-status" style="{{order.statusColor ? 'color: ' + order.statusColor : ''}}"
+                  >{{order.status}}</text
+                >
+              </view>
+              <view class="orders__card-divider"></view>
+              <view class="orders__card-body">
+                <image class="orders__card-image" src="{{order.image}}" mode="aspectFill" />
+                <view class="orders__card-info">
+                  <text class="orders__card-quantity">数量: {{order.quantity}}</text>
+                  <text class="orders__card-amount">支付金额: ¥ {{order.amount}}</text>
                 </view>
               </view>
             </view>
+          </view>
+          <view wx:else class="empty" aria-label="暂无订单">
+            <image class="empty__img" src="/assets/figma/orders-empty.png" mode="aspectFit" aria-hidden="true" />
+          </view>
+        </view>
+      </scroll-view>
 
-            <view wx:else class="empty" aria-label="暂无订单">
-              <image class="empty__img" src="/assets/figma/orders-empty.svg" mode="aspectFit" aria-hidden="true" />
+      <!-- 待使用 -->
+      <scroll-view
+        wx:if="{{activeIndex === 1}}"
+        class="list-scroll"
+        scroll-y
+        enable-back-to-top
+        type="list"
+        aria-label="待使用订单列表"
+      >
+        <view>
+          <view wx:if="{{ordersCountByIndex[1] > 0}}" class="list" aria-label="订单列表">
+            <view
+              wx:for="{{ordersByIndex[1]}}"
+              wx:key="id"
+              class="orders__card"
+              wx:for-item="order"
+              aria-label="订单卡片"
+            >
+              <view class="orders__card-header">
+                <view class="orders__card-header-left">
+                  <image class="orders__card-icon" src="/assets/figma/buildings-modern.png" mode="aspectFit" />
+                  <text class="orders__card-store">{{order.storeName}}</text>
+                </view>
+                <text class="orders__card-status" style="{{order.statusColor ? 'color: ' + order.statusColor : ''}}"
+                  >{{order.status}}</text
+                >
+              </view>
+              <view class="orders__card-divider"></view>
+              <view class="orders__card-body">
+                <image class="orders__card-image" src="{{order.image}}" mode="aspectFill" />
+                <view class="orders__card-info">
+                  <text class="orders__card-quantity">数量: {{order.quantity}}</text>
+                  <text class="orders__card-amount">支付金额: ¥ {{order.amount}}</text>
+                </view>
+              </view>
             </view>
           </view>
-        </scroll-view>
-      </swiper-item>
-    </block>
-  </swiper>
+          <view wx:else class="empty" aria-label="暂无订单">
+            <image class="empty__img" src="/assets/figma/orders-empty.png" mode="aspectFit" aria-hidden="true" />
+          </view>
+        </view>
+      </scroll-view>
+
+      <!-- 有效单 -->
+      <scroll-view
+        wx:if="{{activeIndex === 2}}"
+        class="list-scroll"
+        scroll-y
+        enable-back-to-top
+        type="list"
+        aria-label="有效单列表"
+      >
+        <view>
+          <view wx:if="{{ordersCountByIndex[2] > 0}}" class="list" aria-label="订单列表">
+            <view
+              wx:for="{{ordersByIndex[2]}}"
+              wx:key="id"
+              class="orders__card"
+              wx:for-item="order"
+              aria-label="订单卡片"
+            >
+              <view class="orders__card-header">
+                <view class="orders__card-header-left">
+                  <image class="orders__card-icon" src="/assets/figma/buildings-modern.png" mode="aspectFit" />
+                  <text class="orders__card-store">{{order.storeName}}</text>
+                </view>
+                <text class="orders__card-status" style="{{order.statusColor ? 'color: ' + order.statusColor : ''}}"
+                  >{{order.status}}</text
+                >
+              </view>
+              <view class="orders__card-divider"></view>
+              <view class="orders__card-body">
+                <image class="orders__card-image" src="{{order.image}}" mode="aspectFill" />
+                <view class="orders__card-info">
+                  <text class="orders__card-quantity">数量: {{order.quantity}}</text>
+                  <text class="orders__card-amount">支付金额: ¥ {{order.amount}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view wx:else class="empty" aria-label="暂无订单">
+            <image class="empty__img" src="/assets/figma/orders-empty.png" mode="aspectFit" aria-hidden="true" />
+          </view>
+        </view>
+      </scroll-view>
+
+      <!-- 待支付 -->
+      <scroll-view
+        wx:if="{{activeIndex === 3}}"
+        class="list-scroll"
+        scroll-y
+        enable-back-to-top
+        type="list"
+        aria-label="待支付订单列表"
+      >
+        <view>
+          <view wx:if="{{ordersCountByIndex[3] > 0}}" class="list" aria-label="订单列表">
+            <view
+              wx:for="{{ordersByIndex[3]}}"
+              wx:key="id"
+              class="orders__card"
+              wx:for-item="order"
+              aria-label="订单卡片"
+            >
+              <view class="orders__card-header">
+                <view class="orders__card-header-left">
+                  <image class="orders__card-icon" src="/assets/figma/buildings-modern.png" mode="aspectFit" />
+                  <text class="orders__card-store">{{order.storeName}}</text>
+                </view>
+                <view class="orders__card-status-wrapper">
+                  <text class="orders__card-status">待支付，剩余</text>
+                  <text wx:if="{{order.countdown}}" class="orders__card-countdown"> {{order.countdown}}</text>
+                </view>
+              </view>
+              <view class="orders__card-divider"></view>
+              <view class="orders__card-body">
+                <image class="orders__card-image" src="{{order.image}}" mode="aspectFill" />
+                <view class="orders__card-info">
+                  <text class="orders__card-quantity">数量: {{order.quantity}}</text>
+                  <text class="orders__card-amount">支付金额: ¥ {{order.amount}}</text>
+                  <!-- <text wx:if="{{order.countdown}}" class="orders__card-countdown">剩余时间: {{order.countdown}}</text> -->
+                </view>
+              </view>
+            </view>
+          </view>
+          <view wx:else class="empty" aria-label="暂无订单">
+            <image class="empty__img" src="/assets/figma/orders-empty.png" mode="aspectFit" aria-hidden="true" />
+          </view>
+        </view>
+      </scroll-view>
+
+      <!-- 退款单 -->
+      <scroll-view
+        wx:if="{{activeIndex === 4}}"
+        class="list-scroll"
+        scroll-y
+        enable-back-to-top
+        type="list"
+        aria-label="退款单列表"
+      >
+        <view>
+          <view wx:if="{{ordersCountByIndex[4] > 0}}" class="list" aria-label="订单列表">
+            <view
+              wx:for="{{ordersByIndex[4]}}"
+              wx:key="id"
+              class="orders__card"
+              wx:for-item="order"
+              aria-label="订单卡片"
+            >
+              <view class="orders__card-header">
+                <view class="orders__card-header-left">
+                  <image class="orders__card-icon" src="/assets/figma/buildings-modern.png" mode="aspectFit" />
+                  <text class="orders__card-store">{{order.storeName}}</text>
+                </view>
+                <text class="orders__card-status" style="{{order.statusColor ? 'color: ' + order.statusColor : ''}}"
+                  >{{order.status}}</text
+                >
+              </view>
+              <view class="orders__card-divider"></view>
+              <view class="orders__card-body">
+                <image class="orders__card-image" src="{{order.image}}" mode="aspectFill" />
+                <view class="orders__card-info">
+                  <text class="orders__card-quantity">数量: {{order.quantity}}</text>
+                  <text class="orders__card-amount">支付金额: ¥ {{order.amount}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view wx:else class="empty" aria-label="暂无订单">
+            <image class="empty__img" src="/assets/figma/orders-empty.png" mode="aspectFit" aria-hidden="true" />
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
 </view>

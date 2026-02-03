@@ -64,7 +64,7 @@ Page({
   /**
    * 页面加载时读取入口参数并同步 Tab 状态
    */
-  onLoad(this: any, options: Record<string, string>) {
+  onLoad(options: Record<string, string>) {
     const initialKey = resolveInitialTabKey(options?.tab || '')
     const index = this.data.tabs.findIndex((t: any) => t.key === initialKey)
     const safeIndex = index >= 0 ? index : 0
@@ -72,12 +72,14 @@ Page({
       activeKey: this.data.tabs[safeIndex].key,
       activeIndex: safeIndex,
     })
+    // 立即加载数据，确保在真机上也能正常显示
+    this.loadMockData()
   },
 
   /**
    * 页面初次渲染完成后加载数据
    */
-  onReady(this: any) {
+  onReady() {
     console.log('[Orders] onReady 被调用')
     // 加载模拟数据
     this.loadMockData()
@@ -86,7 +88,7 @@ Page({
   /**
    * 页面显示时同步外部指定的 Tab（适配原生 tabBar 的 switchTab）
    */
-  onShow(this: any) {
+  onShow() {
     console.log('[Orders] onShow 被调用, 当前数据:', {
       ordersCountByIndex: this.data.ordersCountByIndex,
       activeIndex: this.data.activeIndex,
@@ -127,27 +129,23 @@ Page({
   /**
    * 点击顶部 Tab
    */
-  onTapTab(this: any, e: WechatMiniprogram.TouchEvent) {
-    const key = (e.currentTarget.dataset?.key || '') as OrdersTabKey
-    if (!key || key === this.data.activeKey) return
-    const index = this.data.tabs.findIndex((t: any) => t.key === key)
-    const safeIndex = index >= 0 ? index : 0
-    this.setData(
-      {
-        activeKey: key,
-        activeIndex: safeIndex,
-      },
-      () => {
-        // 滚动到选中的tab居中位置
-        this.scrollTabIntoView(safeIndex)
-      }
-    )
+  onTapTab(e: WechatMiniprogram.TouchEvent) {
+    const index = Number(e.currentTarget.dataset?.index || 0)
+    const safeIndex = Math.max(0, Math.min(this.data.tabs.length - 1, index))
+    if (safeIndex === this.data.activeIndex) return
+    this.setData({
+      activeIndex: safeIndex,
+      activeKey: this.data.tabs[safeIndex].key,
+    }, () => {
+      // 滚动到选中的tab居中位置
+      this.scrollTabIntoView(safeIndex)
+    })
   },
 
   /**
    * 滚动到指定tab居中位置
    */
-  scrollTabIntoView(this: any, index: number) {
+  scrollTabIntoView(index: number) {
     const query = this.createSelectorQuery()
     query.select('.tabs__scroll').boundingClientRect()
     query.selectAll('.tabs__btn').boundingClientRect()
@@ -172,31 +170,19 @@ Page({
     })
   },
 
-  /**
-   * 同步 swiper 切换（用户手势已禁用，但程序切换仍会触发）
-   */
-  onSwiperChange(this: any, e: WechatMiniprogram.SwiperChange) {
-    const current = Number(e.detail?.current || 0)
-    const safeIndex = Math.max(0, Math.min(this.data.tabs.length - 1, Number.isFinite(current) ? current : 0))
-    const nextKey = this.data.tabs[safeIndex]?.key || 'all'
-    if (nextKey === this.data.activeKey && safeIndex === this.data.activeIndex) return
-    this.setData({
-      activeKey: nextKey,
-      activeIndex: safeIndex,
-    })
-  },
+
 
   /**
    * 失败重试（占位交互）
    */
-  onRetry(this: any) {
+  onRetry() {
     this.setData({ errorMessage: '', isLoading: false })
   },
 
   /**
    * 加载模拟数据
    */
-  loadMockData(this: any) {
+  loadMockData() {
     const mockOrders: OrderCard[] = [
       {
         id: '1',

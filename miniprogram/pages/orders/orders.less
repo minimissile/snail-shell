@@ -247,8 +247,14 @@
   .font(28rpx, 48rpx, 500, @color-text);
 }
 
+.orders__card-status-wrapper {
+  .flex(row, center, flex-end);
+  flex-shrink: 0;
+  gap: 4rpx;
+}
+
 .orders__card-status {
-  .font(28rpx, 48rpx, 500, @color-text);
+  .font(28rpx, 48rpx, 500, @color-text-tertiary);
   flex-shrink: 0;
   text-align: right;
 }
@@ -289,4 +295,9 @@
   width: 100%;
   .font(28rpx, 40rpx, 500, @color-text-secondary);
   margin-top: 8rpx;
+}
+
+.orders__card-countdown {
+  .font(28rpx, 48rpx, 500, #ff4d4d);
+  flex-shrink: 0;
 }
