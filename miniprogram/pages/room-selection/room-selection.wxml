@@ -121,8 +121,8 @@
 
     <view class="room-selection__month-picker">
       <view class="room-selection__month-input" bindtap="onChangeMonth">
-        <text class="room-selection__month-value">{{monthCount}}</text>
-        <image class="room-selection__month-icon" src="/images/room-selection/icon-sort.svg" />
+        <text class="room-selection__month-value">{{monthCount}}个月</text>
+        <image class="room-selection__month-icon" src="/assets/figma/room-selection/icon-sort.svg" mode="aspectFit" />
       </view>
 
       <text class="room-selection__month-separator">至</text>
