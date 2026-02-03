@@ -293,7 +293,7 @@ Page({
 
   // 立即预订
   onBookNow() {
-    const { selectedBeds } = this.data
+    const { selectedBeds, bookingMode, startDate, endDate, startTime, endTime, monthCount } = this.data
 
     if (selectedBeds.length === 0) {
       wx.showToast({
@@ -303,9 +303,9 @@ Page({
       return
     }
 
-    wx.showToast({
-      title: `预订 ${selectedBeds.length} 个床位`,
-      icon: 'success',
+    // 跳转到订单填写页面
+    wx.navigateTo({
+      url: '/pages/order-form/order-form',
     })
   },
 })
