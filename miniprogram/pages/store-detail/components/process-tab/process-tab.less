@@ -1,16 +1,17 @@
-// Process Tab - 体验流程标签页
+// 体验流程模块 - Figma node-id=107-2109
 .process-tab {
-  width: 100%;
-  min-height: 922rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 32rpx;
+  padding: 32rpx;
   background: #ffffff;
   border-radius: 24rpx;
 
+  // 头部区域
   &__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 32rpx;
-    gap: 326rpx;
   }
 
   &__title-wrapper {
@@ -26,10 +27,9 @@
   }
 
   &__link {
-    width: 140rpx;
     display: flex;
     align-items: center;
-    gap: 4rpx;
+    width: 140rpx;
   }
 
   &__link-text {
@@ -40,26 +40,21 @@
     color: #6e9fd3;
   }
 
-  &__arrow-right-icon {
+  &__arrow-icon {
     width: 32rpx;
     height: 32rpx;
   }
 
+  // 提示信息
   &__tip {
     display: flex;
     align-items: center;
-    padding: 0 32rpx;
-    margin-bottom: 24rpx;
   }
 
-  &__info-icon-wrapper {
-    padding-right: 8rpx;
-    flex-shrink: 0;
-  }
-
-  &__info-icon {
+  &__tip-icon {
     width: 24rpx;
     height: 24rpx;
+    margin-right: 8rpx;
   }
 
   &__tip-text {
@@ -70,29 +65,27 @@
     color: #999999;
   }
 
-  &__list {
-    padding: 24rpx 32rpx;
+  // 规则列表
+  &__rules {
     display: flex;
     flex-direction: column;
     gap: 32rpx;
+    padding: 24rpx 0;
   }
 
-  &__row {
+  &__rule-item {
     display: flex;
-    width: 100%;
   }
 
-  &__label-wrapper {
+  &__rule-label {
     flex-shrink: 0;
-    display: flex;
-    align-items: stretch;
 
     &--narrow {
       width: 96rpx;
     }
   }
 
-  &__label {
+  &__rule-label-text {
     font-family: Poppins, sans-serif;
     font-weight: 600;
     font-size: 28rpx;
@@ -100,36 +93,32 @@
     color: #333333;
   }
 
-  &__value {
+  &__rule-value {
     flex: 1;
-    display: flex;
-    align-items: center;
+
+    &--column {
+      display: flex;
+      flex-direction: column;
+    }
   }
 
-  &__text {
+  &__rule-value-text {
     font-family: Poppins, sans-serif;
     font-weight: 400;
     font-size: 28rpx;
     line-height: 1.4285714285714286em;
     color: #000000;
-
-    &--green {
-      font-weight: 600;
-      color: #16a34a;
-    }
   }
 
-  &__value-col {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+  &__rule-value-green {
+    font-family: Poppins, sans-serif;
+    font-weight: 600;
+    font-size: 28rpx;
+    line-height: 1.4285714285714286em;
+    color: #16a34a;
   }
 
-  &__value-item {
-    width: 100%;
-  }
-
-  &__text-small {
+  &__rule-value-small {
     font-family: Poppins, sans-serif;
     font-weight: 400;
     font-size: 26rpx;
@@ -143,94 +132,66 @@
     background: #e9e9e9;
   }
 
+  // 退订表格
   &__refund-table {
-    position: relative;
-    width: 622rpx;
-    height: 282rpx;
-    margin: 0 32rpx;
-    margin-top: 16rpx;
+    width: 100%;
     background: #ffffff;
     border: 2rpx solid #e9e9e9;
     border-radius: 16rpx;
+    overflow: hidden;
   }
 
-  &__refund-header-bg {
-    position: absolute;
-    left: 2rpx;
-    top: 2rpx;
-    width: 618rpx;
+  &__table-header-bg {
+    width: 100%;
     height: 80rpx;
     background: #f7f8fc;
-    border-radius: 14rpx 14rpx 0 0;
   }
 
-  &__refund-header {
-    position: absolute;
-    left: 24rpx;
-    top: 24rpx;
-    width: 574rpx;
-    height: 34rpx;
+  &__table-header {
     display: flex;
     justify-content: space-between;
-    z-index: 1;
+    padding: 24rpx;
+    margin-top: -80rpx;
   }
 
-  &__refund-header-left {
-    width: 418rpx;
-    height: 16rpx;
-  }
-
-  &__refund-header-right {
-    width: 112rpx;
-    height: 32rpx;
-  }
-
-  &__refund-header-text {
+  &__table-th-text {
     font-family: Roboto, sans-serif;
     font-weight: 400;
     font-size: 28rpx;
     line-height: 1.4285714285714286em;
     color: #6b7280;
+
+    &:first-child {
+      flex: 1;
+    }
+
+    &:last-child {
+      width: 156rpx;
+    }
   }
 
-  &__refund-body {
-    position: absolute;
-    left: 24rpx;
-    top: 82rpx;
-    width: 574rpx;
-    height: 128rpx;
+  &__table-body {
+    padding: 0 24rpx 32rpx;
   }
 
-  &__refund-row {
+  &__table-row {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 24rpx;
+    // margin-bottom: 16rpx;
+    padding-top: 16rpx;
 
-    &--last {
-      margin-top: 40rpx;
+    &:last-child {
       margin-bottom: 0;
     }
   }
 
-  &__refund-time {
-    display: flex;
-    flex-direction: column;
-    gap: 8rpx;
-    padding-right: 16rpx;
-    width: 288rpx;
-  }
-
-  &__refund-badge {
-    width: 112rpx;
-    height: 24rpx;
+  &__current-badge {
+    padding: 4rpx 12rpx;
     background: #fff1e5;
     border-radius: 4rpx;
-    display: flex;
-    align-items: center;
-    padding: 0 8rpx;
   }
 
-  &__refund-badge-text {
+  &__current-badge-text {
     font-family: Roboto, sans-serif;
     font-weight: 400;
     font-size: 24rpx;
@@ -238,52 +199,41 @@
     color: #f97316;
   }
 
-  &__refund-text {
+  &__table-text {
     font-family: Roboto, sans-serif;
     font-weight: 400;
     font-size: 28rpx;
     line-height: 1.4285714285714286em;
     color: #1f2937;
+
+    &:first-child {
+      flex: 1;
+    }
+
+    &:last-child {
+      width: 156rpx;
+    }
   }
 
-  &__refund-fee {
-    width: 156rpx;
-    height: 40rpx;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-  }
-
-  &__refund-time-simple {
-    flex: 1;
-  }
-
-  &__refund-fee-simple {
-    width: 156rpx;
-    display: flex;
-    justify-content: flex-end;
-  }
-
-  &__refund-divider {
-    position: absolute;
-    left: 2rpx;
-    top: 196rpx;
-    width: 620rpx;
+  &__table-divider {
+    width: 100%;
     height: 2rpx;
     background: #e9e9e9;
+    margin: 16rpx 0;
   }
 
-  &__requirement-section {
+  // 要求区域
+  &__requirements {
     display: flex;
-    padding: 34rpx 32rpx 0;
+    padding-top: 2rpx;
   }
 
-  &__requirement-label-wrapper {
+  &__requirements-label {
     width: 96rpx;
     flex-shrink: 0;
   }
 
-  &__requirement-label {
+  &__requirements-label-text {
     font-family: Poppins, sans-serif;
     font-weight: 600;
     font-size: 32rpx;
@@ -291,14 +241,14 @@
     color: #333333;
   }
 
-  &__requirement-content {
+  &__requirements-content {
     flex: 1;
     display: flex;
     flex-direction: column-reverse;
     gap: 24rpx;
   }
 
-  &__requirement-row {
+  &__requirements-row {
     display: flex;
     gap: 0;
   }
@@ -308,16 +258,9 @@
     display: flex;
     align-items: center;
     gap: 12rpx;
-    margin-bottom: 4rpx;
   }
 
-  &__check-icon {
-    width: 32rpx;
-    height: 32rpx;
-    flex-shrink: 0;
-  }
-
-  &__xmark-icon {
+  &__requirement-icon {
     width: 32rpx;
     height: 32rpx;
     flex-shrink: 0;

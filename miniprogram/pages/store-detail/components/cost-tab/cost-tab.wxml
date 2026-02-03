@@ -1,71 +1,58 @@
-<!-- Cost Card - 费用须知卡片 -->
+<!-- 费用须知模块 - Figma node-id=113-1153 -->
 <view class="cost-tab">
-  <!-- Header -->
+  <!-- 头部区域 -->
   <view class="cost-tab__header">
     <view class="cost-tab__title-wrapper">
       <text class="cost-tab__title">费用须知</text>
     </view>
     <view class="cost-tab__link" bindtap="onViewAllRules">
       <text class="cost-tab__link-text">全部须知</text>
-      <image
-        class="cost-tab__arrow-right-icon"
-        src="/images/store-detail/angle-right-small.svg"
-        mode="aspectFit"
-      ></image>
+      <image class="cost-tab__arrow-icon" src="/assets/figma/cost-notice/icon-angle-right-small.svg" mode="aspectFit" />
     </view>
   </view>
 
-  <!-- Tip container -->
+  <!-- 提示信息 -->
   <view class="cost-tab__tip">
-    <view class="cost-tab__info-icon-wrapper">
-      <image class="cost-tab__info-icon" src="/images/store-detail/info-circle.svg" mode="aspectFit"></image>
-    </view>
-    <text class="cost-tab__tip-text">以下规则由房东制定,请仔细阅读并遵守</text>
+    <image class="cost-tab__tip-icon" src="/images/store-detail/info-circle.svg" mode="aspectFit" />
+    <text class="cost-tab__tip-text">以下规则由房东制定，请仔细阅读并遵守</text>
   </view>
 
-  <!-- Rules container -->
-  <view class="cost-tab__rules-container">
+  <!-- 规则列表 -->
+  <view class="cost-tab__rules">
     <!-- 押金 -->
-    <view class="cost-tab__rule-row">
-      <view class="cost-tab__rule-label-wrapper">
-        <text class="cost-tab__rule-label">押金</text>
+    <view class="cost-tab__rule-item">
+      <view class="cost-tab__rule-label">
+        <text class="cost-tab__rule-label-text">押金</text>
       </view>
-      <view class="cost-tab__rule-content">
-        <image class="cost-tab__info-circle-icon" src="/images/store-detail/info-circle.svg" mode="aspectFit"></image>
-        <text class="cost-tab__rule-text"
-          >¥{{costRules.deposit.amount}},下单后入住前通过平台支付,离店后{{'\n'}}原路退还,无纠纷不扣押</text
+      <view class="cost-tab__rule-value">
+        <image class="cost-tab__info-icon" src="/assets/figma/cost-notice/icon-info-circle.svg" mode="aspectFit" />
+        <text class="cost-tab__rule-value-text"
+          >¥{{costRules.deposit.amount}}，下单后入住前通过平台支付，离店后{{'\n'}}原路退还，无纠纷不扣押</text
         >
       </view>
     </view>
 
-    <!-- Line -->
-    <view class="cost-tab__rule-divider"></view>
+    <!-- 分割线 -->
+    <view class="cost-tab__divider" />
 
     <!-- 加人 -->
-    <view class="cost-tab__rule-row">
-      <view class="cost-tab__rule-label-wrapper cost-tab__rule-label-wrapper--narrow">
-        <text class="cost-tab__rule-label">加人</text>
+    <view class="cost-tab__rule-item">
+      <view class="cost-tab__rule-label cost-tab__rule-label--narrow">
+        <text class="cost-tab__rule-label-text">加人</text>
       </view>
       <view class="cost-tab__rule-value">
-        <view class="cost-tab__rule-value-inner">
-          <text class="cost-tab__rule-value-text">{{costRules.extraPerson.text}}</text>
-        </view>
+        <text class="cost-tab__rule-value-simple">{{costRules.extraPerson.text}}</text>
       </view>
     </view>
   </view>
 
-  <!-- Other rules -->
-  <view class="cost-tab__other-rules">
-    <view class="cost-tab__other-label-wrapper">
-      <text class="cost-tab__other-label">其他</text>
+  <!-- 其他规则 -->
+  <view class="cost-tab__other">
+    <view class="cost-tab__other-label">
+      <text class="cost-tab__other-label-text">其他</text>
     </view>
-    <view class="cost-tab__other-content">
-      <view class="cost-tab__other-tag-wrapper">
-        <!-- 接待港澳台标签 -->
-      </view>
-      <view class="cost-tab__other-text-wrapper">
-        <text class="cost-tab__other-text">请仔细阅读房东其他要求</text>
-      </view>
+    <view class="cost-tab__other-value">
+      <text class="cost-tab__other-value-text">请仔细阅读房东其他要求</text>
     </view>
   </view>
 </view>

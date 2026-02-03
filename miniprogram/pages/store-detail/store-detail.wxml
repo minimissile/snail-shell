@@ -95,16 +95,16 @@
 
     <!-- Cost Tab - 费用须知标签页 -->
     <cost-tab wx:if="{{activeTab === 'cost'}}" costRules="{{costRules}}" bind:viewAll="onViewAllRules" />
-  </view>
 
-  <!-- Section (x=32, y=415, width=311px, height=53px, padding=16px, border-radius=12px) -->
-  <view class="store-detail__tip-section">
-    <view class="store-detail__tip-container">
-      <text class="store-detail__tip-text">温馨提示：民宿不能聚会吵闹，不能做饭。因深圳天气炎热...</text>
+    <!-- 温馨提示 - 仅在费用须知Tab中显示 -->
+    <view wx:if="{{activeTab === 'cost'}}" class="store-detail__tip-section">
+      <view class="store-detail__tip-container">
+        <text class="store-detail__tip-text">温馨提示：民宿不能聚会吵闹，不能做饭。因深圳天气炎热...</text>
+      </view>
     </view>
   </view>
 
-  <!-- 预订按钮 (y=790px, width=375px, height=81px) -->
+  <!-- 预订按钮 -->
   <booking-footer
     checkinDate="住 11-19"
     checkoutDate="离 11-20"

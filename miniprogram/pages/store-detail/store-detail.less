@@ -1372,24 +1372,19 @@
   }
 
   // ==================== Tip Section ====================
-  // x=32px (64rpx), y=415px (830rpx), width=311px (622rpx), height=53px (106rpx)
-  // padding=16px (32rpx), border-radius=12px (24rpx)
+  // 温馨提示 - Figma node-id=113-1380
   &__tip-section {
-    position: absolute;
-    left: 64rpx;
-    top: 830rpx;
-    width: 622rpx;
-    min-height: 106rpx;
+    margin: 0 32rpx 32rpx;
+    padding: 32rpx;
     background: #f7f8fc;
     border-radius: 24rpx;
-    padding: 32rpx;
   }
 
   &__tip-container {
-    width: 590rpx; // 295px
+    display: flex;
+    align-items: center;
   }
 
-  // Roboto 400, 10px (20rpx), line-height=1.6em
   &__tip-text {
     font-family: Roboto, sans-serif;
     font-weight: 400;
