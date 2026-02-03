@@ -80,9 +80,9 @@ Page({
   onCardTap(e: WechatMiniprogram.CustomEvent) {
     const { id } = e.currentTarget.dataset
     console.log('点击了收藏项', id)
-    wx.showToast({
-      title: '查看详情',
-      icon: 'none',
+    // 跳转到门店详情页面
+    wx.navigateTo({
+      url: `/pages/store-detail/store-detail?id=${id}`,
     })
   },
 

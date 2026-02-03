@@ -1,33 +1,36 @@
 <view class="room-selection">
-  <!-- 状态栏 -->
-  <view class="room-selection__status-bar">
-    <view class="room-selection__status-bar-bg"></view>
-    <view class="room-selection__status-bar-content">
-      <text class="room-selection__status-time">9:41</text>
-    </view>
-  </view>
+  <!-- 状态栏占位 -->
+  <view class="room-selection__status-bar"></view>
 
   <!-- 导航栏头部 -->
   <view class="room-selection__header">
-    <!-- 返回和微信按钮 -->
+    <!-- 返回和收藏/分享按钮 -->
     <view class="room-selection__header-top">
       <view class="room-selection__back-btn" bindtap="onGoBack">
-        <view class="room-selection__back-icon"></view>
+        <image class="room-selection__back-icon" src="/assets/figma/room-selection/icon-back.svg" mode="aspectFit" />
       </view>
 
       <view class="room-selection__header-actions">
         <view class="room-selection__favorite-group">
           <view class="room-selection__favorite-btn" bindtap="onToggleFavorite">
-            <text class="room-selection__favorite-icon"></text>
+            <image
+              class="room-selection__favorite-icon"
+              src="/assets/figma/room-selection/icon-favorite.svg"
+              mode="aspectFit"
+            />
           </view>
           <view class="room-selection__favorite-badge">
             <text class="room-selection__favorite-count">{{favoriteCount}}</text>
           </view>
         </view>
 
-        <view class="room-selection__wechat-btn" bindtap="onOpenWechat">
-          <view class="room-selection__wechat-bg"></view>
-          <view class="room-selection__wechat-icon"></view>
+        <!-- 分享按钮 -->
+        <view class="room-selection__share-btn" bindtap="onShare">
+          <image
+            class="room-selection__share-icon"
+            src="/assets/figma/room-selection/icon-share.svg"
+            mode="aspectFit"
+          />
         </view>
       </view>
     </view>
@@ -286,6 +289,12 @@
   <view class="room-selection__footer">
     <view class="room-selection__book-btn" bindtap="onBookNow">
       <text class="room-selection__book-btn-text">立即预订</text>
+      <view class="room-selection__book-btn-price">
+        <text class="room-selection__book-btn-total">¥{{totalPrice}}</text>
+        <view class="room-selection__book-btn-original-wrapper">
+          <text class="room-selection__book-btn-original">¥{{originalPrice}}</text>
+        </view>
+      </view>
     </view>
   </view>
 </view>

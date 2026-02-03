@@ -131,19 +131,19 @@ Page({
     wx.navigateBack()
   },
 
-  // 打开微信
-  onOpenWechat() {
-    wx.showToast({
-      title: '打开微信功能',
-      icon: 'none',
-    })
-  },
-
   // 切换收藏
   onToggleFavorite() {
     wx.showToast({
       title: '收藏功能',
       icon: 'none',
+    })
+  },
+
+  // 分享
+  onShare() {
+    wx.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline'],
     })
   },
 
