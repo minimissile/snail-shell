@@ -4,6 +4,12 @@
   "backgroundTextStyle": "dark",
   "usingComponents": {
     "t-tabs": "tdesign-miniprogram/tabs/tabs",
-    "t-tab-panel": "tdesign-miniprogram/tab-panel/tab-panel"
+    "t-tab-panel": "tdesign-miniprogram/tab-panel/tab-panel",
+    "feature-tab": "./components/feature-tab/feature-tab",
+    "facility-tab": "./components/facility-tab/facility-tab",
+    "landlord-tab": "./components/landlord-tab/landlord-tab",
+    "process-tab": "./components/process-tab/process-tab",
+    "cost-tab": "./components/cost-tab/cost-tab",
+    "booking-footer": "./components/booking-footer/booking-footer"
   }
 }

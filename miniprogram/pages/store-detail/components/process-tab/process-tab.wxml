@@ -1,0 +1,145 @@
+<!-- Process Card - 体验流程卡片 -->
+<view class="process-tab">
+  <!-- Header -->
+  <view class="process-tab__header">
+    <view class="process-tab__title-wrapper">
+      <text class="process-tab__title">体验流程</text>
+    </view>
+    <view class="process-tab__link" bindtap="onViewAllProcess">
+      <text class="process-tab__link-text">全部流程</text>
+      <image
+        class="process-tab__arrow-right-icon"
+        src="/images/store-detail/angle-right-small.svg"
+        mode="aspectFit"
+      ></image>
+    </view>
+  </view>
+
+  <!-- Tip container -->
+  <view class="process-tab__tip">
+    <view class="process-tab__info-icon-wrapper">
+      <image class="process-tab__info-icon" src="/images/store-detail/info-circle.svg" mode="aspectFit"></image>
+    </view>
+    <text class="process-tab__tip-text">以下规则由房东制定,请仔细阅读并遵守</text>
+  </view>
+
+  <!-- Process container -->
+  <view class="process-tab__list">
+    <!-- 入离 -->
+    <view class="process-tab__row">
+      <view class="process-tab__label-wrapper">
+        <text class="process-tab__label">入离</text>
+      </view>
+      <view class="process-tab__value">
+        <text class="process-tab__text">14:00-24:00入住, 12:00前退房</text>
+      </view>
+    </view>
+
+    <!-- Line -->
+    <view class="process-tab__divider"></view>
+
+    <!-- 退订 -->
+    <view class="process-tab__row">
+      <view class="process-tab__label-wrapper process-tab__label-wrapper--narrow">
+        <text class="process-tab__label">退订</text>
+      </view>
+      <view class="process-tab__value-col">
+        <view class="process-tab__value-item">
+          <text class="process-tab__text process-tab__text--green">30分钟内免费取消</text>
+        </view>
+        <view class="process-tab__value-item">
+          <text class="process-tab__text-small">订单确认30分钟后, 取消订单将扣除全部房费</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- Refund table -->
+  <view class="process-tab__refund-table">
+    <!-- 表头背景 -->
+    <view class="process-tab__refund-header-bg"></view>
+
+    <!-- Header -->
+    <view class="process-tab__refund-header">
+      <view class="process-tab__refund-header-left">
+        <text class="process-tab__refund-header-text">退订时间</text>
+      </view>
+      <view class="process-tab__refund-header-right">
+        <text class="process-tab__refund-header-text">退订费用</text>
+      </view>
+    </view>
+
+    <!-- Body -->
+    <view class="process-tab__refund-body">
+      <!-- Row 1 -->
+      <view class="process-tab__refund-row">
+        <view class="process-tab__refund-time">
+          <view class="process-tab__refund-badge">
+            <text class="process-tab__refund-badge-text">当前阶段</text>
+          </view>
+          <text class="process-tab__refund-text">预订成功后30分钟内</text>
+        </view>
+        <view class="process-tab__refund-fee">
+          <text class="process-tab__refund-text">免费取消</text>
+        </view>
+      </view>
+
+      <!-- Row 2 -->
+      <view class="process-tab__refund-row process-tab__refund-row--last">
+        <view class="process-tab__refund-time-simple">
+          <text class="process-tab__refund-text">11月19日16:21后</text>
+        </view>
+        <view class="process-tab__refund-fee-simple">
+          <text class="process-tab__refund-text">取消扣全款</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- Bottom divider -->
+    <view class="process-tab__refund-divider"></view>
+  </view>
+
+  <!-- Requirements -->
+  <view class="process-tab__requirement-section">
+    <view class="process-tab__requirement-label-wrapper">
+      <text class="process-tab__requirement-label">要求</text>
+    </view>
+    <view class="process-tab__requirement-content">
+      <!-- Row 1 -->
+      <view class="process-tab__requirement-row">
+        <view class="process-tab__requirement-item">
+          <image class="process-tab__check-icon" src="/images/store-detail/check-circle.svg" mode="aspectFit"></image>
+          <text class="process-tab__requirement-text">接待婴儿</text>
+        </view>
+        <view class="process-tab__requirement-item">
+          <image class="process-tab__check-icon" src="/images/store-detail/check-circle.svg" mode="aspectFit"></image>
+          <text class="process-tab__requirement-text">接待儿童</text>
+        </view>
+      </view>
+
+      <!-- Row 2 -->
+      <view class="process-tab__requirement-row">
+        <view class="process-tab__requirement-item">
+          <image class="process-tab__xmark-icon" src="/images/store-detail/xmark-circle.svg" mode="aspectFit"></image>
+          <text class="process-tab__requirement-text">接待老人</text>
+        </view>
+        <view class="process-tab__requirement-item">
+          <image class="process-tab__check-icon" src="/images/store-detail/check-circle.svg" mode="aspectFit"></image>
+          <text class="process-tab__requirement-text">接待海外</text>
+        </view>
+      </view>
+
+      <!-- Row 3 -->
+      <view class="process-tab__requirement-row">
+        <view class="process-tab__requirement-item">
+          <image class="process-tab__check-icon" src="/images/store-detail/check-circle.svg" mode="aspectFit"></image>
+          <text class="process-tab__requirement-text">接待港澳台</text>
+        </view>
+        <view class="process-tab__requirement-item">
+          <image class="process-tab__xmark-icon" src="/images/store-detail/xmark-circle.svg" mode="aspectFit"></image>
+          <text class="process-tab__requirement-text">带宠物</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

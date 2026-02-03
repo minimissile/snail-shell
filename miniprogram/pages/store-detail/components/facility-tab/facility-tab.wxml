@@ -1,0 +1,66 @@
+<!-- Facility Card - 设施卡片 -->
+<view class="facility-tab">
+  <!-- Header - 服务/设施 -->
+  <view class="facility-tab__header">
+    <text class="facility-tab__title">服务/设施</text>
+    <view class="facility-tab__link" bindtap="onViewAllFacilities">
+      <text class="facility-tab__link-text">全部设施 </text>
+      <image
+        class="facility-tab__arrow-right-icon"
+        src="/images/store-detail/angle-right-small.svg"
+        mode="aspectFit"
+      ></image>
+    </view>
+  </view>
+
+  <!-- 服务 Section -->
+  <view class="facility-tab__section">
+    <view class="facility-tab__category">
+      <text class="facility-tab__category-title">服务</text>
+    </view>
+    <view class="facility-tab__items">
+      <view class="facility-tab__item" wx:for="{{serviceList}}" wx:key="name">
+        <image
+          class="facility-tab__icon facility-tab__icon--{{item.available ? 'available' : 'unavailable'}}"
+          src="{{item.available ? '/images/store-detail/check-circle-regular.svg' : '/images/store-detail/xmark-circle-regular.svg'}}"
+          mode="aspectFit"
+        ></image>
+        <text class="facility-tab__text">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 基础 Section -->
+  <view class="facility-tab__section">
+    <view class="facility-tab__category">
+      <text class="facility-tab__category-title">基础</text>
+    </view>
+    <view class="facility-tab__items">
+      <view class="facility-tab__item" wx:for="{{basicList}}" wx:key="name">
+        <image
+          class="facility-tab__icon facility-tab__icon--{{item.available ? 'available' : 'unavailable'}}"
+          src="{{item.available ? '/images/store-detail/check-circle-regular.svg' : '/images/store-detail/xmark-circle-regular.svg'}}"
+          mode="aspectFit"
+        ></image>
+        <text class="facility-tab__text">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 卫浴 Section -->
+  <view class="facility-tab__section">
+    <view class="facility-tab__category">
+      <text class="facility-tab__category-title">卫浴</text>
+    </view>
+    <view class="facility-tab__items">
+      <view class="facility-tab__item" wx:for="{{bathroomList}}" wx:key="name">
+        <image
+          class="facility-tab__icon facility-tab__icon--{{item.available ? 'available' : 'unavailable'}}"
+          src="{{item.available ? '/images/store-detail/check-circle-regular.svg' : '/images/store-detail/xmark-circle-regular.svg'}}"
+          mode="aspectFit"
+        ></image>
+        <text class="facility-tab__text">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+</view>

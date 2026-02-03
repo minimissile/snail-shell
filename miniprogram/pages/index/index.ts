@@ -1,3 +1,11 @@
+interface SearchResult {
+  id: number
+  name: string
+  price: number
+  rating: number
+  distance: string
+}
+
 Page({
   data: {
     fromCity: '深圳',
@@ -8,7 +16,7 @@ Page({
     checkOutDateSub: '明天',
     nights: 1,
     isSearching: false,
-    searchResults: [],
+    searchResults: [] as SearchResult[],
     hasSearched: false,
   },
 
@@ -108,9 +116,9 @@ Page({
   },
 
   // 生成模拟搜索结果
-  generateMockResults() {
+  generateMockResults(): SearchResult[] {
     const { toPlace } = this.data
-    const results = []
+    const results: SearchResult[] = []
 
     // 根据目的地生成不同的模拟数据
     if (toPlace.includes('北站')) {

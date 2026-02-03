@@ -1,0 +1,29 @@
+<!-- 门店详情页底部预订组件 -->
+<view class="booking-footer">
+  <!-- 立即预订按钮 - 左侧 -->
+  <view class="booking-footer__book-btn" bindtap="onBookNow">
+    <text class="booking-footer__book-text">立即预订</text>
+    <view class="booking-footer__price-row">
+      <text class="booking-footer__price">¥{{currentPrice}}</text>
+      <text class="booking-footer__original-price">¥{{originalPrice}}</text>
+    </view>
+  </view>
+
+  <!-- 日期选择器 - 中间区域 -->
+  <view class="booking-footer__date-picker" bindtap="onSelectDate">
+    <text class="booking-footer__date-checkin">{{checkinDate}}</text>
+    <view class="booking-footer__date-checkout-row">
+      <text class="booking-footer__date-checkout">{{checkoutDate}}</text>
+      <image
+        class="booking-footer__caret-icon"
+        src="/assets/figma/booking-footer/icon-caret-left.svg"
+        mode="aspectFit"
+      />
+    </view>
+  </view>
+
+  <!-- 实景选房按钮 - 右侧 -->
+  <view class="booking-footer__scene-btn" bindtap="onSceneSelection">
+    <text class="booking-footer__scene-text">实景选房</text>
+  </view>
+</view>

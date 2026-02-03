@@ -20,17 +20,23 @@ Page({
     isFavorite: false,
     favoriteCount: 326,
 
+    // 房东数据
+    landlordData: {
+      avatar: '/images/store-detail/snail.png',
+      name: '蜗壳旗舰店',
+      badge: '自然人房东｜实名验证｜1套房屋',
+      rating: '暂无',
+      reviewCount: 30,
+      confirmRate: '100%',
+    },
+
     // 费用须知数据
     costRules: {
       deposit: {
-        label: '押金',
-        content: '¥200，下单后入住前通过平台支付，离店后\n原路退还，无纠纷不扣押',
-        hasInfo: true,
+        amount: 200,
       },
       extraPerson: {
-        label: '加人',
-        content: '标准入住6人，不可加人',
-        hasInfo: false,
+        text: '标准入住6人,不可加人',
       },
     },
 

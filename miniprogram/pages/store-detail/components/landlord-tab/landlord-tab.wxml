@@ -1,0 +1,54 @@
+<!-- Landlord Card - 房东介绍卡片 -->
+<view class="landlord-tab">
+  <!-- Header - 房东介绍 -->
+  <view class="landlord-tab__header">
+    <text class="landlord-tab__title">房东介绍</text>
+    <view class="landlord-tab__link" bindtap="onViewLandlordPage">
+      <text class="landlord-tab__link-text">房东主页 </text>
+      <image
+        class="landlord-tab__arrow-right-icon"
+        src="/images/store-detail/angle-right-small.svg"
+        mode="aspectFit"
+      ></image>
+    </view>
+  </view>
+
+  <!-- Landlord Info -->
+  <view class="landlord-tab__info">
+    <view class="landlord-tab__profile">
+      <image class="landlord-tab__avatar" src="{{landlordData.avatar}}" mode="aspectFit"></image>
+      <view class="landlord-tab__details">
+        <text class="landlord-tab__name">{{landlordData.name}}</text>
+        <view class="landlord-tab__badge">
+          <text class="landlord-tab__badge-text">{{landlordData.badge}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="landlord-tab__contact" bindtap="onContactLandlord">
+      <text class="landlord-tab__contact-text">联系房东</text>
+    </view>
+  </view>
+
+  <!-- Landlord Stats -->
+  <view class="landlord-tab__stats">
+    <view class="landlord-tab__stat-row">
+      <view class="landlord-tab__stat-item">
+        <text class="landlord-tab__stat-label">好评率</text>
+      </view>
+      <view class="landlord-tab__stat-item">
+        <text class="landlord-tab__stat-value">{{landlordData.rating}}</text>
+      </view>
+      <view class="landlord-tab__stat-item">
+        <text class="landlord-tab__stat-subtitle">共{{landlordData.reviewCount}}条点评</text>
+      </view>
+    </view>
+    <view class="landlord-tab__stat-row">
+      <view class="landlord-tab__stat-item">
+        <text class="landlord-tab__stat-label">订单确认率</text>
+      </view>
+      <view class="landlord-tab__stat-item">
+        <text class="landlord-tab__stat-value landlord-tab__stat-value--highlight">{{landlordData.confirmRate}}</text>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,40 @@
+<!-- Feature Card - 特点卡片 -->
+<view class="feature-tab">
+  <!-- Header - 房屋特色 -->
+  <view class="feature-tab__header">
+    <text class="feature-tab__title">房屋特色</text>
+  </view>
+
+  <!-- Title with Icon -->
+  <view class="feature-tab__name-wrapper">
+    <image class="feature-tab__snail-icon" src="/images/store-detail/snail.png" mode="aspectFit"></image>
+    <text class="feature-tab__name">蜗壳青旅</text>
+  </view>
+
+  <!-- Description Text -->
+  <view class="feature-tab__description">
+    <text class="feature-tab__text">
+      蜗壳青旅是一处为旅人打造的静心居所,我们希望每一位入住者都能在城市的节奏中找到片刻宁静。四人位安静区房型,专为好友出行或轻度社交旅客设计,在共享空间中保留足够的私密与安静。
+    </text>
+    <text class="feature-tab__text">
+      房间面积约二十六平方米,设有两组上下铺,可同时容纳四位客人。每个床位配备独立阅读灯、隐私帘和储物柜,床垫柔软舒适,床品干净整洁。房间采用原木与米色调的简约设计风格,光线柔和,空气清新,让人放松安心。
+    </text>
+    <text class="feature-tab__text">
+      该房型位于青旅的安静楼层,远离街道与公共活动区,使用静音门锁和隔音墙体,确保夜间安睡无扰。房间配备空调、新风系统和高速无线网络,并提供公共卫浴设施,每日定时清洁。
+    </text>
+  </view>
+
+  <!-- Feature Image -->
+  <view class="feature-tab__image-wrapper">
+    <image class="feature-tab__image" src="/images/store-detail/feature-image.png" mode="aspectFill"></image>
+  </view>
+
+  <!-- Blur Background -->
+  <view class="feature-tab__blur"></view>
+
+  <!-- View All Button -->
+  <view class="feature-tab__expand" bindtap="onExpandFeature">
+    <text class="feature-tab__expand-text">展开查看全部 </text>
+    <image class="feature-tab__angle-down-icon" src="/images/store-detail/angle-down.svg" mode="aspectFit"></image>
+  </view>
+</view>
