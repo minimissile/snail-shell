@@ -1,9 +1,7 @@
-// Facility Tab - 设施标签页
+// 设施模块 - Figma node-id=99-1050
 .facility-tab {
-  width: 100%;
   background: #ffffff;
   border-radius: 24rpx;
-  box-shadow: 0px 2rpx 4rpx 0px rgba(0, 0, 0, 0.05);
   padding: 32rpx;
 
   &__header {
@@ -24,7 +22,6 @@
   &__link {
     display: flex;
     align-items: center;
-    cursor: pointer;
   }
 
   &__link-text {
@@ -35,30 +32,27 @@
     color: #6e9fd3;
   }
 
-  &__arrow-right-icon {
+  &__arrow-icon {
     width: 32rpx;
     height: 32rpx;
   }
 
   &__section {
     display: flex;
-    border-bottom: 1rpx solid #f3f4f6;
-    padding-bottom: 16rpx;
+    padding-bottom: 34rpx;
+    border-bottom: 2rpx solid #f3f4f6;
     margin-bottom: 32rpx;
 
     &:last-child {
       border-bottom: none;
-      margin-bottom: 0;
       padding-bottom: 0;
+      margin-bottom: 0;
     }
   }
 
-  &__category {
+  &__category-title {
     width: 78rpx;
     flex-shrink: 0;
-  }
-
-  &__category-title {
     font-family: Poppins, sans-serif;
     font-weight: 500;
     font-size: 28rpx;
@@ -70,32 +64,27 @@
     flex: 1;
     display: flex;
     flex-wrap: wrap;
-    align-content: flex-start;
   }
 
   &__item {
+    width: 50%;
     display: flex;
     align-items: center;
-    height: 40rpx;
-    width: 50%;
-    margin-bottom: 16rpx;
+    padding: 0 32rpx 16rpx 0;
   }
 
   &__icon {
-    width: 32rpx;
+    width: 36rpx;
     height: 32rpx;
-    margin-right: 8rpx;
+    margin-right: 24rpx;
     flex-shrink: 0;
   }
 
-  &__text {
+  &__item-text {
     font-family: Poppins, sans-serif;
     font-weight: 400;
     font-size: 24rpx;
     line-height: 1.666667em;
     color: #1f2937;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 }

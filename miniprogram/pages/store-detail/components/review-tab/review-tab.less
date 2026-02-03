@@ -1,0 +1,253 @@
+// 点评模块 - Figma node-id=98-1075
+.review-tab {
+  background: #ffffff;
+  box-shadow: 0rpx 2rpx 4rpx 0rpx rgba(0, 0, 0, 0.05);
+  border-radius: 24rpx;
+  padding: 32rpx;
+
+  // 头部
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28rpx;
+  }
+
+  &__title {
+    font-family: Poppins, sans-serif;
+    font-weight: 600;
+    font-size: 40rpx;
+    line-height: 1.4em;
+    color: #000000;
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    // width: 140rpx;
+    height: 32rpx;
+  }
+
+  &__link-text {
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
+    font-size: 28rpx;
+    line-height: 1.1428571428571428em;
+    color: #9ca3af;
+  }
+
+  &__arrow-icon {
+    width: 32rpx;
+    height: 32rpx;
+  }
+
+  // 综合评分
+  &__score-container {
+    display: flex;
+    background: #f7f8fc;
+    border-radius: 8rpx;
+    margin-bottom: 20rpx;
+    height: 108rpx;
+  }
+
+  &__score-main {
+    position: relative;
+    width: 284rpx;
+    flex-shrink: 0;
+  }
+
+  &__divider-left {
+    position: absolute;
+    right: 0;
+    top: 20rpx;
+    width: 2rpx;
+    height: 60rpx;
+    background: #e9e9e9;
+  }
+
+  &__divider-right {
+    display: none;
+  }
+
+  &__star-icon {
+    position: absolute;
+    left: 18rpx;
+    top: 28rpx;
+    width: 40rpx;
+    height: 40rpx;
+  }
+
+  &__score-number {
+    position: absolute;
+    left: 58rpx;
+    top: 12rpx;
+    font-family: Poppins, sans-serif;
+    font-weight: 700;
+    font-size: 72rpx;
+    line-height: 1.3333333333333333em;
+    color: #000000;
+  }
+
+  &__score-label-wrapper {
+    position: absolute;
+    left: 174rpx;
+    top: 34rpx;
+    padding-left: 8rpx;
+  }
+
+  &__score-label {
+    font-family: Poppins, sans-serif;
+    font-weight: 600;
+    font-size: 32rpx;
+    line-height: 1.5em;
+    color: #000000;
+  }
+
+  &__score-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8rpx;
+    padding: 16rpx 0 0 16rpx;
+  }
+
+  &__score-row {
+    display: flex;
+    gap: 16rpx;
+  }
+
+  &__score-item {
+    flex: 1;
+  }
+
+  &__score-item-text {
+    font-family: Inter, sans-serif;
+    font-weight: 400;
+    font-size: 20rpx;
+    line-height: 1.6em;
+    color: #6b7280;
+  }
+
+  // 点评关键词标签
+  &__tags {
+    display: flex;
+    margin-bottom: 16rpx;
+  }
+
+  &__tag {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f3f4f6;
+    border: 2rpx solid #e5e7eb;
+    border-radius: 8rpx;
+
+    &:not(:last-child) {
+      margin-right: 16rpx;
+    }
+
+    &:first-child {
+      padding: 10rpx 34.16rpx 10rpx 34.12rpx;
+    }
+
+    &:nth-child(2) {
+      padding: 10rpx 30.72rpx;
+    }
+
+    &:nth-child(3) {
+      padding: 10rpx 34.16rpx 10rpx 34.12rpx;
+    }
+  }
+
+  &__tag-text {
+    font-family: OPPOSans, Poppins, sans-serif;
+    font-weight: 400;
+    font-size: 20rpx;
+    line-height: 2em;
+    color: #374151;
+    text-align: center;
+  }
+
+  // 点评列表
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 48rpx;
+    padding-top: 16rpx;
+  }
+
+  &__review-item {
+    display: flex;
+    flex-direction: column;
+    gap: 16rpx;
+  }
+
+  &__review-header {
+    display: flex;
+    align-items: center;
+  }
+
+  &__avatar-wrapper {
+    width: 104rpx;
+    padding-right: 24rpx;
+  }
+
+  &__avatar {
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 50%;
+  }
+
+  &__review-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__username-wrapper {
+    display: flex;
+  }
+
+  &__username {
+    font-family: Poppins, sans-serif;
+    font-weight: 600;
+    font-size: 32rpx;
+    line-height: 1.5em;
+    color: #000000;
+  }
+
+  &__rating-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  &__star-small {
+    width: 24rpx;
+    height: 24rpx;
+  }
+
+  &__date-wrapper {
+    padding-left: 8rpx;
+  }
+
+  &__date {
+    font-family: Poppins, Inter, sans-serif;
+    font-weight: 400;
+    font-size: 22rpx;
+    line-height: 1.4545454545454546em;
+    color: #9ca3af;
+  }
+
+  &__review-content {
+    display: flex;
+  }
+
+  &__review-text {
+    flex: 1;
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
+    font-size: 28rpx;
+    line-height: 1.4285714285714286em;
+    color: #000000;
+  }
+}

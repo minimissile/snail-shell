@@ -96,6 +96,9 @@
     <!-- Cost Tab - 费用须知标签页 -->
     <cost-tab wx:if="{{activeTab === 'cost'}}" costRules="{{costRules}}" bind:viewAll="onViewAllRules" />
 
+    <!-- Review Tab - 点评标签页 -->
+    <review-tab wx:if="{{activeTab === 'review'}}" bind:viewAll="onViewAllReviews" />
+
     <!-- 温馨提示 - 仅在费用须知Tab中显示 -->
     <view wx:if="{{activeTab === 'cost'}}" class="store-detail__tip-section">
       <view class="store-detail__tip-container">

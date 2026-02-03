@@ -10,6 +10,7 @@
     "landlord-tab": "./components/landlord-tab/landlord-tab",
     "process-tab": "./components/process-tab/process-tab",
     "cost-tab": "./components/cost-tab/cost-tab",
+    "review-tab": "./components/review-tab/review-tab",
     "booking-footer": "./components/booking-footer/booking-footer"
   }
 }

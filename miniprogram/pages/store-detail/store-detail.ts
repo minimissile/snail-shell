@@ -151,6 +151,15 @@ Page({
     })
   },
 
+  // 查看全部点评
+  onViewAllReviews() {
+    wx.showToast({
+      title: '查看全部点评',
+      icon: 'none',
+      duration: 1500,
+    })
+  },
+
   // 查看房东主页
   onViewLandlordPage() {
     wx.showToast({

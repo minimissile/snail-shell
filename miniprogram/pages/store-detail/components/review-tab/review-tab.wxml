@@ -1,0 +1,89 @@
+<!-- 点评模块 - Figma node-id=98-1075 -->
+<view class="review-tab">
+  <!-- 头部 -->
+  <view class="review-tab__header">
+    <text class="review-tab__title">房客点评</text>
+    <view class="review-tab__link" bindtap="onViewAllReviews">
+      <text class="review-tab__link-text">全部30条 </text>
+      <image
+        class="review-tab__arrow-icon"
+        src="/assets/figma/cost-notice/icon-angle-right-small.svg"
+        mode="aspectFit"
+      />
+    </view>
+  </view>
+
+  <!-- 综合评分 -->
+  <view class="review-tab__score-container">
+    <view class="review-tab__score-main">
+      <view class="review-tab__divider-left" />
+      <image class="review-tab__star-icon" src="/assets/figma/review-tab/icon-star.svg" mode="aspectFit" />
+      <text class="review-tab__score-number">4.8</text>
+      <view class="review-tab__score-label-wrapper">
+        <text class="review-tab__score-label">棒</text>
+      </view>
+    </view>
+    <view class="review-tab__score-details">
+      <view class="review-tab__score-row">
+        <view class="review-tab__score-item">
+          <text class="review-tab__score-item-text">描述 4.7</text>
+        </view>
+        <view class="review-tab__score-item">
+          <text class="review-tab__score-item-text">位置 4.9</text>
+        </view>
+        <view class="review-tab__score-item">
+          <text class="review-tab__score-item-text">便捷 4.8</text>
+        </view>
+      </view>
+      <view class="review-tab__score-row">
+        <view class="review-tab__score-item">
+          <text class="review-tab__score-item-text">服务 4.7</text>
+        </view>
+        <view class="review-tab__score-item">
+          <text class="review-tab__score-item-text">卫生 4.8</text>
+        </view>
+        <view class="review-tab__score-item">
+          <text class="review-tab__score-item-text">性价比 4.8</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 点评关键词标签 -->
+  <view class="review-tab__tags">
+    <view class="review-tab__tag" wx:for="{{tags}}" wx:key="label">
+      <text class="review-tab__tag-text">{{item.label}}({{item.count}})</text>
+    </view>
+  </view>
+
+  <!-- 点评列表 -->
+  <view class="review-tab__list">
+    <view class="review-tab__review-item" wx:for="{{reviews}}" wx:key="id">
+      <view class="review-tab__review-header">
+        <view class="review-tab__avatar-wrapper">
+          <image class="review-tab__avatar" src="{{item.avatar}}" mode="aspectFill" />
+        </view>
+        <view class="review-tab__review-info">
+          <view class="review-tab__username-wrapper">
+            <text class="review-tab__username">{{item.username}}</text>
+          </view>
+          <view class="review-tab__rating-wrapper">
+            <image
+              wx:for="{{item.stars}}"
+              wx:key="index"
+              class="review-tab__star-small"
+              src="{{item}}"
+              mode="aspectFit"
+            />
+            <view class="review-tab__date-wrapper">
+              <text class="review-tab__date">{{item.date}}入住</text>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="review-tab__review-content">
+        <text class="review-tab__review-text">{{item.content}}</text>
+      </view>
+    </view>
+  </view>
+</view>
