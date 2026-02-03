@@ -469,15 +469,15 @@
   // ==================== 床位选择区域 ====================
   &__beds-container {
     position: relative;
-    margin: 32rpx 50rpx 0;
+    margin: 32rpx;
     width: 648rpx;
     height: 680rpx;
   }
 
   &__beds-bg {
     position: absolute;
-    top: 0;
     left: 0;
+    top: 0;
     width: 100%;
     height: 100%;
     background: #cbcbca;
@@ -486,8 +486,8 @@
 
   &__beds-divider {
     position: absolute;
-    top: 32rpx;
     left: 316rpx;
+    top: 32rpx;
     width: 16rpx;
     height: 616rpx;
     background: #e0e0df;
@@ -503,41 +503,42 @@
 
   &__bed-frame {
     position: absolute;
-    top: 0;
     left: 0;
+    top: 0;
     width: 100%;
     height: 100%;
     background: #f3a887;
     border-radius: 8rpx;
   }
 
-  &__bed-image {
+  &__bed-upper {
     position: absolute;
+    left: 16rpx;
+    top: 24rpx;
     width: 48rpx;
     height: 44rpx;
+  }
+
+  &__bed-lower {
+    position: absolute;
     left: 16rpx;
-  }
-
-  &__bed-image--upper {
-    top: 24rpx;
-  }
-
-  &__bed-image--lower {
     top: 116rpx;
+    width: 48rpx;
+    height: 44rpx;
   }
 
   &__bed-separator {
     position: absolute;
-    top: 84rpx;
     left: 16rpx;
+    top: 84rpx;
     width: 248rpx;
     height: 16rpx;
     background: #fbe5db;
     border-radius: 2rpx;
   }
 
-  // ==================== 床位单元 ====================
-  &__bed-item {
+  // ==================== 床位按钮 ====================
+  &__bed {
     position: absolute;
     width: 84rpx;
     height: 60rpx;
@@ -548,35 +549,15 @@
     justify-content: center;
   }
 
-  &__bed-item--top-left {
-    top: 16rpx;
-    left: 80rpx;
-  }
-
-  &__bed-item--top-right {
-    top: 16rpx;
-    left: 180rpx;
-  }
-
-  &__bed-item--bottom-left {
-    top: 108rpx;
-    left: 80rpx;
-  }
-
-  &__bed-item--bottom-right {
-    top: 108rpx;
-    left: 180rpx;
-  }
-
-  &__bed-item--selected {
+  &__bed--selected {
     background: #f97316;
   }
 
-  &__bed-item--unavailable {
+  &__bed--unavailable {
     background: #999999;
   }
 
-  &__bed-id {
+  &__bed-num {
     font-family: Poppins;
     font-weight: 600;
     font-size: 24rpx;
@@ -588,20 +569,96 @@
 
   // ==================== 已选床位卡片 ====================
   &__selected-card {
+    position: relative;
     margin: 32rpx;
-    padding: 24rpx;
+    width: 686rpx;
+    height: 400rpx;
     background: #ffffff;
     border-radius: 12rpx;
   }
 
-  &__card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16rpx;
+  // 语音图标
+  &__card-volume-icon {
+    position: absolute;
+    left: 20rpx;
+    top: 24rpx;
+    width: 32rpx;
+    height: 32rpx;
   }
 
-  &__card-date {
+  // 智能门锁提示
+  &__card-smart-lock {
+    position: absolute;
+    left: 64rpx;
+    top: 20rpx;
+    width: 340rpx;
+  }
+
+  &__card-smart-lock-text {
+    font-family: PingFang SC;
+    font-weight: 400;
+    font-size: 28rpx;
+    line-height: 1.4285714285714286em;
+    color: #9ca3af;
+  }
+
+  // 分割线1
+  &__card-line1 {
+    position: absolute;
+    left: 20rpx;
+    top: 76rpx;
+    width: 646rpx;
+    height: 1rpx;
+    background: #e9e9e9;
+  }
+
+  // 房型名称
+  &__card-room-type {
+    position: absolute;
+    left: 20rpx;
+    top: 100rpx;
+    font-family: PingFang SC;
+    font-weight: 600;
+    font-size: 32rpx;
+    line-height: 1.5em;
+    color: #000000;
+  }
+
+  // 切换房型按钮
+  &__card-switch {
+    position: absolute;
+    right: 20rpx;
+    top: 104rpx;
+    display: flex;
+    align-items: center;
+    gap: 8rpx;
+  }
+
+  &__card-switch-text {
+    font-family: PingFang SC;
+    font-weight: 400;
+    font-size: 28rpx;
+    line-height: 1.4285714285714286em;
+    color: #6e9fd3;
+  }
+
+  &__card-switch-icon {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    font-size: 24rpx;
+    line-height: 1.3333333333333333em;
+    color: #6e9fd3;
+
+    &::before {
+      content: '❯';
+    }
+  }
+
+  // 日期标签
+  &__card-day {
+    position: absolute;
+    left: 20rpx;
+    top: 156rpx;
     font-family: PingFang SC;
     font-weight: 500;
     font-size: 28rpx;
@@ -609,7 +666,11 @@
     color: #999999;
   }
 
-  &__card-time {
+  // 时间段
+  &__card-time-range {
+    position: absolute;
+    left: 88rpx;
+    top: 156rpx;
     font-family: PingFang SC;
     font-weight: 400;
     font-size: 28rpx;
@@ -617,86 +678,51 @@
     color: #9ca3af;
   }
 
-  &__card-divider {
+  // 分割线2
+  &__card-line2 {
+    position: absolute;
+    left: 20rpx;
+    top: 220rpx;
+    width: 646rpx;
     height: 1rpx;
     background: #e9e9e9;
-    margin: 16rpx 0;
   }
 
-  &__card-room-type {
-    font-family: PingFang SC;
-    font-weight: 600;
-    font-size: 32rpx;
-    line-height: 1.5em;
-    color: #000000;
-    margin-bottom: 16rpx;
-  }
-
-  &__card-tip {
-    display: flex;
-    align-items: center;
-    gap: 8rpx;
-    margin-bottom: 16rpx;
-  }
-
-  &__card-tip-icon {
-    width: 32rpx;
-    height: 32rpx;
-  }
-
-  &__card-tip-text {
-    font-family: PingFang SC;
-    font-weight: 400;
-    font-size: 28rpx;
-    line-height: 1.4285714285714286em;
-    color: #9ca3af;
-  }
-
-  &__card-action {
-    display: flex;
-    align-items: center;
-    gap: 8rpx;
-    margin-bottom: 24rpx;
-  }
-
-  &__card-action-text {
-    font-family: PingFang SC;
-    font-weight: 400;
-    font-size: 28rpx;
-    line-height: 1.4285714285714286em;
-    color: #6e9fd3;
-  }
-
-  &__card-action-icon {
-    font-family: 'Font Awesome 5 Free';
-    font-weight: 900;
-    font-size: 24rpx;
-    line-height: 1.3333333333333333em;
-    color: #6e9fd3;
-  }
-
-  // ==================== 已选床位列表 ====================
-  &__selected-bed-list {
+  // 已选床位列表
+  &__selected-beds {
+    position: absolute;
+    left: 20rpx;
+    top: 244rpx;
     display: flex;
     gap: 24rpx;
   }
 
-  &__selected-bed {
+  &__bed-item {
+    position: relative;
     width: 162rpx;
     height: 116rpx;
-    background: #f3f4f6;
-    border-radius: 4rpx;
-    position: relative;
   }
 
-  &__selected-bed-info {
-    padding: 22rpx 20rpx;
+  &__bed-bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #f3f4f6;
+    border-radius: 4rpx;
+  }
+
+  &__bed-info {
+    position: absolute;
+    left: 20rpx;
+    top: 22rpx;
     display: flex;
     flex-direction: column;
     gap: 16rpx;
   }
 
-  &__selected-bed-id {
+  &__bed-number {
     font-family: Roboto;
     font-weight: 600;
     font-size: 28rpx;
@@ -705,7 +731,7 @@
     color: #000000;
   }
 
-  &__selected-bed-price {
+  &__bed-price {
     font-family: Roboto;
     font-weight: 600;
     font-size: 28rpx;
@@ -713,7 +739,7 @@
     color: #000000;
   }
 
-  &__selected-bed-divider {
+  &__bed-divider {
     position: absolute;
     left: 90rpx;
     top: 16rpx;
@@ -722,7 +748,7 @@
     background: #e9e9e9;
   }
 
-  &__cancel-bed-btn {
+  &__bed-close {
     position: absolute;
     right: 20rpx;
     top: 44rpx;
@@ -733,32 +759,9 @@
     justify-content: center;
   }
 
-  &__cancel-bed-icon {
-    width: 100%;
-    height: 100%;
-    background: #cccccc;
-    border-radius: 50%;
-    position: relative;
-
-    &::before,
-    &::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 12rpx;
-      height: 2rpx;
-      background: #ffffff;
-      transform: translate(-50%, -50%);
-    }
-
-    &::before {
-      transform: translate(-50%, -50%) rotate(45deg);
-    }
-
-    &::after {
-      transform: translate(-50%, -50%) rotate(-45deg);
-    }
+  &__bed-close-icon {
+    width: 32rpx;
+    height: 32rpx;
   }
 
   // ==================== 底部预订按钮 ====================
@@ -777,16 +780,22 @@
     padding-bottom: calc(0rpx + env(safe-area-inset-bottom));
   }
 
-  &__book-btn {
-    width: 100%;
+  &__book-btn-custom {
     height: 100rpx;
-    background: #f97316;
     border-radius: 16rpx;
+
+    // 确保所有状态下圆角一致
+    &::before,
+    &::after {
+      border-radius: 16rpx;
+    }
+  }
+
+  &__book-btn-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 16rpx 64rpx;
   }
 
   &__book-btn-text {

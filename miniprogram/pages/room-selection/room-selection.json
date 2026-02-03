@@ -1,5 +1,7 @@
 {
   "navigationBarTitleText": "",
   "navigationStyle": "custom",
-  "usingComponents": {}
+  "usingComponents": {
+    "t-button": "tdesign-miniprogram/button/button"
+  }
 }

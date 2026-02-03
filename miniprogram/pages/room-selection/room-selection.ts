@@ -221,11 +221,11 @@ Page({
 
   // 选择/取消选择床位
   onToggleBed(e: any) {
-    const { groupIndex, bedIndex } = e.currentTarget.dataset
+    const { group, bed } = e.currentTarget.dataset
     const bedGroups = this.data.bedGroups
-    const bed = bedGroups[groupIndex].beds[bedIndex]
+    const selectedBed = bedGroups[group].beds[bed]
 
-    if (bed.status === 'unavailable') {
+    if (selectedBed.status === 'unavailable') {
       wx.showToast({
         title: '该床位不可选',
         icon: 'none',
@@ -234,12 +234,12 @@ Page({
     }
 
     // 切换选中状态
-    bed.status = bed.status === 'selected' ? 'available' : 'selected'
+    selectedBed.status = selectedBed.status === 'selected' ? 'available' : 'selected'
 
     // 更新已选床位列表
     const selectedBeds = []
-    for (const group of bedGroups) {
-      for (const b of group.beds) {
+    for (const g of bedGroups) {
+      for (const b of g.beds) {
         if (b.status === 'selected') {
           selectedBeds.push({ id: b.id, price: b.price })
         }

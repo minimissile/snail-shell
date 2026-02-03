@@ -173,113 +173,333 @@
 
   <!-- 床位选择区域 -->
   <view class="room-selection__beds-container">
+    <!-- 背景 -->
     <view class="room-selection__beds-bg"></view>
+    <!-- 中间分割线 -->
     <view class="room-selection__beds-divider"></view>
 
-    <!-- 床位组 -->
-    <view
-      class="room-selection__bed-group"
-      wx:for="{{bedGroups}}"
-      wx:for-item="group"
-      wx:for-index="groupIndex"
-      wx:key="id"
-      style="left: {{group.position.x}}rpx; top: {{group.position.y}}rpx;"
-    >
+    <!-- 床位组 B (左侧上) -->
+    <view class="room-selection__bed-group" style="left: 24rpx; top: 32rpx">
       <view class="room-selection__bed-frame"></view>
-
-      <!-- 上铺图片 -->
-      <image
-        class="room-selection__bed-image room-selection__bed-image--upper"
-        src="/assets/figma/room-selection/bed-upper.png"
-        mode="aspectFit"
-      />
-
-      <!-- 下铺图片 -->
-      <image
-        class="room-selection__bed-image room-selection__bed-image--lower"
-        src="/assets/figma/room-selection/bed-lower.png"
-        mode="aspectFit"
-      />
-
-      <!-- 床位中间分隔线 -->
+      <image class="room-selection__bed-upper" src="/assets/figma/room-selection/bed-upper.png" />
+      <image class="room-selection__bed-lower" src="/assets/figma/room-selection/bed-lower.png" />
       <view class="room-selection__bed-separator"></view>
 
-      <!-- 4个床位 -->
       <view
-        class="room-selection__bed-item room-selection__bed-item--top-left {{group.beds[1].status === 'selected' ? 'room-selection__bed-item--selected' : ''}} {{group.beds[1].status === 'unavailable' ? 'room-selection__bed-item--unavailable' : ''}}"
-        data-group-index="{{groupIndex}}"
-        data-bed-index="1"
+        class="room-selection__bed {{bedGroups[0].beds[1].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[0].beds[1].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
+        style="left: 80rpx; top: 16rpx"
+        data-group="0"
+        data-bed="1"
         bindtap="onToggleBed"
       >
-        <text class="room-selection__bed-id">{{group.beds[1].id}}</text>
+        <text class="room-selection__bed-num">{{bedGroups[0].beds[1].id}}</text>
       </view>
+      <view
+        class="room-selection__bed {{bedGroups[0].beds[0].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[0].beds[0].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
+        style="left: 180rpx; top: 16rpx"
+        data-group="0"
+        data-bed="0"
+        bindtap="onToggleBed"
+      >
+        <text class="room-selection__bed-num">{{bedGroups[0].beds[0].id}}</text>
+      </view>
+      <view
+        class="room-selection__bed {{bedGroups[0].beds[3].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[0].beds[3].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
+        style="left: 80rpx; top: 108rpx"
+        data-group="0"
+        data-bed="3"
+        bindtap="onToggleBed"
+      >
+        <text class="room-selection__bed-num">{{bedGroups[0].beds[3].id}}</text>
+      </view>
+      <view
+        class="room-selection__bed {{bedGroups[0].beds[2].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[0].beds[2].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
+        style="left: 180rpx; top: 108rpx"
+        data-group="0"
+        data-bed="2"
+        bindtap="onToggleBed"
+      >
+        <text class="room-selection__bed-num">{{bedGroups[0].beds[2].id}}</text>
+      </view>
+    </view>
+
+    <!-- 床位组 B2 (左侧中) -->
+    <view class="room-selection__bed-group" style="left: 24rpx; top: 248rpx">
+      <view class="room-selection__bed-frame"></view>
+      <image class="room-selection__bed-upper" src="/assets/figma/room-selection/bed-upper.png" />
+      <image class="room-selection__bed-lower" src="/assets/figma/room-selection/bed-lower.png" />
+      <view class="room-selection__bed-separator"></view>
 
       <view
-        class="room-selection__bed-item room-selection__bed-item--top-right {{group.beds[0].status === 'selected' ? 'room-selection__bed-item--selected' : ''}} {{group.beds[0].status === 'unavailable' ? 'room-selection__bed-item--unavailable' : ''}}"
-        data-group-index="{{groupIndex}}"
-        data-bed-index="0"
+        class="room-selection__bed {{bedGroups[1].beds[1].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[1].beds[1].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
+        style="left: 80rpx; top: 16rpx"
+        data-group="1"
+        data-bed="1"
         bindtap="onToggleBed"
       >
-        <text class="room-selection__bed-id">{{group.beds[0].id}}</text>
+        <text class="room-selection__bed-num">{{bedGroups[1].beds[1].id}}</text>
       </view>
+      <view
+        class="room-selection__bed {{bedGroups[1].beds[0].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[1].beds[0].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
+        style="left: 180rpx; top: 16rpx"
+        data-group="1"
+        data-bed="0"
+        bindtap="onToggleBed"
+      >
+        <text class="room-selection__bed-num">{{bedGroups[1].beds[0].id}}</text>
+      </view>
+      <view
+        class="room-selection__bed {{bedGroups[1].beds[3].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[1].beds[3].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
+        style="left: 80rpx; top: 108rpx"
+        data-group="1"
+        data-bed="3"
+        bindtap="onToggleBed"
+      >
+        <text class="room-selection__bed-num">{{bedGroups[1].beds[3].id}}</text>
+      </view>
+      <view
+        class="room-selection__bed {{bedGroups[1].beds[2].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[1].beds[2].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
+        style="left: 180rpx; top: 108rpx"
+        data-group="1"
+        data-bed="2"
+        bindtap="onToggleBed"
+      >
+        <text class="room-selection__bed-num">{{bedGroups[1].beds[2].id}}</text>
+      </view>
+    </view>
+
+    <!-- 床位组 B3 (左侧下) -->
+    <view class="room-selection__bed-group" style="left: 24rpx; top: 464rpx">
+      <view class="room-selection__bed-frame"></view>
+      <image class="room-selection__bed-upper" src="/assets/figma/room-selection/bed-upper.png" />
+      <image class="room-selection__bed-lower" src="/assets/figma/room-selection/bed-lower.png" />
+      <view class="room-selection__bed-separator"></view>
 
       <view
-        class="room-selection__bed-item room-selection__bed-item--bottom-left {{group.beds[3].status === 'selected' ? 'room-selection__bed-item--selected' : ''}} {{group.beds[3].status === 'unavailable' ? 'room-selection__bed-item--unavailable' : ''}}"
-        data-group-index="{{groupIndex}}"
-        data-bed-index="3"
+        class="room-selection__bed {{bedGroups[2].beds[1].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[2].beds[1].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
+        style="left: 80rpx; top: 16rpx"
+        data-group="2"
+        data-bed="1"
         bindtap="onToggleBed"
       >
-        <text class="room-selection__bed-id">{{group.beds[3].id}}</text>
+        <text class="room-selection__bed-num">{{bedGroups[2].beds[1].id}}</text>
       </view>
+      <view
+        class="room-selection__bed {{bedGroups[2].beds[0].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[2].beds[0].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
+        style="left: 180rpx; top: 16rpx"
+        data-group="2"
+        data-bed="0"
+        bindtap="onToggleBed"
+      >
+        <text class="room-selection__bed-num">{{bedGroups[2].beds[0].id}}</text>
+      </view>
+      <view
+        class="room-selection__bed {{bedGroups[2].beds[3].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[2].beds[3].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
+        style="left: 80rpx; top: 108rpx"
+        data-group="2"
+        data-bed="3"
+        bindtap="onToggleBed"
+      >
+        <text class="room-selection__bed-num">{{bedGroups[2].beds[3].id}}</text>
+      </view>
+      <view
+        class="room-selection__bed {{bedGroups[2].beds[2].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[2].beds[2].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
+        style="left: 180rpx; top: 108rpx"
+        data-group="2"
+        data-bed="2"
+        bindtap="onToggleBed"
+      >
+        <text class="room-selection__bed-num">{{bedGroups[2].beds[2].id}}</text>
+      </view>
+    </view>
+
+    <!-- 床位组 A (右侧上) -->
+    <view class="room-selection__bed-group" style="left: 344rpx; top: 32rpx">
+      <view class="room-selection__bed-frame"></view>
+      <image class="room-selection__bed-upper" src="/assets/figma/room-selection/bed-upper.png" />
+      <image class="room-selection__bed-lower" src="/assets/figma/room-selection/bed-lower.png" />
+      <view class="room-selection__bed-separator"></view>
 
       <view
-        class="room-selection__bed-item room-selection__bed-item--bottom-right {{group.beds[2].status === 'selected' ? 'room-selection__bed-item--selected' : ''}} {{group.beds[2].status === 'unavailable' ? 'room-selection__bed-item--unavailable' : ''}}"
-        data-group-index="{{groupIndex}}"
-        data-bed-index="2"
+        class="room-selection__bed {{bedGroups[3].beds[1].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[3].beds[1].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
+        style="left: 80rpx; top: 16rpx"
+        data-group="3"
+        data-bed="1"
         bindtap="onToggleBed"
       >
-        <text class="room-selection__bed-id">{{group.beds[2].id}}</text>
+        <text class="room-selection__bed-num">{{bedGroups[3].beds[1].id}}</text>
+      </view>
+      <view
+        class="room-selection__bed {{bedGroups[3].beds[0].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[3].beds[0].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
+        style="left: 180rpx; top: 16rpx"
+        data-group="3"
+        data-bed="0"
+        bindtap="onToggleBed"
+      >
+        <text class="room-selection__bed-num">{{bedGroups[3].beds[0].id}}</text>
+      </view>
+      <view
+        class="room-selection__bed {{bedGroups[3].beds[3].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[3].beds[3].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
+        style="left: 80rpx; top: 108rpx"
+        data-group="3"
+        data-bed="3"
+        bindtap="onToggleBed"
+      >
+        <text class="room-selection__bed-num">{{bedGroups[3].beds[3].id}}</text>
+      </view>
+      <view
+        class="room-selection__bed {{bedGroups[3].beds[2].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[3].beds[2].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
+        style="left: 180rpx; top: 108rpx"
+        data-group="3"
+        data-bed="2"
+        bindtap="onToggleBed"
+      >
+        <text class="room-selection__bed-num">{{bedGroups[3].beds[2].id}}</text>
+      </view>
+    </view>
+
+    <!-- 床位组 A2 (右侧中) -->
+    <view class="room-selection__bed-group" style="left: 344rpx; top: 248rpx">
+      <view class="room-selection__bed-frame"></view>
+      <image class="room-selection__bed-upper" src="/assets/figma/room-selection/bed-upper.png" />
+      <image class="room-selection__bed-lower" src="/assets/figma/room-selection/bed-lower.png" />
+      <view class="room-selection__bed-separator"></view>
+
+      <view
+        class="room-selection__bed {{bedGroups[4].beds[1].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[4].beds[1].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
+        style="left: 80rpx; top: 16rpx"
+        data-group="4"
+        data-bed="1"
+        bindtap="onToggleBed"
+      >
+        <text class="room-selection__bed-num">{{bedGroups[4].beds[1].id}}</text>
+      </view>
+      <view
+        class="room-selection__bed {{bedGroups[4].beds[0].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[4].beds[0].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
+        style="left: 180rpx; top: 16rpx"
+        data-group="4"
+        data-bed="0"
+        bindtap="onToggleBed"
+      >
+        <text class="room-selection__bed-num">{{bedGroups[4].beds[0].id}}</text>
+      </view>
+      <view
+        class="room-selection__bed {{bedGroups[4].beds[3].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[4].beds[3].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
+        style="left: 80rpx; top: 108rpx"
+        data-group="4"
+        data-bed="3"
+        bindtap="onToggleBed"
+      >
+        <text class="room-selection__bed-num">{{bedGroups[4].beds[3].id}}</text>
+      </view>
+      <view
+        class="room-selection__bed {{bedGroups[4].beds[2].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[4].beds[2].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
+        style="left: 180rpx; top: 108rpx"
+        data-group="4"
+        data-bed="2"
+        bindtap="onToggleBed"
+      >
+        <text class="room-selection__bed-num">{{bedGroups[4].beds[2].id}}</text>
+      </view>
+    </view>
+
+    <!-- 床位组 A3 (右侧下) -->
+    <view class="room-selection__bed-group" style="left: 344rpx; top: 464rpx">
+      <view class="room-selection__bed-frame"></view>
+      <image class="room-selection__bed-upper" src="/assets/figma/room-selection/bed-upper.png" />
+      <image class="room-selection__bed-lower" src="/assets/figma/room-selection/bed-lower.png" />
+      <view class="room-selection__bed-separator"></view>
+
+      <view
+        class="room-selection__bed {{bedGroups[5].beds[1].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[5].beds[1].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
+        style="left: 80rpx; top: 16rpx"
+        data-group="5"
+        data-bed="1"
+        bindtap="onToggleBed"
+      >
+        <text class="room-selection__bed-num">{{bedGroups[5].beds[1].id}}</text>
+      </view>
+      <view
+        class="room-selection__bed {{bedGroups[5].beds[0].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[5].beds[0].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
+        style="left: 180rpx; top: 16rpx"
+        data-group="5"
+        data-bed="0"
+        bindtap="onToggleBed"
+      >
+        <text class="room-selection__bed-num">{{bedGroups[5].beds[0].id}}</text>
+      </view>
+      <view
+        class="room-selection__bed {{bedGroups[5].beds[3].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[5].beds[3].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
+        style="left: 80rpx; top: 108rpx"
+        data-group="5"
+        data-bed="3"
+        bindtap="onToggleBed"
+      >
+        <text class="room-selection__bed-num">{{bedGroups[5].beds[3].id}}</text>
+      </view>
+      <view
+        class="room-selection__bed {{bedGroups[5].beds[2].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[5].beds[2].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
+        style="left: 180rpx; top: 108rpx"
+        data-group="5"
+        data-bed="2"
+        bindtap="onToggleBed"
+      >
+        <text class="room-selection__bed-num">{{bedGroups[5].beds[2].id}}</text>
       </view>
     </view>
   </view>
 
   <!-- 已选床位卡片（取消选房状态） -->
   <view class="room-selection__selected-card" wx:if="{{selectedBeds.length > 0}}">
-    <view class="room-selection__card-header">
-      <text class="room-selection__card-date">{{currentDay}}</text>
-      <text class="room-selection__card-time">{{roomDate}}</text>
+    <!-- 语音图标 -->
+    <image
+      class="room-selection__card-volume-icon"
+      src="/assets/figma/room-selection/icon-volume.svg"
+      mode="aspectFit"
+      bindtap="onPlayAudio"
+    />
+
+    <!-- 智能门锁提示 -->
+    <view class="room-selection__card-smart-lock">
+      <text class="room-selection__card-smart-lock-text">{{smartLockTip}}</text>
     </view>
 
-    <view class="room-selection__card-divider"></view>
+    <!-- 分割线1 -->
+    <view class="room-selection__card-line1"></view>
 
+    <!-- 房型名称 -->
     <text class="room-selection__card-room-type">{{roomType}}</text>
 
-    <view class="room-selection__card-divider"></view>
-
-    <view class="room-selection__card-tip">
-      <image
-        class="room-selection__card-tip-icon"
-        src="/images/room-selection/icon-volume-high.svg"
-        bindtap="onPlayAudio"
-      />
-      <text class="room-selection__card-tip-text">{{smartLockTip}}</text>
+    <!-- 切换房型按钮 -->
+    <view class="room-selection__card-switch" bindtap="onSwitchRoomType">
+      <text class="room-selection__card-switch-text">切换房型</text>
+      <text class="room-selection__card-switch-icon"></text>
     </view>
 
-    <view class="room-selection__card-action" bindtap="onSwitchRoomType">
-      <text class="room-selection__card-action-text">切换房型</text>
-      <text class="room-selection__card-action-icon"></text>
-    </view>
+    <!-- 日期标签 -->
+    <text class="room-selection__card-day">{{currentDay}}</text>
+
+    <!-- 时间段 -->
+    <text class="room-selection__card-time-range">{{roomDate}}</text>
+
+    <!-- 分割线2 -->
+    <view class="room-selection__card-line2"></view>
 
     <!-- 已选床位列表 -->
-    <view class="room-selection__selected-bed-list">
-      <view class="room-selection__selected-bed" wx:for="{{selectedBeds}}" wx:key="id">
-        <view class="room-selection__selected-bed-info">
-          <text class="room-selection__selected-bed-id">{{item.id}}</text>
-          <text class="room-selection__selected-bed-price">¥{{item.price}}</text>
+    <view class="room-selection__selected-beds">
+      <view class="room-selection__bed-item" wx:for="{{selectedBeds}}" wx:key="id">
+        <view class="room-selection__bed-bg"></view>
+        <view class="room-selection__bed-info">
+          <text class="room-selection__bed-number">{{item.id}}</text>
+          <text class="room-selection__bed-price">¥{{item.price}}</text>
         </view>
-        <view class="room-selection__selected-bed-divider"></view>
-        <view class="room-selection__cancel-bed-btn" data-bed-id="{{item.id}}" bindtap="onCancelBed">
-          <view class="room-selection__cancel-bed-icon"></view>
+        <view class="room-selection__bed-divider"></view>
+        <view class="room-selection__bed-close" data-bed-id="{{item.id}}" bindtap="onCancelBed">
+          <image
+            class="room-selection__bed-close-icon"
+            src="/assets/figma/room-selection/icon-close-circle.svg"
+            mode="aspectFit"
+          />
         </view>
       </view>
     </view>
@@ -287,14 +507,23 @@
 
   <!-- 底部预订按钮 -->
   <view class="room-selection__footer">
-    <view class="room-selection__book-btn" bindtap="onBookNow">
-      <text class="room-selection__book-btn-text">立即预订</text>
-      <view class="room-selection__book-btn-price">
-        <text class="room-selection__book-btn-total">¥{{totalPrice}}</text>
-        <view class="room-selection__book-btn-original-wrapper">
-          <text class="room-selection__book-btn-original">¥{{originalPrice}}</text>
+    <t-button
+      theme="primary"
+      size="large"
+      block
+      shape="round"
+      t-class="room-selection__book-btn-custom"
+      bind:tap="onBookNow"
+    >
+      <view class="room-selection__book-btn-content">
+        <text class="room-selection__book-btn-text">立即预订</text>
+        <view class="room-selection__book-btn-price">
+          <text class="room-selection__book-btn-total">¥{{totalPrice}}</text>
+          <view class="room-selection__book-btn-original-wrapper">
+            <text class="room-selection__book-btn-original">¥{{originalPrice}}</text>
+          </view>
         </view>
       </view>
-    </view>
+    </t-button>
   </view>
 </view>
