@@ -134,22 +134,27 @@
     </view>
   </view>
 
-  <!-- 已选信息提示 -->
+  <!-- 已选信息和提示 -->
   <view class="room-selection__selected-info">
     <view class="room-selection__selected-item">
-      <view class="room-selection__info-icon" bindtap="onViewSelectedInfo"></view>
+      <image
+        class="room-selection__info-icon"
+        src="/assets/figma/room-selection/icon-info-circle.svg"
+        mode="aspectFit"
+        bindtap="onViewSelectedInfo"
+      />
       <text class="room-selection__selected-text"
         >已选:{{bookingMode === 'day' ? selectedDays : bookingMode === 'hour' ? selectedHours : selectedMonths}}</text
       >
     </view>
 
     <view class="room-selection__booking-tip">
-      <view class="room-selection__clock-icon"></view>
+      <image class="room-selection__clock-icon" src="/assets/figma/room-selection/icon-clock.svg" mode="aspectFit" />
       <text class="room-selection__tip-text">{{bookingTip}}</text>
     </view>
   </view>
 
-  <!-- 床位图例 -->
+  <!-- 床位选择说明 -->
   <view class="room-selection__legend">
     <view class="room-selection__legend-items">
       <view class="room-selection__legend-item">
@@ -176,275 +181,59 @@
     <!-- 背景 -->
     <view class="room-selection__beds-bg"></view>
     <!-- 中间分割线 -->
-    <view class="room-selection__beds-divider"></view>
+    <view class="room-selection__beds-divider-wrapper"><view class="room-selection__beds-divider"></view></view>
 
-    <!-- 床位组 B (左侧上) -->
-    <view class="room-selection__bed-group" style="left: 24rpx; top: 32rpx">
-      <view class="room-selection__bed-frame"></view>
-      <image class="room-selection__bed-upper" src="/assets/figma/room-selection/bed-upper.png" />
-      <image class="room-selection__bed-lower" src="/assets/figma/room-selection/bed-lower.png" />
-      <view class="room-selection__bed-separator"></view>
+    <!-- 床位组容器 -->
+    <view class="room-selection__beds-wrapper">
+      <!-- 床位组循环 -->
+      <view
+        class="room-selection__bed-group"
+        wx:for="{{bedGroups}}"
+        wx:for-item="group"
+        wx:for-index="groupIndex"
+        wx:key="id"
+      >
+        <view class="room-selection__bed-frame"></view>
+        <image class="room-selection__bed-upper" src="/assets/figma/room-selection/bed-upper.png" />
+        <image class="room-selection__bed-lower" src="/assets/figma/room-selection/bed-lower.png" />
+        <view class="room-selection__bed-separator"></view>
 
-      <view
-        class="room-selection__bed {{bedGroups[0].beds[1].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[0].beds[1].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
-        style="left: 80rpx; top: 16rpx"
-        data-group="0"
-        data-bed="1"
-        bindtap="onToggleBed"
-      >
-        <text class="room-selection__bed-num">{{bedGroups[0].beds[1].id}}</text>
-      </view>
-      <view
-        class="room-selection__bed {{bedGroups[0].beds[0].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[0].beds[0].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
-        style="left: 180rpx; top: 16rpx"
-        data-group="0"
-        data-bed="0"
-        bindtap="onToggleBed"
-      >
-        <text class="room-selection__bed-num">{{bedGroups[0].beds[0].id}}</text>
-      </view>
-      <view
-        class="room-selection__bed {{bedGroups[0].beds[3].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[0].beds[3].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
-        style="left: 80rpx; top: 108rpx"
-        data-group="0"
-        data-bed="3"
-        bindtap="onToggleBed"
-      >
-        <text class="room-selection__bed-num">{{bedGroups[0].beds[3].id}}</text>
-      </view>
-      <view
-        class="room-selection__bed {{bedGroups[0].beds[2].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[0].beds[2].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
-        style="left: 180rpx; top: 108rpx"
-        data-group="0"
-        data-bed="2"
-        bindtap="onToggleBed"
-      >
-        <text class="room-selection__bed-num">{{bedGroups[0].beds[2].id}}</text>
-      </view>
-    </view>
+        <!-- 4个床位按钮 -->
+        <view
+          class="room-selection__bed room-selection__bed--top-left {{group.beds[1].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{group.beds[1].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
+          data-group="{{groupIndex}}"
+          data-bed="1"
+          bindtap="onToggleBed"
+        >
+          <text class="room-selection__bed-num">{{group.beds[1].id}}</text>
+        </view>
 
-    <!-- 床位组 B2 (左侧中) -->
-    <view class="room-selection__bed-group" style="left: 24rpx; top: 248rpx">
-      <view class="room-selection__bed-frame"></view>
-      <image class="room-selection__bed-upper" src="/assets/figma/room-selection/bed-upper.png" />
-      <image class="room-selection__bed-lower" src="/assets/figma/room-selection/bed-lower.png" />
-      <view class="room-selection__bed-separator"></view>
+        <view
+          class="room-selection__bed room-selection__bed--top-right {{group.beds[0].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{group.beds[0].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
+          data-group="{{groupIndex}}"
+          data-bed="0"
+          bindtap="onToggleBed"
+        >
+          <text class="room-selection__bed-num">{{group.beds[0].id}}</text>
+        </view>
 
-      <view
-        class="room-selection__bed {{bedGroups[1].beds[1].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[1].beds[1].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
-        style="left: 80rpx; top: 16rpx"
-        data-group="1"
-        data-bed="1"
-        bindtap="onToggleBed"
-      >
-        <text class="room-selection__bed-num">{{bedGroups[1].beds[1].id}}</text>
-      </view>
-      <view
-        class="room-selection__bed {{bedGroups[1].beds[0].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[1].beds[0].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
-        style="left: 180rpx; top: 16rpx"
-        data-group="1"
-        data-bed="0"
-        bindtap="onToggleBed"
-      >
-        <text class="room-selection__bed-num">{{bedGroups[1].beds[0].id}}</text>
-      </view>
-      <view
-        class="room-selection__bed {{bedGroups[1].beds[3].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[1].beds[3].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
-        style="left: 80rpx; top: 108rpx"
-        data-group="1"
-        data-bed="3"
-        bindtap="onToggleBed"
-      >
-        <text class="room-selection__bed-num">{{bedGroups[1].beds[3].id}}</text>
-      </view>
-      <view
-        class="room-selection__bed {{bedGroups[1].beds[2].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[1].beds[2].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
-        style="left: 180rpx; top: 108rpx"
-        data-group="1"
-        data-bed="2"
-        bindtap="onToggleBed"
-      >
-        <text class="room-selection__bed-num">{{bedGroups[1].beds[2].id}}</text>
-      </view>
-    </view>
+        <view
+          class="room-selection__bed room-selection__bed--bottom-left {{group.beds[3].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{group.beds[3].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
+          data-group="{{groupIndex}}"
+          data-bed="3"
+          bindtap="onToggleBed"
+        >
+          <text class="room-selection__bed-num">{{group.beds[3].id}}</text>
+        </view>
 
-    <!-- 床位组 B3 (左侧下) -->
-    <view class="room-selection__bed-group" style="left: 24rpx; top: 464rpx">
-      <view class="room-selection__bed-frame"></view>
-      <image class="room-selection__bed-upper" src="/assets/figma/room-selection/bed-upper.png" />
-      <image class="room-selection__bed-lower" src="/assets/figma/room-selection/bed-lower.png" />
-      <view class="room-selection__bed-separator"></view>
-
-      <view
-        class="room-selection__bed {{bedGroups[2].beds[1].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[2].beds[1].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
-        style="left: 80rpx; top: 16rpx"
-        data-group="2"
-        data-bed="1"
-        bindtap="onToggleBed"
-      >
-        <text class="room-selection__bed-num">{{bedGroups[2].beds[1].id}}</text>
-      </view>
-      <view
-        class="room-selection__bed {{bedGroups[2].beds[0].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[2].beds[0].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
-        style="left: 180rpx; top: 16rpx"
-        data-group="2"
-        data-bed="0"
-        bindtap="onToggleBed"
-      >
-        <text class="room-selection__bed-num">{{bedGroups[2].beds[0].id}}</text>
-      </view>
-      <view
-        class="room-selection__bed {{bedGroups[2].beds[3].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[2].beds[3].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
-        style="left: 80rpx; top: 108rpx"
-        data-group="2"
-        data-bed="3"
-        bindtap="onToggleBed"
-      >
-        <text class="room-selection__bed-num">{{bedGroups[2].beds[3].id}}</text>
-      </view>
-      <view
-        class="room-selection__bed {{bedGroups[2].beds[2].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[2].beds[2].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
-        style="left: 180rpx; top: 108rpx"
-        data-group="2"
-        data-bed="2"
-        bindtap="onToggleBed"
-      >
-        <text class="room-selection__bed-num">{{bedGroups[2].beds[2].id}}</text>
-      </view>
-    </view>
-
-    <!-- 床位组 A (右侧上) -->
-    <view class="room-selection__bed-group" style="left: 344rpx; top: 32rpx">
-      <view class="room-selection__bed-frame"></view>
-      <image class="room-selection__bed-upper" src="/assets/figma/room-selection/bed-upper.png" />
-      <image class="room-selection__bed-lower" src="/assets/figma/room-selection/bed-lower.png" />
-      <view class="room-selection__bed-separator"></view>
-
-      <view
-        class="room-selection__bed {{bedGroups[3].beds[1].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[3].beds[1].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
-        style="left: 80rpx; top: 16rpx"
-        data-group="3"
-        data-bed="1"
-        bindtap="onToggleBed"
-      >
-        <text class="room-selection__bed-num">{{bedGroups[3].beds[1].id}}</text>
-      </view>
-      <view
-        class="room-selection__bed {{bedGroups[3].beds[0].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[3].beds[0].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
-        style="left: 180rpx; top: 16rpx"
-        data-group="3"
-        data-bed="0"
-        bindtap="onToggleBed"
-      >
-        <text class="room-selection__bed-num">{{bedGroups[3].beds[0].id}}</text>
-      </view>
-      <view
-        class="room-selection__bed {{bedGroups[3].beds[3].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[3].beds[3].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
-        style="left: 80rpx; top: 108rpx"
-        data-group="3"
-        data-bed="3"
-        bindtap="onToggleBed"
-      >
-        <text class="room-selection__bed-num">{{bedGroups[3].beds[3].id}}</text>
-      </view>
-      <view
-        class="room-selection__bed {{bedGroups[3].beds[2].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[3].beds[2].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
-        style="left: 180rpx; top: 108rpx"
-        data-group="3"
-        data-bed="2"
-        bindtap="onToggleBed"
-      >
-        <text class="room-selection__bed-num">{{bedGroups[3].beds[2].id}}</text>
-      </view>
-    </view>
-
-    <!-- 床位组 A2 (右侧中) -->
-    <view class="room-selection__bed-group" style="left: 344rpx; top: 248rpx">
-      <view class="room-selection__bed-frame"></view>
-      <image class="room-selection__bed-upper" src="/assets/figma/room-selection/bed-upper.png" />
-      <image class="room-selection__bed-lower" src="/assets/figma/room-selection/bed-lower.png" />
-      <view class="room-selection__bed-separator"></view>
-
-      <view
-        class="room-selection__bed {{bedGroups[4].beds[1].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[4].beds[1].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
-        style="left: 80rpx; top: 16rpx"
-        data-group="4"
-        data-bed="1"
-        bindtap="onToggleBed"
-      >
-        <text class="room-selection__bed-num">{{bedGroups[4].beds[1].id}}</text>
-      </view>
-      <view
-        class="room-selection__bed {{bedGroups[4].beds[0].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[4].beds[0].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
-        style="left: 180rpx; top: 16rpx"
-        data-group="4"
-        data-bed="0"
-        bindtap="onToggleBed"
-      >
-        <text class="room-selection__bed-num">{{bedGroups[4].beds[0].id}}</text>
-      </view>
-      <view
-        class="room-selection__bed {{bedGroups[4].beds[3].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[4].beds[3].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
-        style="left: 80rpx; top: 108rpx"
-        data-group="4"
-        data-bed="3"
-        bindtap="onToggleBed"
-      >
-        <text class="room-selection__bed-num">{{bedGroups[4].beds[3].id}}</text>
-      </view>
-      <view
-        class="room-selection__bed {{bedGroups[4].beds[2].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[4].beds[2].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
-        style="left: 180rpx; top: 108rpx"
-        data-group="4"
-        data-bed="2"
-        bindtap="onToggleBed"
-      >
-        <text class="room-selection__bed-num">{{bedGroups[4].beds[2].id}}</text>
-      </view>
-    </view>
-
-    <!-- 床位组 A3 (右侧下) -->
-    <view class="room-selection__bed-group" style="left: 344rpx; top: 464rpx">
-      <view class="room-selection__bed-frame"></view>
-      <image class="room-selection__bed-upper" src="/assets/figma/room-selection/bed-upper.png" />
-      <image class="room-selection__bed-lower" src="/assets/figma/room-selection/bed-lower.png" />
-      <view class="room-selection__bed-separator"></view>
-
-      <view
-        class="room-selection__bed {{bedGroups[5].beds[1].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[5].beds[1].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
-        style="left: 80rpx; top: 16rpx"
-        data-group="5"
-        data-bed="1"
-        bindtap="onToggleBed"
-      >
-        <text class="room-selection__bed-num">{{bedGroups[5].beds[1].id}}</text>
-      </view>
-      <view
-        class="room-selection__bed {{bedGroups[5].beds[0].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[5].beds[0].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
-        style="left: 180rpx; top: 16rpx"
-        data-group="5"
-        data-bed="0"
-        bindtap="onToggleBed"
-      >
-        <text class="room-selection__bed-num">{{bedGroups[5].beds[0].id}}</text>
-      </view>
-      <view
-        class="room-selection__bed {{bedGroups[5].beds[3].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[5].beds[3].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
-        style="left: 80rpx; top: 108rpx"
-        data-group="5"
-        data-bed="3"
-        bindtap="onToggleBed"
-      >
-        <text class="room-selection__bed-num">{{bedGroups[5].beds[3].id}}</text>
-      </view>
-      <view
-        class="room-selection__bed {{bedGroups[5].beds[2].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{bedGroups[5].beds[2].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
-        style="left: 180rpx; top: 108rpx"
-        data-group="5"
-        data-bed="2"
-        bindtap="onToggleBed"
-      >
-        <text class="room-selection__bed-num">{{bedGroups[5].beds[2].id}}</text>
+        <view
+          class="room-selection__bed room-selection__bed--bottom-right {{group.beds[2].status === 'selected' ? 'room-selection__bed--selected' : ''}} {{group.beds[2].status === 'unavailable' ? 'room-selection__bed--unavailable' : ''}}"
+          data-group="{{groupIndex}}"
+          data-bed="2"
+          bindtap="onToggleBed"
+        >
+          <text class="room-selection__bed-num">{{group.beds[2].id}}</text>
+        </view>
       </view>
     </view>
   </view>

@@ -14,7 +14,7 @@
 
   // ==================== 导航栏头部 ====================
   &__header {
-    background: #ffffff;
+    // background: #ffffff;
     padding: 20rpx 32rpx 0;
   }
 
@@ -23,6 +23,7 @@
     justify-content: space-between;
     align-items: center;
     position: relative;
+    margin-bottom: 32rpx;
   }
 
   &__back-btn {
@@ -256,7 +257,7 @@
     border-radius: 4rpx;
     display: flex;
     align-items: center;
-    gap: 0;
+    gap: 4rpx;
   }
 
   &__date-value,
@@ -264,7 +265,7 @@
   &__month-value {
     font-family: D-DIN-PRO;
     font-weight: 400;
-    font-size: 28rpx;
+    font-size: 24rpx;
     line-height: 1.4285714285714286em;
     color: #000000;
   }
@@ -325,34 +326,20 @@
     padding: 0 32rpx 16rpx;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: flex-start;
     gap: 16rpx;
+    margin-top: 24rpx;
   }
 
   &__selected-item {
     display: flex;
     align-items: center;
-    gap: 3rpx;
+    gap: 8rpx;
   }
 
   &__info-icon {
     width: 32rpx;
     height: 32rpx;
-    border-radius: 50%;
-    border: 2rpx solid #cccccc;
-    position: relative;
-
-    &::before {
-      content: 'i';
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      font-family: PingFang SC;
-      font-weight: 600;
-      font-size: 20rpx;
-      color: #cccccc;
-    }
   }
 
   &__selected-text {
@@ -372,31 +359,6 @@
   &__clock-icon {
     width: 32rpx;
     height: 32rpx;
-    border-radius: 50%;
-    border: 2rpx solid #cccccc;
-    position: relative;
-
-    &::before {
-      content: '';
-      position: absolute;
-      left: 50%;
-      top: 40%;
-      width: 2rpx;
-      height: 8rpx;
-      background: #cccccc;
-      transform: translate(-50%, -100%);
-    }
-
-    &::after {
-      content: '';
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 8rpx;
-      height: 2rpx;
-      background: #cccccc;
-      transform: translate(-50%, -50%);
-    }
   }
 
   &__tip-text {
@@ -429,7 +391,7 @@
   &__legend-color {
     width: 24rpx;
     height: 24rpx;
-    border-radius: 2rpx;
+    border-radius: 4rpx;
 
     &--selected {
       background: #f97316;
@@ -453,16 +415,20 @@
   }
 
   &__price-info-btn {
-    padding: 4rpx 12rpx;
+    padding: 0 12rpx;
     background: #fad161;
     border-radius: 4rpx;
+    height: 40rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   &__price-info-text {
     font-family: PingFang SC;
     font-weight: 400;
     font-size: 24rpx;
-    line-height: 1.3333333333333333em;
+    // line-height: 1.3333333333333333em;
     color: #000000;
   }
 
@@ -470,8 +436,9 @@
   &__beds-container {
     position: relative;
     margin: 32rpx;
-    width: 648rpx;
-    height: 680rpx;
+    padding: 32rpx 24rpx;
+    background: #cbcbca;
+    border-radius: 12rpx;
   }
 
   &__beds-bg {
@@ -482,23 +449,40 @@
     height: 100%;
     background: #cbcbca;
     border-radius: 12rpx;
+    z-index: 0;
   }
 
   &__beds-divider {
     position: absolute;
-    left: 316rpx;
+    left: 50%;
+    transform: translateX(-50%);
     top: 32rpx;
+    bottom: 32rpx;
     width: 16rpx;
-    height: 616rpx;
     background: #e0e0df;
     border-radius: 2rpx;
+    z-index: 1;
+  }
+
+  &__beds-divider-wrapper {
+    padding: 0 16rpx;
+  }
+
+  // 床位组容器 - 使用flex布局
+  &__beds-wrapper {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24rpx 40rpx;
   }
 
   // ==================== 床位组 ====================
   &__bed-group {
-    position: absolute;
-    width: 280rpx;
+    position: relative;
+    width: calc((100% - 40rpx) / 2);
     height: 184rpx;
+    flex-shrink: 0;
   }
 
   &__bed-frame {
@@ -529,10 +513,11 @@
 
   &__bed-separator {
     position: absolute;
-    left: 16rpx;
+    left: 72rpx;
     top: 84rpx;
-    width: 248rpx;
+    right: 72rpx;
     height: 16rpx;
+    width: calc(100% - 88rpx);
     background: #fbe5db;
     border-radius: 2rpx;
   }
@@ -547,6 +532,26 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  &__bed--top-left {
+    left: 80rpx;
+    top: 16rpx;
+  }
+
+  &__bed--top-right {
+    right: 16rpx;
+    top: 16rpx;
+  }
+
+  &__bed--bottom-left {
+    left: 80rpx;
+    bottom: 16rpx;
+  }
+
+  &__bed--bottom-right {
+    right: 16rpx;
+    bottom: 16rpx;
   }
 
   &__bed--selected {
