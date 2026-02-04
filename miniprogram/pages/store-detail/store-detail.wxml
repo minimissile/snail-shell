@@ -2,17 +2,15 @@
   <!-- 状态栏占位 -->
   <status-bar />
 
-  <!-- Header (y=45px, padding=10px 0px) -->
-  <view class="store-detail__header">
+  <!-- Header - 滚动超过100px后显示白色背景 -->
+  <view class="store-detail__header {{showHeaderBg ? 'store-detail__header--visible' : ''}}">
+    <status-bar />
+
     <!-- Header Actions -->
     <view class="store-detail__header-actions">
       <!-- 左侧: 返回按钮 (32x32px) -->
       <view class="store-detail__back-btn" bindtap="onGoBack">
-        <image
-          class="store-detail__back-icon"
-          src="/images/store-detail/back-btn.svg"
-          mode="aspectFit"
-        ></image>
+        <image class="store-detail__back-icon" src="/images/store-detail/back-btn.svg" mode="aspectFit"></image>
       </view>
 
       <!-- 中间: 喜欢和分享按钮组 -->
@@ -43,8 +41,14 @@
       <view class="store-detail__placeholder"></view>
     </view>
 
-    <!-- 标签导航栏 - 使用 TDesign Tabs 组件 -->
-    <t-tabs value="{{activeTab}}" bind:change="onTabChange" theme="line" class="store-detail__tabs">
+    <!-- 标签导航栏 - 滚动超过100px后显示 -->
+    <t-tabs
+      wx:if="{{showHeaderBg}}"
+      value="{{activeTab}}"
+      bind:change="onTabChange"
+      theme="line"
+      class="store-detail__tabs"
+    >
       <t-tab-panel wx:for="{{tabs}}" wx:key="id" label="{{item.name}}" value="{{item.id}}" />
     </t-tabs>
   </view>

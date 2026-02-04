@@ -62,6 +62,9 @@ Page({
     checkOutDate: '11-20',
     currentPrice: 468,
     originalPrice: 669,
+
+    // Header背景显示状态(滚动超过100px后显示白色背景)
+    showHeaderBg: false,
   },
 
   onLoad() {
@@ -150,10 +153,17 @@ Page({
 
   // 监听页面滚动
   onPageScroll(e: any) {
+    const scrollTop = e.scrollTop
+
+    // 滚动超过100px显示header背景
+    const shouldShowBg = scrollTop > 100
+    if (this.data.showHeaderBg !== shouldShowBg) {
+      this.setData({ showHeaderBg: shouldShowBg })
+    }
+
     // 如果正在执行点击滚动,不更新tab
     if (this.data.isScrollingToSection) return
 
-    const scrollTop = e.scrollTop
     const { sectionPositions } = this.data
 
     // 找到当前可视区域的section
@@ -209,7 +219,7 @@ Page({
   onShare() {
     wx.showShareMenu({
       withShareTicket: true,
-      menus: ['shareAppMessage', 'shareTimeline']
+      menus: ['shareAppMessage', 'shareTimeline'],
     })
     wx.showToast({
       title: '点击右上角分享',
