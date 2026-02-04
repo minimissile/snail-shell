@@ -66,7 +66,7 @@ Page({
 
   onLoad() {
     console.log('门店详情页加载')
-      
+
     // 计算各section位置
     setTimeout(() => {
       this.calculateSectionPositions()
@@ -152,10 +152,10 @@ Page({
   onPageScroll(e: any) {
     // 如果正在执行点击滚动,不更新tab
     if (this.data.isScrollingToSection) return
-    
+
     const scrollTop = e.scrollTop
     const { sectionPositions } = this.data
-    
+
     // 找到当前可视区域的section
     for (let i = 0; i < sectionPositions.length; i++) {
       const section = sectionPositions[i]
@@ -201,6 +201,18 @@ Page({
   onOpenWechat() {
     wx.showToast({
       title: '微信功能',
+      icon: 'none',
+    })
+  },
+
+  // 分享按钮
+  onShare() {
+    wx.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline']
+    })
+    wx.showToast({
+      title: '点击右上角分享',
       icon: 'none',
     })
   },

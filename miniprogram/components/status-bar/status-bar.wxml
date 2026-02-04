@@ -1,0 +1,2 @@
+<!-- 状态栏占位组件 - 撑开状态栏高度 -->
+<view class="status-bar" style="height: {{statusBarHeight}}px;"></view>

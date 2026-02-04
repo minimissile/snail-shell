@@ -3,6 +3,7 @@
   "enablePullDownRefresh": false,
   "backgroundTextStyle": "dark",
   "usingComponents": {
+    "status-bar": "/components/status-bar/status-bar",
     "t-tabs": "tdesign-miniprogram/tabs/tabs",
     "t-tab-panel": "tdesign-miniprogram/tab-panel/tab-panel",
     "overview-tab": "/components/overview-tab/overview-tab",

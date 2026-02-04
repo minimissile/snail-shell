@@ -1,46 +1,46 @@
 <view class="store-detail">
-  <!-- 状态栏 (y=0, height=44.32px) -->
-  <view class="store-detail__status-bar">
-    <view class="store-detail__status-bar-bg"></view>
-    <view class="store-detail__status-content">
-      <text class="store-detail__status-time">9:41</text>
-      <view class="store-detail__status-icons">
-        <view class="store-detail__status-cellular"></view>
-        <view class="store-detail__status-wifi"></view>
-        <view class="store-detail__status-battery"></view>
-      </view>
-    </view>
-  </view>
+  <!-- 状态栏占位 -->
+  <status-bar />
 
   <!-- Header (y=45px, padding=10px 0px) -->
   <view class="store-detail__header">
-    <!-- Header Actions (padding=10px 0px) -->
+    <!-- Header Actions -->
     <view class="store-detail__header-actions">
-      <!-- Go back button (32x32px) -->
+      <!-- 左侧: 返回按钮 (32x32px) -->
       <view class="store-detail__back-btn" bindtap="onGoBack">
-        <image class="store-detail__back-icon" src="/images/store-detail/angle-right-small.svg" mode="aspectFit"></image>
+        <image
+          class="store-detail__back-icon"
+          src="/images/store-detail/back-btn.svg"
+          mode="aspectFit"
+        ></image>
       </view>
 
-      <!-- Right actions group (width=215px) -->
+      <!-- 中间: 喜欢和分享按钮组 -->
       <view class="store-detail__actions-group">
         <!-- 收藏组 (width=56px, height=49px) -->
         <view class="store-detail__favorite-wrapper">
-          <!-- Like button (40x40px, x=0, y=9) -->
+          <!-- Like button (40x40px) -->
           <view class="store-detail__favorite-btn" bindtap="onToggleFavorite">
-            <text class="store-detail__favorite-icon">{{isFavorite ? '♥' : '♡'}}</text>
+            <image
+              class="store-detail__favorite-icon"
+              src="/images/store-detail/heart-icon.svg"
+              mode="aspectFit"
+            ></image>
           </view>
-          <!-- Badge (34x22px, x=22, y=0) -->
+          <!-- Badge (34x22px) -->
           <view class="store-detail__favorite-badge">
             <text class="store-detail__favorite-count">{{favoriteCount}}</text>
           </view>
         </view>
 
-        <!-- WeChat button (87x32px, x=128, y=9) -->
-        <view class="store-detail__wechat-btn" bindtap="onOpenWechat">
-          <view class="store-detail__wechat-bg"></view>
-          <view class="store-detail__wechat-icon"></view>
+        <!-- Share button (40x40px) -->
+        <view class="store-detail__share-btn" bindtap="onShare">
+          <image class="store-detail__share-icon" src="/images/store-detail/share-btn.svg" mode="aspectFit"></image>
         </view>
       </view>
+
+      <!-- 右侧占位,保持平衡 -->
+      <view class="store-detail__placeholder"></view>
     </view>
 
     <!-- 标签导航栏 - 使用 TDesign Tabs 组件 -->

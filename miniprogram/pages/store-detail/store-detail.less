@@ -6,82 +6,7 @@
   min-height: 100vh;
   background: #f7f9fb;
   position: relative;
-  padding-bottom: 162rpx; // 81px
-
-  // ==================== 状态栏 ====================
-  // y=0, height=44.32px (88.64rpx ≈ 88rpx)
-  &__status-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 88rpx;
-    z-index: 1000;
-  }
-
-  &__status-bar-bg {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: #ffffff;
-  }
-
-  &__status-content {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 42rpx; // 21px
-  }
-
-  // Time: Poppins 600, 15px (30rpx), letter-spacing: -2%
-  &__status-time {
-    font-family: Poppins, sans-serif;
-    font-weight: 600;
-    font-size: 30rpx;
-    line-height: 1.5em;
-    letter-spacing: -0.02em;
-    color: #000000;
-  }
-
-  &__status-icons {
-    display: flex;
-    align-items: center;
-    gap: 12rpx; // 6px
-  }
-
-  // 状态图标 CSS 绘制
-  &__status-cellular,
-  &__status-wifi,
-  &__status-battery {
-    width: 34rpx; // 17px
-    height: 22rpx; // 11px
-    position: relative;
-  }
-
-  &__status-battery {
-    width: 49rpx; // 24.33px
-    height: 23rpx; // 11.33px
-    border: 2rpx solid #000000;
-    border-radius: 4rpx;
-    background: #000000;
-
-    &::after {
-      content: '';
-      position: absolute;
-      right: -3rpx;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 3rpx;
-      height: 8rpx;
-      background: #000000;
-      border-radius: 0 2rpx 2rpx 0;
-    }
-  }
+  padding-bottom: 200rpx;
 
   // ==================== Header ====================
   // y=45px (90rpx)
@@ -90,44 +15,53 @@
     top: 88rpx;
     left: 0;
     width: 100%;
-    background: #ffffff;
+    // background: #ffffff;
     z-index: 999;
   }
-  
-  // padding=10px 0px (20rpx 0)
+
+  // Header actions: 返回按钮在左, 喜欢+分享在中间, 右侧占位
   &__header-actions {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; // 左中右布局
     align-items: center;
     padding: 20rpx 0;
-    margin: 0 32rpx; // 添加左右边距以匹配返回按钮位置
+    margin: 0 32rpx;
   }
 
-  // Go back button: 32x32px (64rpx), padding=8px (16rpx)
+  // Go back button: 32x32px (64rpx)
+  // SVG已包含完整按钮样式(Background: rgba(255,255,255,0.8), Border-radius: 9999px)
   &__back-btn {
-    width: 64rpx;
-    height: 64rpx;
+    width: 64rpx; // 32px
+    height: 64rpx; // 32px
     display: flex;
+    // padding: 10rpx;
     justify-content: center;
     align-items: center;
-    padding: 16rpx;
-    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.80);
+    border-radius: 100rpx;
   }
 
-  // 返回箭头图标: 24x24px (48rpx) - 占位图标
+  // 返回按钮SVG: 32x32px (64rpx)
   &__back-icon {
-    width: 48rpx;
-    height: 48rpx;
+    width: 32rpx;
+    height: 32rpx;
   }
 
-  // Actions group: width=215px (430rpx), height=49px (98rpx)
+  // 右侧占位元素, 与返回按钮宽度相同,保持中间按钮组居中
+  &__placeholder {
+    width: 64rpx; // 32px, 与返回按钮同宽
+    height: 64rpx;
+  }
+
+  // Actions group: 只有收藏和分享两个按钮
   &__actions-group {
-    width: 430rpx;
-    height: 98rpx;
+    width: 256rpx; // 56px(收藏) + 16px(间距) + 40px(分享) = 112px = 224rpx, 留一些余量
+    height: 98rpx; // 49px
     position: relative;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: flex-start;
+    gap: 32rpx; // 16px 间距
   }
 
   // 收藏组: width=56px (112rpx), height=49px (98rpx)
@@ -135,7 +69,7 @@
     width: 112rpx;
     height: 98rpx;
     position: relative;
-    margin-right: 144rpx; // 留出微信按钮的空间 (128 + 16)
+    flex-shrink: 0; // 防止压缩
   }
 
   // Like button: 40x40px (80rpx), x=0, y=9 (18rpx)
@@ -145,19 +79,21 @@
     top: 18rpx;
     width: 80rpx;
     height: 80rpx;
-    background: rgba(255, 255, 255, 0.8);
-    border: 1rpx solid #e9e9e9;
-    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.8); // 白色半透明
+    border-radius: 9999rpx; // 圆角极大
     display: flex;
     justify-content: center;
     align-items: center;
+    // 阴影: 0px 2px 4px -2px rgba(0,0,0,0.1), 0px 4px 6px -1px rgba(0,0,0,0.1)
+    box-shadow:
+      0px 4rpx 8rpx -4rpx rgba(0, 0, 0, 0.1),
+      0px 8rpx 12rpx -2rpx rgba(0, 0, 0, 0.1);
   }
 
-  // Font Awesome 5 Free, 20px (40rpx)
+  // Font Awesome 5 Free, 20px (40rpx), #1F2937
   &__favorite-icon {
-    font-size: 40rpx;
-    line-height: 1.4em;
-    color: #1f2937;
+    width: 40rpx; // 20px
+    height: 40rpx; // 20px
   }
 
   // Badge: 34x22px (68rpx x 44rpx), x=22 (44rpx), y=0
@@ -168,7 +104,7 @@
     min-width: 68rpx;
     height: 44rpx;
     background: #ffffff;
-    border: 1rpx solid #cccccc;
+    border: 2rpx solid #cccccc; // 1px = 2rpx
     border-radius: 100rpx;
     display: flex;
     align-items: center;
@@ -176,7 +112,7 @@
     padding: 0 12rpx;
   }
 
-  // Poppins 600, 12px (24rpx)
+  // Poppins 600, 12px (24rpx), #000000
   &__favorite-count {
     font-family: Poppins, sans-serif;
     font-weight: 600;
@@ -185,15 +121,28 @@
     color: #000000;
   }
 
-  // WeChat button: 87x32px (174rpx x 64rpx), x=128 (256rpx), y=9 (18rpx)
-  &__wechat-btn {
-    position: absolute;
-    right: 0;
-    top: 18rpx;
-    width: 174rpx;
-    height: 64rpx;
-    position: relative;
+  // Share button: 40x40px (80rpx)
+  // Background: rgba(255, 255, 255, 0.8)
+  // Border-radius: 9999px
+  // Shadow: 0px 2px 4px -2px rgba(0,0,0,0.1), 0px 4px 6px -1px rgba(0,0,0,0.1)
+  &__share-btn {
+    width: 80rpx; // 40px
+    height: 80rpx; // 40px
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 9999rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 4rpx 8rpx -4rpx rgba(0, 0, 0, 0.1), 0px 8rpx 12rpx -2rpx rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
   }
+
+  // Share icon: 20x20px (40rpx), #1F2937
+  &__share-icon {
+    width: 40rpx; // 20px
+    height: 40rpx; // 20px
+  }
+
 
   // TDesign Tabs 组件样式自定义
   &__tabs {
