@@ -4,7 +4,7 @@ Page({
     // 房源信息
     roomType: '男生四人位',
     roomInfo: '整套88㎡ | 1居1床1卫1厅 | 宜住2人',
-    roomImage: '/images/order-form/room-thumbnail.jpg',
+    roomImage: '/assets/figma/order-form/room-thumbnail.png',
 
     // 套餐信息
     packages: [
