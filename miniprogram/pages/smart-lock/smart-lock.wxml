@@ -2,11 +2,11 @@
   <!-- 状态栏 -->
   <view class="status-bar" style="height: {{statusBarHeight}}px;"></view>
 
+  <!-- 渐变背景 -->
+  <view class="header-gradient"></view>
+
   <!-- 头部 -->
   <view class="header">
-    <!-- 渐变背景 -->
-    <view class="header-gradient"></view>
-
     <!-- 返回按钮 -->
     <view class="back-button" bindtap="onBack">
       <image class="back-icon" src="/assets/figma/smart-lock/icon-back.svg" mode="aspectFit" />
@@ -18,10 +18,10 @@
     </view>
 
     <!-- 设置按钮 -->
-    <view class="settings-button" bindtap="onSettings">
+    <!-- <view class="settings-button" bindtap="onSettings">
       <image class="settings-icon" src="/assets/figma/smart-lock/icon-gear-settings.svg" mode="aspectFit" />
       <view wx:if="{{hasNotification}}" class="notification-badge"></view>
-    </view>
+    </view> -->
   </view>
 
   <!-- 中间开锁/关锁按钮 -->

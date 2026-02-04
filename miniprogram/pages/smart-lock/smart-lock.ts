@@ -50,11 +50,11 @@ Page({
         type: 'light',
       })
 
-      wx.showToast({
-        title: this.data.isLocked ? '已关锁 🔒' : '已开锁 🔓',
-        icon: 'success',
-        duration: 1500,
-      })
+      // wx.showToast({
+      //   title: this.data.isLocked ? '已关锁 🔒' : '已开锁 🔓',
+      //   icon: 'success',
+      //   duration: 1500,
+      // })
 
       // 动画结束
       setTimeout(() => {

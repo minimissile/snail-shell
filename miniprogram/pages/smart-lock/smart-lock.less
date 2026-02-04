@@ -8,30 +8,31 @@
   .status-bar {
     width: 100%;
     background-color: transparent;
+    // background: #000;
+  }
+
+  // 渐变背景
+  .header-gradient {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 500rpx;
+    background: linear-gradient(180deg, rgba(255, 229, 212, 1) 3%, rgba(255, 255, 255, 0) 81%);
+    z-index: 0;
   }
 
   // 头部
   .header {
     width: 100%;
-    height: 176rpx;
+    height: 106rpx;
     position: relative;
-
-    // 渐变背景
-    .header-gradient {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 182rpx;
-      background: linear-gradient(211deg, rgba(255, 229, 212, 1) 3%, rgba(255, 255, 255, 0) 81%);
-      z-index: 0;
-    }
 
     // 返回按钮
     .back-button {
       position: absolute;
       left: 40rpx;
-      top: 80rpx;
+      top: 10rpx;
       width: 64rpx;
       height: 64rpx;
       border-radius: 50%;
@@ -56,7 +57,7 @@
     .header-title {
       position: absolute;
       left: 50%;
-      top: 84rpx;
+      top: 14rpx;
       transform: translateX(-50%);
       z-index: 2;
 
