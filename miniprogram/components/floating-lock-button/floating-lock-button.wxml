@@ -1,8 +1,6 @@
 <movable-area class="floating-button-area">
   <movable-view
     class="floating-button"
-    x="{{x}}"
-    y="{{y}}"
     direction="all"
     inertia
     out-of-bounds

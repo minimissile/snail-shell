@@ -147,7 +147,7 @@ Page({
     }
     if (key === '门店详情') {
       wx.navigateTo({
-        url: '/pages/store-detail/store-detail',
+        url: '/pages/nearby-stores/nearby-stores',
         fail: () => {
           wx.showToast({ title: '暂无法打开门店详情', icon: 'none' })
         },

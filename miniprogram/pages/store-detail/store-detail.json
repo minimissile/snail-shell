@@ -5,6 +5,8 @@
   "usingComponents": {
     "t-tabs": "tdesign-miniprogram/tabs/tabs",
     "t-tab-panel": "tdesign-miniprogram/tab-panel/tab-panel",
+    "overview-tab": "/components/overview-tab/overview-tab",
+    "listing-tab": "/components/listing-tab/listing-tab",
     "feature-tab": "./components/feature-tab/feature-tab",
     "facility-tab": "./components/facility-tab/facility-tab",
     "landlord-tab": "./components/landlord-tab/landlord-tab",

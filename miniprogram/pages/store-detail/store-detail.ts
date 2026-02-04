@@ -2,7 +2,15 @@
 Page({
   data: {
     // 当前激活的标签页
-    activeTab: 'cost' as 'overview' | 'listing' | 'review' | 'feature' | 'facility' | 'landlord' | 'process' | 'cost',
+    activeTab: 'overview' as
+      | 'overview'
+      | 'listing'
+      | 'review'
+      | 'feature'
+      | 'facility'
+      | 'landlord'
+      | 'process'
+      | 'cost',
 
     // 标签页列表
     tabs: [
@@ -15,6 +23,12 @@ Page({
       { id: 'process', name: '体验流程' },
       { id: 'cost', name: '费用须知' },
     ],
+
+    // section位置信息
+    sectionPositions: [] as Array<{ id: string; top: number; bottom: number }>,
+
+    // 是否正在滚动到指定位置(防止滚动时触发tab切换)
+    isScrollingToSection: false,
 
     // 收藏相关
     isFavorite: false,
@@ -52,6 +66,44 @@ Page({
 
   onLoad() {
     console.log('门店详情页加载')
+      
+    // 计算各section位置
+    setTimeout(() => {
+      this.calculateSectionPositions()
+    }, 500)
+  },
+
+  onReady() {
+    // 监听页面滚动
+    this.setupScrollListener()
+  },
+
+  // 计算各section的位置
+  calculateSectionPositions() {
+    const query = wx.createSelectorQuery()
+    const sectionIds = ['overview', 'listing', 'review', 'feature', 'facility', 'landlord', 'process', 'cost']
+
+    sectionIds.forEach((id) => {
+      query.select(`#${id}-section`).boundingClientRect()
+    })
+
+    query.exec((res) => {
+      const positions = res
+        .filter((rect: any) => rect)
+        .map((rect: any, index: number) => ({
+          id: sectionIds[index],
+          top: rect.top,
+          bottom: rect.bottom,
+        }))
+
+      this.setData({ sectionPositions: positions })
+      console.log('Section位置:', positions)
+    })
+  },
+
+  // 设置滚动监听
+  setupScrollListener() {
+    // 小程序使用onPageScroll监听页面滚动
   },
 
   // 返回上一页
@@ -74,19 +126,58 @@ Page({
       activeTab: value,
     })
 
-    // TODO: 根据标签页加载对应内容
-    console.log('切换到标签页:', value)
+    // 滚动到对应section
+    this.scrollToSection(value)
   },
 
-  // 旧的切换方法(保留兼容)
-  onSwitchTab(e: any) {
-    const { tab } = e.currentTarget.dataset
-    this.setData({
-      activeTab: tab,
-    })
+  // 滚动到指定section
+  scrollToSection(sectionId: string) {
+    this.setData({ isScrollingToSection: true })
 
-    // TODO: 根据标签页加载对应内容
-    console.log('切换到标签页:', tab)
+    wx.pageScrollTo({
+      selector: `#${sectionId}-section`,
+      duration: 300,
+      success: () => {
+        setTimeout(() => {
+          this.setData({ isScrollingToSection: false })
+        }, 350)
+      },
+      fail: () => {
+        this.setData({ isScrollingToSection: false })
+      },
+    })
+  },
+
+  // 监听页面滚动
+  onPageScroll(e: any) {
+    // 如果正在执行点击滚动,不更新tab
+    if (this.data.isScrollingToSection) return
+    
+    const scrollTop = e.scrollTop
+    const { sectionPositions } = this.data
+    
+    // 找到当前可视区域的section
+    for (let i = 0; i < sectionPositions.length; i++) {
+      const section = sectionPositions[i]
+      const nextSection = sectionPositions[i + 1]
+
+      // 如果是最后一个section或者scrollTop在当前section范围内
+      if (!nextSection || scrollTop < nextSection.top - 100) {
+        const newTab = section.id as
+          | 'overview'
+          | 'listing'
+          | 'review'
+          | 'feature'
+          | 'facility'
+          | 'landlord'
+          | 'process'
+          | 'cost'
+        if (this.data.activeTab !== newTab) {
+          this.setData({ activeTab: newTab })
+        }
+        break
+      }
+    }
   },
 
   // 收藏/取消收藏
@@ -106,12 +197,89 @@ Page({
     })
   },
 
-  // 打开微信
+  // 微信按钮
   onOpenWechat() {
     wx.showToast({
-      title: '打开微信功能',
+      title: '微信功能',
       icon: 'none',
-      duration: 1500,
+    })
+  },
+
+  // 实拍看房
+  onVideoTour() {
+    wx.showToast({
+      title: '实拍看房',
+      icon: 'none',
+    })
+  },
+
+  // 查看地图
+  onViewMap() {
+    wx.showToast({
+      title: '查看地图',
+      icon: 'none',
+    })
+  },
+
+  // 查看评价
+  onViewReviews() {
+    wx.navigateTo({
+      url: '/pages/reviews/reviews',
+      fail: () => {
+        wx.showToast({ title: '评价页面开发中', icon: 'none' })
+      },
+    })
+  },
+
+  // 预订房间
+  onBookRoom() {
+    wx.showModal({
+      title: '确认预订',
+      content: `房型: 男生四人位\n价格: ¥468`,
+      confirmText: '确认预订',
+      success: (res) => {
+        if (res.confirm) {
+          wx.showToast({ title: '预订成功', icon: 'success' })
+        }
+      },
+    })
+  },
+
+  // 团购验券
+  onCouponVerify() {
+    wx.navigateTo({
+      url: '/pages/coupon-verify/coupon-verify',
+      fail: () => {
+        wx.showToast({ title: '团购验券页面开发中', icon: 'none' })
+      },
+    })
+  },
+
+  // 门店储值
+  onBalance() {
+    wx.navigateTo({
+      url: '/pages/balance/balance',
+      fail: () => {
+        wx.showToast({ title: '储值页面开发中', icon: 'none' })
+      },
+    })
+  },
+
+  // Wi-Fi连接
+  onWifi() {
+    wx.showToast({
+      title: 'Wi-Fi连接功能',
+      icon: 'none',
+    })
+  },
+
+  // 查看优惠券
+  onViewCoupons() {
+    wx.navigateTo({
+      url: '/pages/coupons/coupons',
+      fail: () => {
+        wx.showToast({ title: '优惠券页面开发中', icon: 'none' })
+      },
     })
   },
 

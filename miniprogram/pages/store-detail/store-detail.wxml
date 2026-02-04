@@ -18,11 +18,7 @@
     <view class="store-detail__header-actions">
       <!-- Go back button (32x32px) -->
       <view class="store-detail__back-btn" bindtap="onGoBack">
-        <image
-          class="store-detail__back-icon"
-          src="/images/store-detail/angle-right-small.svg"
-          mode="aspectFit"
-        ></image>
+        <image class="store-detail__back-icon" src="/images/store-detail/angle-right-small.svg" mode="aspectFit"></image>
       </view>
 
       <!-- Right actions group (width=215px) -->
@@ -53,56 +49,84 @@
     </t-tabs>
   </view>
 
-  <!-- Container (y=157px, padding=16px) -->
+  <!-- Container (y=157px, padding=16px) - 所有内容从上到下排列 -->
   <view class="store-detail__container">
-    <!-- Feature Tab - 特点标签页 -->
-    <feature-tab wx:if="{{activeTab === 'feature'}}" bind:expand="onExpandFeature" />
+    <!-- Section 1: 概览 -->
+    <view id="overview-section" class="store-detail__section" data-tab="overview">
+      <overview-tab bind:videoTour="onVideoTour" bind:viewMap="onViewMap" bind:viewReviews="onViewReviews" />
+    </view>
 
-    <!-- Facility Tab - 设施标签页 -->
-    <facility-tab wx:if="{{activeTab === 'facility'}}" bind:viewAll="onViewAllFacilities" />
+    <!-- Section 2: 房源 -->
+    <view id="listing-section" class="store-detail__section" data-tab="listing">
+      <listing-tab
+        bind:bookRoom="onBookRoom"
+        bind:couponVerify="onCouponVerify"
+        bind:balance="onBalance"
+        bind:wifi="onWifi"
+        bind:selectDate="onSelectDate"
+        bind:viewCoupons="onViewCoupons"
+      />
+    </view>
 
-    <!-- Landlord Tab - 房东介绍标签页 -->
-    <landlord-tab
-      wx:if="{{activeTab === 'landlord'}}"
-      landlordData="{{landlordData}}"
-      bind:viewPage="onViewLandlordPage"
-      bind:contact="onContactLandlord"
-    />
+    <!-- Section 3: 点评 -->
+    <view id="review-section" class="store-detail__section" data-tab="review">
+      <review-tab bind:viewAll="onViewAllReviews" />
+    </view>
 
-    <!-- Process Simple Card - 体验流程简版卡片 (房东介绍页下方显示) -->
-    <view class="store-detail__process-simple-card" wx:if="{{activeTab === 'landlord'}}">
-      <view class="store-detail__process-simple-header">
-        <text class="store-detail__process-simple-title">体验流程</text>
-        <view class="store-detail__process-simple-link" bindtap="onViewAllProcess">
-          <text class="store-detail__process-simple-link-text">全部流程 </text>
-          <image
-            class="store-detail__arrow-right-icon"
-            src="/images/store-detail/angle-right-small.svg"
-            mode="aspectFit"
-          ></image>
+    <!-- Section 4: 特点 -->
+    <view id="feature-section" class="store-detail__section" data-tab="feature">
+      <feature-tab bind:expand="onExpandFeature" />
+    </view>
+
+    <!-- Section 5: 设施 -->
+    <view id="facility-section" class="store-detail__section" data-tab="facility">
+      <facility-tab bind:viewAll="onViewAllFacilities" />
+    </view>
+
+    <!-- Section 6: 房东 -->
+    <view id="landlord-section" class="store-detail__section" data-tab="landlord">
+      <landlord-tab
+        landlordData="{{landlordData}}"
+        bind:viewPage="onViewLandlordPage"
+        bind:contact="onContactLandlord"
+      />
+
+      <!-- 体验流程简版卡片 (房东介绍下方) -->
+      <view class="store-detail__process-simple-card">
+        <view class="store-detail__process-simple-header">
+          <text class="store-detail__process-simple-title">体验流程</text>
+          <view class="store-detail__process-simple-link" bindtap="onViewAllProcess">
+            <text class="store-detail__process-simple-link-text">全部流程 </text>
+            <image
+              class="store-detail__arrow-right-icon"
+              src="/images/store-detail/angle-right-small.svg"
+              mode="aspectFit"
+            ></image>
+          </view>
         </view>
-      </view>
-      <view class="store-detail__process-simple-tip">
-        <view class="store-detail__info-icon-wrapper">
-          <text class="store-detail__info-icon-text"></text>
+        <view class="store-detail__process-simple-tip">
+          <view class="store-detail__info-icon-wrapper">
+            <text class="store-detail__info-icon-text"></text>
+          </view>
+          <text class="store-detail__process-simple-tip-text">以下规则由房东制定,请仔细阅读并遵守</text>
         </view>
-        <text class="store-detail__process-simple-tip-text">以下规则由房东制定,请仔细阅读并遵守</text>
       </view>
     </view>
 
-    <!-- Process Tab - 体验流程标签页 -->
-    <process-tab wx:if="{{activeTab === 'process'}}" bind:viewAll="onViewAllProcess" />
+    <!-- Section 7: 体验流程 -->
+    <view id="process-section" class="store-detail__section" data-tab="process">
+      <process-tab bind:viewAll="onViewAllProcess" />
+    </view>
 
-    <!-- Cost Tab - 费用须知标签页 -->
-    <cost-tab wx:if="{{activeTab === 'cost'}}" costRules="{{costRules}}" bind:viewAll="onViewAllRules" />
+    <!-- Section 8: 费用须知 -->
+    <view id="cost-section" class="store-detail__section" data-tab="cost">
+      <cost-tab costRules="{{costRules}}" bind:viewAll="onViewAllRules" />
 
-    <!-- Review Tab - 点评标签页 -->
-    <review-tab wx:if="{{activeTab === 'review'}}" bind:viewAll="onViewAllReviews" />
-
-    <!-- 温馨提示 - 仅在费用须知Tab中显示 -->
-    <view wx:if="{{activeTab === 'cost'}}" class="store-detail__tip-section">
-      <view class="store-detail__tip-container">
-        <text class="store-detail__tip-text">温馨提示：民宿不能聚会吵闹，不能做饭。因深圳天气炎热...</text>
+      <!-- 温馨提示 -->
+      <view class="store-detail__tip-section">
+        <view class="store-detail__tip-container">
+          <text class="store-detail__tip-text">温馨提示：民宿不能聚会吵闹，不能做饭。因深圳天气炎热...</text>
+        </view>
       </view>
     </view>
   </view>

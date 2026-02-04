@@ -1,0 +1,111 @@
+<view class="overview-tab">
+  <!-- 封面轮播图 (y=0, height=320px) -->
+  <view class="overview-tab__cover">
+    <swiper class="overview-tab__swiper" indicator-dots="{{true}}" autoplay circular>
+      <swiper-item>
+        <image class="overview-tab__cover-image" src="/images/store-detail/cover-image.png" mode="aspectFill"></image>
+      </swiper-item>
+    </swiper>
+
+    <!-- 实拍看房按钮 (x=247, y=176, 112x80px) -->
+    <view class="overview-tab__video-tour" bindtap="onVideoTour">
+      <image
+        class="overview-tab__video-thumb"
+        src="/images/store-detail/video-tour-thumb.png"
+        mode="aspectFill"
+      ></image>
+      <view class="overview-tab__video-overlay">
+        <text class="overview-tab__play-icon"></text>
+        <text class="overview-tab__video-text">实拍看房</text>
+      </view>
+      <view class="overview-tab__expand-btn">
+        <text class="overview-tab__expand-icon"></text>
+      </view>
+    </view>
+
+    <!-- 亮点标签条 (x=16, y=220, 217x36px) -->
+    <view class="overview-tab__highlights">
+      <view class="overview-tab__highlight-active"></view>
+      <view class="overview-tab__highlight-items">
+        <text class="overview-tab__highlight-text overview-tab__highlight-text--dim">封面</text>
+        <text class="overview-tab__highlight-text overview-tab__highlight-text--active">WOW亮点!</text>
+        <text class="overview-tab__highlight-text overview-tab__highlight-text--dim">卧室</text>
+        <text class="overview-tab__highlight-text overview-tab__highlight-text--dim">厨房｜</text>
+        <view class="overview-tab__highlight-more">
+          <text class="overview-tab__highlight-text overview-tab__highlight-text--dim">相册</text>
+          <image
+            class="overview-tab__arrow-icon"
+            src="/images/store-detail/icon-angle-right.svg"
+            mode="aspectFit"
+          ></image>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 房屋基本信息卡片 (x=16, y=288, 343x302px) -->
+  <view class="overview-tab__info-card">
+    <!-- 标题和分享 -->
+    <view class="overview-tab__info-header">
+      <text class="overview-tab__title">蜗壳精品店/深圳北大五居 家庭出游/麻将投影桌游/红山6979/过香港福田会展/山</text>
+      <text class="overview-tab__share-icon"></text>
+    </view>
+
+    <!-- 地址区域 (x=138, y=218, 197x68px) -->
+    <view class="overview-tab__address-section" bindtap="onViewMap">
+      <image class="overview-tab__map-bg" src="/images/store-detail/map-thumbnail.png" mode="aspectFill"></image>
+      <view class="overview-tab__address-content">
+        <text class="overview-tab__address-line">距深圳北站-深圳北站-A1出站口(东1号出站口)直线1.9公里</text>
+        <text class="overview-tab__address-line">龙华区, 深圳龙华区龙光玖钻北区-1A...</text>
+      </view>
+      <view class="overview-tab__map-link">
+        <text class="overview-tab__map-text">地图</text>
+        <image
+          class="overview-tab__map-icon"
+          src="/images/store-detail/icon-angle-right-gray.svg"
+          mode="aspectFit"
+        ></image>
+      </view>
+    </view>
+
+    <!-- 蜗壳精选标签 (x=16, y=82, 311x44px) -->
+    <view class="overview-tab__quality-badge">
+      <view class="overview-tab__quality-tag">
+        <text>蜗壳精选</text>
+      </view>
+      <text class="overview-tab__quality-text">实拍视频有保障, 入住不满意必赔</text>
+      <image
+        class="overview-tab__quality-arrow"
+        src="/images/store-detail/icon-angle-right-small.svg"
+        mode="aspectFit"
+      ></image>
+    </view>
+
+    <!-- 特色标签 (x=16, y=142, 311x60px) -->
+    <view class="overview-tab__feature-tags">
+      <view class="overview-tab__feature-tag">专业保洁</view>
+      <view class="overview-tab__feature-tag">网红INS风</view>
+      <view class="overview-tab__feature-tag">实拍看房</view>
+      <view class="overview-tab__feature-tag">免费瓶装水</view>
+      <view class="overview-tab__feature-tag">干湿分离</view>
+      <view class="overview-tab__feature-tag">5星卫生分</view>
+    </view>
+
+    <!-- 评分卡片 (x=16, y=218, 114x68px) -->
+    <view class="overview-tab__rating-card" bindtap="onViewReviews">
+      <view class="overview-tab__rating-header">
+        <image class="overview-tab__star-icon" src="/images/store-detail/icon-star.svg" mode="aspectFit"></image>
+        <text class="overview-tab__rating-score">5.0超棒</text>
+        <text class="overview-tab__rating-count">20条 </text>
+        <image
+          class="overview-tab__rating-arrow"
+          src="/images/store-detail/icon-angle-right-small.svg"
+          mode="aspectFit"
+        ></image>
+      </view>
+      <view class="overview-tab__rating-comment">
+        <text>"室内干净整洁"</text>
+      </view>
+    </view>
+  </view>
+</view>
