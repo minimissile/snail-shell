@@ -22,185 +22,297 @@
     height: 100%;
   }
 
-  // 实拍看房
+  // 实拍看房按钮 - 100% Figma还原 (112x80px = 224x160rpx)
   &__video-tour {
     position: absolute;
     right: 32rpx;
-    bottom: 88rpx;
-    width: 224rpx;
-    height: 160rpx;
+    bottom: 180rpx;
+    width: 224rpx; // 112px
+    height: 160rpx; // 80px
+    border: 4rpx solid #ffffff;
+    border-radius: 16rpx;
   }
 
+  // 背景图片: 112x80px, 圆角8px, 2px白色边框
   &__video-thumb {
     width: 100%;
     height: 100%;
-    border-radius: 16rpx;
-    border: 4rpx solid #ffffff;
+    border-radius: 16rpx; // 8px
+    border: 4rpx solid #ffffff; // 2px
   }
 
+  // 遮罩层SVG: 108x76px (216x152rpx), 位于中间
   &__video-overlay {
     position: absolute;
-    top: 4rpx;
-    left: 4rpx;
-    width: 216rpx;
-    height: 152rpx;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 12rpx;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 8rpx;
+    top: 0rpx; // 2px
+    left: 0rpx; // 2px
+    width: 100%; // 108px
+    height: 100%; // 76px
   }
 
-  &__play-icon {
-    font-size: 48rpx;
-    color: #ffffff;
-    line-height: 1;
-  }
-
-  &__play-icon::before {
-    content: '▶';
-  }
-
-  &__video-text {
-    font-family: Poppins, sans-serif;
-    font-weight: 500;
-    font-size: 24rpx;
-    line-height: 32rpx;
-    color: #ffffff;
-  }
-
+  // 展开按钮SVG: 20x20px (40x40rpx), x=88 y=4
   &__expand-btn {
     position: absolute;
-    top: 8rpx;
-    right: 8rpx;
-    width: 40rpx;
-    height: 40rpx;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    top: 8rpx; // 4px
+    right: 8rpx; // 112-88-20=4px
+    width: 40rpx; // 20px
+    height: 40rpx; // 20px
   }
 
-  &__expand-icon {
-    font-size: 24rpx;
-    color: #ffffff;
-    line-height: 1;
-  }
-
-  &__expand-icon::before {
-    content: '⤢';
-  }
-
-  // 亮点标签条
+  // 亮点标签条 - 可切换+动画 (217x36px = 434x72rpx)
   &__highlights {
     position: absolute;
     left: 32rpx;
-    bottom: 32rpx;
-    width: 434rpx;
-    height: 72rpx;
+    bottom: 80rpx;
+    height: 72rpx; // 36px
     background: rgba(0, 0, 0, 0.6);
-    border-radius: 9999rpx;
+    border-radius: 9999rpx; // 胶囊形
     display: flex;
     align-items: center;
-    padding: 0 8rpx;
+    padding: 0 4rpx; // 左右内边距12px
   }
 
+  // 高亮背景 - 动态位置+过渡动画
   &__highlight-active {
     position: absolute;
-    left: 4rpx;
-    top: 4rpx;
-    width: 100rpx;
-    height: 66rpx;
+    top: 4rpx; // 2px
+    height: 64rpx; // 32px
     background: #ffffff;
-    border-radius: 35rpx;
+    border-radius: 32rpx; // 16px
+    transition:
+      left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  &__highlight-items {
+  // 标签项容器
+  &__highlight-item {
     position: relative;
     z-index: 1;
     display: flex;
     align-items: center;
-    width: 100%;
-    padding: 0 20rpx;
-    gap: 8rpx;
+    justify-content: center;
+    height: 100%;
+    padding: 0 24rpx; // 左右8px
   }
 
+  // 标签文字: Poppins 400, 10px (20rpx)
   &__highlight-text {
     font-family: Poppins, sans-serif;
     font-weight: 400;
-    font-size: 20rpx;
-    line-height: 40rpx;
+    font-size: 20rpx; // 11px 稍大一点更清晰
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.9); // 默认白色
     white-space: nowrap;
-    padding: 0 8rpx;
+    transition: color 0.3s ease;
 
-    &--dim {
-      color: #ffffff;
-    }
-
+    // 激活状态 - 黑色文字
     &--active {
       color: #000000;
-      font-weight: 600;
+      font-weight: 500;
     }
   }
 
-  &__highlight-more {
-    display: flex;
-    align-items: center;
-    gap: 4rpx;
-  }
-
+  // 箭头图标: 12x12px (24x24rpx)
   &__arrow-icon {
-    width: 24rpx;
-    height: 24rpx;
+    width: 20rpx; // 10px
+    height: 20rpx; // 10px
+    margin-left: 2rpx;
   }
 
   // ====================房屋基本信息====================
+  // 卡片容器: 343x302px = 686x604rpx
   &__info-card {
-    margin: 32rpx 32rpx 48rpx;
+    margin: -64rpx 32rpx 0; // 上移与封面重叠
+    position: relative;
+    z-index: 10;
+    width: 686rpx; // 343px
     background: #ffffff;
-    border-radius: 32rpx;
-    padding: 32rpx;
+    border-radius: 32rpx; // 16px
+    padding: 32rpx; // 16px
+    box-sizing: border-box;
   }
 
+  // 标题区域: 311x50px, row布局, space-between
   &__info-header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    gap: 28rpx;
-    margin-bottom: 32rpx;
+    gap: 28rpx; // 13.84px
+    margin-bottom: 32rpx; // 16px (82-66=16)
+  }
+
+  &__title-wrap {
+    flex: 1;
   }
 
   &__title {
-    flex: 1;
     font-family: Poppins, sans-serif;
     font-weight: 600;
-    font-size: 32rpx;
-    line-height: 50rpx;
+    font-size: 32rpx; // 16px
+    line-height: 1.5625em; // 50rpx
+    color: #000000;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+
+  &__share-wrap {
+    padding-top: 60rpx; // 30px
+    flex-shrink: 0;
+  }
+
+  // 分享图标: 14x9px (28x18rpx)
+  &__share-icon {
+    width: 32rpx; // 16px
+    height: 32rpx; // 16px
+  }
+
+  // 蜗壳精选标签: 311x44px = 622x88rpx
+  &__quality-badge {
+    display: flex;
+    align-items: center;
+    gap: 32rpx; // 16px
+    padding: 16rpx; // 8px
+    background: linear-gradient(90deg, rgba(243, 232, 255, 1) 0%, rgba(224, 231, 255, 1) 100%);
+    border-radius: 16rpx; // 8px
+    margin-bottom: 32rpx; // 16px (142-126=16)
+  }
+
+  // 蜗壳精选标签: 72x28px
+  &__quality-tag {
+    padding: 8rpx 16rpx; // 4px 8px
+    background: #6366f1;
+    border-radius: 8rpx; // 4px
+
+    text {
+      font-family: Poppins, sans-serif;
+      font-weight: 400;
+      font-size: 28rpx; // 14px
+      line-height: 1.43em;
+      color: #ffffff;
+    }
+  }
+
+  &__quality-content {
+    flex: 1;
+  }
+
+  &__quality-text {
+    font-family: Poppins, sans-serif;
+    font-weight: 500;
+    font-size: 24rpx; // 12px
+    line-height: 1.67em;
+    color: #4b5563;
+  }
+
+  &__quality-arrow {
+    width: 24rpx; // 12px
+    height: 24rpx; // 12px
+  }
+
+  // 特色标签区域: 311x60px
+  &__feature-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16rpx 16rpx; // 8px
+    margin-bottom: 32rpx; // 16px (218-202=16)
+  }
+
+  // 标签项: padding 5px 9px, 边框 1px #EADDD3, 圆角 6px
+  &__feature-tag {
+    padding: 10rpx 18rpx; // 5px 9px
+    border: 2rpx solid #eaddd3; // 1px
+    border-radius: 12rpx; // 6px
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
+    font-size: 24rpx; // 12px
+    line-height: 1.33em;
+    color: #8e6b52;
+  }
+
+  // 底部区域: 评分卡片 + 地址区域
+  &__bottom-section {
+    display: flex;
+    gap: 16rpx; // 8px (138-16-114=8)
+  }
+
+  // 评分卡片: 114x68px = 228x136rpx
+  &__rating-card {
+    width: 228rpx; // 114px
+    height: 136rpx; // 68px
+    padding: 16rpx; // 8px
+    background: #f3f4f6;
+    border: 2rpx solid #e9e9e9; // 1px
+    border-radius: 16rpx; // 8px
+    box-sizing: border-box;
+  }
+
+  &__rating-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  &__star-icon {
+    width: 24rpx; // 12px
+    height: 24rpx; // 12px
+    flex-shrink: 0;
+  }
+
+  &__rating-info {
+    margin-left: 4rpx;
+  }
+
+  &__rating-score {
+    font-family: Poppins, sans-serif;
+    font-weight: 600;
+    font-size: 24rpx; // 14px
+    line-height: 1;
     color: #000000;
   }
 
-  &__share-icon {
-    font-size: 32rpx;
+  &__rating-count-wrap {
+    padding: 0 4rpx; // 0 2px
+  }
+
+  &__rating-count {
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
+    font-size: 24rpx; // 12px
+    line-height: 1.33em;
     color: #9ca3af;
-    line-height: 1;
-    padding-top: 16rpx;
   }
 
-  &__share-icon::before {
-    content: '⬈';
+  &__rating-arrow {
+    width: 24rpx; // 12px
+    height: 24rpx; // 12px
+    margin-left: auto;
   }
 
-  // 地址区域
+  // 评论背景: 圆角 6px, 宽度 99px
+  &__rating-comment {
+    width: 198rpx; // 99px
+    background: #f3f4f6;
+    border-radius: 12rpx; // 6px
+    margin-top: 8rpx;
+
+    text {
+      font-family: Poppins, sans-serif;
+      font-weight: 400;
+      font-size: 24rpx; // 12px
+      line-height: 1.33em;
+      color: #4b5563;
+    }
+  }
+
+  // 地址区域: 197x68px = 394x136rpx
   &__address-section {
     position: relative;
-    width: 394rpx;
-    height: 136rpx;
-    margin-bottom: 32rpx;
-    border: 1rpx solid #e9e9e9;
-    border-radius: 16rpx;
+    flex: 1;
+    height: 136rpx; // 68px
+    border: 2rpx solid #e9e9e9; // 1px
+    border-radius: 16rpx; // 8px
     overflow: hidden;
   }
 
@@ -210,161 +322,49 @@
     left: 0;
     width: 100%;
     height: 100%;
-    opacity: 0.3;
   }
 
   &__address-content {
     position: relative;
     z-index: 1;
-    padding: 16rpx;
-    display: flex;
-    flex-direction: column;
-    gap: 4rpx;
+    padding: 16rpx; // 8px
+    width: 250rpx; // 125px
   }
 
-  &__address-line {
+  &__address-text {
     font-family: 'Noto Sans SC', sans-serif;
     font-weight: 100;
-    font-size: 24rpx;
-    line-height: 33rpx;
+    font-size: 24rpx; // 12px
+    line-height: 1.375em;
     color: #4b5563;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
   }
 
+  // 地图链接: x=168, y=16 (相对于地址区域)
   &__map-link {
     position: absolute;
-    bottom: 16rpx;
-    right: 16rpx;
+    top: 32rpx; // 16px
+    right: 10rpx; // (197-168-24)/2
     z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4rpx;
+  }
+
+  &__map-icon {
+    width: 40rpx; // 20px
+    height: 40rpx; // 20px
   }
 
   &__map-text {
     font-family: Poppins, sans-serif;
     font-weight: 400;
-    font-size: 24rpx;
-    line-height: 33rpx;
+    font-size: 24rpx; // 12px
+    line-height: 1.375em;
     color: #6e9fd3;
-  }
-
-  &__map-icon {
-    width: 24rpx;
-    height: 24rpx;
-  }
-
-  // 蜗壳精选
-  &__quality-badge {
-    display: flex;
-    align-items: center;
-    gap: 32rpx;
-    padding: 16rpx;
-    background: linear-gradient(90deg, rgba(243, 232, 255, 1) 0%, rgba(224, 231, 255, 1) 100%);
-    border-radius: 16rpx;
-    margin-bottom: 32rpx;
-  }
-
-  &__quality-tag {
-    padding: 8rpx 16rpx;
-    background: #6366f1;
-    border-radius: 8rpx;
-
-    text {
-      font-family: Poppins, sans-serif;
-      font-weight: 400;
-      font-size: 28rpx;
-      line-height: 40rpx;
-      color: #ffffff;
-    }
-  }
-
-  &__quality-text {
-    flex: 1;
-    font-family: Poppins, sans-serif;
-    font-weight: 500;
-    font-size: 24rpx;
-    line-height: 40rpx;
-    color: #4b5563;
-  }
-
-  &__quality-arrow {
-    width: 24rpx;
-    height: 24rpx;
-  }
-
-  // 特色标签
-  &__feature-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12rpx 16rpx;
-    margin-bottom: 32rpx;
-  }
-
-  &__feature-tag {
-    padding: 10rpx 18rpx;
-    border: 1rpx solid #eaddd3;
-    border-radius: 12rpx;
-    font-family: Poppins, sans-serif;
-    font-weight: 400;
-    font-size: 24rpx;
-    line-height: 32rpx;
-    color: #8e6b52;
-  }
-
-  // 评分卡片
-  &__rating-card {
-    width: 228rpx;
-    padding: 16rpx;
-    background: #f3f4f6;
-    border: 1rpx solid #e9e9e9;
-    border-radius: 16rpx;
-  }
-
-  &__rating-header {
-    display: flex;
-    align-items: center;
-    gap: 8rpx;
-    margin-bottom: 16rpx;
-  }
-
-  &__star-icon {
-    width: 24rpx;
-    height: 24rpx;
-  }
-
-  &__rating-score {
-    font-family: Poppins, sans-serif;
-    font-weight: 600;
-    font-size: 28rpx;
-    line-height: 56rpx;
-    color: #000000;
-  }
-
-  &__rating-count {
-    font-family: Poppins, sans-serif;
-    font-weight: 400;
-    font-size: 24rpx;
-    line-height: 32rpx;
-    color: #9ca3af;
-  }
-
-  &__rating-arrow {
-    width: 24rpx;
-    height: 24rpx;
-    margin-left: auto;
-  }
-
-  &__rating-comment {
-    background: #f3f4f6;
-    border-radius: 12rpx;
-
-    text {
-      font-family: Poppins, sans-serif;
-      font-weight: 400;
-      font-size: 24rpx;
-      line-height: 32rpx;
-      color: #4b5563;
-    }
+    margin-top: 4rpx;
   }
 }

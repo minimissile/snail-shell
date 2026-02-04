@@ -169,22 +169,22 @@
     color: #ffffff;
   }
 
-  // ====================金刚区====================
+  // ====================金刚区 (343x126px = 686x252rpx)====================
   &__services {
     display: flex;
-    gap: 12rpx;
+    gap: 34rpx; // 17px (343-103*3)/2
     margin-bottom: 48rpx;
   }
 
+  // 卡片: 103x126px = 206x252rpx
   &__service-card {
     position: relative;
-    flex: 1;
-    height: 252rpx;
-    border-radius: 32rpx;
-    padding: 24rpx;
+    width: 206rpx; // 103px
+    height: 252rpx; // 126px
+    border-radius: 32rpx; // 16px
     overflow: hidden;
-    border: 1rpx solid #ffffff;
-    box-shadow: 0 8rpx 12rpx -2rpx rgba(0, 0, 0, 0.1);
+    border: 2rpx solid #ffffff; // 1px
+    box-shadow: 0 8rpx 12rpx -2rpx rgba(0, 0, 0, 0.1); // 0px 4px 6px -1px
 
     &--orange {
       background: linear-gradient(138deg, rgba(255, 246, 230, 1) 0%, rgba(255, 255, 255, 1) 98%);
@@ -199,87 +199,95 @@
     }
   }
 
+  // 标题: x=19, y=12, OPPOSans 400, 16px
   &__service-title {
-    position: relative;
+    position: absolute;
+    left: 38rpx; // 19px
+    top: 24rpx; // 12px
     z-index: 2;
     font-family: OPPOSans, sans-serif;
     font-weight: 400;
-    font-size: 32rpx;
-    line-height: 48rpx;
+    font-size: 32rpx; // 16px
+    line-height: 1.5em;
     color: #000000;
   }
 
+  // 描述: x=15, y=40, Poppins 500, 12px
   &__service-desc {
-    position: relative;
+    position: absolute;
+    left: 30rpx; // 15px
+    top: 80rpx; // 40px
     z-index: 2;
-    display: block;
-    margin-top: 8rpx;
     font-family: Poppins, sans-serif;
     font-weight: 500;
-    font-size: 24rpx;
-    line-height: 48rpx;
+    font-size: 24rpx; // 12px
+    line-height: 2em;
     color: #9ca3af;
   }
 
+  // 装饰圆形
   &__service-circle {
     position: absolute;
     border-radius: 50%;
 
+    // 圆形1: 54x54px, x=56, y=81 (从顶部)
     &--orange-1 {
-      width: 108rpx;
-      height: 108rpx;
+      width: 108rpx; // 54px
+      height: 108rpx; // 54px
       background: #fff7e1;
-      right: 56rpx;
-      bottom: 81rpx;
+      left: 112rpx; // 56px
+      top: 162rpx; // 81px
     }
 
+    // 圆形2: 33x33px, x=77, y=102 (从顶部)
     &--orange-2 {
-      width: 66rpx;
-      height: 66rpx;
+      width: 66rpx; // 33px
+      height: 66rpx; // 33px
       background: #fefcf1;
-      right: 77rpx;
-      bottom: 102rpx;
+      left: 154rpx; // 77px
+      top: 204rpx; // 102px
     }
 
     &--yellow-1 {
       width: 108rpx;
       height: 108rpx;
       background: #fffbd5;
-      right: 56rpx;
-      bottom: 81rpx;
+      left: 112rpx;
+      top: 162rpx;
     }
 
     &--yellow-2 {
       width: 66rpx;
       height: 66rpx;
       background: #fffde9;
-      right: 77rpx;
-      bottom: 102rpx;
+      left: 154rpx;
+      top: 204rpx;
     }
 
     &--blue-1 {
       width: 108rpx;
       height: 108rpx;
       background: #e5f9ff;
-      right: 56rpx;
-      bottom: 81rpx;
+      left: 112rpx;
+      top: 162rpx;
     }
 
     &--blue-2 {
       width: 66rpx;
       height: 66rpx;
       background: #f1fcff;
-      right: 77rpx;
-      bottom: 102rpx;
+      left: 154rpx;
+      top: 204rpx;
     }
   }
 
+  // 图标: x=16, y=62, 71x54px
   &__service-icon {
     position: absolute;
-    bottom: 32rpx;
-    right: 32rpx;
-    width: 142rpx;
-    height: 108rpx;
+    left: 32rpx; // 16px
+    top: 124rpx; // 62px
+    width: 142rpx; // 71px
+    height: 108rpx; // 54px
     z-index: 1;
   }
 
@@ -291,50 +299,52 @@
     margin-bottom: -32rpx;
   }
 
-  // ====================入住时间====================
+  // ====================入住时间 (319x24px = 638x48rpx)====================
   &__check-dates {
-    position: relative;
     display: flex;
     align-items: center;
-    gap: 102rpx;
-    margin: 0 24rpx 32rpx;
+    justify-content: space-between;
+    width: 638rpx; // 319px
+    height: 48rpx; // 24px
+    margin: 0 auto 32rpx;
   }
 
+  // 日期组: 118x24px, 水平排列
   &__date-group {
     display: flex;
-    flex-direction: column;
-    gap: 4rpx;
+    align-items: baseline;
+    gap: 12rpx; // 6px
   }
 
+  // 日期值: Poppins 600, 16px
   &__date-value {
     font-family: Poppins, sans-serif;
     font-weight: 600;
-    font-size: 32rpx;
-    line-height: 48rpx;
+    font-size: 32rpx; // 16px
+    line-height: 1.5em;
     color: #000000;
   }
 
+  // 日期标签: Poppins 600, 12px
   &__date-label {
     font-family: Poppins, sans-serif;
     font-weight: 600;
-    font-size: 24rpx;
-    line-height: 48rpx;
+    font-size: 24rpx; // 12px
+    line-height: 2em;
     color: #999999;
   }
 
+  // 晚数标签: 43x21px = 86x42rpx
   &__nights {
-    position: absolute;
-    right: 0;
-    top: 2rpx;
-    padding: 8rpx 14rpx;
-    border: 1rpx solid #cccccc;
-    border-radius: 32rpx;
+    padding: 8rpx 14rpx; // 4px 7px
+    border: 2rpx solid #cccccc; // 1px
+    border-radius: 32rpx; // 16px
 
     text {
       font-family: Poppins, sans-serif;
       font-weight: 600;
-      font-size: 24rpx;
-      line-height: 24rpx;
+      font-size: 24rpx; // 12px
+      line-height: 1em;
       color: #000000;
     }
   }

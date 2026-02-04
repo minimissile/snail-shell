@@ -1,125 +1,130 @@
 <view class="listing-tab">
-  <!-- 房型卡片 (x=16, y=856, 343x179px) -->
-  <view class="listing-tab__room-card">
-    <image
-      class="listing-tab__room-image"
-      src="/images/store-detail/room-type-thumb-11b390.png"
-      mode="aspectFill"
-    ></image>
-
-    <view class="listing-tab__room-info">
-      <!-- 房型名称 -->
-      <view class="listing-tab__room-header">
-        <text class="listing-tab__room-name">男生四人位</text>
-        <image
-          class="listing-tab__room-arrow"
-          src="/images/store-detail/icon-angle-right-room.svg"
-          mode="aspectFit"
-        ></image>
-      </view>
-
-      <!-- 房型规格 -->
-      <text class="listing-tab__room-specs">5居 4张1.5米大床·1张1.6米大床 4人 整套100㎡</text>
-
-      <!-- 房型政策 -->
-      <text class="listing-tab__room-policy">无早餐 30分钟内免费取消</text>
-
-      <!-- 预订信息 -->
-      <view class="listing-tab__room-booking">
-        <!-- 立即确认标签 -->
-        <view class="listing-tab__confirm-tag">立即确认</view>
-
-        <!-- 价格区域 -->
-        <view class="listing-tab__price-wrapper">
-          <!-- 价格对比 -->
-          <view class="listing-tab__prices">
-            <text class="listing-tab__price-old">¥699</text>
-            <text class="listing-tab__price-current">¥468</text>
-          </view>
-
-          <!-- 优惠标签 -->
-          <view class="listing-tab__discount-tags">
-            <view class="listing-tab__discount-left">
-              <text class="listing-tab__discount-text">已省¥201</text>
-              <image
-                class="listing-tab__discount-arrow"
-                src="/images/store-detail/icon-angle-right-small.svg"
-                mode="aspectFit"
-              ></image>
-            </view>
-            <view class="listing-tab__discount-right">
-              <text class="listing-tab__discount-label">首单特惠</text>
-            </view>
-          </view>
-        </view>
-
-        <!-- 预订按钮 -->
-        <view class="listing-tab__book-btn" bindtap="onBookRoom">订</view>
-      </view>
-    </view>
-  </view>
-
-  <!-- 金刚区 (x=16, y=606, 343x126px) -->
+  <!-- 金刚区 (343x126px = 686x252rpx) -->
   <view class="listing-tab__services">
-    <!-- 团购验券 -->
+    <!-- 团购验券 (103x126px) -->
     <view class="listing-tab__service-card listing-tab__service-card--orange" bindtap="onCouponVerify">
       <text class="listing-tab__service-title">团购验券</text>
       <text class="listing-tab__service-desc">折上折更优惠</text>
       <view class="listing-tab__service-circle listing-tab__service-circle--orange-1"></view>
       <view class="listing-tab__service-circle listing-tab__service-circle--orange-2"></view>
-      <image class="listing-tab__service-icon" src="/images/store-detail/icon-tuangou.png" mode="aspectFit"></image>
+      <image class="listing-tab__service-icon" src="/images/store-detail/icon-tuangou-new.png" mode="aspectFit"></image>
     </view>
 
-    <!-- 门店储值 -->
+    <!-- 门店储值 (103x126px) -->
     <view class="listing-tab__service-card listing-tab__service-card--yellow" bindtap="onBalance">
       <text class="listing-tab__service-title">门店储值</text>
       <text class="listing-tab__service-desc">享受折上折</text>
       <view class="listing-tab__service-circle listing-tab__service-circle--yellow-1"></view>
       <view class="listing-tab__service-circle listing-tab__service-circle--yellow-2"></view>
-      <image class="listing-tab__service-icon" src="/images/store-detail/icon-chuzhi.png" mode="aspectFit"></image>
+      <image class="listing-tab__service-icon" src="/images/store-detail/icon-chuzhi-new.png" mode="aspectFit"></image>
     </view>
 
-    <!-- Wi-Fi -->
+    <!-- Wi-Fi (103x126px) -->
     <view class="listing-tab__service-card listing-tab__service-card--blue" bindtap="onWifi">
       <text class="listing-tab__service-title">连接WI-FI</text>
       <text class="listing-tab__service-desc">安全、省流</text>
       <view class="listing-tab__service-circle listing-tab__service-circle--blue-1"></view>
       <view class="listing-tab__service-circle listing-tab__service-circle--blue-2"></view>
-      <image class="listing-tab__service-icon" src="/images/store-detail/icon-wifi.png" mode="aspectFit"></image>
+      <image class="listing-tab__service-icon" src="/images/store-detail/icon-wifi-new.png" mode="aspectFit"></image>
+    </view>
+  </view>
+
+  <view>
+    <!-- 优惠券Banner (x=32, y=764, 311xhug) -->
+    <view class="listing-tab__coupon-banner" bindtap="onViewCoupons">
+      <view class="listing-tab__coupon-left">
+        <view class="listing-tab__coupon-amount">¥200</view>
+        <text class="listing-tab__coupon-name">连住专享券</text>
+      </view>
+      <view class="listing-tab__coupon-right">
+        <text class="listing-tab__coupon-link">查看 </text>
+        <image
+          class="listing-tab__coupon-arrow"
+          src="/images/store-detail/icon-angle-right-small.svg"
+          mode="aspectFit"
+        ></image>
+      </view>
+    </view>
+
+    <!-- 入住时间 (319x24px = 638x48rpx) -->
+    <view class="listing-tab__check-dates" bindtap="onSelectDate">
+      <!-- 入住日期 (x=0, 118x24px) -->
+      <view class="listing-tab__date-group">
+        <text class="listing-tab__date-value">11月14日</text>
+        <text class="listing-tab__date-label">周五 入住</text>
+      </view>
+      <!-- 晚数标签 (x=138, 43x21px) -->
+      <view class="listing-tab__nights">
+        <text>共1晚</text>
+      </view>
+      <!-- 离开日期 (x=201, 118x24px) -->
+      <view class="listing-tab__date-group">
+        <text class="listing-tab__date-value">11月15日</text>
+        <text class="listing-tab__date-label">周六 离开</text>
+      </view>
+    </view>
+
+    <!-- 房型卡片 (x=16, y=856, 343x179px) -->
+    <view class="listing-tab__room-card">
+      <image
+        class="listing-tab__room-image"
+        src="/images/store-detail/room-type-thumb-11b390.png"
+        mode="aspectFill"
+      ></image>
+
+      <view class="listing-tab__room-info">
+        <!-- 房型名称 -->
+        <view class="listing-tab__room-header">
+          <text class="listing-tab__room-name">男生四人位</text>
+          <image
+            class="listing-tab__room-arrow"
+            src="/images/store-detail/icon-angle-right-room.svg"
+            mode="aspectFit"
+          ></image>
+        </view>
+
+        <!-- 房型规格 -->
+        <text class="listing-tab__room-specs">5居 4张1.5米大床·1张1.6米大床 4人 整套100㎡</text>
+
+        <!-- 房型政策 -->
+        <text class="listing-tab__room-policy">无早餐 30分钟内免费取消</text>
+
+        <!-- 预订信息 -->
+        <view class="listing-tab__room-booking">
+          <!-- 立即确认标签 -->
+          <view class="listing-tab__confirm-tag">立即确认</view>
+
+          <!-- 价格区域 -->
+          <view class="listing-tab__price-wrapper">
+            <!-- 价格对比 -->
+            <view class="listing-tab__prices">
+              <text class="listing-tab__price-old">¥699</text>
+              <text class="listing-tab__price-current">¥468</text>
+            </view>
+
+            <!-- 优惠标签 -->
+            <view class="listing-tab__discount-tags">
+              <view class="listing-tab__discount-left">
+                <text class="listing-tab__discount-text">已省¥201</text>
+                <image
+                  class="listing-tab__discount-arrow"
+                  src="/images/store-detail/icon-angle-right-small.svg"
+                  mode="aspectFit"
+                ></image>
+              </view>
+              <view class="listing-tab__discount-right">
+                <text class="listing-tab__discount-label">首单特惠</text>
+              </view>
+            </view>
+          </view>
+
+          <!-- 预订按钮 -->
+          <view class="listing-tab__book-btn" bindtap="onBookRoom">订</view>
+        </view>
+      </view>
     </view>
   </view>
 
   <!-- 白色背景填充 (x=16, y=748, 343x108px) -->
-  <view class="listing-tab__white-bg"></view>
-
-  <!-- 入住时间 (x=28, y=818, 319x24px) -->
-  <view class="listing-tab__check-dates" bindtap="onSelectDate">
-    <view class="listing-tab__date-group">
-      <text class="listing-tab__date-value">11月14日</text>
-      <text class="listing-tab__date-label">周五 入住</text>
-    </view>
-    <view class="listing-tab__date-group">
-      <text class="listing-tab__date-value">11月15日</text>
-      <text class="listing-tab__date-label">周六 离开</text>
-    </view>
-    <view class="listing-tab__nights">
-      <text>共1晚</text>
-    </view>
-  </view>
-
-  <!-- 优惠券Banner (x=32, y=764, 311xhug) -->
-  <view class="listing-tab__coupon-banner" bindtap="onViewCoupons">
-    <view class="listing-tab__coupon-left">
-      <view class="listing-tab__coupon-amount">¥200</view>
-      <text class="listing-tab__coupon-name">连住专享券</text>
-    </view>
-    <view class="listing-tab__coupon-right">
-      <text class="listing-tab__coupon-link">查看 </text>
-      <image
-        class="listing-tab__coupon-arrow"
-        src="/images/store-detail/icon-angle-right-small.svg"
-        mode="aspectFit"
-      ></image>
-    </view>
-  </view>
+  <!-- <view class="listing-tab__white-bg"></view> -->
 </view>
