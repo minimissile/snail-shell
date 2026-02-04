@@ -1,8 +1,8 @@
 <view class="order-form">
   <!-- 状态栏 -->
-  <view class="status-bar">
-    <text class="status-bar__time">9:41</text>
-  </view>
+  <view class="status-bar" style="height: {{statusBarHeight}}px;"></view>
+
+  <view class="order-form__bg"></view>
 
   <!-- 导航栏 -->
   <view class="navbar">
@@ -10,9 +10,7 @@
       <image class="navbar__back-icon" src="/assets/figma/order-form/icon-back.svg" mode="aspectFit" />
     </view>
     <text class="navbar__title">订单填写</text>
-    <view class="navbar__wechat">
-      <view class="navbar__wechat-icon"></view>
-    </view>
+    <view class="navbar__placeholder"></view>
   </view>
 
   <!-- 智能门锁提示 -->
@@ -65,11 +63,15 @@
 
     <view class="booking-card__policies">
       <view class="booking-card__policy">
-        <text class="booking-card__policy-icon"></text>
+        <image class="booking-card__policy-icon" src="/assets/figma/order-form/icon-check-green.png" mode="aspectFit" />
         <text class="booking-card__policy-text">{{cancelPolicy}}</text>
       </view>
       <view class="booking-card__policy">
-        <text class="booking-card__policy-icon booking-card__policy-icon--confirm"></text>
+        <image
+          class="booking-card__policy-icon booking-card__policy-icon--confirm"
+          src="/assets/figma/order-form/icon-clock-gray.png"
+          mode="aspectFit"
+        />
         <text class="booking-card__policy-text booking-card__policy-text--confirm">立即确认</text>
       </view>
     </view>

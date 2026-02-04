@@ -1,6 +1,9 @@
 // 订单填写页面
 Page({
   data: {
+    // 系统信息
+    statusBarHeight: 0,
+
     // 房源信息
     roomType: '男生四人位',
     roomInfo: '整套88㎡ | 1居1床1卫1厅 | 宜住2人',
@@ -48,7 +51,11 @@ Page({
   },
 
   onLoad() {
-    // 页面加载
+    // 获取系统信息
+    const systemInfo = wx.getSystemInfoSync()
+    this.setData({
+      statusBarHeight: systemInfo.statusBarHeight || 0,
+    })
   },
 
   // 返回上一页
