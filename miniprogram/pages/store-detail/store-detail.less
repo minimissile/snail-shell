@@ -53,58 +53,49 @@
     height: 64rpx;
   }
 
-  // Actions group: 只有收藏和分享两个按钮
+  // Actions group: 喜欢和分享两个按钮水平对齐
   &__actions-group {
-    width: 256rpx; // 56px(收藏) + 16px(间距) + 40px(分享) = 112px = 224rpx, 留一些余量
-    height: 98rpx; // 49px
-    position: relative;
     display: flex;
-    align-items: center;
-    justify-content: flex-start;
+    align-items: center; // 垂直居中对齐
     gap: 32rpx; // 16px 间距
   }
 
-  // 收藏组: width=56px (112rpx), height=49px (98rpx)
+  // 收藏组: 喜欢按钮 + 徽章
   &__favorite-wrapper {
-    width: 112rpx;
-    height: 98rpx;
     position: relative;
-    flex-shrink: 0; // 防止压缩
+    display: flex;
+    align-items: center;
   }
 
-  // Like button: 40x40px (80rpx), x=0, y=9 (18rpx)
+  // Like button: 40x40px (80rpx)
   &__favorite-btn {
-    position: absolute;
-    left: 0;
-    top: 18rpx;
     width: 80rpx;
     height: 80rpx;
-    background: rgba(255, 255, 255, 0.8); // 白色半透明
-    border-radius: 9999rpx; // 圆角极大
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 9999rpx;
     display: flex;
     justify-content: center;
     align-items: center;
-    // 阴影: 0px 2px 4px -2px rgba(0,0,0,0.1), 0px 4px 6px -1px rgba(0,0,0,0.1)
     box-shadow:
       0px 4rpx 8rpx -4rpx rgba(0, 0, 0, 0.1),
       0px 8rpx 12rpx -2rpx rgba(0, 0, 0, 0.1);
   }
 
-  // Font Awesome 5 Free, 20px (40rpx), #1F2937
+  // Heart icon: 20x20px (40rpx)
   &__favorite-icon {
-    width: 40rpx; // 20px
-    height: 40rpx; // 20px
+    width: 40rpx;
+    height: 40rpx;
   }
 
-  // Badge: 34x22px (68rpx x 44rpx), x=22 (44rpx), y=0
+  // Badge: 34x22px (68rpx x 44rpx), 位于按钮右上角
   &__favorite-badge {
     position: absolute;
-    left: 44rpx;
-    top: 0;
+    left: 44rpx; // 覆盖在按钮右侧
+    top: -10rpx; // 稍微向上偏移
     min-width: 68rpx;
     height: 44rpx;
     background: #ffffff;
-    border: 2rpx solid #cccccc; // 1px = 2rpx
+    border: 2rpx solid #cccccc;
     border-radius: 100rpx;
     display: flex;
     align-items: center;
