@@ -13,9 +13,13 @@
       bind:coupon="onTapCoupon"
       bind:favorites="onTapFavorites"
       bind:points="onTapPoints"
+      bind:action="onTapQuickAction"
     />
 
     <!-- 金刚区 -->
     <icon-grid bind:item="onTapGridItem" />
   </view>
 </view>
+
+<!-- 智能开锁浮动按钮 -->
+<floating-lock-button />

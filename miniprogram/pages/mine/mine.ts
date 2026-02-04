@@ -57,7 +57,18 @@ Page({
 
   onTapQuickAction(e: any) {
     const key = e.detail?.key || ''
-    const tab = key === 'pay' ? 'pay' : key === 'use' ? 'use' : key === 'refund' ? 'refund' : 'all'
+    // 映射关系：orders/pay/use/refund -> all/toPay/toUse/refund
+    let tab: string
+    if (key === 'pay') {
+      tab = 'pay' // 待付款
+    } else if (key === 'use') {
+      tab = 'use' // 待使用
+    } else if (key === 'refund') {
+      tab = 'refund' // 退款单
+    } else {
+      tab = 'all' // 我的订单 -> 全部
+    }
+
     wx.setStorageSync('orders:initialTab', tab)
     wx.switchTab({
       url: '/pages/orders/orders',

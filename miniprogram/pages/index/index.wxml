@@ -142,3 +142,6 @@
     </view>
   </view>
 </scroll-view>
+
+<!-- 智能开锁浮动按钮 -->
+<!-- <floating-lock-button /> -->

@@ -15,5 +15,9 @@ Component({
     onPoints() {
       this.triggerEvent('points')
     },
+    onTapQuickAction(e: any) {
+      // 转发 quick-actions 组件的 action 事件给父组件
+      this.triggerEvent('action', e.detail)
+    },
   },
 })

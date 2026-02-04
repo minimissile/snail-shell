@@ -3,3 +3,6 @@
     <text class="messages__empty-text">暂无消息</text>
   </view>
 </view>
+
+<!-- 智能开锁浮动按钮 -->
+<!-- <floating-lock-button /> -->

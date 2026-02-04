@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "收藏/足迹",
-  "usingComponents": {}
+  "usingComponents": {
+    "floating-lock-button": "/components/floating-lock-button/floating-lock-button"
+  }
 }
