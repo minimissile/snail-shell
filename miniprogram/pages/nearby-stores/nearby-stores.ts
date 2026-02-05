@@ -27,7 +27,7 @@ Page({
       {
         id: '1',
         name: '【蜗壳精品店】深圳北站青年旅社',
-        image: '/images/nearby-stores/store-item-image-1.jpg',
+        image: '/assets/figma/favorites/item-1.jpg',
         promotionTag: '离店赚10倍积分',
         verifiedTag: '认证房源',
         isFavorite: false,
@@ -44,7 +44,7 @@ Page({
       {
         id: '2',
         name: '【蜗壳旗舰店】深圳北站青年公寓',
-        image: '/images/nearby-stores/store-item-image-2.jpg',
+        image: '/assets/figma/favorites/item-1.jpg',
         promotionTag: '预订享限时优惠',
         verifiedTag: '蜗壳精选',
         isFavorite: false,

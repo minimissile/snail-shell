@@ -19,7 +19,7 @@ Component({
       {
         id: '1',
         username: '2***9',
-        avatar: '/assets/figma/review-tab/avatar-1.png',
+        avatar: '/assets/figma/review-tab/avatar-3.png',
         stars: [
           '/assets/figma/review-tab/icon-star-small.svg',
           '/assets/figma/review-tab/icon-star-small.svg',
@@ -33,7 +33,7 @@ Component({
       {
         id: '2',
         username: '匿名用户',
-        avatar: '/assets/figma/review-tab/avatar-2.png',
+        avatar: '/assets/figma/review-tab/avatar-3.png',
         stars: [
           '/assets/figma/review-tab/icon-star-small.svg',
           '/assets/figma/review-tab/icon-star-small.svg',

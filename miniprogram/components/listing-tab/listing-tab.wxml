@@ -25,7 +25,7 @@
       <text class="listing-tab__service-desc">安全、省流</text>
       <view class="listing-tab__service-circle listing-tab__service-circle--blue-1"></view>
       <view class="listing-tab__service-circle listing-tab__service-circle--blue-2"></view>
-      <image class="listing-tab__service-icon" src="/images/store-detail/icon-wifi-new.png" mode="aspectFit"></image>
+      <image class="listing-tab__service-icon" src="/images/store-detail/icon-wifi.png" mode="aspectFit"></image>
     </view>
   </view>
 
@@ -68,7 +68,7 @@
     <view class="listing-tab__room-card">
       <image
         class="listing-tab__room-image"
-        src="/images/store-detail/room-type-thumb-11b390.png"
+        src="/images/store-detail/room-type-image.jpg"
         mode="aspectFill"
       ></image>
 
