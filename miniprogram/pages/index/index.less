@@ -20,6 +20,7 @@ page {
   position: relative;
   height: 674rpx;
   overflow: hidden;
+  pointer-events: none;
 }
 
 .home__header-overlay {
@@ -105,6 +106,27 @@ page {
   }
 }
 
+// 目的地输入框
+.booking-card__route-input {
+  flex: 1;
+  font-family: Poppins;
+  font-weight: 500;
+  font-size: 36rpx;
+  line-height: 56rpx;
+  color: #333333;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+
+.booking-card__route-placeholder {
+  color: #cccccc;
+  font-weight: 400;
+}
+
 .booking-card__route-icon {
   width: 40rpx;
   height: 32rpx;
@@ -116,12 +138,18 @@ page {
 
 .booking-card__route-actions {
   .flex(row, center, flex-end);
+  flex-shrink: 0;
+  gap: 0;
 }
 
 .booking-card__icon-btn {
   width: 32rpx;
   height: 32rpx;
   .flex(row, center, center);
+  padding: 8rpx; // 增加点击区域
+  margin: -8rpx; // 偏移保持视觉位置
+  position: relative;
+  z-index: 10;
 }
 
 .booking-card__icon {
@@ -137,11 +165,19 @@ page {
 .booking-card__route-spacer {
   width: 24rpx;
   height: 64rpx;
+  pointer-events: none; // 不阻挡点击事件
 }
 
 .booking-card__locate {
-  .flex(row, center, flex-start);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 8rpx;
+  flex-shrink: 0;
+  margin-left: 24rpx;
+  cursor: pointer;
+  position: relative;
+  z-index: 10; // 确保在最上层
 }
 
 .booking-card__locate-text {
@@ -379,16 +415,16 @@ page {
 }
 
 .promo__link {
-  // position: absolute;
-  // left: 16rpx;
-  // bottom: 16rpx;
   margin-top: 8rpx;
-  padding: 8rpx 16rpx;
-  border-radius: 16rpx;
+  padding: 10rpx 12rpx;
+  border-radius: 8rpx;
   background: #ffffff;
   border: 2rpx solid #a2dcff;
   box-sizing: border-box;
   margin-right: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .promo__link-text {

@@ -24,6 +24,11 @@
     "navigationStyle": "default",
     "backgroundColor": "#F7F9FB"
   },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于搜索附近的门店"
+    }
+  },
   "tabBar": {
     "color": "#6B7280",
     "selectedColor": "#F97316",
