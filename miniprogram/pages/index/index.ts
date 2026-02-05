@@ -89,30 +89,13 @@ Page({
       return
     }
 
-    this.setData({
-      isSearching: true,
-      hasSearched: false,
-      searchResults: [],
+    // 直接跳转到附近门店页面，传递搜索参数
+    wx.navigateTo({
+      url: `/pages/nearby-stores/nearby-stores?destination=${encodeURIComponent(this.data.toPlace)}&city=${encodeURIComponent(this.data.fromCity)}&checkIn=${encodeURIComponent(this.data.checkInDateMain)}&checkOut=${encodeURIComponent(this.data.checkOutDateMain)}`,
+      fail: () => {
+        wx.showToast({ title: '页面跳转失败', icon: 'none' })
+      },
     })
-
-    wx.showLoading({ title: '搜索中...' })
-
-    // 模拟搜索请求
-    setTimeout(() => {
-      const mockResults = this.generateMockResults()
-      this.setData({
-        isSearching: false,
-        hasSearched: true,
-        searchResults: mockResults,
-      })
-      wx.hideLoading()
-
-      if (mockResults.length > 0) {
-        wx.showToast({ title: `找到${mockResults.length}个结果`, icon: 'success' })
-      } else {
-        wx.showToast({ title: '暂无搜索结果', icon: 'none' })
-      }
-    }, 1500)
   },
 
   // 生成模拟搜索结果

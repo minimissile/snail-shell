@@ -1,4 +1,6 @@
 {
   "navigationStyle": "custom",
-  "usingComponents": {}
+  "usingComponents": {
+    "status-bar": "/components/status-bar/status-bar"
+  }
 }

@@ -1,27 +1,21 @@
 <view class="smart-lock-page">
   <!-- 状态栏 -->
-  <view class="status-bar" style="height: {{statusBarHeight}}px;"></view>
+  <status-bar />
 
   <!-- 渐变背景 -->
   <view class="header-gradient"></view>
 
   <!-- 头部 -->
-  <view class="header">
+  <view class="header" style="height: {{navBarHeight}}px;">
     <!-- 返回按钮 -->
-    <view class="back-button" bindtap="onBack">
+    <view class="back-button" style="height: {{capsuleHeight}}px; width: {{capsuleHeight}}px;" bindtap="onBack">
       <image class="back-icon" src="/assets/figma/smart-lock/icon-back.svg" mode="aspectFit" />
     </view>
 
     <!-- 标题 -->
-    <view class="header-title">
+    <view class="header-title" style="line-height: {{capsuleHeight}}px;">
       <text class="title-text">智能门锁</text>
     </view>
-
-    <!-- 设置按钮 -->
-    <!-- <view class="settings-button" bindtap="onSettings">
-      <image class="settings-icon" src="/assets/figma/smart-lock/icon-gear-settings.svg" mode="aspectFit" />
-      <view wx:if="{{hasNotification}}" class="notification-badge"></view>
-    </view> -->
   </view>
 
   <!-- 中间开锁/关锁按钮 -->
@@ -124,7 +118,7 @@
           </view>
         </view>
         <view class="list-right">
-          <text class="list-arrow"></text>
+          <image class="list-arrow" src="/images/store-detail/icon-angle-right-rating.svg" mode="aspectFit"></image>
         </view>
       </view>
 
@@ -140,7 +134,7 @@
           </view>
         </view>
         <view class="list-right">
-          <text class="list-arrow"></text>
+          <image class="list-arrow" src="/images/store-detail/icon-angle-right-rating.svg" mode="aspectFit"></image>
         </view>
       </view>
     </view>

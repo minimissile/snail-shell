@@ -1,15 +1,26 @@
 Page({
   data: {
-    statusBarHeight: 0,
+    navBarHeight: 44, // 导航栏高度
+    capsuleHeight: 32, // 胶囊高度
     isLocked: true, // true: 关锁状态，false: 开锁状态
     hasNotification: true, // 是否显示红点
     isAnimating: false, // 是否正在动画中
   },
 
   onLoad() {
+    // 获取胶囊按钮信息
+    const menuButton = wx.getMenuButtonBoundingClientRect()
     const systemInfo = wx.getSystemInfoSync()
+    const statusBarHeight = systemInfo.statusBarHeight || 0
+
+    // 胶囊高度
+    const capsuleHeight = menuButton.height
+    // 导航栏高度 = (胶囊上边距 - 状态栏高度) * 2 + 胶囊高度
+    const navBarHeight = (menuButton.top - statusBarHeight) * 2 + capsuleHeight
+
     this.setData({
-      statusBarHeight: systemInfo.statusBarHeight || 0,
+      navBarHeight,
+      capsuleHeight,
     })
   },
 
@@ -39,8 +50,15 @@ Page({
       type: 'heavy',
     })
 
-    // 切换状态（动画时长与 CSS 动画匹配）
+    // 显示加载提示
+    wx.showLoading({
+      title: this.data.isLocked ? '正在开锁...' : '正在关锁...',
+      mask: true,
+    })
+
+    // 模拟开锁/关锁等待时间 1.5秒
     setTimeout(() => {
+      // 切换状态
       this.setData({
         isLocked: !this.data.isLocked,
       })
@@ -50,6 +68,8 @@ Page({
         type: 'light',
       })
 
+      // 隐藏加载并显示成功提示
+      wx.hideLoading()
       // wx.showToast({
       //   title: this.data.isLocked ? '已关锁 🔒' : '已开锁 🔓',
       //   icon: 'success',
@@ -62,7 +82,7 @@ Page({
           isAnimating: false,
         })
       }, 400)
-    }, 400)
+    }, 1500) // 1.5秒等待时间
   },
 
   // 指纹管理

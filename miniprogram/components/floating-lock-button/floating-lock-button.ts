@@ -1,11 +1,12 @@
 Component({
   data: {
-    x: 0, // 初始 x 位置，将在 ready 中计算
-    y: 0, // 初始 y 位置，将在 ready 中计算
+    x: 0,
+    y: 0,
+    show: false, // 控制显示，避免位置计算前的动画
   },
 
   lifetimes: {
-    ready() {
+    ready(this: any) {
       // 获取系统信息，计算右下角位置
       const systemInfo = wx.getSystemInfoSync()
       const windowWidth = systemInfo.windowWidth
@@ -22,7 +23,8 @@ Component({
       const x = windowWidth - buttonSize - rightMargin
       const y = windowHeight - buttonSize - bottomMargin
 
-      this.setData({ x, y })
+      // 设置位置并显示
+      this.setData({ x, y, show: true })
     },
   },
 

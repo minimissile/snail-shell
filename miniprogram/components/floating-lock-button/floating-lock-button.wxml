@@ -1,4 +1,4 @@
-<movable-area class="floating-button-area">
+<movable-area class="floating-button-area" wx:if="{{show}}">
   <movable-view
     class="floating-button"
     x="{{x}}"
