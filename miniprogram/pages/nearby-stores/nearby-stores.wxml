@@ -79,29 +79,46 @@
 
         <!-- 标签 -->
         <view class="store-card__tags">
-          <view class="store-card__tag store-card__tag--gradient" wx:if="{{item.promotionTag}}"
-            >{{item.promotionTag}}</view
-          >
-          <view class="store-card__tag store-card__tag--verified" wx:if="{{item.verifiedTag}}"
-            >{{item.verifiedTag}}</view
-          >
+
+          <view class="store-card__tag store-card__tag--verified" wx:if="{{item.verifiedTag}}">{{item.verifiedTag}}
+          </view>
+
+          <view class="store-card__tag store-card__tag--gradient" wx:if="{{item.promotionTag}}">{{item.promotionTag}}
+          </view>
+
+
         </view>
 
-        <!-- 收藏按钮 -->
-        <view class="store-card__favorite" bindtap="onFavoriteTap" data-id="{{item.id}}" catchtap="onFavoriteTap">
-          <text>{{item.isFavorite ? '♥' : '♡'}}</text>
+        <!-- 收藏(点赞)按钮 -->
+        <view class="store-card__favorite" catchtap="onFavoriteTap" data-id="{{item.id}}">
+          <image class="store-card__favorite-icon" src="/images/nearby-stores/favorite-heart.svg" mode="aspectFit" />
+        </view>
+
+        <!-- 评分评论 Rating and review - mode:row, padding:4px 12px -->
+        <view class="store-card__rating">
+          <!-- Container -->
+          <view class="store-card__rating-icon-container">
+            <!-- Symbol: Font Awesome star -->
+            <image class="store-card__rating-star" src="/images/nearby-stores/star-icon.svg" mode="aspectFit" />
+          </view>
+          <!-- Margin: padding 0 0 0 8px -->
+          <view class="store-card__rating-score-margin">
+            <text class="store-card__rating-score">{{item.rating}} 超棒</text>
+          </view>
+          <!-- Margin: padding 0 0 0 8px -->
+          <view class="store-card__rating-count-margin">
+            <text class="store-card__rating-count">{{item.reviewCount}}条</text>
+          </view>
+          <!-- Margin: padding 0 0 0 8px -->
+          <view class="store-card__rating-comment-margin">
+            <text class="store-card__rating-comment">“{{item.highlightComment}}”</text>
+          </view>
         </view>
 
         <!-- 图片数量 -->
         <view class="store-card__count">{{item.imageCount}}/{{item.totalImages}}</view>
 
-        <!-- 评分评论 -->
-        <view class="store-card__rating">
-          <text class="star">★</text>
-          <text class="score">{{item.rating}} 超棒</text>
-          <text class="count">{{item.reviewCount}}条</text>
-          <text class="comment">"{{item.highlightComment}}"</text>
-        </view>
+
       </view>
 
       <!-- 房源信息 -->
@@ -109,11 +126,11 @@
         <view class="store-card__title">{{item.name}}</view>
 
         <!-- 特点标签 -->
-        <scroll-view class="store-card__features" scroll-x="{{true}}" enable-flex="{{true}}">
-          <view wx:for="{{item.features}}" wx:for-item="feature" wx:key="*this" class="store-card__feature"
-            >{{feature}}</view
-          >
-        </scroll-view>
+        <!-- Property features - height:44, mode:none -->
+        <view class="store-card__features">
+          <view wx:for="{{item.features}}" wx:for-item="feature" wx:key="*this" class="store-card__feature">{{feature}}
+          </view>
+        </view>
 
         <!-- 详情 -->
         <view class="store-card__details">{{item.details}}</view>
@@ -126,7 +143,7 @@
           </view>
           <view class="store-card__discount" bindtap="onDiscountTap" data-id="{{item.id}}" catchtap="onDiscountTap">
             <text>已省¥{{item.savedAmount}} | 钻石会员</text>
-            <image src="/images/angle-right.svg" mode="aspectFit" />
+            <image src="/images/nearby-stores/angle-right.svg" mode="aspectFit" />
           </view>
         </view>
       </view>

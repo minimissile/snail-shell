@@ -205,22 +205,26 @@
 
   &__tags {
     position: absolute;
-    top: 16rpx;
-    left: 16rpx;
+    top: 0rpx;
+    left: 0rpx;
     display: flex;
-    gap: 8rpx;
+    gap: 0rpx;
   }
 
   &__tag {
-    padding: 8rpx 48rpx 8rpx 16rpx;
+    padding: 12rpx 24rpx 12rpx 16rpx;
     border-radius: 4rpx 0 40rpx 4rpx;
     font-size: 24rpx;
     color: #ffffff;
     line-height: 1.2;
+    z-index: 2;
 
     &--gradient {
       background: linear-gradient(90deg, #fb923c 0%, #fde047 100%);
       color: #a16207;
+      margin-left: -32rpx;
+      z-index: 1;
+      padding-left: 48rpx;
     }
 
     &--verified {
@@ -239,11 +243,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
 
-    text {
-      font-size: 32rpx;
-      color: #ffffff;
-    }
+  // 收藏图标 - 从 Figma 设计稿导出的 SVG (32x32)
+  &__favorite-icon {
+    width: 32rpx; // 16 * 2
+    height: 32rpx; // 16 * 2
+    display: block;
   }
 
   &__count {
@@ -253,45 +259,96 @@
     background-color: rgba(0, 0, 0, 0.5);
     color: #ffffff;
     font-size: 22rpx;
-    padding: 6rpx 16rpx;
+    padding: 10rpx 16rpx;
     border-radius: 9999px;
     line-height: 1.2;
   }
 
+  // 评分评论区 - mode:row, alignItems:center, padding:4px 12px, borderRadius:9999px
   &__rating {
     position: absolute;
     bottom: 32rpx;
     left: 24rpx;
-    right: 100rpx;
-    background-color: rgba(0, 0, 0, 0.4);
-    border-radius: 9999rpx;
-    padding: 8rpx 24rpx;
-    display: flex;
+    // right: 100rpx;
+    display: flex; // mode: row
+    flex-direction: row;
     align-items: center;
-    gap: 8rpx;
-    font-size: 24rpx;
-    color: #ffffff;
-    line-height: 1.2;
+    padding: 8rpx 24rpx; // 4px 12px * 2
+    background: rgba(0, 0, 0, 0.4); // fill_FOKW0J
+    border-radius: 9999px;
+    margin-right: auto;
+  }
 
-    .star {
-      color: #f87171;
-      font-size: 24rpx;
-    }
+  // Container - mode:column
+  &__rating-icon-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 24rpx; // 12 * 2
+    height: 24rpx; // 12 * 2
+  }
 
-    .score {
-      font-weight: 600;
-    }
+  // 星星图标 Symbol - fontSize:12, color:#F87171
+  &__rating-star {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
 
-    .count {
-      color: #d1d5db;
-    }
+  // Margin - padding: 0 0 0 8px
+  &__rating-score-margin {
+    display: flex;
+    flex-direction: column;
+    padding-left: 16rpx; // 8 * 2
+  }
 
-    .comment {
-      flex: 1;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
+  // 5.0 超棒 - Poppins, 600, 12px, color:#FFFFFF
+  &__rating-score {
+    font-family: Poppins; // style_JWEDUU
+    font-weight: 600;
+    font-size: 24rpx; // 12 * 2
+    line-height: 32rpx; // 1.333 * 12 * 2
+    text-align: left;
+    color: #ffffff; // fill_B7JA58
+  }
+
+  // Margin - padding: 0 0 0 8px
+  &__rating-count-margin {
+    display: flex;
+    flex-direction: column;
+    padding-left: 16rpx; // 8 * 2
+  }
+
+  // 20条 - Poppins, 400, 12px, color:#D1D5DB
+  &__rating-count {
+    font-family: Poppins; // style_G9BY3C
+    font-weight: 400;
+    font-size: 24rpx; // 12 * 2
+    line-height: 32rpx; // 1.333 * 12 * 2
+    text-align: left;
+    color: #d1d5db; // fill_S6CKQO
+  }
+
+  // Margin - padding: 0 0 0 8px
+  &__rating-comment-margin {
+    display: flex;
+    flex-direction: column;
+    padding-left: 16rpx; // 8 * 2
+    flex: 1;
+  }
+
+  // "房东人很热情" - Roboto, 400, 12px, color:#FFFFFF
+  &__rating-comment {
+    font-family: Roboto; // style_MOKJDC
+    font-weight: 400;
+    font-size: 24rpx; // 12 * 2
+    line-height: 32rpx; // 1.333 * 12 * 2
+    text-align: left;
+    color: #ffffff; // fill_B7JA58
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   &__info {
@@ -306,28 +363,28 @@
     margin-bottom: 16rpx;
   }
 
+  // Property features - height:44, mode:none, 自动换行
   &__features {
     display: flex;
-    gap: 16rpx;
+    flex-wrap: wrap; // 自动换行
+    gap: 8rpx; // 标签间距
     margin-bottom: 16rpx;
-    overflow-x: auto;
-    white-space: nowrap;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
   }
 
+  // Background - padding:2px 8px, borderRadius:2px
   &__feature {
-    display: inline-block;
-    padding: 4rpx 16rpx;
-    background-color: #f3f4f6;
-    color: #6b7280;
-    font-size: 24rpx;
-    border-radius: 4rpx;
-    line-height: 1.2;
+    display: inline-flex;
+    flex-direction: column; // mode: column
+    padding: 4rpx 16rpx; // 2px 8px * 2
+    background: #f3f4f6; // fill_E997FY
+    border-radius: 4rpx; // 2px * 2
+    font-family: Poppins; // style_H1ARM7
+    font-weight: 400;
+    font-size: 24rpx; // 12 * 2
+    line-height: 32rpx; // 1.333 * 12 * 2
+    text-align: left;
+    color: #6b7280; // fill_3DHV62
     white-space: nowrap;
-    flex-shrink: 0;
   }
 
   &__details {
@@ -340,7 +397,7 @@
   &__footer {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     gap: 16rpx;
   }
 
