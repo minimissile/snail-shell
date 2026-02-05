@@ -16,7 +16,7 @@
       <text class="listing-tab__service-desc">享受折上折</text>
       <view class="listing-tab__service-circle listing-tab__service-circle--yellow-1"></view>
       <view class="listing-tab__service-circle listing-tab__service-circle--yellow-2"></view>
-      <image class="listing-tab__service-icon" src="/images/store-detail/icon-chuzhi-new.png" mode="aspectFit"></image>
+      <image class="listing-tab__service-icon" src="/images/store-detail/icon-store.png" mode="aspectFit"></image>
     </view>
 
     <!-- Wi-Fi (103x126px) -->

@@ -46,7 +46,7 @@ Component({
       {
         id: '3',
         username: '5***3',
-        avatar: '/assets/figma/review-tab/avatar-3.png',
+        avatar: '/assets/figma/review-tab/avatar-3.jpg',
         stars: [
           '/assets/figma/review-tab/icon-star-small.svg',
           '/assets/figma/review-tab/icon-star-small.svg',

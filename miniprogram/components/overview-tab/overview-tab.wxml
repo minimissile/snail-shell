@@ -3,7 +3,7 @@
   <view class="overview-tab__cover">
     <swiper class="overview-tab__swiper" indicator-dots="{{true}}" autoplay circular>
       <swiper-item>
-        <image class="overview-tab__cover-image" src="/images/store-detail/cover-image.png" mode="aspectFill"></image>
+        <image class="overview-tab__cover-image" src="/images/store-detail/cover-image.jpg" mode="aspectFill"></image>
       </swiper-item>
     </swiper>
 
@@ -118,7 +118,7 @@
 
       <!-- 地址区域 (x=138, 197x68px) -->
       <view class="overview-tab__address-section" bindtap="onViewMap">
-        <image class="overview-tab__map-bg" src="/images/store-detail/map-bg.png" mode="aspectFill"></image>
+        <image class="overview-tab__map-bg" src="/images/store-detail/map-thumbnail.jpg" mode="aspectFill"></image>
         <view class="overview-tab__address-content">
           <text class="overview-tab__address-text"
             >距深圳北站-深圳北站-A1出站口(东1号出站口)直线1.9公里 龙华区, 深圳龙华区龙光玖钻北区-1A...</text
