@@ -7,7 +7,7 @@
       <text class="listing-tab__service-desc">折上折更优惠</text>
       <view class="listing-tab__service-circle listing-tab__service-circle--orange-1"></view>
       <view class="listing-tab__service-circle listing-tab__service-circle--orange-2"></view>
-      <image class="listing-tab__service-icon" src="/images/store-detail/icon-tuangou-new.png" mode="aspectFit"></image>
+      <image class="listing-tab__service-icon" src="/images/store-detail/icon-tuangou.png" mode="aspectFit"></image>
     </view>
 
     <!-- 门店储值 (103x126px) -->
