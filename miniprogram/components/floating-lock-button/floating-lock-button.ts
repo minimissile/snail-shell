@@ -3,6 +3,9 @@ Component({
     x: 0,
     y: 0,
     show: false, // 控制显示，避免位置计算前的动画
+    touchStartX: 0,
+    touchStartY: 0,
+    touchStartTime: 0,
   },
 
   lifetimes: {
@@ -29,6 +32,32 @@ Component({
   },
 
   methods: {
+    onTouchStart(this: any, e: WechatMiniprogram.TouchEvent) {
+      // 记录触摸开始位置和时间
+      this.setData({
+        touchStartX: e.touches[0].pageX,
+        touchStartY: e.touches[0].pageY,
+        touchStartTime: Date.now(),
+      })
+    },
+
+    onTouchEnd(this: any, e: WechatMiniprogram.TouchEvent) {
+      const data = this.data
+      const touchEndX = e.changedTouches[0].pageX
+      const touchEndY = e.changedTouches[0].pageY
+      const touchEndTime = Date.now()
+
+      // 计算移动距离和时间
+      const moveX = Math.abs(touchEndX - data.touchStartX)
+      const moveY = Math.abs(touchEndY - data.touchStartY)
+      const moveTime = touchEndTime - data.touchStartTime
+
+      // 如果移动距离小于10px且时间小于300ms，认为是点击
+      if (moveX < 10 && moveY < 10 && moveTime < 300) {
+        this.onTap()
+      }
+    },
+
     onTap() {
       wx.navigateTo({
         url: '/pages/smart-lock/smart-lock',

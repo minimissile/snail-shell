@@ -72,6 +72,12 @@
       "pages": [
         "logs"
       ]
+    },
+    {
+      "root": "pages/smart-lock",
+      "pages": [
+        "smart-lock"
+      ]
     }
   ],
   "window": {

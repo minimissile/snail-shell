@@ -115,11 +115,13 @@ Page({
   // 房源卡片点击
   onStoreCardTap(e: WechatMiniprogram.TouchEvent) {
     const id = e.currentTarget.dataset.id
-    wx.showToast({
-      title: `查看房源 ${id}`,
-      icon: 'none',
+    // 跳转到门店详情页面
+    wx.navigateTo({
+      url: `/pages/store-detail/store-detail?id=${id}`,
+      fail: () => {
+        wx.showToast({ title: '页面跳转失败', icon: 'none' })
+      },
     })
-    // TODO: 跳转到房源详情页
   },
 
   // 收藏切换

@@ -8,7 +8,8 @@
     out-of-bounds
     damping="20"
     friction="2"
-    bindtap="onTap"
+    bindtouchstart="onTouchStart"
+    bindtouchend="onTouchEnd"
     aria-role="button"
     aria-label="智能开锁"
   >
