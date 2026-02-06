@@ -2,21 +2,77 @@
   "pages": [
     "pages/index/index",
     "pages/mine/mine",
-    "pages/common-info/common-info",
     "pages/orders/orders",
-    "pages/coupons/coupons",
     "pages/favorites/favorites",
-    "pages/messages/messages",
-    "pages/smart-lock/smart-lock",
-    "pages/feedback/feedback",
-    "pages/service-agreement/service-agreement",
-    "pages/balance/balance",
-    "pages/coupon-verify/coupon-verify",
-    "pages/nearby-stores/nearby-stores",
-    "pages/store-detail/store-detail",
-    "pages/order-form/order-form",
-    "pages/room-selection/room-selection",
-    "pages/logs/logs"
+    "pages/messages/messages"
+  ],
+  "subPackages": [
+    {
+      "root": "pages/common-info",
+      "pages": [
+        "common-info"
+      ]
+    },
+    {
+      "root": "pages/coupons",
+      "pages": [
+        "coupons"
+      ]
+    },
+    {
+      "root": "pages/feedback",
+      "pages": [
+        "feedback"
+      ]
+    },
+    {
+      "root": "pages/service-agreement",
+      "pages": [
+        "service-agreement"
+      ]
+    },
+    {
+      "root": "pages/balance",
+      "pages": [
+        "balance"
+      ]
+    },
+    {
+      "root": "pages/coupon-verify",
+      "pages": [
+        "coupon-verify"
+      ]
+    },
+    {
+      "root": "pages/nearby-stores",
+      "pages": [
+        "nearby-stores"
+      ]
+    },
+    {
+      "root": "pages/store-detail",
+      "pages": [
+        "store-detail"
+      ]
+    },
+    {
+      "root": "pages/order-form",
+      "pages": [
+        "order-form"
+      ]
+    },
+    {
+      "root": "pages/room-selection",
+      "pages": [
+        "room-selection"
+      ]
+    },
+    {
+      "root": "pages/logs",
+      "pages": [
+        "logs"
+      ]
+    }
   ],
   "window": {
     "navigationBarTextStyle": "black",

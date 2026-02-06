@@ -1,7 +1,7 @@
 import os
 from PIL import Image
 
-source_path = '/Users/nuke/Desktop/snail-shell/miniprogram/images/nearby-stores/store-card-image.png'
+source_path = '/Users/nuke/Desktop/snail-shell/miniprogram/images/nearby-stores/store-card-image@2x.webp'
 output_dir = '/Users/nuke/Desktop/snail-shell/miniprogram/images/nearby-stores/'
 
 if os.path.exists(source_path):
