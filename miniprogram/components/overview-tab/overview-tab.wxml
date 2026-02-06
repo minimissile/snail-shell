@@ -9,8 +9,6 @@
 
     <!-- 实拍看房按钮 (112x80px) - 100% Figma还原 -->
     <view class="overview-tab__video-tour" bindtap="onVideoTour">
-      <!-- 背景图片: 112x80px, 圆角8px, 2px白色边框 -->
-      <!-- <image class="overview-tab__video-thumb" src="/images/store-detail/video-tour-bg.png" mode="aspectFill"></image> -->
       <!-- 遮罩层: 108x76px, 圆角6px, rgba(0,0,0,0.3) -->
       <image
         class="overview-tab__video-overlay"
