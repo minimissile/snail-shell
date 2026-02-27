@@ -293,13 +293,13 @@ export class OrderService {
         store: {
           id: order.store.id,
           name: order.store.name,
-          image: order.store.images[0] || '',
+          image: ((order.store.images || []) as string[])[0] || '',
         },
         room: room
           ? {
               id: room.id,
               name: room.name,
-              image: room.images[0] || '',
+              image: ((room.images || []) as string[])[0] || '',
             }
           : null,
         bedCount: order.items.length,
@@ -353,7 +353,7 @@ export class OrderService {
       store: {
         id: order.store.id,
         name: order.store.name,
-        image: order.store.images[0] || '',
+        image: ((order.store.images || []) as string[])[0] || '',
         address: order.store.address,
         phone: order.store.phone,
       },
@@ -361,7 +361,7 @@ export class OrderService {
         ? {
             id: room.id,
             name: room.name,
-            image: room.images[0] || '',
+            image: ((room.images || []) as string[])[0] || '',
             bedIds: order.items.map((i) => i.bed.bedNumber),
           }
         : null,

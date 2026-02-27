@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -60,7 +60,7 @@ model Store {
   id              String    @id @default(cuid())
   name            String
   description     String?   @db.Text
-  images          String[]  // 图片URL数组
+  images          Json      @default("[]") // 图片URL数组
   videoUrl        String?
 
   // 位置信息
@@ -125,7 +125,7 @@ model StoreFacility {
   storeId   String
   store     Store   @relation(fields: [storeId], references: [id], onDelete: Cascade)
   category  String  // 分类: 公共区域/房间设施
-  items     String[] // 设施项目
+  items     Json      @default("[]") // 设施项目
 
   @@index([storeId])
 }
@@ -147,7 +147,7 @@ model StoreRule {
   checkInTime String  @default("14:00后")
   checkOutTime String @default("12:00前")
   cancelPolicy String @default("入住前24小时免费取消")
-  notices     String[] // 注意事项
+  notices     Json      @default("[]") // 注意事项
 
   @@unique([storeId])
 }
@@ -185,7 +185,7 @@ model Room {
   store         Store     @relation(fields: [storeId], references: [id], onDelete: Cascade)
   name          String
   type          RoomType
-  images        String[]
+  images        Json      @default("[]")
   bedCount      Int       // 总床位数
   area          Int       // 面积(平方米)
   floor         String?   // 楼层
@@ -199,7 +199,7 @@ model Room {
   holidayPrice  Decimal?  @db.Decimal(10, 2)  // 节假日价
 
   // 设施特点
-  features      String[]
+  features      Json      @default("[]")
   hasSmartLock  Boolean   @default(true)
 
   status        RoomStatus @default(ACTIVE)
@@ -446,8 +446,8 @@ model CouponTemplate {
   validTo         DateTime?   // 固定结束时间
 
   // 使用限制
-  applicableStores String[]   // 适用门店ID, 空数组表示全部
-  applicableRooms  String[]   // 适用房型, 空数组表示全部
+  applicableStores Json     @default("[]") // 适用门店ID, 空数组表示全部
+  applicableRooms  Json     @default("[]") // 适用房型, 空数组表示全部
 
   // 发放限制
   totalCount      Int         @default(-1) // 总数量, -1表示不限
@@ -727,7 +727,7 @@ model Review {
 
   rating      Int       // 1-5 星
   content     String    @db.Text
-  images      String[]
+  images      Json      @default("[]")
 
   roomType    String?   // 入住房型
   stayDate    String?   // 入住月份 2024-05
@@ -771,7 +771,7 @@ model Feedback {
 
   type        FeedbackType
   content     String    @db.Text
-  images      String[]
+  images      Json      @default("[]")
   contact     String?
 
   status      FeedbackStatus @default(PENDING)
@@ -820,7 +820,7 @@ model HomeConfig {
   banners     Json      // [{id, image, link, title}]
 
   // 热门标签
-  hotTags     String[]
+  hotTags     Json      @default("[]")
 
   // 促销入口
   promotions  Json      // [{id, type, title, subtitle, image, link}]

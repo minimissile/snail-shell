@@ -109,12 +109,13 @@ export class StoreService {
       const distance =
         lng && lat ? this.calculateDistance(Number(store.latitude), Number(store.longitude), lat, lng) : null
 
+      const images = (store.images || []) as string[]
       return {
         id: store.id,
         name: store.name,
-        image: store.images[0] || '',
-        images: store.images,
-        imageCount: store.images.length,
+        image: images[0] || '',
+        images: images,
+        imageCount: images.length,
         rating: Number(store.rating),
         ratingText: this.getRatingText(Number(store.rating)),
         reviewCount: store.reviewCount,
@@ -275,13 +276,15 @@ export class StoreService {
 
         const bookedBedIds = new Set(bookedBeds.map((b) => b.bedId))
         const availableBeds = room._count.beds - bookedBedIds.size
+        const roomImages = (room.images || []) as string[]
+        const roomFeatures = (room.features || []) as string[]
 
         return {
           id: room.id,
           name: room.name,
           type: room.type.toLowerCase(),
-          image: room.images[0] || '',
-          images: room.images,
+          image: roomImages[0] || '',
+          images: roomImages,
           bedCount: room._count.beds,
           availableBeds,
           area: room.area,
@@ -291,7 +294,7 @@ export class StoreService {
           priceUnit: '晚',
           hourPrice: room.hourPrice ? Number(room.hourPrice) : null,
           monthPrice: room.monthPrice ? Number(room.monthPrice) : null,
-          features: room.features,
+          features: roomFeatures,
           packages: room.packages.map((p) => ({
             type: p.type,
             icon: p.icon,

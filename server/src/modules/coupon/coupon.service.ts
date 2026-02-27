@@ -149,9 +149,10 @@ export class CouponService {
 
     for (const coupon of coupons) {
       const template = coupon.template
+      const applicableStores = (template.applicableStores || []) as string[]
 
       // 检查适用门店
-      if (template.applicableStores.length > 0 && !template.applicableStores.includes(storeId)) {
+      if (applicableStores.length > 0 && !applicableStores.includes(storeId)) {
         unavailable.push({
           id: coupon.id,
           name: template.name,

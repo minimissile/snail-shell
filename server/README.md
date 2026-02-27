@@ -14,8 +14,11 @@
 ## 环境要求
 
 - Node.js >= 18
-- Docker Desktop (推荐) 或本地安装 PostgreSQL + Redis
 - npm >= 9
+- 数据库 (三选一):
+  - Docker Desktop (本地开发)
+  - 本地安装 PostgreSQL + Redis
+  - 云数据库服务 (团队协作推荐)
 
 ## 快速开始
 
@@ -36,22 +39,106 @@ docker-compose up -d
 
 **方式二：本地安装**
 
+macOS:
+
 ```bash
-# macOS
 brew install postgresql@15 redis
 brew services start postgresql@15
 brew services start redis
-
-# 创建数据库
 createdb snailshell
 ```
 
+Windows:
+
+```powershell
+# 安装 Chocolatey 包管理器 (以管理员身份运行 PowerShell)
+Set-ExecutionPolicy Bypass -Scope Process -Force
+iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+
+# 安装 PostgreSQL 和 Redis
+choco install postgresql15 redis-64
+
+# 启动服务 (服务会自动启动，或手动启动)
+net start postgresql-x64-15
+net start redis
+
+# 创建数据库 (使用 psql)
+psql -U postgres -c "CREATE DATABASE snailshell;"
+psql -U postgres -c "CREATE USER snailshell WITH PASSWORD 'snailshell123';"
+psql -U postgres -c "GRANT ALL PRIVILEGES ON DATABASE snailshell TO snailshell;"
+```
+
+或使用安装包：
+
+- PostgreSQL: https://www.postgresql.org/download/windows/
+- Redis: https://github.com/tporadowski/redis/releases
+
+**方式三：云数据库 (推荐用于团队协作)**
+
+使用云数据库服务，所有开发者共享同一数据源，无需本地安装。
+
+#### 腾讯云
+
+| 服务       | 产品                                                              | 配置建议         |
+| ---------- | ----------------------------------------------------------------- | ---------------- |
+| PostgreSQL | [云数据库 PostgreSQL](https://cloud.tencent.com/product/postgres) | 1核1G (开发环境) |
+| Redis      | [云数据库 Redis](https://cloud.tencent.com/product/crs)           | 256MB (开发环境) |
+
+#### 阿里云
+
+| 服务       | 产品                                                                     | 配置建议         |
+| ---------- | ------------------------------------------------------------------------ | ---------------- |
+| PostgreSQL | [云数据库 RDS PostgreSQL](https://www.aliyun.com/product/rds/postgresql) | 1核1G (开发环境) |
+| Redis      | [云数据库 Redis](https://www.aliyun.com/product/redis)                   | 256MB (开发环境) |
+
+#### 配置步骤
+
+1. 在云控制台创建 PostgreSQL 和 Redis 实例
+2. 配置安全组/白名单，允许开发机器 IP 访问
+3. 获取连接信息，修改 `.env` 文件：
+
+```env
+# PostgreSQL 云数据库
+DATABASE_URL="postgresql://用户名:密码@云数据库地址:端口/数据库名?schema=public"
+
+# Redis 云数据库
+REDIS_HOST=云Redis地址
+REDIS_PORT=6379
+REDIS_PASSWORD=Redis密码
+```
+
+4. 初始化数据库表结构：
+
+```bash
+# 首次部署，同步 schema 到云数据库
+npx prisma db push
+
+# 或使用迁移 (生产环境推荐)
+npx prisma migrate deploy
+```
+
+#### 云数据库注意事项
+
+- **安全组配置**: 确保开发机器的公网 IP 已加入白名单
+- **SSL 连接**: 生产环境建议开启 SSL，连接字符串添加 `?sslmode=require`
+- **数据备份**: 开启自动备份，设置合理的备份保留策略
+- **费用预估**: 开发环境最低配置约 50-100 元/月
+
 ### 3. 配置环境变量
+
+macOS/Linux:
 
 ```bash
 cp .env.example .env
-# 根据需要修改 .env 中的配置
 ```
+
+Windows (PowerShell):
+
+```powershell
+Copy-Item .env.example .env
+```
+
+根据需要修改 `.env` 中的配置。
 
 ### 4. 初始化数据库
 
@@ -139,16 +226,17 @@ server/
 
 ## 协同开发
 
-### 环境一致性
+### 数据库方案选择
 
-项目使用 Docker 确保所有开发者的环境完全一致：
+| 方案     | 适用场景 | 优点                   | 缺点                     |
+| -------- | -------- | ---------------------- | ------------------------ |
+| Docker   | 单人开发 | 环境隔离、一键启动     | 需安装 Docker            |
+| 云数据库 | 团队协作 | 数据共享、无需本地安装 | 有费用、需网络           |
+| 本地安装 | 离线开发 | 无依赖                 | 配置繁琐、版本可能不一致 |
 
-- PostgreSQL 15-alpine
-- Redis 7-alpine
+**团队协作推荐使用云数据库**，所有成员连接同一数据源，数据实时同步。
 
-每位开发者在本地运行独立的 Docker 容器，数据互不干扰。
-
-### 新成员入门
+### 新成员入门 (云数据库方案)
 
 ```bash
 # 1. 克隆代码
@@ -158,14 +246,37 @@ cd snail-shell/server
 # 2. 安装依赖
 npm install
 
-# 3. 启动数据库
+# 3. 获取 .env 配置文件
+# 向团队成员获取 .env 文件 (包含云数据库连接信息)
+
+# 4. 生成 Prisma 客户端
+npx prisma generate
+
+# 5. 启动服务
+npm run start:dev
+```
+
+### 新成员入门 (Docker 方案)
+
+```bash
+# 1. 克隆代码
+git clone <repo-url>
+cd snail-shell/server
+
+# 2. 安装依赖
+npm install
+
+# 3. 配置环境变量
+cp .env.example .env
+
+# 4. 启动数据库
 docker-compose up -d
 
-# 4. 初始化数据库
+# 5. 初始化数据库
 npx prisma migrate dev
 npx prisma db seed
 
-# 5. 启动服务
+# 6. 启动服务
 npm run start:dev
 ```
 
@@ -203,6 +314,8 @@ npm run start:dev
 
 ### 端口被占用
 
+macOS/Linux:
+
 ```bash
 # 查看端口占用
 lsof -i :3000
@@ -211,6 +324,18 @@ lsof -i :6379
 
 # 停止占用进程
 kill -9 <PID>
+```
+
+Windows (PowerShell):
+
+```powershell
+# 查看端口占用
+netstat -ano | findstr :3000
+netstat -ano | findstr :5432
+netstat -ano | findstr :6379
+
+# 停止占用进程 (PID 为上述命令最后一列数字)
+taskkill /PID <PID> /F
 ```
 
 ### 数据库连接失败

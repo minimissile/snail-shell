@@ -34,20 +34,23 @@ export class FavoriteService {
     ])
 
     return paginate(
-      favorites.map((f) => ({
-        id: f.id,
-        store: {
-          id: f.store.id,
-          name: f.store.name,
-          image: f.store.images[0] || '',
-          rating: Number(f.store.rating),
-          reviewCount: f.store.reviewCount,
-          location: f.store.district,
-          price: f.store.rooms[0] ? Number(f.store.rooms[0].price) : 0,
-          tag: '平台验真',
-        },
-        createdAt: f.createdAt,
-      })),
+      favorites.map((f) => {
+        const storeImages = (f.store.images || []) as string[]
+        return {
+          id: f.id,
+          store: {
+            id: f.store.id,
+            name: f.store.name,
+            image: storeImages[0] || '',
+            rating: Number(f.store.rating),
+            reviewCount: f.store.reviewCount,
+            location: f.store.district,
+            price: f.store.rooms[0] ? Number(f.store.rooms[0].price) : 0,
+            tag: '平台验真',
+          },
+          createdAt: f.createdAt,
+        }
+      }),
       total,
       page,
       pageSize
@@ -136,12 +139,13 @@ export class FavoriteService {
       if (!grouped[dateKey]) {
         grouped[dateKey] = []
       }
+      const fpImages = (fp.store.images || []) as string[]
       grouped[dateKey].push({
         id: fp.id,
         store: {
           id: fp.store.id,
           name: fp.store.name,
-          image: fp.store.images[0] || '',
+          image: fpImages[0] || '',
           rating: Number(fp.store.rating),
           reviewCount: fp.store.reviewCount,
           location: fp.store.district,
