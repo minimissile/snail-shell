@@ -97,12 +97,8 @@ Page({
       })
     } catch (err) {
       console.error('加载门店列表失败:', err)
-      this.setData({ isLoading: false })
-
-      // 如果是首次加载失败，显示空状态或使用模拟数据
-      if (isRefresh) {
-        this.loadMockData()
-      }
+      this.setData({ isLoading: false, isEmpty: true, storeList: [] })
+      wx.showToast({ title: '加载门店失败', icon: 'none' })
     }
   },
 
@@ -127,54 +123,6 @@ Page({
       savedAmount: Math.floor(store.lowestPrice * 0.1),
       distance: store.distance,
     }
-  },
-
-  // 加载模拟数据（API 未连接时使用）
-  loadMockData() {
-    const mockList: StoreItem[] = [
-      {
-        id: '1',
-        name: '【蜗壳精品店】深圳北站青年旅社',
-        image: '/assets/figma/favorites/item-1.jpg',
-        images: ['/assets/figma/favorites/item-1.jpg'],
-        promotionTag: '离店赚10倍积分',
-        verifiedTag: '认证房源',
-        isFavorite: false,
-        imageCount: 1,
-        totalImages: 55,
-        rating: 5.0,
-        reviewCount: 20,
-        highlightComment: '房东人很热情',
-        features: ['专业保洁', '网红INS风', '实拍看房', '免费瓶装水', '干湿分离', '5星卫生分'],
-        details: '5居5床10-14人·整套188㎡ | 距深圳北站直线1.9公里',
-        price: 180,
-        savedAmount: 199,
-      },
-      {
-        id: '2',
-        name: '【蜗壳旗舰店】深圳北站青年公寓',
-        image: '/assets/figma/favorites/item-1.jpg',
-        images: ['/assets/figma/favorites/item-1.jpg'],
-        promotionTag: '预订享限时优惠',
-        verifiedTag: '蜗壳精选',
-        isFavorite: false,
-        imageCount: 1,
-        totalImages: 40,
-        rating: 5.0,
-        reviewCount: 18,
-        highlightComment: '房间隔音挺好',
-        features: ['超赞房东', '私家花园', '实拍看房', '免费瓶装水', '干湿分离', '5星卫生分'],
-        details: '5居5床10-14人·整套188㎡ | 距深圳北站直线1.9公里',
-        price: 180,
-        savedAmount: 199,
-      },
-    ]
-
-    this.setData({
-      storeList: mockList,
-      isEmpty: false,
-      hasMore: false,
-    })
   },
 
   // 下拉刷新

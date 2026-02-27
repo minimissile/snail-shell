@@ -108,7 +108,7 @@ Page({
       const { storeId, roomId } = this.data
 
       if (!storeId || !roomId) {
-        this.loadMockData()
+        wx.showToast({ title: '参数缺失', icon: 'none' })
         return
       }
 
@@ -149,21 +149,8 @@ Page({
       this.loadAvailableCoupons()
     } catch (err) {
       console.error('加载数据失败:', err)
-      this.loadMockData()
+      wx.showToast({ title: '加载数据失败', icon: 'none' })
     }
-  },
-
-  // 加载模拟数据
-  loadMockData() {
-    this.setData({
-      roomType: '男生四人位',
-      roomDesc: '整套88㎡ | 1居1床1卫1厅 | 宜住2人',
-      roomImage: '/assets/figma/order-form/room-thumbnail.png',
-      totalPrice: 68,
-      originalPrice: 98,
-      discountAmount: 30,
-      packages: [{ type: 'cancel', icon: '✓', name: '免费取消' }],
-    })
   },
 
   // 计算价格

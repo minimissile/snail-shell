@@ -68,7 +68,7 @@ Page({
   // 加载收藏列表
   async loadFavorites() {
     if (!isLoggedIn()) {
-      this.loadMockData()
+      this.setData({ isEmpty: true, favoritesList: [] })
       return
     }
 
@@ -88,15 +88,15 @@ Page({
       })
     } catch (err) {
       console.error('加载收藏失败:', err)
-      this.setData({ isLoading: false })
-      this.loadMockData()
+      this.setData({ isLoading: false, isEmpty: true, favoritesList: [] })
+      wx.showToast({ title: '加载收藏失败', icon: 'none' })
     }
   },
 
   // 加载足迹列表
   async loadFootprints() {
     if (!isLoggedIn()) {
-      this.loadMockFootprints()
+      this.setData({ isEmpty: true, footprintsList: [], footprintGroups: [] })
       return
     }
 
@@ -137,8 +137,8 @@ Page({
       })
     } catch (err) {
       console.error('加载足迹失败:', err)
-      this.setData({ isLoading: false })
-      this.loadMockFootprints()
+      this.setData({ isLoading: false, isEmpty: true, footprintsList: [], footprintGroups: [] })
+      wx.showToast({ title: '加载足迹失败', icon: 'none' })
     }
   },
 
@@ -156,72 +156,6 @@ Page({
       image: item.storeImage || '/assets/figma/favorites/item-1.jpg',
       tag: '蜗壳精选',
     }
-  },
-
-  // 加载模拟数据
-  loadMockData() {
-    const mockList: FavoriteItem[] = [
-      {
-        id: '1',
-        storeId: '1',
-        title: '不如野·奢·林时有事Forest设计师度假民宿(喀纳斯景区店)',
-        rating: 4.8,
-        reviewCount: 358,
-        location: '阿勒泰地区 · 近哈纳斯新村 · 喀纳斯风景区',
-        checkInDate: '01-27至01-28入住',
-        price: 330,
-        image: '/assets/figma/favorites/item-1.jpg',
-        tag: '蜗壳精选',
-      },
-      {
-        id: '2',
-        storeId: '2',
-        title: '不如野·奢·林时有事Forest设计师度假民宿(喀纳斯景区店)',
-        rating: 4.8,
-        reviewCount: 358,
-        location: '阿勒泰地区 · 近哈纳斯新村 · 喀纳斯风景区',
-        checkInDate: '01-27至01-28入住',
-        price: 330,
-        image: '/assets/figma/favorites/item-1.jpg',
-        tag: '蜗壳精选',
-      },
-    ]
-
-    this.setData({
-      favoritesList: mockList,
-      isEmpty: false,
-    })
-  },
-
-  // 加载模拟足迹数据
-  loadMockFootprints() {
-    const mockList: FootprintItem[] = [
-      {
-        id: '1',
-        storeId: '1',
-        title: '不如野·奢·林时有事Forest设计师度假民宿(喀纳斯景区店)',
-        rating: 4.8,
-        reviewCount: 358,
-        location: '阿勒泰地区 · 近哈纳斯新村 · 喀纳斯风景区',
-        checkInDate: '',
-        price: 330,
-        image: '/assets/figma/favorites/item-1.jpg',
-        tag: '',
-        visitTime: new Date().toISOString(),
-      },
-    ]
-
-    this.setData({
-      footprintsList: mockList,
-      footprintGroups: [
-        {
-          date: new Date().toISOString().split('T')[0],
-          dateText: '今天',
-          items: mockList,
-        },
-      ],
-      isEmpty: false,
-    })
   },
 
   // 切换 Tab

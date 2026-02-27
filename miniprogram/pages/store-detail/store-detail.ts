@@ -89,7 +89,7 @@ Page({
     if (storeId) {
       this.loadStoreData(storeId)
     } else {
-      this.loadMockData()
+      wx.showToast({ title: '门店ID缺失', icon: 'none' })
     }
   },
 
@@ -136,87 +136,8 @@ Page({
     } catch (err) {
       console.error('加载门店数据失败:', err)
       this.setData({ isLoading: false })
-      this.loadMockData()
+      wx.showToast({ title: '加载门店数据失败', icon: 'none' })
     }
-  },
-
-  // 加载模拟数据
-  loadMockData() {
-    this.setData({
-      storeInfo: {
-        id: '1',
-        name: '蜗壳青旅·深圳北站店',
-        description: '位于深圳北站商圈，交通便利，环境舒适',
-        address: '深圳市龙华区民治街道北站社区民康路88号',
-        city: '深圳',
-        latitude: 22.6129,
-        longitude: 114.0289,
-        phone: '0755-12345678',
-        images: ['/assets/figma/favorites/item-1.jpg'],
-        rating: 4.9,
-        reviewCount: 328,
-        lowestPrice: 68,
-        tags: ['认证房源', '智能门锁'],
-        features: ['免费WiFi', '停车位', '早餐服务', '智能门锁'],
-        notices: ['禁止携带宠物', '禁止大声喧哗'],
-        facilities: ['休息区', '自助厨房', '洗衣房', '阅读角'],
-        checkInTime: '14:00后',
-        checkOutTime: '12:00前',
-        deposit: 200,
-        cancelPolicy: '入住前24小时免费取消',
-        landlord: {
-          name: '蜗壳官方',
-          avatar: '/images/store-detail/snail.png',
-          badge: '专业青旅运营团队',
-        },
-      } as any,
-      rooms: [
-        {
-          id: '1',
-          storeId: '1',
-          name: '8人女生房',
-          type: 'FEMALE_DORM',
-          bedCount: 8,
-          price: 68,
-          originalPrice: 98,
-          images: ['/assets/figma/favorites/item-1.jpg'],
-          facilities: ['独立卫浴', '空调', 'WiFi'],
-          available: 5,
-          total: 8,
-        },
-        {
-          id: '2',
-          storeId: '1',
-          name: '6人混合房',
-          type: 'MIXED_DORM',
-          bedCount: 6,
-          price: 58,
-          originalPrice: 78,
-          images: ['/assets/figma/favorites/item-1.jpg'],
-          facilities: ['独立卫浴', '空调', 'WiFi'],
-          available: 3,
-          total: 6,
-        },
-      ],
-      reviews: [
-        {
-          id: '1',
-          userId: '1',
-          userName: '蜗壳测试用户',
-          userAvatar: '',
-          storeId: '1',
-          orderId: '1',
-          rating: 5,
-          content: '位置很好，离地铁站很近，房间干净整洁！',
-          images: [],
-          createdAt: new Date().toISOString(),
-        },
-      ],
-      currentPrice: 68,
-      originalPrice: 98,
-      favoriteCount: 326,
-      isLoading: false,
-    })
   },
 
   // 计算各section的位置

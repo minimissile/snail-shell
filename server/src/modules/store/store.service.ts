@@ -254,8 +254,8 @@ export class StoreService {
     })
 
     // 查询每个房型的可用床位数
-    const checkInDate = new Date(dto.checkInDate)
-    const checkOutDate = new Date(dto.checkOutDate)
+    const checkInDate = dto.checkInDate ? new Date(dto.checkInDate) : new Date()
+    const checkOutDate = dto.checkOutDate ? new Date(dto.checkOutDate) : new Date(Date.now() + 86400000)
 
     const result = await Promise.all(
       rooms.map(async (room) => {
@@ -325,8 +325,8 @@ export class StoreService {
       throw new NotFoundException('房型不存在')
     }
 
-    const checkInDate = new Date(dto.checkInDate)
-    const checkOutDate = new Date(dto.checkOutDate)
+    const checkInDate = dto.checkInDate ? new Date(dto.checkInDate) : new Date()
+    const checkOutDate = dto.checkOutDate ? new Date(dto.checkOutDate) : new Date(Date.now() + 86400000)
 
     // 查询已预订的床位
     const bookedBeds = await this.prisma.bedBooking.findMany({

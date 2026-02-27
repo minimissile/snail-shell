@@ -217,35 +217,6 @@ Page({
     })
   },
 
-  // 生成模拟搜索结果
-  generateMockResults(): SearchResult[] {
-    const { toPlace } = this.data
-    const results: SearchResult[] = []
-
-    // 根据目的地生成不同的模拟数据
-    if (toPlace.includes('北站')) {
-      results.push(
-        { id: 1, name: `${toPlace}附近酒店A`, price: 188, rating: 4.5, distance: '200m' },
-        { id: 2, name: `${toPlace}快捷酒店`, price: 128, rating: 4.2, distance: '500m' },
-        { id: 3, name: `${toPlace}商务酒店`, price: 268, rating: 4.7, distance: '800m' }
-      )
-    } else if (toPlace.includes('机场')) {
-      results.push(
-        { id: 1, name: `${toPlace}机场酒店`, price: 298, rating: 4.3, distance: '1.2km' },
-        { id: 2, name: `${toPlace}快捷宾馆`, price: 158, rating: 4.0, distance: '2.1km' }
-      )
-    } else {
-      results.push(
-        { id: 1, name: `${toPlace}舒适酒店`, price: 168, rating: 4.4, distance: '300m' },
-        { id: 2, name: `${toPlace}精品民宿`, price: 218, rating: 4.6, distance: '600m' },
-        { id: 3, name: `${toPlace}经济型酒店`, price: 98, rating: 3.9, distance: '400m' },
-        { id: 4, name: `${toPlace}豪华酒店`, price: 388, rating: 4.8, distance: '1.5km' }
-      )
-    }
-
-    return results
-  },
-
   onGoSelectRoom() {
     // 跳转到附近门店页面（附近房源）
     wx.navigateTo({

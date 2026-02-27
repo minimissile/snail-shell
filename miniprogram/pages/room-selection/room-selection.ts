@@ -141,8 +141,7 @@ Page({
       this.calculateDays()
     } catch (error) {
       console.error('加载数据失败:', error)
-      // 使用模拟数据
-      this.loadMockData()
+      wx.showToast({ title: '加载数据失败', icon: 'none' })
     } finally {
       this.setData({ loading: false })
     }
@@ -189,80 +188,6 @@ Page({
     }
 
     this.setData({ bedGroups: groups })
-  },
-
-  // 加载模拟数据
-  loadMockData() {
-    const price = 88
-    const groups: BedGroup[] = [
-      {
-        id: 'B',
-        position: { x: 12, y: 16 },
-        beds: [
-          { id: 'B01', status: 'available', price },
-          { id: 'B02', status: 'available', price },
-          { id: 'B03', status: 'available', price },
-          { id: 'B04', status: 'available', price },
-        ],
-      },
-      {
-        id: 'B2',
-        position: { x: 12, y: 124 },
-        beds: [
-          { id: 'B05', status: 'available', price },
-          { id: 'B06', status: 'available', price },
-          { id: 'B07', status: 'available', price },
-          { id: 'B08', status: 'available', price },
-        ],
-      },
-      {
-        id: 'B3',
-        position: { x: 12, y: 232 },
-        beds: [
-          { id: 'B09', status: 'available', price },
-          { id: 'B10', status: 'available', price },
-          { id: 'B11', status: 'available', price },
-          { id: 'B12', status: 'available', price },
-        ],
-      },
-      {
-        id: 'A',
-        position: { x: 172, y: 16 },
-        beds: [
-          { id: 'A01', status: 'available', price },
-          { id: 'A02', status: 'available', price },
-          { id: 'A03', status: 'available', price },
-          { id: 'A04', status: 'available', price },
-        ],
-      },
-      {
-        id: 'A2',
-        position: { x: 172, y: 124 },
-        beds: [
-          { id: 'A05', status: 'available', price },
-          { id: 'A06', status: 'available', price },
-          { id: 'A07', status: 'unavailable', price },
-          { id: 'A08', status: 'available', price },
-        ],
-      },
-      {
-        id: 'A3',
-        position: { x: 172, y: 232 },
-        beds: [
-          { id: 'A09', status: 'available', price },
-          { id: 'A10', status: 'unavailable', price },
-          { id: 'A11', status: 'available', price },
-          { id: 'A12', status: 'available', price },
-        ],
-      },
-    ]
-
-    this.setData({
-      bedGroups: groups,
-      roomType: '男生四人位',
-      unitPrice: price,
-      storeName: this.data.storeName || '民治店',
-    })
   },
 
   // 计算天数

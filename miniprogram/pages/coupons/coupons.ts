@@ -59,7 +59,7 @@ Page({
   // 加载优惠券列表
   async loadCoupons() {
     if (!isLoggedIn()) {
-      this.loadMockData()
+      this.setData({ isEmpty: true, allCoupons: [], displayCoupons: [] })
       return
     }
 
@@ -98,8 +98,8 @@ Page({
       this.filterCoupons()
     } catch (err) {
       console.error('加载优惠券失败:', err)
-      this.setData({ isLoading: false })
-      this.loadMockData()
+      this.setData({ isLoading: false, isEmpty: true, allCoupons: [], displayCoupons: [] })
+      wx.showToast({ title: '加载优惠券失败', icon: 'none' })
     }
   },
 
@@ -135,66 +135,6 @@ Page({
       isExpired: coupon.status === 'expired',
       isUsed: coupon.status === 'used',
     }
-  },
-
-  // 加载模拟数据
-  loadMockData() {
-    const mockCoupons: CouponItem[] = [
-      {
-        id: '1',
-        type: 'amount',
-        status: 'unused',
-        iconSrc: '/assets/figma/coupons/coupon-icon-homestay.svg',
-        amount: '20',
-        unit: '¥',
-        title: '新人专享券',
-        description: '满100可用',
-        validPeriod: '有效期:2024-02-27至2024-03-27',
-        isExpired: false,
-        isUsed: false,
-      },
-      {
-        id: '2',
-        type: 'discount',
-        status: 'unused',
-        iconSrc: '/assets/figma/coupons/coupon-icon-selection.svg',
-        amount: '9.5',
-        unit: '折',
-        title: '会员专享折扣券',
-        description: '全场通用',
-        validPeriod: '有效期:2024-02-27至2024-04-27',
-        isExpired: false,
-        isUsed: false,
-      },
-      {
-        id: '3',
-        type: 'amount',
-        status: 'used',
-        iconSrc: '/assets/figma/coupons/coupon-icon-hotel.svg',
-        amount: '30',
-        unit: '¥',
-        title: '限时优惠券',
-        description: '满200可用',
-        validPeriod: '有效期:2024-01-27至2024-02-27',
-        isExpired: false,
-        isUsed: true,
-      },
-    ]
-
-    const tabs = this.data.tabs.map((tab) => {
-      if (tab.id === 'all') return { ...tab, count: mockCoupons.length }
-      if (tab.id === 'unused') return { ...tab, count: mockCoupons.filter((c) => c.status === 'unused').length }
-      if (tab.id === 'used') return { ...tab, count: mockCoupons.filter((c) => c.status === 'used').length }
-      if (tab.id === 'expired') return { ...tab, count: mockCoupons.filter((c) => c.status === 'expired').length }
-      return tab
-    })
-
-    this.setData({
-      allCoupons: mockCoupons,
-      displayCoupons: mockCoupons,
-      tabs,
-      isEmpty: false,
-    })
   },
 
   // 根据当前 tab 过滤优惠券

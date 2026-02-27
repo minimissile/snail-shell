@@ -854,3 +854,108 @@ model HomeConfig {
 
   updatedAt   DateTime  @updatedAt
 }
+
+// ==================== 管理后台相关 ====================
+
+enum AdminStatus {
+  ACTIVE      // 正常
+  DISABLED    // 禁用
+}
+
+model AdminUser {
+  id            String      @id @default(cuid())
+  username      String      @unique
+  password      String
+  realName      String
+  phone         String?
+  email         String?
+  avatar        String?
+  status        AdminStatus @default(ACTIVE)
+  lastLoginAt   DateTime?
+  lastLoginIp   String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  createdBy     String?
+
+  roles         AdminUserRole[]
+  operationLogs AdminOperationLog[]
+
+  @@index([username])
+  @@index([status])
+}
+
+model AdminRole {
+  id          String      @id @default(cuid())
+  name        String      @unique
+  code        String      @unique
+  description String?
+  sortOrder   Int         @default(0)
+  status      AdminStatus @default(ACTIVE)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  users       AdminUserRole[]
+  permissions AdminRolePermission[]
+
+  @@index([code])
+}
+
+model AdminPermission {
+  id          String    @id @default(cuid())
+  name        String
+  code        String    @unique
+  module      String
+  action      String
+  description String?
+  sortOrder   Int       @default(0)
+  createdAt   DateTime  @default(now())
+
+  roles       AdminRolePermission[]
+
+  @@index([module])
+  @@index([code])
+}
+
+model AdminUserRole {
+  id        String    @id @default(cuid())
+  userId    String
+  user      AdminUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  roleId    String
+  role      AdminRole @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  createdAt DateTime  @default(now())
+
+  @@unique([userId, roleId])
+  @@index([userId])
+  @@index([roleId])
+}
+
+model AdminRolePermission {
+  id           String          @id @default(cuid())
+  roleId       String
+  role         AdminRole       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permissionId String
+  permission   AdminPermission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  createdAt    DateTime        @default(now())
+
+  @@unique([roleId, permissionId])
+  @@index([roleId])
+  @@index([permissionId])
+}
+
+model AdminOperationLog {
+  id            String    @id @default(cuid())
+  adminUserId   String
+  adminUser     AdminUser @relation(fields: [adminUserId], references: [id])
+  module        String
+  action        String
+  description   String
+  method        String
+  path          String
+  ip            String?
+  requestBody   Json?
+  responseCode  Int?
+  createdAt     DateTime  @default(now())
+
+  @@index([adminUserId, createdAt])
+  @@index([module, createdAt])
+}

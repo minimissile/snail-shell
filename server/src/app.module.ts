@@ -22,6 +22,9 @@ import { BalanceModule } from './modules/balance/balance.module'
 import { MessageModule } from './modules/message/message.module'
 import { CommonModule } from './modules/common/common.module'
 
+// 管理后台模块
+import { AdminModule } from './modules/admin/admin.module'
+
 @Module({
   imports: [
     // 配置模块
@@ -45,6 +48,9 @@ import { CommonModule } from './modules/common/common.module'
     BalanceModule,
     MessageModule,
     CommonModule,
+
+    // 管理后台模块
+    AdminModule,
   ],
   providers: [
     // 全局异常过滤器

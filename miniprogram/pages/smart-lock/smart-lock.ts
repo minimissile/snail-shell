@@ -70,7 +70,8 @@ Page({
       await this.loadLockDetail(activeLock.id)
     } catch (error) {
       console.error('加载门锁列表失败:', error)
-      this.loadMockData()
+      this.setData({ loading: false })
+      wx.showToast({ title: '加载门锁失败', icon: 'none' })
     } finally {
       this.setData({ loading: false })
     }
@@ -98,7 +99,7 @@ Page({
       this.loadUnlockRecords()
     } catch (error) {
       console.error('加载门锁详情失败:', error)
-      this.loadMockData()
+      wx.showToast({ title: '加载门锁详情失败', icon: 'none' })
     }
   },
 
@@ -114,18 +115,6 @@ Page({
     } catch (error) {
       console.error('加载开锁记录失败:', error)
     }
-  },
-
-  // 加载模拟数据
-  loadMockData() {
-    this.setData({
-      storeName: '民治店',
-      roomName: '男生四人位',
-      bedNumber: 'A01',
-      isLocked: true,
-      password: '123456',
-      passwordValidTo: '2026-03-01 12:00',
-    })
   },
 
   // 返回

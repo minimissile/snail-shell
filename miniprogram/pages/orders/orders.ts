@@ -124,7 +124,10 @@ Page({
   // 加载订单列表
   async loadOrders(isRefresh = true) {
     if (!isLoggedIn()) {
-      this.loadMockData()
+      this.setData({
+        ordersByIndex: [[], [], [], [], []],
+        ordersCountByIndex: [0, 0, 0, 0, 0],
+      })
       return
     }
 
@@ -168,7 +171,7 @@ Page({
     } catch (err) {
       console.error('加载订单失败:', err)
       this.setData({ isLoading: false })
-      this.loadMockData()
+      wx.showToast({ title: '加载订单失败', icon: 'none' })
     }
   },
 
@@ -312,113 +315,5 @@ Page({
   onRetry() {
     this.setData({ errorMessage: '', isLoading: false })
     this.loadOrders(true)
-  },
-
-  // 加载模拟数据（API 未连接时使用）
-  loadMockData() {
-    const mockOrders: OrderCard[] = [
-      {
-        id: '1',
-        orderNo: 'ORD202402270001',
-        storeName: '蜗壳精选公寓（民治店）',
-        status: '待评价',
-        statusKey: 'completed',
-        image: '/images/orders/order-room.png',
-        quantity: 1,
-        amount: '300.00',
-        checkIn: '2024-02-27',
-        checkOut: '2024-02-28',
-      },
-      {
-        id: '2',
-        orderNo: 'ORD202402270002',
-        storeName: '蜗壳精选公寓（民治店）',
-        status: '待使用',
-        statusKey: 'confirmed',
-        image: '/images/orders/order-room.png',
-        quantity: 1,
-        amount: '300.00',
-        checkIn: '2024-02-28',
-        checkOut: '2024-03-01',
-      },
-      {
-        id: '3',
-        orderNo: 'ORD202402270003',
-        storeName: '蜗壳精选公寓（民治店）',
-        status: '退款成功',
-        statusKey: 'refunded',
-        image: '/images/orders/order-room.png',
-        quantity: 1,
-        amount: '300.00',
-        checkIn: '2024-02-25',
-        checkOut: '2024-02-26',
-      },
-    ]
-
-    const toPayOrders: OrderCard[] = [
-      {
-        id: '4',
-        orderNo: 'ORD202402270004',
-        storeName: '蜗壳精选公寓（民治店）',
-        status: '待支付',
-        statusKey: 'pending',
-        image: '/images/orders/order-room.png',
-        quantity: 1,
-        amount: '300.00',
-        countdown: '30:00',
-        checkIn: '2024-02-28',
-        checkOut: '2024-03-01',
-      },
-    ]
-
-    const toUseOrders: OrderCard[] = [
-      {
-        id: '2',
-        orderNo: 'ORD202402270002',
-        storeName: '蜗壳精选公寓（民治店）',
-        status: '待使用',
-        statusKey: 'confirmed',
-        image: '/images/orders/order-room.png',
-        quantity: 1,
-        amount: '300.00',
-        checkIn: '2024-02-28',
-        checkOut: '2024-03-01',
-      },
-    ]
-
-    const validOrders: OrderCard[] = [...toUseOrders]
-
-    const refundOrders: OrderCard[] = [
-      {
-        id: '3',
-        orderNo: 'ORD202402270003',
-        storeName: '蜗壳精选公寓（民治店）',
-        status: '退款成功',
-        statusKey: 'refunded',
-        image: '/images/orders/order-room.png',
-        quantity: 1,
-        amount: '300.00',
-        checkIn: '2024-02-25',
-        checkOut: '2024-02-26',
-      },
-    ]
-
-    this.setData({
-      ordersByIndex: [mockOrders, toUseOrders, validOrders, toPayOrders, refundOrders],
-      ordersCountByIndex: [
-        mockOrders.length,
-        toUseOrders.length,
-        validOrders.length,
-        toPayOrders.length,
-        refundOrders.length,
-      ],
-      'ordersByTab.all': mockOrders,
-      'ordersByTab.toUse': toUseOrders,
-      'ordersByTab.valid': validOrders,
-      'ordersByTab.toPay': toPayOrders,
-      'ordersByTab.refund': refundOrders,
-    })
-
-    console.log('[Orders] Mock data loaded')
   },
 })
