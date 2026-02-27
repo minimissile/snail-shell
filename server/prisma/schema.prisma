@@ -1,0 +1,829 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ==================== 用户相关 ====================
+
+model User {
+  id              String    @id @default(cuid())
+  openId          String    @unique
+  unionId         String?
+  nickname        String?
+  avatar          String?
+  phone           String?
+  memberLevel     MemberLevel @default(NORMAL)
+  memberExpireAt  DateTime?
+  points          Int       @default(0)
+
+  // 余额相关
+  balance         Decimal   @default(0) @db.Decimal(10, 2)
+  cashback        Decimal   @default(0) @db.Decimal(10, 2)
+  consumption     Decimal   @default(0) @db.Decimal(10, 2)
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  // 关联
+  orders          Order[]
+  favorites       Favorite[]
+  footprints      Footprint[]
+  coupons         UserCoupon[]
+  pointRecords    PointRecord[]
+  balanceRecords  BalanceRecord[]
+  messages        Message[]
+  reviews         Review[]
+  feedbacks       Feedback[]
+
+  @@index([openId])
+  @@index([phone])
+}
+
+enum MemberLevel {
+  NORMAL      // 普通会员
+  SILVER      // 银卡会员
+  GOLD        // 金卡会员
+  DIAMOND     // 钻石会员
+  BLACK_GOLD  // 黑金会员
+}
+
+// ==================== 门店相关 ====================
+
+model Store {
+  id              String    @id @default(cuid())
+  name            String
+  description     String?   @db.Text
+  images          String[]  // 图片URL数组
+  videoUrl        String?
+
+  // 位置信息
+  address         String
+  district        String    // 区域
+  cityCode        String    // 城市编码
+  longitude       Decimal   @db.Decimal(10, 7)
+  latitude        Decimal   @db.Decimal(10, 7)
+  nearbyTransport String?   // 附近交通
+
+  // 营业信息
+  businessHours   String    @default("全天营业")
+  phone           String?
+
+  // 评分
+  rating          Decimal   @default(5.0) @db.Decimal(2, 1)
+  reviewCount     Int       @default(0)
+  favoriteCount   Int       @default(0)
+
+  // 状态
+  status          StoreStatus @default(ACTIVE)
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  // 关联
+  rooms           Room[]
+  features        StoreFeature[]
+  facilities      StoreFacility[]
+  highlights      StoreHighlight[]
+  rules           StoreRule[]
+  costRules       StoreCostRule[]
+  landlord        Landlord?
+  orders          Order[]
+  favorites       Favorite[]
+  footprints      Footprint[]
+  reviews         Review[]
+
+  @@index([cityCode])
+  @@index([district])
+  @@index([status])
+}
+
+enum StoreStatus {
+  ACTIVE      // 营业中
+  INACTIVE    // 暂停营业
+  CLOSED      // 已关闭
+}
+
+model StoreFeature {
+  id        String  @id @default(cuid())
+  storeId   String
+  store     Store   @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  icon      String
+  name      String
+
+  @@index([storeId])
+}
+
+model StoreFacility {
+  id        String  @id @default(cuid())
+  storeId   String
+  store     Store   @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  category  String  // 分类: 公共区域/房间设施
+  items     String[] // 设施项目
+
+  @@index([storeId])
+}
+
+model StoreHighlight {
+  id          String  @id @default(cuid())
+  storeId     String
+  store       Store   @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  title       String
+  description String
+
+  @@index([storeId])
+}
+
+model StoreRule {
+  id          String  @id @default(cuid())
+  storeId     String
+  store       Store   @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  checkInTime String  @default("14:00后")
+  checkOutTime String @default("12:00前")
+  cancelPolicy String @default("入住前24小时免费取消")
+  notices     String[] // 注意事项
+
+  @@unique([storeId])
+}
+
+model StoreCostRule {
+  id        String  @id @default(cuid())
+  storeId   String
+  store     Store   @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  title     String
+  content   String
+  sortOrder Int     @default(0)
+
+  @@index([storeId])
+}
+
+model Landlord {
+  id            String  @id @default(cuid())
+  storeId       String  @unique
+  store         Store   @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  name          String
+  avatar        String?
+  description   String?
+  responseRate  String  @default("98%")
+  responseTime  String  @default("5分钟内")
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+// ==================== 房型/床位相关 ====================
+
+model Room {
+  id            String    @id @default(cuid())
+  storeId       String
+  store         Store     @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  name          String
+  type          RoomType
+  images        String[]
+  bedCount      Int       // 总床位数
+  area          Int       // 面积(平方米)
+  floor         String?   // 楼层
+
+  // 价格
+  price         Decimal   @db.Decimal(10, 2)  // 基准价格(每晚)
+  originalPrice Decimal?  @db.Decimal(10, 2)  // 原价
+  hourPrice     Decimal?  @db.Decimal(10, 2)  // 小时价
+  monthPrice    Decimal?  @db.Decimal(10, 2)  // 月租价
+  weekendPrice  Decimal?  @db.Decimal(10, 2)  // 周末价
+  holidayPrice  Decimal?  @db.Decimal(10, 2)  // 节假日价
+
+  // 设施特点
+  features      String[]
+  hasSmartLock  Boolean   @default(true)
+
+  status        RoomStatus @default(ACTIVE)
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // 关联
+  beds          Bed[]
+  packages      RoomPackage[]
+  orderItems    OrderItem[]
+
+  @@index([storeId])
+  @@index([type])
+  @@index([status])
+}
+
+enum RoomType {
+  MALE_DORM     // 男生房
+  FEMALE_DORM   // 女生房
+  MIXED_DORM    // 混合房
+  PRIVATE       // 独立房间
+}
+
+enum RoomStatus {
+  ACTIVE        // 可预订
+  MAINTENANCE   // 维护中
+  INACTIVE      // 已下架
+}
+
+model RoomPackage {
+  id        String  @id @default(cuid())
+  roomId    String
+  room      Room    @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  type      String  // breakfast/cancel/wifi 等
+  icon      String
+  name      String
+
+  @@index([roomId])
+}
+
+model Bed {
+  id          String    @id @default(cuid())
+  roomId      String
+  room        Room      @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  bedNumber   String    // 床位编号: A1, A2, B1, B2 等
+  position    BedPosition
+  groupIndex  Int       // 床位组索引
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // 关联
+  bookings    BedBooking[]
+  orderItems  OrderItem[]
+
+  @@unique([roomId, bedNumber])
+  @@index([roomId])
+}
+
+enum BedPosition {
+  TOP_LEFT
+  TOP_RIGHT
+  BOTTOM_LEFT
+  BOTTOM_RIGHT
+}
+
+// 床位预订记录（用于查询床位状态）
+model BedBooking {
+  id            String    @id @default(cuid())
+  bedId         String
+  bed           Bed       @relation(fields: [bedId], references: [id], onDelete: Cascade)
+  orderId       String
+  order         Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  bookingMode   BookingMode
+  checkInDate   DateTime  @db.Date
+  checkOutDate  DateTime  @db.Date
+  startTime     DateTime? // 小时订开始时间
+  endTime       DateTime? // 小时订结束时间
+
+  status        BookingStatus @default(ACTIVE)
+
+  createdAt     DateTime  @default(now())
+
+  @@index([bedId, checkInDate, checkOutDate])
+  @@index([orderId])
+}
+
+enum BookingStatus {
+  ACTIVE
+  CANCELLED
+  COMPLETED
+}
+
+// ==================== 订单相关 ====================
+
+model Order {
+  id              String      @id @default(cuid())
+  orderNo         String      @unique
+  userId          String
+  user            User        @relation(fields: [userId], references: [id])
+  storeId         String
+  store           Store       @relation(fields: [storeId], references: [id])
+
+  // 预订信息
+  bookingMode     BookingMode
+  checkInDate     DateTime    @db.Date
+  checkOutDate    DateTime    @db.Date
+  startTime       DateTime?   // 小时订开始时间
+  endTime         DateTime?   // 小时订结束时间
+  monthCount      Int?        // 月订月数
+  nights          Int         // 晚数
+
+  // 入住人信息
+  guestName       String
+  guestPhone      String
+  guestIdCard     String?
+
+  // 价格信息
+  roomPrice       Decimal     @db.Decimal(10, 2) // 房费
+  totalDiscount   Decimal     @default(0) @db.Decimal(10, 2) // 总优惠
+  pointsDeduction Decimal     @default(0) @db.Decimal(10, 2) // 积分抵扣
+  balanceDeduction Decimal    @default(0) @db.Decimal(10, 2) // 余额抵扣
+  finalPrice      Decimal     @db.Decimal(10, 2) // 最终价格
+  earnPoints      Int         @default(0) // 可获积分
+
+  // 优惠券
+  couponId        String?
+  coupon          UserCoupon? @relation(fields: [couponId], references: [id])
+
+  // 支付信息
+  paymentMethod   PaymentMethod?
+  transactionId   String?     // 微信支付交易号
+  paidAt          DateTime?
+
+  // 订单状态
+  status          OrderStatus @default(PENDING_PAYMENT)
+
+  // 退款信息
+  refundStatus    RefundStatus?
+  refundAmount    Decimal?    @db.Decimal(10, 2)
+  refundReason    String?
+  refundAt        DateTime?
+
+  // 备注
+  remark          String?
+
+  // 过期时间（待支付订单）
+  expireAt        DateTime?
+
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  // 关联
+  items           OrderItem[]
+  bedBookings     BedBooking[]
+  discounts       OrderDiscount[]
+  smartLockAccess SmartLockAccess?
+
+  @@index([userId])
+  @@index([storeId])
+  @@index([status])
+  @@index([orderNo])
+  @@index([createdAt])
+}
+
+enum BookingMode {
+  DAY     // 按天
+  HOUR    // 按小时
+  MONTH   // 按月
+}
+
+enum OrderStatus {
+  PENDING_PAYMENT   // 待支付
+  PENDING_USE       // 待使用
+  IN_USE            // 使用中
+  COMPLETED         // 已完成
+  CANCELLED         // 已取消
+  REFUNDING         // 退款中
+  REFUNDED          // 已退款
+}
+
+enum PaymentMethod {
+  WECHAT    // 微信支付
+  BALANCE   // 余额支付
+}
+
+enum RefundStatus {
+  PENDING   // 待处理
+  APPROVED  // 已批准
+  REJECTED  // 已拒绝
+  COMPLETED // 已完成
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  roomId    String
+  room      Room    @relation(fields: [roomId], references: [id])
+  bedId     String
+  bed       Bed     @relation(fields: [bedId], references: [id])
+  price     Decimal @db.Decimal(10, 2)
+
+  @@index([orderId])
+}
+
+model OrderDiscount {
+  id        String  @id @default(cuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  name      String  // 优惠名称
+  type      DiscountType
+  amount    Decimal @db.Decimal(10, 2)
+
+  @@index([orderId])
+}
+
+enum DiscountType {
+  PROMOTION   // 促销优惠
+  MEMBER      // 会员优惠
+  COUPON      // 优惠券
+  POINTS      // 积分抵扣
+}
+
+// ==================== 优惠券相关 ====================
+
+model CouponTemplate {
+  id              String      @id @default(cuid())
+  name            String
+  description     String?
+  type            CouponType
+
+  // 优惠内容
+  amount          Decimal?    @db.Decimal(10, 2) // 优惠金额
+  discountRate    Decimal?    @db.Decimal(3, 2)  // 折扣率 0.9 = 9折
+  minAmount       Decimal     @default(0) @db.Decimal(10, 2) // 最低消费
+
+  // 有效期类型
+  validType       CouponValidType @default(FIXED)
+  validDays       Int?        // 领取后N天有效
+  validFrom       DateTime?   // 固定开始时间
+  validTo         DateTime?   // 固定结束时间
+
+  // 使用限制
+  applicableStores String[]   // 适用门店ID, 空数组表示全部
+  applicableRooms  String[]   // 适用房型, 空数组表示全部
+
+  // 发放限制
+  totalCount      Int         @default(-1) // 总数量, -1表示不限
+  perUserLimit    Int         @default(1)  // 每人限领
+
+  status          CouponTemplateStatus @default(ACTIVE)
+
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  // 关联
+  userCoupons     UserCoupon[]
+
+  @@index([status])
+}
+
+enum CouponType {
+  DISCOUNT    // 满减券
+  RATE        // 折扣券
+  CASH        // 现金券
+}
+
+enum CouponValidType {
+  FIXED       // 固定时间段
+  DAYS        // 领取后N天
+}
+
+enum CouponTemplateStatus {
+  ACTIVE      // 进行中
+  INACTIVE    // 已停止
+  EXPIRED     // 已过期
+}
+
+model UserCoupon {
+  id              String      @id @default(cuid())
+  userId          String
+  user            User        @relation(fields: [userId], references: [id])
+  templateId      String
+  template        CouponTemplate @relation(fields: [templateId], references: [id])
+
+  validFrom       DateTime
+  validTo         DateTime
+
+  status          UserCouponStatus @default(AVAILABLE)
+  usedAt          DateTime?
+
+  createdAt       DateTime    @default(now())
+
+  // 关联
+  orders          Order[]
+
+  @@index([userId, status])
+  @@index([templateId])
+}
+
+enum UserCouponStatus {
+  AVAILABLE   // 可用
+  USED        // 已使用
+  EXPIRED     // 已过期
+}
+
+// ==================== 收藏/足迹相关 ====================
+
+model Favorite {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
+  storeId   String
+  store     Store     @relation(fields: [storeId], references: [id])
+
+  createdAt DateTime  @default(now())
+
+  @@unique([userId, storeId])
+  @@index([userId])
+}
+
+model Footprint {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
+  storeId   String
+  store     Store     @relation(fields: [storeId], references: [id])
+
+  viewedAt  DateTime  @default(now())
+
+  @@index([userId, viewedAt])
+  @@index([storeId])
+}
+
+// ==================== 智能门锁相关 ====================
+
+model SmartLockAccess {
+  id            String    @id @default(cuid())
+  orderId       String    @unique
+  order         Order     @relation(fields: [orderId], references: [id])
+
+  lockId        String?   // 门锁设备ID
+
+  // 时效
+  validFrom     DateTime
+  validTo       DateTime
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // 关联
+  passwords     SmartLockPassword[]
+  fingerprints  SmartLockFingerprint[]
+  cards         SmartLockCard[]
+  events        SmartLockEvent[]
+}
+
+model SmartLockPassword {
+  id          String    @id @default(cuid())
+  accessId    String
+  access      SmartLockAccess @relation(fields: [accessId], references: [id], onDelete: Cascade)
+
+  type        PasswordType @default(PERMANENT)
+  name        String?
+  password    String
+  validFrom   DateTime?
+  validTo     DateTime?
+
+  createdAt   DateTime  @default(now())
+
+  @@index([accessId])
+}
+
+enum PasswordType {
+  PERMANENT   // 永久密码
+  TEMPORARY   // 临时密码
+}
+
+model SmartLockFingerprint {
+  id          String    @id @default(cuid())
+  accessId    String
+  access      SmartLockAccess @relation(fields: [accessId], references: [id], onDelete: Cascade)
+
+  name        String?
+  fingerprintId String  // 设备端指纹ID
+
+  createdAt   DateTime  @default(now())
+
+  @@index([accessId])
+}
+
+model SmartLockCard {
+  id          String    @id @default(cuid())
+  accessId    String
+  access      SmartLockAccess @relation(fields: [accessId], references: [id], onDelete: Cascade)
+
+  name        String?
+  cardId      String    // 门卡ID
+
+  createdAt   DateTime  @default(now())
+
+  @@index([accessId])
+}
+
+model SmartLockEvent {
+  id          String    @id @default(cuid())
+  accessId    String
+  access      SmartLockAccess @relation(fields: [accessId], references: [id], onDelete: Cascade)
+
+  type        LockEventType
+  method      String?   // password/fingerprint/card/app/auto
+  operator    String?   // 操作者
+  result      EventResult @default(SUCCESS)
+
+  createdAt   DateTime  @default(now())
+
+  @@index([accessId, createdAt])
+}
+
+enum LockEventType {
+  UNLOCK      // 开锁
+  LOCK        // 关锁
+  ALARM       // 告警
+}
+
+enum EventResult {
+  SUCCESS
+  FAILED
+}
+
+// ==================== 积分/余额记录 ====================
+
+model PointRecord {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+
+  type        PointRecordType
+  amount      Int
+  balance     Int       // 变动后余额
+  description String
+  orderId     String?   // 关联订单ID
+
+  createdAt   DateTime  @default(now())
+
+  @@index([userId, createdAt])
+}
+
+enum PointRecordType {
+  EARN        // 获取
+  SPEND       // 消费
+  EXPIRE      // 过期
+}
+
+model BalanceRecord {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+
+  type        BalanceRecordType
+  balanceType BalanceType
+  amount      Decimal   @db.Decimal(10, 2)
+  balance     Decimal   @db.Decimal(10, 2) // 变动后余额
+  description String
+  orderId     String?
+
+  createdAt   DateTime  @default(now())
+
+  @@index([userId, createdAt])
+}
+
+enum BalanceRecordType {
+  RECHARGE    // 充值
+  SPEND       // 消费
+  REFUND      // 退款
+  WITHDRAW    // 提现
+  REWARD      // 奖励
+}
+
+enum BalanceType {
+  BALANCE     // 余额
+  CASHBACK    // 返现
+  CONSUMPTION // 消费金
+}
+
+// ==================== 消息相关 ====================
+
+model Message {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+
+  type        MessageType
+  title       String
+  content     String    @db.Text
+
+  // 关联数据
+  orderId     String?
+
+  isRead      Boolean   @default(false)
+
+  createdAt   DateTime  @default(now())
+
+  @@index([userId, isRead])
+  @@index([userId, type])
+}
+
+enum MessageType {
+  SYSTEM      // 系统消息
+  ORDER       // 订单消息
+  PROMOTION   // 促销消息
+}
+
+// ==================== 点评相关 ====================
+
+model Review {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  storeId     String
+  store       Store     @relation(fields: [storeId], references: [id])
+
+  rating      Int       // 1-5 星
+  content     String    @db.Text
+  images      String[]
+
+  roomType    String?   // 入住房型
+  stayDate    String?   // 入住月份 2024-05
+
+  // 回复
+  replyContent String?  @db.Text
+  replyAt     DateTime?
+
+  status      ReviewStatus @default(ACTIVE)
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([storeId, status])
+  @@index([userId])
+}
+
+enum ReviewStatus {
+  ACTIVE      // 显示
+  HIDDEN      // 隐藏
+}
+
+// ==================== 其他 ====================
+
+model City {
+  id        String    @id @default(cuid())
+  code      String    @unique
+  name      String
+  letter    String    // 首字母
+  isHot     Boolean   @default(false)
+  sortOrder Int       @default(0)
+
+  @@index([letter])
+  @@index([isHot])
+}
+
+model Feedback {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+
+  type        FeedbackType
+  content     String    @db.Text
+  images      String[]
+  contact     String?
+
+  status      FeedbackStatus @default(PENDING)
+  reply       String?   @db.Text
+  repliedAt   DateTime?
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([userId])
+  @@index([status])
+}
+
+enum FeedbackType {
+  SUGGESTION  // 建议
+  COMPLAINT   // 投诉
+  BUG         // Bug
+}
+
+enum FeedbackStatus {
+  PENDING     // 待处理
+  PROCESSING  // 处理中
+  RESOLVED    // 已解决
+}
+
+model Agreement {
+  id          String    @id @default(cuid())
+  type        AgreementType @unique
+  title       String
+  content     String    @db.Text
+  version     String
+
+  updatedAt   DateTime  @updatedAt
+}
+
+enum AgreementType {
+  USER        // 用户协议
+  PRIVACY     // 隐私政策
+  BOOKING     // 预订须知
+}
+
+model HomeConfig {
+  id          String    @id @default(cuid())
+
+  // Banner配置
+  banners     Json      // [{id, image, link, title}]
+
+  // 热门标签
+  hotTags     String[]
+
+  // 促销入口
+  promotions  Json      // [{id, type, title, subtitle, image, link}]
+
+  updatedAt   DateTime  @updatedAt
+}
