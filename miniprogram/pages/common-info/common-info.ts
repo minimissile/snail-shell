@@ -1,9 +1,5 @@
-type Traveler = {
-  id: string
-  name: string
-  phone: string
-  idCard: string
-}
+import { userApi } from '../../api/index'
+import type { GuestInfo, CreateGuestParams } from '../../api/index'
 
 type FormData = {
   name: string
@@ -11,9 +7,18 @@ type FormData = {
   idCard: string
 }
 
+// 显示用的入住人信息（脱敏后）
+interface DisplayTraveler {
+  id: string
+  name: string
+  phone: string
+  idCard: string
+  isDefault: boolean
+}
+
 Component({
   data: {
-    travelers: [] as Traveler[],
+    travelers: [] as DisplayTraveler[],
     showEditPopup: false,
     isEditMode: false,
     editingId: '',
@@ -22,10 +27,10 @@ Component({
       phone: '',
       idCard: '',
     } as FormData,
+    loading: false,
   },
   lifetimes: {
     attached(this: any) {
-      // 加载常用旅客数据
       this.loadTravelers()
     },
   },
@@ -33,38 +38,48 @@ Component({
     /**
      * 加载常用旅客列表
      */
-    loadTravelers(this: any) {
+    async loadTravelers(this: any) {
+      this.setData({ loading: true })
+
       try {
-        const travelers = wx.getStorageSync('common-travelers') as Traveler[]
-        if (travelers && Array.isArray(travelers)) {
-          this.setData({ travelers })
-        } else {
-          // 初始化默认数据
-          const defaultTravelers: Traveler[] = [
-            {
-              id: '1',
-              name: 'Dimoo',
-              phone: '86-185****0306',
-              idCard: '4302************118',
-            },
-          ]
-          this.setData({ travelers: defaultTravelers })
-          wx.setStorageSync('common-travelers', defaultTravelers)
-        }
+        const guests = await userApi.getGuests()
+        // 转换为显示格式（脱敏处理）
+        const travelers = guests.map((g: GuestInfo) => ({
+          id: g.id,
+          name: g.name,
+          phone: this.maskPhone(g.phone),
+          idCard: this.maskIdCard(g.idNumber),
+          isDefault: g.isDefault,
+        }))
+        this.setData({ travelers })
       } catch (error) {
         console.error('加载常用旅客失败', error)
+        this.setData({ travelers: [] })
+      } finally {
+        this.setData({ loading: false })
       }
     },
 
     /**
-     * 保存常用旅客列表
+     * 手机号脱敏
      */
-    saveTravelers(this: any) {
-      try {
-        wx.setStorageSync('common-travelers', this.data.travelers)
-      } catch (error) {
-        console.error('保存常用旅客失败', error)
+    maskPhone(phone: string): string {
+      if (!phone) return ''
+      if (phone.length >= 11) {
+        return phone.substring(0, 3) + '****' + phone.substring(7)
       }
+      return phone
+    },
+
+    /**
+     * 身份证号脱敏
+     */
+    maskIdCard(idCard: string): string {
+      if (!idCard) return ''
+      if (idCard.length >= 18) {
+        return idCard.substring(0, 4) + '************' + idCard.substring(14)
+      }
+      return idCard
     },
 
     /**
@@ -72,18 +87,17 @@ Component({
      */
     onOpenCard(this: any, e: WechatMiniprogram.TouchEvent) {
       const id = e.currentTarget.dataset.id
-      const traveler = this.data.travelers.find((t: Traveler) => t.id === id)
+      const traveler = this.data.travelers.find((t: DisplayTraveler) => t.id === id)
 
       if (!traveler) return
 
-      // 设置为编辑模式
       this.setData({
         isEditMode: true,
         editingId: id,
         formData: {
           name: traveler.name,
-          phone: traveler.phone,
-          idCard: traveler.idCard,
+          phone: '',
+          idCard: '',
         },
         showEditPopup: true,
       })
@@ -93,7 +107,6 @@ Component({
      * 添加常用旅客
      */
     onAddTraveler(this: any) {
-      // 打开添加弹窗
       this.setData({
         isEditMode: false,
         editingId: '',
@@ -126,33 +139,27 @@ Component({
      * 姓名输入变化
      */
     onNameChange(this: any, e: any) {
-      this.setData({
-        'formData.name': e.detail.value,
-      })
+      this.setData({ 'formData.name': e.detail.value })
     },
 
     /**
      * 手机号输入变化
      */
     onPhoneChange(this: any, e: any) {
-      this.setData({
-        'formData.phone': e.detail.value,
-      })
+      this.setData({ 'formData.phone': e.detail.value })
     },
 
     /**
      * 身份证号输入变化
      */
     onIdCardChange(this: any, e: any) {
-      this.setData({
-        'formData.idCard': e.detail.value,
-      })
+      this.setData({ 'formData.idCard': e.detail.value })
     },
 
     /**
      * 确认编辑/添加
      */
-    onConfirmEdit(this: any) {
+    async onConfirmEdit(this: any) {
       const { formData, isEditMode, editingId } = this.data
 
       // 表单验证
@@ -160,62 +167,58 @@ Component({
         wx.showToast({ title: '请输入姓名', icon: 'none' })
         return
       }
-      if (!formData.phone.trim()) {
-        wx.showToast({ title: '请输入手机号', icon: 'none' })
-        return
-      }
-      if (!formData.idCard.trim()) {
-        wx.showToast({ title: '请输入身份证号', icon: 'none' })
-        return
-      }
 
-      // 简单的手机号验证
-      if (!/^\d{11}$/.test(formData.phone.replace(/[^\d]/g, ''))) {
-        wx.showToast({ title: '手机号格式不正确', icon: 'none' })
-        return
+      if (!isEditMode || formData.phone.trim()) {
+        if (!formData.phone.trim()) {
+          wx.showToast({ title: '请输入手机号', icon: 'none' })
+          return
+        }
+        if (!/^\d{11}$/.test(formData.phone.replace(/[^\d]/g, ''))) {
+          wx.showToast({ title: '手机号格式不正确', icon: 'none' })
+          return
+        }
       }
 
-      // 简单的身份证验证
-      if (!/^[\dXx]{18}$/.test(formData.idCard.replace(/[^\dXx]/g, ''))) {
-        wx.showToast({ title: '身份证号格式不正确', icon: 'none' })
-        return
+      if (!isEditMode || formData.idCard.trim()) {
+        if (!formData.idCard.trim()) {
+          wx.showToast({ title: '请输入身份证号', icon: 'none' })
+          return
+        }
+        if (!/^[\dXx]{18}$/.test(formData.idCard.replace(/[^\dXx]/g, ''))) {
+          wx.showToast({ title: '身份证号格式不正确', icon: 'none' })
+          return
+        }
       }
 
-      let travelers = [...this.data.travelers]
+      wx.showLoading({ title: '保存中...', mask: true })
 
-      if (isEditMode) {
-        // 编辑模式：更新现有旅客
-        const index = travelers.findIndex((t: Traveler) => t.id === editingId)
-        if (index !== -1) {
-          travelers[index] = {
-            ...travelers[index],
+      try {
+        if (isEditMode) {
+          const updateData: Partial<CreateGuestParams> = { name: formData.name.trim() }
+          if (formData.phone.trim()) updateData.phone = formData.phone.trim()
+          if (formData.idCard.trim()) {
+            updateData.idNumber = formData.idCard.trim()
+            updateData.idType = 'ID_CARD'
+          }
+          await userApi.updateGuest(editingId, updateData)
+        } else {
+          await userApi.createGuest({
             name: formData.name.trim(),
             phone: formData.phone.trim(),
-            idCard: formData.idCard.trim(),
-          }
+            idType: 'ID_CARD',
+            idNumber: formData.idCard.trim(),
+          })
         }
-      } else {
-        // 添加模式：创建新旅客
-        const newTraveler: Traveler = {
-          id: Date.now().toString(),
-          name: formData.name.trim(),
-          phone: formData.phone.trim(),
-          idCard: formData.idCard.trim(),
-        }
-        travelers.push(newTraveler)
+
+        wx.hideLoading()
+        wx.showToast({ title: isEditMode ? '修改成功' : '添加成功', icon: 'success' })
+        this.setData({ showEditPopup: false })
+        this.loadTravelers()
+      } catch (error) {
+        wx.hideLoading()
+        console.error('保存失败:', error)
+        wx.showToast({ title: '保存失败', icon: 'none' })
       }
-
-      // 保存数据
-      this.setData({ travelers })
-      this.saveTravelers()
-
-      // 关闭弹窗
-      this.setData({ showEditPopup: false })
-
-      wx.showToast({
-        title: isEditMode ? '修改成功' : '添加成功',
-        icon: 'success',
-      })
     },
 
     /**
@@ -227,15 +230,20 @@ Component({
       wx.showModal({
         title: '确认删除',
         content: '确定要删除该常用旅客吗？',
-        success: (res) => {
+        success: async (res) => {
           if (res.confirm) {
-            const travelers = this.data.travelers.filter((t: Traveler) => t.id !== editingId)
-            this.setData({
-              travelers,
-              showEditPopup: false,
-            })
-            this.saveTravelers()
-            wx.showToast({ title: '删除成功', icon: 'success' })
+            wx.showLoading({ title: '删除中...', mask: true })
+            try {
+              await userApi.deleteGuest(editingId)
+              wx.hideLoading()
+              wx.showToast({ title: '删除成功', icon: 'success' })
+              this.setData({ showEditPopup: false })
+              this.loadTravelers()
+            } catch (error) {
+              wx.hideLoading()
+              console.error('删除失败:', error)
+              wx.showToast({ title: '删除失败', icon: 'none' })
+            }
           }
         },
       })
@@ -244,9 +252,7 @@ Component({
     onBack() {
       wx.navigateBack({
         delta: 1,
-        fail: () => {
-          wx.switchTab({ url: '/pages/mine/mine' })
-        },
+        fail: () => wx.switchTab({ url: '/pages/mine/mine' }),
       })
     },
     onMenu() {
@@ -255,9 +261,7 @@ Component({
     onClose() {
       wx.navigateBack({
         delta: 1,
-        fail: () => {
-          wx.switchTab({ url: '/pages/mine/mine' })
-        },
+        fail: () => wx.switchTab({ url: '/pages/mine/mine' }),
       })
     },
   },

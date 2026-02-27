@@ -1,30 +1,52 @@
+import { storeApi, favoriteApi } from '../../api/index'
+import type { RoomInfo, BedInfo } from '../../api/index'
+
+// 床位显示数据
+interface BedDisplayItem {
+  id: string
+  status: 'available' | 'selected' | 'unavailable'
+  price: number
+}
+
+interface BedGroup {
+  id: string
+  position: { x: number; y: number }
+  beds: BedDisplayItem[]
+}
+
 Page({
   data: {
+    // 页面参数
+    storeId: '',
+    roomId: '',
+    checkIn: '',
+    checkOut: '',
+
     // 当前预订方式: 'day' | 'hour' | 'month'
     bookingMode: 'day' as 'day' | 'hour' | 'month',
 
     // 门店信息
-    storeName: '民治店',
+    storeName: '',
     businessHours: '营业时间 00:00-24:00',
 
     // 预订日期
-    startDate: '2026-01-20',
-    startDayOfWeek: '周二',
-    endDate: '2026-01-20',
-    endDayOfWeek: '周二',
+    startDate: '',
+    startDayOfWeek: '',
+    endDate: '',
+    endDayOfWeek: '',
 
     // 按小时预订 - 时段信息
-    startTime: '14:50',
-    endTime: '16:50',
+    startTime: '14:00',
+    endTime: '16:00',
 
     // 按月预订 - 月份信息
-    monthCount: '2个月',
-    monthEndDate: '2026-03-20',
+    monthCount: '1个月',
+    monthEndDate: '',
 
     // 已选信息
     selectedDays: '1天',
     selectedHours: '2.0小时',
-    selectedMonths: '2个月',
+    selectedMonths: '1个月',
 
     // 床位图例
     legendItems: [
@@ -33,80 +55,18 @@ Page({
       { color: '#999999', label: '不可选' },
     ],
 
-    // 床位数据 - 6组床位，每组4个床位
-    bedGroups: [
-      {
-        id: 'B',
-        position: { x: 12, y: 16 },
-        beds: [
-          { id: 'B01', status: 'selected', price: 88 }, // 当前已选
-          { id: 'B02', status: 'available', price: 88 },
-          { id: 'B03', status: 'selected', price: 88 }, // 当前已选
-          { id: 'B04', status: 'available', price: 88 },
-        ],
-      },
-      {
-        id: 'B2',
-        position: { x: 12, y: 124 },
-        beds: [
-          { id: 'B05', status: 'available', price: 88 },
-          { id: 'B06', status: 'available', price: 88 },
-          { id: 'B07', status: 'available', price: 88 },
-          { id: 'B08', status: 'available', price: 88 },
-        ],
-      },
-      {
-        id: 'B3',
-        position: { x: 12, y: 232 },
-        beds: [
-          { id: 'B09', status: 'available', price: 88 },
-          { id: 'B10', status: 'available', price: 88 },
-          { id: 'B11', status: 'available', price: 88 },
-          { id: 'B12', status: 'available', price: 88 },
-        ],
-      },
-      {
-        id: 'A',
-        position: { x: 172, y: 16 },
-        beds: [
-          { id: 'A01', status: 'available', price: 88 },
-          { id: 'A02', status: 'available', price: 88 },
-          { id: 'A03', status: 'available', price: 88 },
-          { id: 'A04', status: 'available', price: 88 },
-        ],
-      },
-      {
-        id: 'A2',
-        position: { x: 172, y: 124 },
-        beds: [
-          { id: 'A05', status: 'available', price: 88 },
-          { id: 'A06', status: 'available', price: 88 },
-          { id: 'A07', status: 'available', price: 88 },
-          { id: 'A08', status: 'available', price: 88 },
-        ],
-      },
-      {
-        id: 'A3',
-        position: { x: 172, y: 232 },
-        beds: [
-          { id: 'A09', status: 'available', price: 88 },
-          { id: 'A10', status: 'unavailable', price: 88 }, // 不可选
-          { id: 'A11', status: 'available', price: 88 },
-          { id: 'A12', status: 'available', price: 88 },
-        ],
-      },
-    ],
+    // 床位数据
+    bedGroups: [] as BedGroup[],
 
-    // 已选床位列表（用于取消选房状态）
-    selectedBeds: [
-      { id: 'B01', price: 88 },
-      { id: 'B03', price: 88 },
-    ],
+    // 已选床位列表
+    selectedBeds: [] as { id: string; price: number }[],
 
     // 房型信息
-    roomType: '男生四人位',
-    roomDate: '1月20日 18:20-20:08',
+    roomInfo: null as RoomInfo | null,
+    roomType: '',
+    roomDate: '',
     currentDay: '今天',
+    unitPrice: 0,
 
     // 智能门锁提示
     smartLockTip: '配备智能门锁, 入住更安心',
@@ -115,15 +75,250 @@ Page({
     bookingTip: '可提前7天预定，最长可预定7天',
 
     // 价格信息
-    totalPrice: 148,
-    originalPrice: 176,
+    totalPrice: 0,
+    originalPrice: 0,
 
-    // 收藏数
-    favoriteCount: 326,
+    // 收藏
+    isFavorite: false,
+    favoriteCount: 0,
+
+    // 加载状态
+    loading: true,
   },
 
-  onLoad() {
-    // 页面加载
+  onLoad(options) {
+    const { storeId, roomId, checkIn, checkOut, storeName } = options
+    if (!storeId || !roomId) {
+      wx.showToast({ title: '参数错误', icon: 'none' })
+      return
+    }
+
+    // 解析日期
+    const startDate = checkIn || this.formatDate(new Date())
+    const endDate = checkOut || this.formatDate(new Date(Date.now() + 86400000))
+
+    this.setData({
+      storeId,
+      roomId,
+      checkIn: startDate,
+      checkOut: endDate,
+      startDate,
+      endDate,
+      storeName: storeName ? decodeURIComponent(storeName) : '',
+      startDayOfWeek: this.getDayOfWeek(startDate),
+      endDayOfWeek: this.getDayOfWeek(endDate),
+    })
+
+    this.loadData()
+  },
+
+  // 加载数据
+  async loadData() {
+    this.setData({ loading: true })
+
+    try {
+      const { storeId, roomId, checkIn } = this.data
+      // 并行加载房型和床位数据
+      const [rooms, beds] = await Promise.all([
+        storeApi.getRooms(storeId, { checkIn, checkOut: this.data.checkOut }),
+        storeApi.getBeds(storeId, roomId, { date: checkIn }),
+      ])
+
+      // 找到当前房型
+      const roomInfo = rooms.find((r) => r.id === roomId)
+      if (roomInfo) {
+        this.setData({
+          roomInfo,
+          roomType: roomInfo.name,
+          unitPrice: roomInfo.price,
+        })
+      }
+
+      // 转换床位数据为显示格式
+      this.transformBeds(beds, roomInfo?.price || 88)
+
+      // 计算天数
+      this.calculateDays()
+    } catch (error) {
+      console.error('加载数据失败:', error)
+      // 使用模拟数据
+      this.loadMockData()
+    } finally {
+      this.setData({ loading: false })
+    }
+  },
+
+  // 转换床位数据
+  transformBeds(beds: BedInfo[], price: number) {
+    // 按位置分组床位，每组4个
+    const groups: BedGroup[] = []
+    const positions = [
+      { id: 'B', x: 12, y: 16 },
+      { id: 'B2', x: 12, y: 124 },
+      { id: 'B3', x: 12, y: 232 },
+      { id: 'A', x: 172, y: 16 },
+      { id: 'A2', x: 172, y: 124 },
+      { id: 'A3', x: 172, y: 232 },
+    ]
+
+    for (let i = 0; i < positions.length; i++) {
+      const groupBeds: BedDisplayItem[] = []
+      for (let j = 0; j < 4; j++) {
+        const bedIndex = i * 4 + j
+        const bed = beds[bedIndex]
+        if (bed) {
+          groupBeds.push({
+            id: bed.bedNumber,
+            status: bed.status === 'available' ? 'available' : 'unavailable',
+            price,
+          })
+        } else {
+          // 如果没有足够的床位数据，补充模拟数据
+          groupBeds.push({
+            id: `${positions[i].id}${String(j + 1).padStart(2, '0')}`,
+            status: 'available',
+            price,
+          })
+        }
+      }
+      groups.push({
+        id: positions[i].id,
+        position: { x: positions[i].x, y: positions[i].y },
+        beds: groupBeds,
+      })
+    }
+
+    this.setData({ bedGroups: groups })
+  },
+
+  // 加载模拟数据
+  loadMockData() {
+    const price = 88
+    const groups: BedGroup[] = [
+      {
+        id: 'B',
+        position: { x: 12, y: 16 },
+        beds: [
+          { id: 'B01', status: 'available', price },
+          { id: 'B02', status: 'available', price },
+          { id: 'B03', status: 'available', price },
+          { id: 'B04', status: 'available', price },
+        ],
+      },
+      {
+        id: 'B2',
+        position: { x: 12, y: 124 },
+        beds: [
+          { id: 'B05', status: 'available', price },
+          { id: 'B06', status: 'available', price },
+          { id: 'B07', status: 'available', price },
+          { id: 'B08', status: 'available', price },
+        ],
+      },
+      {
+        id: 'B3',
+        position: { x: 12, y: 232 },
+        beds: [
+          { id: 'B09', status: 'available', price },
+          { id: 'B10', status: 'available', price },
+          { id: 'B11', status: 'available', price },
+          { id: 'B12', status: 'available', price },
+        ],
+      },
+      {
+        id: 'A',
+        position: { x: 172, y: 16 },
+        beds: [
+          { id: 'A01', status: 'available', price },
+          { id: 'A02', status: 'available', price },
+          { id: 'A03', status: 'available', price },
+          { id: 'A04', status: 'available', price },
+        ],
+      },
+      {
+        id: 'A2',
+        position: { x: 172, y: 124 },
+        beds: [
+          { id: 'A05', status: 'available', price },
+          { id: 'A06', status: 'available', price },
+          { id: 'A07', status: 'unavailable', price },
+          { id: 'A08', status: 'available', price },
+        ],
+      },
+      {
+        id: 'A3',
+        position: { x: 172, y: 232 },
+        beds: [
+          { id: 'A09', status: 'available', price },
+          { id: 'A10', status: 'unavailable', price },
+          { id: 'A11', status: 'available', price },
+          { id: 'A12', status: 'available', price },
+        ],
+      },
+    ]
+
+    this.setData({
+      bedGroups: groups,
+      roomType: '男生四人位',
+      unitPrice: price,
+      storeName: this.data.storeName || '民治店',
+    })
+  },
+
+  // 计算天数
+  calculateDays() {
+    const { startDate, endDate } = this.data
+    if (!startDate || !endDate) return
+
+    const start = new Date(startDate)
+    const end = new Date(endDate)
+    const days = Math.max(1, Math.ceil((end.getTime() - start.getTime()) / 86400000))
+
+    this.setData({
+      selectedDays: `${days}天`,
+      roomDate: `${this.formatDisplayDate(startDate)} - ${this.formatDisplayDate(endDate)}`,
+    })
+
+    this.updatePrice()
+  },
+
+  // 更新价格
+  updatePrice() {
+    const { selectedBeds, unitPrice, startDate, endDate } = this.data
+    if (selectedBeds.length === 0) {
+      this.setData({ totalPrice: 0, originalPrice: 0 })
+      return
+    }
+
+    const start = new Date(startDate)
+    const end = new Date(endDate)
+    const days = Math.max(1, Math.ceil((end.getTime() - start.getTime()) / 86400000))
+
+    const totalPrice = selectedBeds.length * unitPrice * days
+    const originalPrice = Math.round(totalPrice * 1.2)
+
+    this.setData({ totalPrice, originalPrice })
+  },
+
+  // 格式化日期
+  formatDate(date: Date): string {
+    const y = date.getFullYear()
+    const m = String(date.getMonth() + 1).padStart(2, '0')
+    const d = String(date.getDate()).padStart(2, '0')
+    return `${y}-${m}-${d}`
+  },
+
+  // 格式化显示日期
+  formatDisplayDate(dateStr: string): string {
+    const date = new Date(dateStr)
+    return `${date.getMonth() + 1}月${date.getDate()}日`
+  },
+
+  // 获取星期几
+  getDayOfWeek(dateStr: string): string {
+    const days = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
+    const date = new Date(dateStr)
+    return days[date.getDay()]
   },
 
   // 返回上一页
@@ -132,11 +327,29 @@ Page({
   },
 
   // 切换收藏
-  onToggleFavorite() {
-    wx.showToast({
-      title: '收藏功能',
-      icon: 'none',
-    })
+  async onToggleFavorite() {
+    const { storeId, isFavorite, favoriteCount } = this.data
+
+    try {
+      if (isFavorite) {
+        await favoriteApi.removeFavorite(storeId)
+        this.setData({
+          isFavorite: false,
+          favoriteCount: Math.max(0, favoriteCount - 1),
+        })
+        wx.showToast({ title: '已取消收藏', icon: 'none' })
+      } else {
+        await favoriteApi.addFavorite(storeId)
+        this.setData({
+          isFavorite: true,
+          favoriteCount: favoriteCount + 1,
+        })
+        wx.showToast({ title: '收藏成功', icon: 'success' })
+      }
+    } catch (error) {
+      console.error('收藏操作失败:', error)
+      wx.showToast({ title: '操作失败', icon: 'none' })
+    }
   },
 
   // 分享
@@ -145,6 +358,14 @@ Page({
       withShareTicket: true,
       menus: ['shareAppMessage', 'shareTimeline'],
     })
+  },
+
+  onShareAppMessage() {
+    const { storeId, roomId, storeName, roomType } = this.data
+    return {
+      title: `${storeName} - ${roomType}`,
+      path: `/pages/room-selection/room-selection?storeId=${storeId}&roomId=${roomId}`,
+    }
   },
 
   // 切换预订方式
@@ -157,65 +378,56 @@ Page({
 
   // 查看预订方式说明
   onViewBookingInfo() {
-    wx.showToast({
+    wx.showModal({
       title: '预订方式说明',
-      icon: 'none',
+      content: '按天：适合多日入住\n按小时：适合短时休息\n按月：适合长期入住，享更多优惠',
+      showCancel: false,
     })
   },
 
   // 修改开始日期
   onChangeStartDate() {
-    wx.showToast({
-      title: '选择开始日期',
-      icon: 'none',
-    })
+    const today = this.formatDate(new Date())
+    wx.showToast({ title: '选择入住日期', icon: 'none' })
   },
 
   // 修改结束日期
   onChangeEndDate() {
-    wx.showToast({
-      title: '选择结束日期',
-      icon: 'none',
-    })
+    wx.showToast({ title: '选择离店日期', icon: 'none' })
   },
 
   // 修改开始时间（按小时）
   onChangeStartTime() {
-    wx.showToast({
-      title: '选择开始时间',
-      icon: 'none',
-    })
+    wx.showToast({ title: '选择开始时间', icon: 'none' })
   },
 
   // 修改结束时间（按小时）
   onChangeEndTime() {
-    wx.showToast({
-      title: '选择结束时间',
-      icon: 'none',
-    })
+    wx.showToast({ title: '选择结束时间', icon: 'none' })
   },
 
   // 修改月份（按月）
   onChangeMonth() {
-    wx.showToast({
-      title: '选择月份',
-      icon: 'none',
-    })
+    wx.showToast({ title: '选择月数', icon: 'none' })
   },
 
   // 查看已选信息说明
   onViewSelectedInfo() {
-    wx.showToast({
-      title: '已选信息说明',
-      icon: 'none',
+    const { selectedBeds, selectedDays } = this.data
+    wx.showModal({
+      title: '已选信息',
+      content: `已选床位：${selectedBeds.length}个\n入住时长：${selectedDays}`,
+      showCancel: false,
     })
   },
 
   // 查看价格说明
   onViewPriceInfo() {
-    wx.showToast({
+    const { unitPrice, selectedBeds, selectedDays } = this.data
+    wx.showModal({
       title: '价格说明',
-      icon: 'none',
+      content: `单价：¥${unitPrice}/床/天\n床位数：${selectedBeds.length}\n天数：${selectedDays}`,
+      showCancel: false,
     })
   },
 
@@ -226,10 +438,7 @@ Page({
     const selectedBed = bedGroups[group].beds[bed]
 
     if (selectedBed.status === 'unavailable') {
-      wx.showToast({
-        title: '该床位不可选',
-        icon: 'none',
-      })
+      wx.showToast({ title: '该床位不可选', icon: 'none' })
       return
     }
 
@@ -237,7 +446,7 @@ Page({
     selectedBed.status = selectedBed.status === 'selected' ? 'available' : 'selected'
 
     // 更新已选床位列表
-    const selectedBeds = []
+    const selectedBeds: { id: string; price: number }[] = []
     for (const g of bedGroups) {
       for (const b of g.beds) {
         if (b.status === 'selected') {
@@ -246,10 +455,8 @@ Page({
       }
     }
 
-    this.setData({
-      bedGroups,
-      selectedBeds,
-    })
+    this.setData({ bedGroups, selectedBeds })
+    this.updatePrice()
   },
 
   // 取消床位选择
@@ -269,43 +476,33 @@ Page({
     // 更新已选床位列表
     const selectedBeds = this.data.selectedBeds.filter((b) => b.id !== bedId)
 
-    this.setData({
-      bedGroups,
-      selectedBeds,
-    })
+    this.setData({ bedGroups, selectedBeds })
+    this.updatePrice()
   },
 
   // 切换房型
   onSwitchRoomType() {
-    wx.showToast({
-      title: '切换房型',
-      icon: 'none',
-    })
+    wx.showToast({ title: '切换房型', icon: 'none' })
   },
 
   // 播放语音介绍
   onPlayAudio() {
-    wx.showToast({
-      title: '播放语音介绍',
-      icon: 'none',
-    })
+    wx.showToast({ title: '播放语音介绍', icon: 'none' })
   },
 
   // 立即预订
   onBookNow() {
-    const { selectedBeds, bookingMode, startDate, endDate, startTime, endTime, monthCount } = this.data
+    const { selectedBeds, storeId, roomId, checkIn, checkOut, storeName, roomType } = this.data
 
     if (selectedBeds.length === 0) {
-      wx.showToast({
-        title: '请先选择床位',
-        icon: 'none',
-      })
+      wx.showToast({ title: '请先选择床位', icon: 'none' })
       return
     }
 
-    // 跳转到订单填写页面
+    // 跳转到订单填写页面，传递床位信息
+    const bedIds = selectedBeds.map((b) => b.id).join(',')
     wx.navigateTo({
-      url: '/pages/order-form/order-form',
+      url: `/pages/order-form/order-form?storeId=${storeId}&roomId=${roomId}&checkIn=${checkIn}&checkOut=${checkOut}&storeName=${encodeURIComponent(storeName)}&roomType=${encodeURIComponent(roomType)}&bedIds=${bedIds}`,
     })
   },
 })

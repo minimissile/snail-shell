@@ -31,13 +31,15 @@ export class SearchStoresDto extends PaginationDto {
   @IsNumber()
   lat?: number
 
-  @ApiProperty({ description: '入住日期 YYYY-MM-DD' })
+  @ApiPropertyOptional({ description: '入住日期 YYYY-MM-DD' })
+  @IsOptional()
   @IsDateString()
-  checkInDate: string
+  checkInDate?: string
 
-  @ApiProperty({ description: '离店日期 YYYY-MM-DD' })
+  @ApiPropertyOptional({ description: '离店日期 YYYY-MM-DD' })
+  @IsOptional()
   @IsDateString()
-  checkOutDate: string
+  checkOutDate?: string
 
   @ApiPropertyOptional({ description: '入住人数' })
   @IsOptional()
@@ -81,13 +83,15 @@ export class SearchStoresDto extends PaginationDto {
 }
 
 export class GetRoomsDto {
-  @ApiProperty({ description: '入住日期' })
+  @ApiPropertyOptional({ description: '入住日期' })
+  @IsOptional()
   @IsDateString()
-  checkInDate: string
+  checkInDate?: string
 
-  @ApiProperty({ description: '离店日期' })
+  @ApiPropertyOptional({ description: '离店日期' })
+  @IsOptional()
   @IsDateString()
-  checkOutDate: string
+  checkOutDate?: string
 
   @ApiPropertyOptional({ description: '预订方式', enum: ['day', 'hour', 'month'] })
   @IsOptional()
@@ -96,13 +100,15 @@ export class GetRoomsDto {
 }
 
 export class GetBedsDto {
-  @ApiProperty({ description: '入住日期' })
+  @ApiPropertyOptional({ description: '入住日期' })
+  @IsOptional()
   @IsDateString()
-  checkInDate: string
+  checkInDate?: string
 
-  @ApiProperty({ description: '离店日期' })
+  @ApiPropertyOptional({ description: '离店日期' })
+  @IsOptional()
   @IsDateString()
-  checkOutDate: string
+  checkOutDate?: string
 
   @ApiPropertyOptional({ description: '预订方式', enum: ['day', 'hour', 'month'] })
   @IsOptional()

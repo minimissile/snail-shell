@@ -41,6 +41,7 @@ model User {
   messages        Message[]
   reviews         Review[]
   feedbacks       Feedback[]
+  guests          Guest[]
 
   @@index([openId])
   @@index([phone])
@@ -52,6 +53,32 @@ enum MemberLevel {
   GOLD        // 金卡会员
   DIAMOND     // 钻石会员
   BLACK_GOLD  // 黑金会员
+}
+
+// 常用入住人
+model Guest {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  name        String
+  phone       String
+  idType      IdType    @default(ID_CARD)
+  idNumber    String
+  isDefault   Boolean   @default(false)
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([userId])
+}
+
+enum IdType {
+  ID_CARD         // 身份证
+  PASSPORT        // 护照
+  HK_MACAO_PASS   // 港澳通行证
+  TW_PASS         // 台湾通行证
+  OTHER           // 其他
 }
 
 // ==================== 门店相关 ====================

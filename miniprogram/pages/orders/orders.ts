@@ -1,14 +1,43 @@
+import { orderApi } from '../../api/index'
+import type { OrderInfo, OrderStatus, GetOrdersParams } from '../../api/order'
+import { isLoggedIn } from '../../utils/auth'
+
 type OrdersTabKey = 'all' | 'toUse' | 'valid' | 'toPay' | 'refund'
 
 type OrderCard = {
   id: string
+  orderNo: string
   storeName: string
   status: string
+  statusKey: OrderStatus
   statusColor?: string
   image: string
   quantity: number
   amount: string
   countdown?: string
+  checkIn: string
+  checkOut: string
+}
+
+// Tab 映射到 API status
+const TAB_TO_STATUS: Record<OrdersTabKey, OrderStatus | 'all'> = {
+  all: 'all',
+  toUse: 'confirmed',
+  valid: 'paid',
+  toPay: 'pending',
+  refund: 'refunding',
+}
+
+// 订单状态映射
+const STATUS_TEXT: Record<OrderStatus, string> = {
+  pending: '待支付',
+  paid: '已支付',
+  confirmed: '待使用',
+  checkedIn: '入住中',
+  completed: '已完成',
+  cancelled: '已取消',
+  refunding: '退款中',
+  refunded: '已退款',
 }
 
 /**
@@ -24,7 +53,7 @@ function resolveInitialTabKey(raw: string): OrdersTabKey {
 }
 
 /**
- * 从本地缓存读取外部指定的初始 Tab（用于 switchTab 进入订单页时传参）
+ * 从本地缓存读取外部指定的初始 Tab
  */
 function readInitialTabFromStorage(): OrdersTabKey | '' {
   try {
@@ -47,7 +76,7 @@ Page({
     ] as Array<{ key: OrdersTabKey; label: string }>,
     activeKey: 'all' as OrdersTabKey,
     activeIndex: 0,
-    scrollLeft: 0, // tabs滚动位置
+    scrollLeft: 0,
     isLoading: false,
     errorMessage: '',
     ordersByIndex: [[], [], [], [], []] as Array<OrderCard[]>,
@@ -59,11 +88,11 @@ Page({
       toPay: [] as OrderCard[],
       refund: [] as OrderCard[],
     } as Record<OrdersTabKey, OrderCard[]>,
+    page: 1,
+    pageSize: 10,
+    hasMore: true,
   },
 
-  /**
-   * 页面加载时读取入口参数并同步 Tab 状态
-   */
   onLoad(options: Record<string, string>) {
     const initialKey = resolveInitialTabKey(options?.tab || '')
     const index = this.data.tabs.findIndex((t: any) => t.key === initialKey)
@@ -72,52 +101,110 @@ Page({
       activeKey: this.data.tabs[safeIndex].key,
       activeIndex: safeIndex,
     })
-    // 立即加载数据，确保在真机上也能正常显示
-    this.loadMockData()
+    this.loadOrders()
   },
 
-  /**
-   * 页面初次渲染完成后加载数据
-   */
   onReady() {
-    console.log('[Orders] onReady 被调用')
-    // 加载模拟数据
-    this.loadMockData()
+    console.log('[Orders] onReady')
   },
 
-  /**
-   * 页面显示时同步外部指定的 Tab（适配原生 tabBar 的 switchTab）
-   */
   onShow() {
-    console.log('[Orders] onShow 被调用, 当前数据:', {
-      ordersCountByIndex: this.data.ordersCountByIndex,
-      activeIndex: this.data.activeIndex,
-    })
+    const nextKey = readInitialTabFromStorage()
+    if (nextKey && nextKey !== this.data.activeKey) {
+      const index = this.data.tabs.findIndex((t: any) => t.key === nextKey)
+      const safeIndex = index >= 0 ? index : 0
+      this.setData({
+        activeKey: nextKey,
+        activeIndex: safeIndex,
+      })
+      this.loadOrders()
+    }
+  },
 
-    // 确保数据已加载（解决真机上的显示问题）
-    if (this.data.ordersCountByIndex[0] === 0) {
-      console.log('[Orders] 检测到数据未加载,重新加载')
+  // 加载订单列表
+  async loadOrders(isRefresh = true) {
+    if (!isLoggedIn()) {
       this.loadMockData()
+      return
     }
 
-    const nextKey = readInitialTabFromStorage()
-    if (!nextKey) return
-    const index = this.data.tabs.findIndex((t: any) => t.key === nextKey)
-    const safeIndex = index >= 0 ? index : 0
-    if (safeIndex === this.data.activeIndex && nextKey === this.data.activeKey) return
-    this.setData({
-      activeKey: nextKey,
-      activeIndex: safeIndex,
+    if (this.data.isLoading) return
+    if (!isRefresh && !this.data.hasMore) return
+
+    this.setData({ isLoading: true })
+
+    try {
+      const status = TAB_TO_STATUS[this.data.activeKey]
+      const params: GetOrdersParams = {
+        status: status === 'all' ? undefined : status,
+        page: isRefresh ? 1 : this.data.page,
+        pageSize: this.data.pageSize,
+      }
+
+      const result = await orderApi.getOrders(params)
+      const newOrders = result.items.map((order) => this.transformOrderData(order))
+
+      // 更新当前 tab 的订单列表
+      const currentKey = this.data.activeKey
+      const currentIndex = this.data.activeIndex
+
+      const ordersByTab = { ...this.data.ordersByTab }
+      ordersByTab[currentKey] = isRefresh ? newOrders : [...ordersByTab[currentKey], ...newOrders]
+
+      const ordersByIndex = [...this.data.ordersByIndex]
+      ordersByIndex[currentIndex] = ordersByTab[currentKey]
+
+      const ordersCountByIndex = [...this.data.ordersCountByIndex]
+      ordersCountByIndex[currentIndex] = ordersByTab[currentKey].length
+
+      this.setData({
+        ordersByTab,
+        ordersByIndex,
+        ordersCountByIndex,
+        page: (isRefresh ? 1 : this.data.page) + 1,
+        hasMore: result.items.length === this.data.pageSize,
+        isLoading: false,
+      })
+    } catch (err) {
+      console.error('加载订单失败:', err)
+      this.setData({ isLoading: false })
+      this.loadMockData()
+    }
+  },
+
+  // 转换订单数据格式
+  transformOrderData(order: OrderInfo): OrderCard {
+    return {
+      id: order.id,
+      orderNo: order.orderNo,
+      storeName: order.storeName,
+      status: order.statusText || STATUS_TEXT[order.status],
+      statusKey: order.status,
+      image: order.storeImage || '/images/orders/order-room.png',
+      quantity: order.bedIds.length || 1,
+      amount: order.totalAmount.toFixed(2),
+      checkIn: order.checkIn,
+      checkOut: order.checkOut,
+      countdown: order.status === 'pending' ? '30:00' : undefined,
+    }
+  },
+
+  // 下拉刷新
+  onPullDownRefresh() {
+    this.loadOrders(true).then(() => {
+      wx.stopPullDownRefresh()
     })
+  },
+
+  // 上拉加载更多
+  onReachBottom() {
+    this.loadOrders(false)
   },
 
   onOpenOrderTitle() {
     wx.showToast({ title: '全部订单', icon: 'none' })
   },
 
-  /**
-   * 点击头像区域右侧菜单
-   */
   onOpenHeaderMenu() {
     wx.showToast({ title: '更多操作', icon: 'none' })
   },
@@ -126,157 +213,193 @@ Page({
     wx.showToast({ title: '关闭', icon: 'none' })
   },
 
-  /**
-   * 点击顶部 Tab
-   */
   onTapTab(e: WechatMiniprogram.TouchEvent) {
     const index = Number(e.currentTarget.dataset?.index || 0)
     const safeIndex = Math.max(0, Math.min(this.data.tabs.length - 1, index))
     if (safeIndex === this.data.activeIndex) return
-    this.setData({
-      activeIndex: safeIndex,
-      activeKey: this.data.tabs[safeIndex].key,
-    }, () => {
-      // 滚动到选中的tab居中位置
-      this.scrollTabIntoView(safeIndex)
-    })
+    this.setData(
+      {
+        activeIndex: safeIndex,
+        activeKey: this.data.tabs[safeIndex].key,
+        page: 1,
+        hasMore: true,
+      },
+      () => {
+        this.scrollTabIntoView(safeIndex)
+        this.loadOrders(true)
+      }
+    )
   },
 
-  /**
-   * 滚动到指定tab居中位置
-   */
   scrollTabIntoView(index: number) {
     const query = this.createSelectorQuery()
     query.select('.tabs__scroll').boundingClientRect()
     query.selectAll('.tabs__btn').boundingClientRect()
     query.exec((res: any) => {
       if (!res || !res[0] || !res[1] || !res[1][index]) return
-
       const scrollView = res[0]
       const buttons = res[1]
       const targetButton = buttons[index]
-
-      // 计算目标tab的中心位置
       const buttonCenter = targetButton.left - scrollView.left + targetButton.width / 2
-      // 计算屏幕中心位置
       const screenCenter = scrollView.width / 2
-      // 计算需要滚动的距离
       const scrollLeft = buttonCenter - screenCenter
-
-      // 执行滚动
-      this.setData({
-        scrollLeft: Math.max(0, scrollLeft),
-      })
+      this.setData({ scrollLeft: Math.max(0, scrollLeft) })
     })
   },
 
-
-
-  /**
-   * 失败重试（占位交互）
-   */
-  onRetry() {
-    this.setData({ errorMessage: '', isLoading: false })
+  // 点击订单卡片
+  onTapOrderCard(e: WechatMiniprogram.TouchEvent) {
+    const id = e.currentTarget.dataset?.id
+    if (!id) return
+    wx.navigateTo({
+      url: `/pages/order-detail/order-detail?id=${id}`,
+      fail: () => {
+        wx.showToast({ title: '订单详情页开发中', icon: 'none' })
+      },
+    })
   },
 
-  /**
-   * 加载模拟数据
-   */
+  // 支付订单
+  async onPayOrder(e: WechatMiniprogram.TouchEvent) {
+    const id = e.currentTarget.dataset?.id
+    if (!id) return
+
+    try {
+      const result = await orderApi.payOrder(id, { paymentMethod: 'wechat' })
+      if (result.payParams) {
+        // 调用微信支付
+        wx.requestPayment({
+          ...result.payParams,
+          success: () => {
+            wx.showToast({ title: '支付成功', icon: 'success' })
+            this.loadOrders(true)
+          },
+          fail: () => {
+            wx.showToast({ title: '支付取消', icon: 'none' })
+          },
+        })
+      } else {
+        wx.showToast({ title: '支付成功', icon: 'success' })
+        this.loadOrders(true)
+      }
+    } catch (err) {
+      console.error('支付失败:', err)
+    }
+  },
+
+  // 取消订单
+  async onCancelOrder(e: WechatMiniprogram.TouchEvent) {
+    const id = e.currentTarget.dataset?.id
+    if (!id) return
+
+    wx.showModal({
+      title: '确认取消',
+      content: '确定要取消此订单吗？',
+      success: async (res) => {
+        if (res.confirm) {
+          try {
+            await orderApi.cancelOrder(id)
+            wx.showToast({ title: '已取消', icon: 'success' })
+            this.loadOrders(true)
+          } catch (err) {
+            console.error('取消订单失败:', err)
+          }
+        }
+      },
+    })
+  },
+
+  onRetry() {
+    this.setData({ errorMessage: '', isLoading: false })
+    this.loadOrders(true)
+  },
+
+  // 加载模拟数据（API 未连接时使用）
   loadMockData() {
     const mockOrders: OrderCard[] = [
       {
         id: '1',
+        orderNo: 'ORD202402270001',
         storeName: '蜗壳精选公寓（民治店）',
         status: '待评价',
+        statusKey: 'completed',
         image: '/images/orders/order-room.png',
         quantity: 1,
         amount: '300.00',
+        checkIn: '2024-02-27',
+        checkOut: '2024-02-28',
       },
       {
         id: '2',
+        orderNo: 'ORD202402270002',
         storeName: '蜗壳精选公寓（民治店）',
         status: '待使用',
+        statusKey: 'confirmed',
         image: '/images/orders/order-room.png',
         quantity: 1,
         amount: '300.00',
+        checkIn: '2024-02-28',
+        checkOut: '2024-03-01',
       },
       {
         id: '3',
+        orderNo: 'ORD202402270003',
         storeName: '蜗壳精选公寓（民治店）',
         status: '退款成功',
+        statusKey: 'refunded',
         image: '/images/orders/order-room.png',
         quantity: 1,
         amount: '300.00',
+        checkIn: '2024-02-25',
+        checkOut: '2024-02-26',
       },
     ]
 
     const toPayOrders: OrderCard[] = [
       {
         id: '4',
+        orderNo: 'ORD202402270004',
         storeName: '蜗壳精选公寓（民治店）',
-        status: '待支付，剩余30:00',
+        status: '待支付',
+        statusKey: 'pending',
         image: '/images/orders/order-room.png',
         quantity: 1,
         amount: '300.00',
         countdown: '30:00',
-      },
-      {
-        id: '5',
-        storeName: '蜗壳精选公寓（民治店）',
-        status: '待支付，剩余30:00',
-        image: '/images/orders/order-room.png',
-        quantity: 1,
-        amount: '300.00',
-        countdown: '30:00',
+        checkIn: '2024-02-28',
+        checkOut: '2024-03-01',
       },
     ]
 
     const toUseOrders: OrderCard[] = [
       {
-        id: '6',
+        id: '2',
+        orderNo: 'ORD202402270002',
         storeName: '蜗壳精选公寓（民治店）',
         status: '待使用',
+        statusKey: 'confirmed',
         image: '/images/orders/order-room.png',
         quantity: 1,
         amount: '300.00',
-      },
-      {
-        id: '7',
-        storeName: '蜗壳精选公寓（民治店）',
-        status: '待使用',
-        image: '/images/orders/order-room.png',
-        quantity: 1,
-        amount: '300.00',
+        checkIn: '2024-02-28',
+        checkOut: '2024-03-01',
       },
     ]
 
-    const validOrders: OrderCard[] = [
-      {
-        id: '8',
-        storeName: '蜗壳精选公寓（民治店）',
-        status: '待使用',
-        image: '/images/orders/order-room.png',
-        quantity: 1,
-        amount: '300.00',
-      },
-    ]
+    const validOrders: OrderCard[] = [...toUseOrders]
 
     const refundOrders: OrderCard[] = [
       {
-        id: '9',
+        id: '3',
+        orderNo: 'ORD202402270003',
         storeName: '蜗壳精选公寓（民治店）',
         status: '退款成功',
+        statusKey: 'refunded',
         image: '/images/orders/order-room.png',
         quantity: 1,
         amount: '300.00',
-      },
-      {
-        id: '10',
-        storeName: '蜗壳精选公寓（民治店）',
-        status: '退款成功',
-        image: '/images/orders/order-room.png',
-        quantity: 1,
-        amount: '300.00',
+        checkIn: '2024-02-25',
+        checkOut: '2024-02-26',
       },
     ]
 
@@ -296,12 +419,6 @@ Page({
       'ordersByTab.refund': refundOrders,
     })
 
-    // 调试日志:确认数据加载
-    console.log('[Orders] 数据加载完成:', {
-      ordersByIndex: this.data.ordersByIndex.map((arr: any[]) => arr.length),
-      ordersCountByIndex: this.data.ordersCountByIndex,
-      activeIndex: this.data.activeIndex,
-      activeKey: this.data.activeKey,
-    })
+    console.log('[Orders] Mock data loaded')
   },
 })

@@ -1,18 +1,126 @@
+import { userApi, couponApi, messageApi } from '../../api/index'
+import { isLoggedIn, getUserInfo } from '../../utils/auth'
+import { login, getProfile, setProfile } from '../../store/user'
+import type { UserProfile } from '../../store/user'
+
 Page({
   data: {
+    isLoggedIn: false,
     avatarSrc: '/assets/figma/avatar.jpg',
-    userName: 'Dimoo旅行家',
-    greeting: '尊贵的大众会员, 下午好',
-    couponCount: 1,
-    memberType: 'general', // 'gold' | 'general'
+    userName: '点击登录',
+    greeting: '登录后享受更多权益',
+    couponCount: 0,
+    memberType: 'general' as 'gold' | 'general',
+    points: 0,
+    balance: 0,
   },
 
   onLoad() {
-    // 页面加载时的初始化逻辑
+    this.checkLoginStatus()
   },
 
-  onOpenHeaderMenu() {
-    // 切换会员类型用于测试
+  onShow() {
+    this.checkLoginStatus()
+    if (isLoggedIn()) {
+      this.loadUserData()
+    }
+  },
+
+  // 检查登录状态
+  checkLoginStatus() {
+    const loggedIn = isLoggedIn()
+    if (loggedIn) {
+      const profile = getProfile()
+      if (profile) {
+        this.updateUserDisplay(profile)
+      }
+    } else {
+      this.setData({
+        isLoggedIn: false,
+        userName: '点击登录',
+        greeting: '登录后享受更多权益',
+        avatarSrc: '/assets/figma/avatar.jpg',
+        couponCount: 0,
+        points: 0,
+        balance: 0,
+      })
+    }
+  },
+
+  // 加载用户数据
+  async loadUserData() {
+    try {
+      const [profile, coupons, unread] = await Promise.all([
+        userApi.getProfile().catch(() => null),
+        couponApi.getMyCoupons({ status: 'unused' }).catch(() => ({ items: [] })),
+        messageApi.getUnreadCount().catch(() => ({ total: 0 })),
+      ])
+
+      if (profile) {
+        setProfile(profile)
+        this.updateUserDisplay(profile)
+      }
+
+      this.setData({
+        couponCount: coupons.items?.length || 0,
+      })
+
+      // 设置 tabBar 消息数量
+      if (unread.total > 0) {
+        wx.setTabBarBadge({
+          index: 3,
+          text: unread.total > 99 ? '99+' : String(unread.total),
+        })
+      } else {
+        wx.removeTabBarBadge({ index: 3 })
+      }
+    } catch (err) {
+      console.error('加载用户数据失败:', err)
+    }
+  },
+
+  // 更新用户显示信息
+  updateUserDisplay(profile: UserProfile) {
+    const hour = new Date().getHours()
+    let timeGreeting = '你好'
+    if (hour < 6) timeGreeting = '凌晨好'
+    else if (hour < 12) timeGreeting = '上午好'
+    else if (hour < 14) timeGreeting = '中午好'
+    else if (hour < 18) timeGreeting = '下午好'
+    else timeGreeting = '晚上好'
+
+    const memberText = profile.memberLevel === 'gold' ? '黄金会员' : '大众会员'
+
+    this.setData({
+      isLoggedIn: true,
+      userName: profile.nickname || '蜗壳用户',
+      avatarSrc: profile.avatar || '/assets/figma/avatar.jpg',
+      greeting: `尊贵的${memberText}, ${timeGreeting}`,
+      memberType: profile.memberLevel === 'gold' ? 'gold' : 'general',
+      points: profile.points || 0,
+      balance: profile.balance || 0,
+      couponCount: profile.couponCount || 0,
+    })
+  },
+
+  // 点击头像/登录区域
+  async onOpenHeaderMenu() {
+    if (!isLoggedIn()) {
+      // 触发登录
+      try {
+        wx.showLoading({ title: '登录中...', mask: true })
+        const profile = await login()
+        wx.hideLoading()
+        this.updateUserDisplay(profile)
+        wx.showToast({ title: '登录成功', icon: 'success' })
+      } catch (err) {
+        wx.hideLoading()
+        wx.showToast({ title: '登录失败', icon: 'none' })
+      }
+      return
+    }
+
+    // 已登录，切换会员类型用于测试
     const currentType = this.data.memberType
     const newType = currentType === 'gold' ? 'general' : 'gold'
     const newGreeting = newType === 'gold' ? '尊贵的黄金会员, 下午好' : '尊贵的大众会员, 下午好'
@@ -52,21 +160,20 @@ Page({
   },
 
   onTapPoints() {
-    wx.showToast({ title: '积分', icon: 'none' })
+    wx.showToast({ title: `积分：${this.data.points}`, icon: 'none' })
   },
 
   onTapQuickAction(e: any) {
     const key = e.detail?.key || ''
-    // 映射关系：orders/pay/use/refund -> all/toPay/toUse/refund
     let tab: string
     if (key === 'pay') {
-      tab = 'pay' // 待付款
+      tab = 'pay'
     } else if (key === 'use') {
-      tab = 'use' // 待使用
+      tab = 'use'
     } else if (key === 'refund') {
-      tab = 'refund' // 退款单
+      tab = 'refund'
     } else {
-      tab = 'all' // 我的订单 -> 全部
+      tab = 'all'
     }
 
     wx.setStorageSync('orders:initialTab', tab)
@@ -80,98 +187,32 @@ Page({
 
   onTapGridItem(e: any) {
     const key = e.detail?.key || ''
-    console.log('onTapGridItem called with key:', key) // 添加调试日志
+    console.log('onTapGridItem called with key:', key)
 
-    if (key === '常用信息') {
+    const routes: Record<string, string> = {
+      常用信息: '/pages/common-info/common-info',
+      余额: '/pages/balance/balance',
+      智能门锁: '/pages/smart-lock/smart-lock',
+      团购验券: '/pages/coupon-verify/coupon-verify',
+      我要反馈: '/pages/feedback/feedback',
+      用户服务协议: '/pages/service-agreement/service-agreement',
+      附近门店: '/pages/nearby-stores/nearby-stores',
+      门店详情: '/pages/nearby-stores/nearby-stores',
+      订单填写: '/pages/order-form/order-form',
+      实景选房: '/pages/room-selection/room-selection',
+    }
+
+    const url = routes[key]
+    if (url) {
       wx.navigateTo({
-        url: '/pages/common-info/common-info',
+        url,
         fail: () => {
-          wx.showToast({ title: '暂无法打开常用信息', icon: 'none' })
+          wx.showToast({ title: `暂无法打开${key}`, icon: 'none' })
         },
       })
       return
     }
-    if (key === '余额') {
-      wx.navigateTo({
-        url: '/pages/balance/balance',
-        fail: () => {
-          wx.showToast({ title: '暂无法打开余额页面', icon: 'none' })
-        },
-      })
-      return
-    }
-    if (key === '智能门锁') {
-      wx.navigateTo({
-        url: '/pages/smart-lock/smart-lock',
-        fail: () => {
-          wx.showToast({ title: '暂无法打开智能门锁', icon: 'none' })
-        },
-      })
-      return
-    }
-    if (key === '团购验券') {
-      wx.navigateTo({
-        url: '/pages/coupon-verify/coupon-verify',
-        fail: () => {
-          wx.showToast({ title: '暂无法打开团购验券', icon: 'none' })
-        },
-      })
-      return
-    }
-    if (key === '我要反馈') {
-      wx.navigateTo({
-        url: '/pages/feedback/feedback',
-        fail: () => {
-          wx.showToast({ title: '暂无法打开反馈页面', icon: 'none' })
-        },
-      })
-      return
-    }
-    if (key === '用户服务协议') {
-      wx.navigateTo({
-        url: '/pages/service-agreement/service-agreement',
-        fail: () => {
-          wx.showToast({ title: '暂无法打开服务协议', icon: 'none' })
-        },
-      })
-      return
-    }
-    if (key === '附近门店') {
-      wx.navigateTo({
-        url: '/pages/nearby-stores/nearby-stores',
-        fail: () => {
-          wx.showToast({ title: '暂无法打开附近门店', icon: 'none' })
-        },
-      })
-      return
-    }
-    if (key === '门店详情') {
-      wx.navigateTo({
-        url: '/pages/nearby-stores/nearby-stores',
-        fail: () => {
-          wx.showToast({ title: '暂无法打开门店详情', icon: 'none' })
-        },
-      })
-      return
-    }
-    if (key === '订单填写') {
-      wx.navigateTo({
-        url: '/pages/order-form/order-form',
-        fail: () => {
-          wx.showToast({ title: '暂无法打开订单填写', icon: 'none' })
-        },
-      })
-      return
-    }
-    if (key === '实景选房') {
-      wx.navigateTo({
-        url: '/pages/room-selection/room-selection',
-        fail: () => {
-          wx.showToast({ title: '暂无法打开实景选房', icon: 'none' })
-        },
-      })
-      return
-    }
+
     wx.showToast({ title: key || '功能', icon: 'none' })
   },
 })

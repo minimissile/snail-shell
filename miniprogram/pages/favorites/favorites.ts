@@ -1,5 +1,10 @@
+import { favoriteApi } from '../../api/index'
+import type { FavoriteInfo, FootprintGroup } from '../../api/favorite'
+import { isLoggedIn } from '../../utils/auth'
+
 interface FavoriteItem {
   id: string
+  storeId: string
   title: string
   rating: number
   reviewCount: number
@@ -10,6 +15,16 @@ interface FavoriteItem {
   tag: string
 }
 
+interface FootprintItem extends FavoriteItem {
+  visitTime: string
+}
+
+interface FootprintGroupData {
+  date: string
+  dateText: string
+  items: FootprintItem[]
+}
+
 interface TabItem {
   id: string
   label: string
@@ -18,15 +33,137 @@ interface TabItem {
 Page({
   data: {
     statusBarHeight: 0,
-    activeTab: 'favorites', // 'favorites' | 'footprints'
+    activeTab: 'favorites' as 'favorites' | 'footprints',
     tabs: [
       { id: 'favorites', label: '收藏' },
       { id: 'footprints', label: '足迹' },
     ] as TabItem[],
     todayLabel: '今天',
-    favoritesList: [
+    favoritesList: [] as FavoriteItem[],
+    footprintsList: [] as FootprintItem[],
+    footprintGroups: [] as FootprintGroupData[],
+    isLoading: false,
+    isEmpty: false,
+    page: 1,
+    pageSize: 20,
+    hasMore: true,
+  },
+
+  onLoad() {
+    const systemInfo = wx.getSystemInfoSync()
+    this.setData({
+      statusBarHeight: systemInfo.statusBarHeight || 0,
+    })
+    this.loadFavorites()
+  },
+
+  onShow() {
+    if (this.data.activeTab === 'favorites') {
+      this.loadFavorites()
+    } else {
+      this.loadFootprints()
+    }
+  },
+
+  // 加载收藏列表
+  async loadFavorites() {
+    if (!isLoggedIn()) {
+      this.loadMockData()
+      return
+    }
+
+    this.setData({ isLoading: true })
+
+    try {
+      const result = await favoriteApi.getFavorites({
+        page: 1,
+        pageSize: this.data.pageSize,
+      })
+
+      const items = result.items.map((item) => this.transformFavoriteData(item))
+      this.setData({
+        favoritesList: items,
+        isEmpty: items.length === 0,
+        isLoading: false,
+      })
+    } catch (err) {
+      console.error('加载收藏失败:', err)
+      this.setData({ isLoading: false })
+      this.loadMockData()
+    }
+  },
+
+  // 加载足迹列表
+  async loadFootprints() {
+    if (!isLoggedIn()) {
+      this.loadMockFootprints()
+      return
+    }
+
+    this.setData({ isLoading: true })
+
+    try {
+      const groups = await favoriteApi.getFootprints({
+        page: 1,
+        pageSize: this.data.pageSize,
+      })
+
+      const footprintGroups = groups.map((group) => ({
+        date: group.date,
+        dateText: group.dateText,
+        items: group.items.map((item) => ({
+          id: item.id,
+          storeId: item.storeId,
+          title: item.storeName,
+          rating: 4.8,
+          reviewCount: 0,
+          location: item.storeAddress,
+          checkInDate: '',
+          price: item.lowestPrice,
+          image: item.storeImage || '/assets/figma/favorites/item-1.jpg',
+          tag: '',
+          visitTime: item.visitTime,
+        })),
+      }))
+
+      // 扁平化足迹列表
+      const footprintsList = footprintGroups.flatMap((g) => g.items)
+
+      this.setData({
+        footprintGroups,
+        footprintsList,
+        isEmpty: footprintsList.length === 0,
+        isLoading: false,
+      })
+    } catch (err) {
+      console.error('加载足迹失败:', err)
+      this.setData({ isLoading: false })
+      this.loadMockFootprints()
+    }
+  },
+
+  // 转换收藏数据格式
+  transformFavoriteData(item: FavoriteInfo): FavoriteItem {
+    return {
+      id: item.id,
+      storeId: item.storeId,
+      title: item.storeName,
+      rating: item.rating,
+      reviewCount: 0,
+      location: item.storeAddress,
+      checkInDate: '',
+      price: item.lowestPrice,
+      image: item.storeImage || '/assets/figma/favorites/item-1.jpg',
+      tag: '蜗壳精选',
+    }
+  },
+
+  // 加载模拟数据
+  loadMockData() {
+    const mockList: FavoriteItem[] = [
       {
         id: '1',
+        storeId: '1',
         title: '不如野·奢·林时有事Forest设计师度假民宿(喀纳斯景区店)',
         rating: 4.8,
         reviewCount: 358,
@@ -38,6 +175,7 @@ Page({
       },
       {
         id: '2',
+        storeId: '2',
         title: '不如野·奢·林时有事Forest设计师度假民宿(喀纳斯景区店)',
         rating: 4.8,
         reviewCount: 358,
@@ -47,42 +185,118 @@ Page({
         image: '/assets/figma/favorites/item-1.jpg',
         tag: '蜗壳精选',
       },
-      {
-        id: '3',
-        title: '不如野·奢·林时有事Forest设计师度假民宿(喀纳斯景区店)',
-        rating: 4.8,
-        reviewCount: 358,
-        location: '阿勒泰地区 · 近哈纳斯新村 · 喀纳斯风景区',
-        checkInDate: '01-27至01-28入住',
-        price: 330,
-        image: '/assets/figma/favorites/item-1.jpg',
-        tag: '蜗壳精选',
-      },
-    ] as FavoriteItem[],
-    footprintsList: [] as FavoriteItem[],
-  },
+    ]
 
-  onLoad() {
-    const systemInfo = wx.getSystemInfoSync()
     this.setData({
-      statusBarHeight: systemInfo.statusBarHeight || 0,
-      footprintsList: this.data.favoritesList, // 足迹使用相同数据演示
+      favoritesList: mockList,
+      isEmpty: false,
     })
   },
 
+  // 加载模拟足迹数据
+  loadMockFootprints() {
+    const mockList: FootprintItem[] = [
+      {
+        id: '1',
+        storeId: '1',
+        title: '不如野·奢·林时有事Forest设计师度假民宿(喀纳斯景区店)',
+        rating: 4.8,
+        reviewCount: 358,
+        location: '阿勒泰地区 · 近哈纳斯新村 · 喀纳斯风景区',
+        checkInDate: '',
+        price: 330,
+        image: '/assets/figma/favorites/item-1.jpg',
+        tag: '',
+        visitTime: new Date().toISOString(),
+      },
+    ]
+
+    this.setData({
+      footprintsList: mockList,
+      footprintGroups: [
+        {
+          date: new Date().toISOString().split('T')[0],
+          dateText: '今天',
+          items: mockList,
+        },
+      ],
+      isEmpty: false,
+    })
+  },
+
+  // 切换 Tab
   onTabChange(e: WechatMiniprogram.CustomEvent) {
     const { id } = e.currentTarget.dataset
-    this.setData({
-      activeTab: id,
+    this.setData({ activeTab: id })
+
+    if (id === 'favorites') {
+      this.loadFavorites()
+    } else {
+      this.loadFootprints()
+    }
+  },
+
+  // 点击卡片
+  onCardTap(e: WechatMiniprogram.CustomEvent) {
+    const { id } = e.currentTarget.dataset
+    const storeId =
+      this.data.activeTab === 'favorites'
+        ? this.data.favoritesList.find((item) => item.id === id)?.storeId
+        : this.data.footprintsList.find((item) => item.id === id)?.storeId
+
+    wx.navigateTo({
+      url: `/pages/store-detail/store-detail?id=${storeId || id}`,
     })
   },
 
-  onCardTap(e: WechatMiniprogram.CustomEvent) {
-    const { id } = e.currentTarget.dataset
-    console.log('点击了收藏项', id)
-    // 跳转到门店详情页面
-    wx.navigateTo({
-      url: `/pages/store-detail/store-detail?id=${id}`,
+  // 取消收藏
+  async onRemoveFavorite(e: WechatMiniprogram.TouchEvent) {
+    const { id, storeId } = e.currentTarget.dataset
+
+    wx.showModal({
+      title: '确认取消收藏',
+      content: '确定要取消收藏此门店吗？',
+      success: async (res) => {
+        if (res.confirm) {
+          try {
+            await favoriteApi.removeFavorite(storeId || id)
+            const favoritesList = this.data.favoritesList.filter((item) => item.id !== id)
+            this.setData({
+              favoritesList,
+              isEmpty: favoritesList.length === 0,
+            })
+            wx.showToast({ title: '已取消收藏', icon: 'success' })
+          } catch (err) {
+            console.error('取消收藏失败:', err)
+            // 本地移除
+            const favoritesList = this.data.favoritesList.filter((item) => item.id !== id)
+            this.setData({ favoritesList })
+          }
+        }
+      },
+    })
+  },
+
+  // 清空足迹
+  async onClearFootprints() {
+    wx.showModal({
+      title: '确认清空',
+      content: '确定要清空所有足迹吗？',
+      success: async (res) => {
+        if (res.confirm) {
+          try {
+            await favoriteApi.clearFootprints()
+            this.setData({
+              footprintsList: [],
+              footprintGroups: [],
+              isEmpty: true,
+            })
+            wx.showToast({ title: '已清空足迹', icon: 'success' })
+          } catch (err) {
+            console.error('清空足迹失败:', err)
+          }
+        }
+      },
     })
   },
 
@@ -91,9 +305,17 @@ Page({
   },
 
   onMenu() {
-    wx.showToast({
-      title: '菜单',
-      icon: 'none',
-    })
+    if (this.data.activeTab === 'footprints') {
+      wx.showActionSheet({
+        itemList: ['清空足迹'],
+        success: (res) => {
+          if (res.tapIndex === 0) {
+            this.onClearFootprints()
+          }
+        },
+      })
+    } else {
+      wx.showToast({ title: '菜单', icon: 'none' })
+    }
   },
 })

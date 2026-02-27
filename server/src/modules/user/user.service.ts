@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { PrismaService } from '../../prisma/prisma.service'
-import { UpdateProfileDto, GetPointRecordsDto } from './dto'
+import { UpdateProfileDto, GetPointRecordsDto, CreateGuestDto, UpdateGuestDto } from './dto'
 import { paginate } from '../../common/dto'
 
 @Injectable()
@@ -229,5 +229,153 @@ export class UserService {
   private maskPhone(phone: string): string {
     if (!phone || phone.length < 7) return phone
     return phone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')
+  }
+
+  // ========== 入住人管理 ==========
+
+  /**
+   * 获取入住人列表
+   */
+  async getGuests(userId: string) {
+    const guests = await this.prisma.guest.findMany({
+      where: { userId },
+      orderBy: [{ isDefault: 'desc' }, { createdAt: 'desc' }],
+    })
+
+    return guests.map((g) => ({
+      id: g.id,
+      name: g.name,
+      phone: g.phone,
+      idType: g.idType,
+      idNumber: g.idNumber,
+      isDefault: g.isDefault,
+    }))
+  }
+
+  /**
+   * 创建入住人
+   */
+  async createGuest(userId: string, dto: CreateGuestDto) {
+    // 如果设为默认，先取消其他默认
+    if (dto.isDefault) {
+      await this.prisma.guest.updateMany({
+        where: { userId, isDefault: true },
+        data: { isDefault: false },
+      })
+    }
+
+    // 如果是第一个入住人，自动设为默认
+    const count = await this.prisma.guest.count({ where: { userId } })
+    const isDefault = dto.isDefault || count === 0
+
+    const guest = await this.prisma.guest.create({
+      data: {
+        userId,
+        name: dto.name,
+        phone: dto.phone,
+        idType: (dto.idType as any) || 'ID_CARD',
+        idNumber: dto.idNumber,
+        isDefault,
+      },
+    })
+
+    return {
+      id: guest.id,
+      name: guest.name,
+      phone: guest.phone,
+      idType: guest.idType,
+      idNumber: guest.idNumber,
+      isDefault: guest.isDefault,
+    }
+  }
+
+  /**
+   * 更新入住人
+   */
+  async updateGuest(userId: string, guestId: string, dto: UpdateGuestDto) {
+    // 验证入住人属于当前用户
+    const existing = await this.prisma.guest.findFirst({
+      where: { id: guestId, userId },
+    })
+
+    if (!existing) {
+      throw new NotFoundException('入住人不存在')
+    }
+
+    // 如果设为默认，先取消其他默认
+    if (dto.isDefault) {
+      await this.prisma.guest.updateMany({
+        where: { userId, isDefault: true, NOT: { id: guestId } },
+        data: { isDefault: false },
+      })
+    }
+
+    const guest = await this.prisma.guest.update({
+      where: { id: guestId },
+      data: {
+        ...(dto.name && { name: dto.name }),
+        ...(dto.phone && { phone: dto.phone }),
+        ...(dto.idType && { idType: dto.idType as any }),
+        ...(dto.idNumber && { idNumber: dto.idNumber }),
+        ...(dto.isDefault !== undefined && { isDefault: dto.isDefault }),
+      },
+    })
+
+    return {
+      id: guest.id,
+      name: guest.name,
+      phone: guest.phone,
+      idType: guest.idType,
+      idNumber: guest.idNumber,
+      isDefault: guest.isDefault,
+    }
+  }
+
+  /**
+   * 删除入住人
+   */
+  async deleteGuest(userId: string, guestId: string) {
+    // 验证入住人属于当前用户
+    const existing = await this.prisma.guest.findFirst({
+      where: { id: guestId, userId },
+    })
+
+    if (!existing) {
+      throw new NotFoundException('入住人不存在')
+    }
+
+    await this.prisma.guest.delete({
+      where: { id: guestId },
+    })
+
+    return { success: true }
+  }
+
+  /**
+   * 设为默认入住人
+   */
+  async setDefaultGuest(userId: string, guestId: string) {
+    // 验证入住人属于当前用户
+    const existing = await this.prisma.guest.findFirst({
+      where: { id: guestId, userId },
+    })
+
+    if (!existing) {
+      throw new NotFoundException('入住人不存在')
+    }
+
+    // 先取消所有默认
+    await this.prisma.guest.updateMany({
+      where: { userId },
+      data: { isDefault: false },
+    })
+
+    // 设置当前为默认
+    await this.prisma.guest.update({
+      where: { id: guestId },
+      data: { isDefault: true },
+    })
+
+    return { success: true }
   }
 }
