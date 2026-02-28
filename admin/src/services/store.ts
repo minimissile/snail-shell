@@ -1,4 +1,4 @@
-import { get, post, put, del } from './request'
+import { get, post, put, del, request } from './request'
 
 export const storeApi = {
   getStores: (params?: any) => get('/stores', params),
@@ -7,6 +7,17 @@ export const storeApi = {
   updateStore: (id: string, data: any) => put(`/stores/${id}`, data),
   deleteStore: (id: string) => del(`/stores/${id}`),
   updateStoreStatus: (id: string, status: string) => put(`/stores/${id}/status`, { status }),
+
+  uploadImage: (file: File) => {
+    const formData = new FormData()
+    formData.append('file', file)
+    return request<{ url: string }>({
+      method: 'POST',
+      url: '/upload/image',
+      data: formData,
+      headers: { 'Content-Type': 'multipart/form-data' },
+    })
+  },
 
   getRooms: (storeId: string) => get(`/stores/${storeId}/rooms`),
   getRoom: (id: string) => get(`/rooms/${id}`),

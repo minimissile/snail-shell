@@ -1,9 +1,9 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards } from '@nestjs/common'
+import { Controller, Get, Post, Put, Delete, Body, Param, Query, UseGuards } from '@nestjs/common'
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger'
 import { AdminSystemService } from './admin-system.service'
 import { AdminJwtAuthGuard, PermissionsGuard } from '../auth/guards'
 import { Permissions } from '../auth/decorators'
-import { UpdateHomeConfigDto, CreateCityDto, UpdateCityDto, UpdateAgreementDto } from './dto'
+import { UpdateHomeConfigDto, CreateCityDto, UpdateCityDto, UpdateAgreementDto, ReplyFeedbackDto } from './dto'
 
 @ApiTags('管理后台-系统配置')
 @Controller('admin/system')
@@ -79,5 +79,26 @@ export class AdminSystemController {
   @ApiOperation({ summary: '更新协议' })
   async updateAgreement(@Param('type') type: string, @Body() dto: UpdateAgreementDto) {
     return this.systemService.updateAgreement(type, dto)
+  }
+
+  // ==================== 反馈管理 ====================
+
+  @Get('feedbacks')
+  @Permissions('system:read')
+  @ApiOperation({ summary: '反馈列表' })
+  async findFeedbacks(
+    @Query('page') page?: number,
+    @Query('pageSize') pageSize?: number,
+    @Query('status') status?: string,
+    @Query('type') type?: string,
+  ) {
+    return this.systemService.findFeedbacks(page, pageSize, status, type)
+  }
+
+  @Put('feedbacks/:id/reply')
+  @Permissions('system:update')
+  @ApiOperation({ summary: '回复反馈' })
+  async replyFeedback(@Param('id') id: string, @Body() dto: ReplyFeedbackDto) {
+    return this.systemService.replyFeedback(id, dto)
   }
 }

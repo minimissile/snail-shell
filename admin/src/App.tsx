@@ -14,6 +14,7 @@ import CouponList from '@/pages/Coupon/CouponList'
 import HomeConfig from '@/pages/System/HomeConfig'
 import CityList from '@/pages/System/CityList'
 import Agreement from '@/pages/System/Agreement'
+import FeedbackList from '@/pages/System/FeedbackList'
 import AdminList from '@/pages/Admin/AdminList'
 import RoleList from '@/pages/Admin/RoleList'
 
@@ -47,6 +48,7 @@ const App: React.FC = () => {
         <Route path="system/home-config" element={<HomeConfig />} />
         <Route path="system/cities" element={<CityList />} />
         <Route path="system/agreements" element={<Agreement />} />
+        <Route path="system/feedbacks" element={<FeedbackList />} />
         <Route path="admin/users" element={<AdminList />} />
         <Route path="admin/roles" element={<RoleList />} />
       </Route>

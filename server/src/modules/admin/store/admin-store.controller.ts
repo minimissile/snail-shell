@@ -1,5 +1,8 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, Query, UseGuards } from '@nestjs/common'
-import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger'
+import { Controller, Get, Post, Put, Delete, Body, Param, Query, UseGuards, UseInterceptors, UploadedFile, UploadedFiles } from '@nestjs/common'
+import { ApiTags, ApiOperation, ApiBearerAuth, ApiConsumes } from '@nestjs/swagger'
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express'
+import { diskStorage } from 'multer'
+import { extname, join } from 'path'
 import { AdminStoreService } from './admin-store.service'
 import { AdminJwtAuthGuard } from '../auth/guards'
 import { PermissionsGuard } from '../auth/guards'
@@ -12,6 +15,14 @@ import {
   CreateRoomDto,
   UpdateRoomDto,
 } from './dto'
+
+const imageStorage = diskStorage({
+  destination: join(__dirname, '..', '..', '..', '..', 'uploads'),
+  filename: (_req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9)
+    cb(null, uniqueSuffix + extname(file.originalname))
+  },
+})
 
 @ApiTags('管理后台-门店管理')
 @Controller('admin')
@@ -62,6 +73,24 @@ export class AdminStoreController {
   @ApiOperation({ summary: '更改门店状态' })
   async updateStoreStatus(@Param('id') id: string, @Body() dto: UpdateStoreStatusDto) {
     return this.storeService.updateStoreStatus(id, dto)
+  }
+
+  @Post('upload/image')
+  @Permissions('store:create')
+  @ApiOperation({ summary: '上传图片' })
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FileInterceptor('file', { storage: imageStorage }))
+  async uploadImage(@UploadedFile() file: Express.Multer.File) {
+    return { url: `/uploads/${file.filename}` }
+  }
+
+  @Post('upload/images')
+  @Permissions('store:create')
+  @ApiOperation({ summary: '批量上传图片' })
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FilesInterceptor('files', 20, { storage: imageStorage }))
+  async uploadImages(@UploadedFiles() files: Express.Multer.File[]) {
+    return files.map((file) => ({ url: `/uploads/${file.filename}` }))
   }
 
   // ==================== 房型 ====================

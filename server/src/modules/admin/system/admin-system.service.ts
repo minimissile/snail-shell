@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { PrismaService } from '../../../prisma/prisma.service'
-import { UpdateHomeConfigDto, CreateCityDto, UpdateCityDto, UpdateAgreementDto } from './dto'
+import { UpdateHomeConfigDto, CreateCityDto, UpdateCityDto, UpdateAgreementDto, ReplyFeedbackDto } from './dto'
+import { paginate } from '../../../common/dto'
 
 @Injectable()
 export class AdminSystemService {
@@ -104,6 +105,43 @@ export class AdminSystemService {
         title: dto.title,
         content: dto.content,
         version: dto.version || '1.0.0',
+      },
+    })
+  }
+
+  // ==================== 反馈管理 ====================
+
+  async findFeedbacks(page = 1, pageSize = 10, status?: string, type?: string) {
+    const where: any = {}
+    if (status) where.status = status
+    if (type) where.type = type
+
+    const [list, total] = await Promise.all([
+      this.prisma.feedback.findMany({
+        where,
+        include: {
+          user: { select: { id: true, nickname: true, phone: true, avatar: true } },
+        },
+        orderBy: { createdAt: 'desc' },
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+      }),
+      this.prisma.feedback.count({ where }),
+    ])
+
+    return paginate(list, total, page, pageSize)
+  }
+
+  async replyFeedback(id: string, dto: ReplyFeedbackDto) {
+    const feedback = await this.prisma.feedback.findUnique({ where: { id } })
+    if (!feedback) throw new NotFoundException('反馈不存在')
+
+    return this.prisma.feedback.update({
+      where: { id },
+      data: {
+        reply: dto.reply,
+        status: (dto.status || 'RESOLVED') as any,
+        repliedAt: new Date(),
       },
     })
   }

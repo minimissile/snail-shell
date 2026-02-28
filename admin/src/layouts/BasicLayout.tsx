@@ -14,6 +14,7 @@ import {
   KeyOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  MessageOutlined,
 } from '@ant-design/icons'
 import { getAdminInfo, removeToken } from '@/utils/auth'
 
@@ -54,6 +55,11 @@ const menuItems: MenuProps['items'] = [
       { key: '/system/cities', label: '城市管理' },
       { key: '/system/agreements', label: '协议管理' },
     ],
+  },
+  {
+    key: '/system/feedbacks',
+    icon: <MessageOutlined />,
+    label: '用户反馈',
   },
   {
     key: 'admin',

@@ -65,3 +65,14 @@ export class UpdateAgreementDto {
   @IsString()
   version?: string
 }
+
+export class ReplyFeedbackDto {
+  @ApiProperty({ description: '回复内容' })
+  @IsString()
+  reply: string
+
+  @ApiPropertyOptional({ description: '状态', enum: ['PENDING', 'PROCESSING', 'RESOLVED'] })
+  @IsOptional()
+  @IsEnum(['PENDING', 'PROCESSING', 'RESOLVED'])
+  status?: string
+}

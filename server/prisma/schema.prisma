@@ -816,6 +816,7 @@ enum FeedbackType {
   SUGGESTION  // 建议
   COMPLAINT   // 投诉
   BUG         // Bug
+  OTHER       // 其他
 }
 
 enum FeedbackStatus {

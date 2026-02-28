@@ -32,7 +32,8 @@ const CityList: React.FC = () => {
         await systemApi.updateCity(editingId, values)
         message.success('更新成功')
       } else {
-        await systemApi.createCity(values)
+        // 新增时 name 与 code 保持一致
+        await systemApi.createCity({ ...values, name: values.code })
         message.success('创建成功')
       }
       setVisible(false)
@@ -61,8 +62,7 @@ const CityList: React.FC = () => {
   }
 
   const columns = [
-    { title: '城市编码', dataIndex: 'code', width: 120 },
-    { title: '城市名称', dataIndex: 'name', width: 150 },
+    { title: '城市名称', dataIndex: 'code', width: 120 },
     { title: '首字母', dataIndex: 'letter', width: 80 },
     {
       title: '是否热门',
@@ -122,11 +122,11 @@ const CityList: React.FC = () => {
       >
         <Form form={form} layout="vertical" onFinish={handleSubmit}>
           {!editingId && (
-            <Form.Item name="code" label="城市编码" rules={[{ required: true, message: '请输入城市编码' }]}>
-              <Input placeholder="如: 310000" />
+            <Form.Item name="code" label="城市名称" rules={[{ required: true, message: '请输入城市名称' }]} extra="同时作为城市编码使用">
+              <Input placeholder="如: 深圳" />
             </Form.Item>
           )}
-          <Form.Item name="name" label="城市名称" rules={[{ required: true, message: '请输入城市名称' }]}>
+          <Form.Item name="name" label="城市名称" rules={[{ required: true, message: '请输入城市名称' }]} hidden={!editingId}>
             <Input />
           </Form.Item>
           <Form.Item name="letter" label="首字母" rules={[{ required: true, message: '请输入首字母' }]}>

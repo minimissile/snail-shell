@@ -105,13 +105,13 @@ Page({
     wx.getSetting({
       success: (res) => {
         if (res.authSetting['scope.userLocation']) {
-          // 已授权，直接获取位置
-          this.getLocation()
+          // 已授权，直接打开地图选点
+          this.openLocationPicker()
         } else if (res.authSetting['scope.userLocation'] === false) {
           // 用户之前拒绝过，引导打开设置
           wx.showModal({
             title: '需要位置权限',
-            content: '请在设置中开启位置权限，以便搜索附近的门店',
+            content: '请在设置中开启位置权限，以便选择位置',
             confirmText: '去设置',
             success: (modalRes) => {
               if (modalRes.confirm) {
@@ -121,7 +121,7 @@ Page({
           })
         } else {
           // 未授权，第一次请求会自动弹出授权框
-          this.getLocation()
+          this.openLocationPicker()
         }
       },
       fail: () => {
@@ -130,43 +130,41 @@ Page({
     })
   },
 
-  // 获取地理位置
-  getLocation() {
-    wx.showLoading({ title: '定位中...', mask: true })
-
-    wx.getLocation({
-      type: 'gcj02',
+  // 打开地图选点
+  openLocationPicker() {
+    wx.chooseLocation({
       success: (res) => {
-        console.log('定位成功:', res)
-        // 模拟逆地理编码，获取城市名称
-        this.setData({
-          fromCity: '当前定位城市',
-          toPlace: '附近',
-        })
-        wx.hideLoading()
-        wx.showToast({ title: '定位成功', icon: 'success' })
+        console.log('选点成功:', res)
+        // 将选择的位置名称填充到目的地输入框
+        const locationName = res.name || res.address || ''
+        if (locationName) {
+          this.setData({
+            toPlace: locationName,
+          })
+          wx.showToast({ title: '已选择位置', icon: 'success' })
+        }
       },
       fail: (err) => {
-        console.log('定位失败:', err)
-        wx.hideLoading()
-
-        if (err.errMsg.includes('auth deny')) {
-          wx.showModal({
-            title: '定位失败',
-            content: '需要您的位置权限才能搜索附近的门店',
-            confirmText: '去设置',
-            success: (modalRes) => {
-              if (modalRes.confirm) {
-                wx.openSetting()
-              }
-            },
-          })
-        } else {
-          wx.showToast({
-            title: '定位失败，请稍后重试',
-            icon: 'none',
-            duration: 2000,
-          })
+        console.log('选点失败或取消:', err)
+        // 用户取消选择不提示错误
+        if (err.errMsg && !err.errMsg.includes('cancel')) {
+          if (err.errMsg.includes('auth deny')) {
+            wx.showModal({
+              title: '需要位置权限',
+              content: '请在设置中开启位置权限，以便选择位置',
+              confirmText: '去设置',
+              success: (modalRes) => {
+                if (modalRes.confirm) {
+                  wx.openSetting()
+                }
+              },
+            })
+          } else {
+            wx.showToast({
+              title: '选择位置失败',
+              icon: 'none',
+            })
+          }
         }
       },
     })

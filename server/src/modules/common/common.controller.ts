@@ -1,8 +1,19 @@
-import { Controller, Get, Post, Body, Param, Query, UseGuards } from '@nestjs/common'
-import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger'
+import { Controller, Get, Post, Body, Param, Query, UseGuards, UseInterceptors, UploadedFile } from '@nestjs/common'
+import { ApiTags, ApiOperation, ApiBearerAuth, ApiConsumes } from '@nestjs/swagger'
+import { FileInterceptor } from '@nestjs/platform-express'
+import { diskStorage } from 'multer'
+import { extname, join } from 'path'
 import { CommonService } from './common.service'
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard'
 import { CurrentUser } from '../../common/decorators'
+
+const imageStorage = diskStorage({
+  destination: join(__dirname, '..', '..', '..', '..', 'uploads'),
+  filename: (_req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9)
+    cb(null, uniqueSuffix + extname(file.originalname))
+  },
+})
 
 // 可选认证
 class OptionalJwtAuthGuard extends JwtAuthGuard {
@@ -48,8 +59,10 @@ export class CommonController {
   @Post('upload')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
-  @ApiOperation({ summary: '获取文件上传地址' })
-  async getUploadUrl(@Body() body: { type: string; filename: string }) {
-    return this.commonService.getUploadUrl(body.type, body.filename)
+  @ApiOperation({ summary: '上传图片' })
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FileInterceptor('file', { storage: imageStorage }))
+  async uploadFile(@UploadedFile() file: Express.Multer.File) {
+    return { url: `/uploads/${file.filename}` }
   }
 }

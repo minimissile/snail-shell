@@ -12,4 +12,7 @@ export const systemApi = {
   getAgreements: () => get('/system/agreements'),
   getAgreement: (type: string) => get(`/system/agreements/${type}`),
   updateAgreement: (type: string, data: any) => put(`/system/agreements/${type}`, data),
+
+  getFeedbacks: (params?: any) => get('/system/feedbacks', params),
+  replyFeedback: (id: string, data: any) => put(`/system/feedbacks/${id}/reply`, data),
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Table, Button, Space, Tag, Input, Select, Card, message, Popconfirm, Modal, Form } from 'antd'
-import { PlusOutlined, SearchOutlined, EditOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons'
+import { Table, Button, Space, Tag, Input, Select, Card, message, Popconfirm, Modal, Form, Upload } from 'antd'
+import { PlusOutlined, SearchOutlined, EditOutlined, DeleteOutlined, EyeOutlined, UploadOutlined } from '@ant-design/icons'
+import type { UploadFile, UploadProps } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { storeApi } from '@/services/store'
 import { STORE_STATUS_MAP } from '@/utils/constants'
@@ -12,8 +13,20 @@ const StoreList: React.FC = () => {
   const [params, setParams] = useState({ page: 1, pageSize: 10, keyword: '', status: '' })
   const [createVisible, setCreateVisible] = useState(false)
   const [createLoading, setCreateLoading] = useState(false)
+  const [coverList, setCoverList] = useState<UploadFile[]>([])
+  const [albumList, setAlbumList] = useState<UploadFile[]>([])
   const [form] = Form.useForm()
   const navigate = useNavigate()
+
+  const customUpload: UploadProps['customRequest'] = async (options) => {
+    const { file, onSuccess, onError } = options
+    try {
+      const res = await storeApi.uploadImage(file as File)
+      onSuccess?.(res)
+    } catch (err) {
+      onError?.(err as Error)
+    }
+  }
 
   const fetchData = async () => {
     setLoading(true)
@@ -63,10 +76,21 @@ const StoreList: React.FC = () => {
   const handleCreate = async (values: any) => {
     setCreateLoading(true)
     try {
-      await storeApi.createStore(values)
+      // 封面图作为第一张，后面跟相册图片
+      const coverUrl = coverList.length > 0 && coverList[0].response
+        ? coverList[0].response.url
+        : undefined
+      const albumUrls = albumList
+        .filter((f) => f.response?.url)
+        .map((f) => f.response.url)
+      const images = coverUrl ? [coverUrl, ...albumUrls] : albumUrls
+
+      await storeApi.createStore({ ...values, images })
       message.success('创建成功')
       setCreateVisible(false)
       form.resetFields()
+      setCoverList([])
+      setAlbumList([])
       fetchData()
     } catch {
       /* handled */
@@ -76,6 +100,19 @@ const StoreList: React.FC = () => {
   }
 
   const columns = [
+    {
+      title: '封面',
+      dataIndex: 'images',
+      width: 80,
+      render: (images: string[]) => {
+        const src = images?.[0]
+        return src ? (
+          <img src={src} alt="" style={{ width: 48, height: 48, borderRadius: 4, objectFit: 'cover' }} />
+        ) : (
+          <div style={{ width: 48, height: 48, borderRadius: 4, background: '#f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ccc', fontSize: 12 }}>无</div>
+        )
+      },
+    },
     { title: '门店名称', dataIndex: 'name', width: 200 },
     { title: '城市', dataIndex: 'cityCode', width: 100 },
     { title: '区域', dataIndex: 'district', width: 120 },
@@ -172,6 +209,8 @@ const StoreList: React.FC = () => {
         onCancel={() => {
           setCreateVisible(false)
           form.resetFields()
+          setCoverList([])
+          setAlbumList([])
         }}
         onOk={() => form.submit()}
         confirmLoading={createLoading}
@@ -181,9 +220,43 @@ const StoreList: React.FC = () => {
           <Form.Item name="name" label="门店名称" rules={[{ required: true, message: '请输入门店名称' }]}>
             <Input />
           </Form.Item>
+          <Form.Item label="门店封面">
+            <Upload
+              listType="picture-card"
+              fileList={coverList}
+              onChange={({ fileList }) => setCoverList(fileList.slice(-1))}
+              customRequest={customUpload}
+              maxCount={1}
+              accept="image/*"
+            >
+              {coverList.length < 1 && (
+                <div>
+                  <PlusOutlined />
+                  <div style={{ marginTop: 8 }}>上传封面</div>
+                </div>
+              )}
+            </Upload>
+          </Form.Item>
+          <Form.Item label="门店相册">
+            <Upload
+              listType="picture-card"
+              fileList={albumList}
+              onChange={({ fileList }) => setAlbumList(fileList)}
+              customRequest={customUpload}
+              multiple
+              accept="image/*"
+            >
+              {albumList.length < 20 && (
+                <div>
+                  <PlusOutlined />
+                  <div style={{ marginTop: 8 }}>上传图片</div>
+                </div>
+              )}
+            </Upload>
+          </Form.Item>
           <Space style={{ display: 'flex' }}>
-            <Form.Item name="cityCode" label="城市编码" rules={[{ required: true, message: '请输入城市编码' }]}>
-              <Input />
+            <Form.Item name="cityCode" label="城市" rules={[{ required: true, message: '请输入城市' }]}>
+              <Input placeholder="如: 深圳" />
             </Form.Item>
             <Form.Item name="district" label="区域" rules={[{ required: true, message: '请输入区域' }]}>
               <Input />

@@ -1,1 +1,1 @@
-export { UpdateHomeConfigDto, CreateCityDto, UpdateCityDto, UpdateAgreementDto } from './system.dto'
+export { UpdateHomeConfigDto, CreateCityDto, UpdateCityDto, UpdateAgreementDto, ReplyFeedbackDto } from './system.dto'
