@@ -3,14 +3,73 @@
 .messages {
   min-height: 100vh;
   background: @color-page-bg;
-  .flex(column, center, center);
-  padding: 96rpx 32rpx;
+  padding: 32rpx;
+  box-sizing: border-box;
 }
 
-.messages__empty {
-  .flex(column, center, center);
+.messages__payment-test {
+  .card(40rpx);
 }
 
-.messages__empty-text {
+.payment-test__title {
+  .font(36rpx, 52rpx, 600, @color-text);
+  text-align: center;
+  margin-bottom: 48rpx;
+}
+
+.payment-test__form {
+  .flex(column, stretch, flex-start);
+}
+
+.payment-test__input-group {
+  .flex(column, flex-start, flex-start);
+  margin-bottom: 24rpx;
+}
+
+.payment-test__label {
+  .font(28rpx, 40rpx, 500, @color-text-secondary);
+  margin-bottom: 16rpx;
+}
+
+.payment-test__input {
+  width: 100%;
+  height: 88rpx;
+  background: @color-page-bg;
+  border-radius: @radius-sm;
+  padding: 0 24rpx;
+  box-sizing: border-box;
+  .font(32rpx, 88rpx, 400, @color-text);
+}
+
+.payment-test__tip {
+  .font(24rpx, 36rpx, 400, @color-text-muted);
+  margin-bottom: 32rpx;
+}
+
+.payment-test__btn {
+  margin-top: 16rpx;
+}
+
+.payment-test__result {
+  margin-top: 40rpx;
+  padding-top: 32rpx;
+  .hairline-border-top(@color-border);
+  .flex(row, center, flex-start);
+}
+
+.payment-test__result-label {
   .font(28rpx, 40rpx, 400, @color-text-secondary);
+}
+
+.payment-test__result-text {
+  .font(28rpx, 40rpx, 500, @color-text);
+  margin-left: 8rpx;
+
+  &.success {
+    color: #10b981;
+  }
+
+  &.error {
+    color: @color-red;
+  }
 }

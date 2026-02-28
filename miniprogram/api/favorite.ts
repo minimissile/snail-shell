@@ -54,10 +54,10 @@ export function checkFavorite(storeId: string): Promise<{ isFavorite: boolean }>
 
 // 获取足迹列表
 export function getFootprints(params?: { page?: number; pageSize?: number }): Promise<FootprintGroup[]> {
-  return get<FootprintGroup[]>('/favorites/footprints', params, { needAuth: true })
+  return get<FootprintGroup[]>('/footprints', params, { needAuth: true })
 }
 
 // 清空足迹
 export function clearFootprints(): Promise<void> {
-  return del<void>('/favorites/footprints', undefined, { needAuth: true })
+  return del<void>('/footprints', undefined, { needAuth: true })
 }

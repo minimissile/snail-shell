@@ -37,6 +37,12 @@ const UserList: React.FC = () => {
 
   const columns = [
     {
+      title: '用户ID',
+      dataIndex: 'id',
+      width: 80,
+      ellipsis: true,
+    },
+    {
       title: '头像',
       dataIndex: 'avatarUrl',
       width: 70,

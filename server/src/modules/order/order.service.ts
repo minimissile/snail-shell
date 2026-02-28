@@ -1,15 +1,28 @@
-import { Injectable, NotFoundException, BadRequestException, ConflictException } from '@nestjs/common'
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+  ConflictException,
+  Inject,
+  forwardRef,
+  Logger,
+} from '@nestjs/common'
 import { PrismaService } from '../../prisma/prisma.service'
 import { RedisService } from '../../redis/redis.service'
+import { WechatPayService } from '../wechat-pay/wechat-pay.service'
 import { CalculateOrderDto, CreateOrderDto, GetOrdersDto, PayOrderDto, CancelOrderDto, RefundOrderDto } from './dto'
 import { paginate } from '../../common/dto'
 import { v4 as uuidv4 } from 'uuid'
 
 @Injectable()
 export class OrderService {
+  private readonly logger = new Logger(OrderService.name)
+
   constructor(
     private prisma: PrismaService,
-    private redis: RedisService
+    private redis: RedisService,
+    @Inject(forwardRef(() => WechatPayService))
+    private wechatPayService: WechatPayService
   ) {}
 
   /**
@@ -415,6 +428,7 @@ export class OrderService {
   async payOrder(userId: string, orderId: string, dto: PayOrderDto) {
     const order = await this.prisma.order.findFirst({
       where: { id: orderId, userId, status: 'PENDING_PAYMENT' },
+      include: { store: { select: { name: true } } },
     })
 
     if (!order) {
@@ -426,17 +440,41 @@ export class OrderService {
     }
 
     if (dto.paymentMethod === 'wechat') {
-      // TODO: 调用微信支付
-      // 返回支付参数
-      return {
-        paymentParams: {
-          timeStamp: String(Math.floor(Date.now() / 1000)),
-          nonceStr: uuidv4().replace(/-/g, ''),
-          package: 'prepay_id=mock_prepay_id',
-          signType: 'RSA',
-          paySign: 'mock_sign',
-        },
+      // 获取用户 openId
+      const user = await this.prisma.user.findUnique({
+        where: { id: userId },
+        select: { openId: true },
+      })
+
+      if (!user?.openId) {
+        throw new BadRequestException('用户信息异常')
       }
+
+      // 检查微信支付服务是否可用
+      if (!this.wechatPayService.isAvailable()) {
+        this.logger.warn('微信支付服务未配置，返回模拟数据')
+        // 开发环境返回模拟数据
+        return {
+          paymentParams: {
+            timeStamp: String(Math.floor(Date.now() / 1000)),
+            nonceStr: uuidv4().replace(/-/g, ''),
+            package: 'prepay_id=mock_prepay_id',
+            signType: 'RSA',
+            paySign: 'mock_sign',
+          },
+        }
+      }
+
+      // 调用微信支付统一下单
+      const totalFee = Math.round(Number(order.finalPrice) * 100) // 转换为分
+      const paymentParams = await this.wechatPayService.createJsapiOrder({
+        outTradeNo: order.orderNo,
+        totalFee,
+        openId: user.openId,
+        description: `${order.store.name} - 住宿预订`,
+      })
+
+      return { paymentParams }
     } else {
       // 余额支付
       const user = await this.prisma.user.findUnique({
@@ -509,6 +547,38 @@ export class OrderService {
         })
       }
     })
+  }
+
+  /**
+   * 处理微信支付回调通知
+   */
+  async handlePaymentNotify(orderNo: string, transactionId: string, totalFee: number) {
+    // 根据订单号查询订单
+    const order = await this.prisma.order.findUnique({
+      where: { orderNo },
+    })
+
+    if (!order) {
+      this.logger.warn(`支付回调: 订单不存在 orderNo=${orderNo}`)
+      return
+    }
+
+    // 幂等性检查：已支付的订单直接返回
+    if (order.status !== 'PENDING_PAYMENT') {
+      this.logger.log(`支付回调: 订单已处理 orderNo=${orderNo}, status=${order.status}`)
+      return
+    }
+
+    // 验证金额 (totalFee 是分，order.finalPrice 是元)
+    const expectedFee = Math.round(Number(order.finalPrice) * 100)
+    if (totalFee !== expectedFee) {
+      this.logger.error(`支付回调: 金额不匹配 orderNo=${orderNo}, expected=${expectedFee}, actual=${totalFee}`)
+      throw new BadRequestException('支付金额不匹配')
+    }
+
+    // 完成支付
+    await this.completePayment(order.id, 'WECHAT', transactionId)
+    this.logger.log(`支付回调: 订单支付成功 orderNo=${orderNo}`)
   }
 
   /**

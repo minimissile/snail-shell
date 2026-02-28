@@ -9,6 +9,7 @@ export * as balanceApi from './balance'
 export * as messageApi from './message'
 export * as smartLockApi from './smart-lock'
 export * as commonApi from './common'
+export * as paymentApi from './payment'
 
 // 导出类型
 export type { UserProfile, GuestInfo, CreateGuestParams } from './user'

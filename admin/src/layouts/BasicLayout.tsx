@@ -115,20 +115,24 @@ const BasicLayout: React.FC = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            gap: 8,
             borderBottom: '1px solid rgba(255,255,255,0.1)',
           }}
         >
-          <h1
-            style={{
-              color: '#fff',
-              margin: 0,
-              fontSize: collapsed ? 16 : 20,
-              fontWeight: 700,
-              whiteSpace: 'nowrap',
-            }}
-          >
-            {collapsed ? '蜗壳' : '蜗壳管理后台'}
-          </h1>
+          <img src="/logo.png" alt="蜗壳" style={{ width: 32, height: 32, borderRadius: 6 }} />
+          {!collapsed && (
+            <h1
+              style={{
+                color: '#fff',
+                margin: 0,
+                fontSize: 18,
+                fontWeight: 700,
+                whiteSpace: 'nowrap',
+              }}
+            >
+              蜗壳管理后台
+            </h1>
+          )}
         </div>
         <Menu
           theme="dark"

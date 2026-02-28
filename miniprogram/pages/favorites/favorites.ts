@@ -51,9 +51,9 @@ Page({
   },
 
   onLoad() {
-    const systemInfo = wx.getSystemInfoSync()
+    const windowInfo = wx.getWindowInfo()
     this.setData({
-      statusBarHeight: systemInfo.statusBarHeight || 0,
+      statusBarHeight: windowInfo.statusBarHeight || 0,
     })
     this.loadFavorites()
   },

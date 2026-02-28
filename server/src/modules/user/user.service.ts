@@ -46,6 +46,7 @@ export class UserService {
       memberLevel: user.memberLevel.toLowerCase(),
       memberExpireAt: user.memberExpireAt,
       points: user.points,
+      balance: user.balance,
       couponCount: user._count.coupons,
       favoriteCount: user._count.favorites,
       createdAt: user.createdAt,

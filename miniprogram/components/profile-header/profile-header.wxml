@@ -1,4 +1,4 @@
-<view class="header">
+<view class="header" bindtap="onMenu">
   <view class="left">
     <view class="avatar" aria-label="头像">
       <image class="avatar__img" src="{{avatarSrc}}" mode="aspectFill" lazy-load />

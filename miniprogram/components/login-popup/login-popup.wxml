@@ -3,7 +3,8 @@
     <!-- header -->
     <view class="login-popup__header">
       <view class="login-popup__header-left"></view>
-      <text class="login-popup__header-title">{{currentStep === 'phone-auth' ? '绑定手机号' : '登录'}}</text>
+      <text class="login-popup__header-title">{{currentStep === 'set-profile' ? '完善信息' : currentStep === 'phone-auth' ?
+        '绑定手机号' : '登录'}}</text>
       <view class="login-popup__header-right">
         <view class="login-popup__close" bindtap="onClose" aria-label="关闭">
           <t-icon name="close" size="40rpx" color="#6b7280" />
@@ -27,6 +28,22 @@
       <t-button theme="primary" size="large" block open-type="getPhoneNumber" bindgetphonenumber="onGetPhoneNumber"
         loading="{{isLoading}}" class="login-popup__btn">授权手机号</t-button>
       <text class="login-popup__skip" bindtap="onSkipPhone">暂不绑定</text>
+    </view>
+
+    <!-- Step 3: Set Profile (nickname) -->
+    <view wx:elif="{{currentStep === 'set-profile'}}" class="login-popup__content">
+      <button class="login-popup__avatar-wrapper" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+        <image class="login-popup__avatar-preview" src="{{tempAvatarUrl || '/assets/figma/avatar.jpg'}}"
+          mode="aspectFill" />
+      </button>
+      <text class="login-popup__avatar-hint">点击更换头像</text>
+      <view class="login-popup__input-wrapper">
+        <input class="login-popup__nickname-input" type="nickname" placeholder="请输入昵称" bindinput="onNicknameInput"
+          value="{{tempNickname}}" />
+      </view>
+      <t-button theme="primary" size="large" block loading="{{isLoading}}" bindtap="onSaveProfile"
+        class="login-popup__btn">完成</t-button>
+      <text class="login-popup__skip" bindtap="onSkipProfile">跳过</text>
     </view>
 
     <!-- Error State -->

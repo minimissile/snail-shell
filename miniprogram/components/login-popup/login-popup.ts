@@ -1,4 +1,5 @@
-import { login, bindPhone, getProfile } from '../../store/user'
+import { login, bindPhone, getProfile, setProfile } from '../../store/user'
+import { updateProfile } from '../../api/user'
 
 Component({
   properties: {
@@ -9,9 +10,11 @@ Component({
   },
 
   data: {
-    currentStep: 'wechat-login' as 'wechat-login' | 'phone-auth' | 'error',
+    currentStep: 'wechat-login' as 'wechat-login' | 'phone-auth' | 'set-profile' | 'error',
     isLoading: false,
     errorMessage: '',
+    tempNickname: '',
+    tempAvatarUrl: '',
   },
 
   observers: {
@@ -21,12 +24,28 @@ Component({
           currentStep: 'wechat-login',
           isLoading: false,
           errorMessage: '',
+          tempNickname: '',
+          tempAvatarUrl: '',
         })
       }
     },
   },
 
   methods: {
+    // Check if user needs to set profile
+    shouldSetProfile(profile: any): boolean {
+      return !profile?.nickname
+    },
+
+    // Proceed after auth step: check if profile setup is needed
+    proceedAfterAuth(profile: any) {
+      if (this.shouldSetProfile(profile)) {
+        this.setData({ currentStep: 'set-profile', isLoading: false })
+      } else {
+        this.triggerLoginSuccess(profile)
+      }
+    },
+
     // WeChat one-tap login
     async onWechatLogin() {
       if (this.data.isLoading) return
@@ -35,7 +54,7 @@ Component({
       try {
         const profile = await login()
         if (profile.phone) {
-          this.triggerLoginSuccess(profile)
+          this.proceedAfterAuth(profile)
         } else {
           this.setData({ currentStep: 'phone-auth', isLoading: false })
         }
@@ -52,7 +71,6 @@ Component({
     async onGetPhoneNumber(e: any) {
       const code = e.detail?.code
       if (!code) {
-        // User denied authorization - stay on current step
         return
       }
 
@@ -60,7 +78,7 @@ Component({
       try {
         await bindPhone(code)
         const profile = getProfile()
-        this.triggerLoginSuccess(profile)
+        this.proceedAfterAuth(profile)
       } catch (err) {
         this.setData({ isLoading: false })
         wx.showToast({ title: '绑定手机号失败', icon: 'none' })
@@ -69,6 +87,47 @@ Component({
 
     // Skip phone auth
     onSkipPhone() {
+      const profile = getProfile()
+      this.proceedAfterAuth(profile)
+    },
+
+    // Nickname input handler
+    onNicknameInput(e: any) {
+      this.setData({ tempNickname: e.detail.value })
+    },
+
+    // Avatar selection handler
+    onChooseAvatar(e: any) {
+      this.setData({ tempAvatarUrl: e.detail.avatarUrl })
+    },
+
+    // Save profile (nickname)
+    async onSaveProfile() {
+      const { tempNickname } = this.data
+      if (!tempNickname.trim()) {
+        wx.showToast({ title: '请输入昵称', icon: 'none' })
+        return
+      }
+
+      if (this.data.isLoading) return
+      this.setData({ isLoading: true })
+
+      try {
+        await updateProfile({ nickname: tempNickname.trim() })
+        const profile = getProfile()
+        if (profile) {
+          setProfile({ ...profile, nickname: tempNickname.trim() })
+        }
+        const updatedProfile = getProfile()
+        this.triggerLoginSuccess(updatedProfile)
+      } catch (err) {
+        this.setData({ isLoading: false })
+        wx.showToast({ title: '保存失败，请重试', icon: 'none' })
+      }
+    },
+
+    // Skip profile setup
+    onSkipProfile() {
       const profile = getProfile()
       this.triggerLoginSuccess(profile)
     },

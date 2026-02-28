@@ -80,7 +80,7 @@ Component({
         if (container && items && items[index]) {
           const item = items[index]
           // 计算相对位置 (转换为rpx)
-          const ratio = 750 / wx.getSystemInfoSync().windowWidth
+          const ratio = 750 / wx.getWindowInfo().windowWidth
           const left = (item.left - container.left) * ratio
           const width = item.width * ratio
 

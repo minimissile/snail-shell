@@ -5,10 +5,10 @@ Component({
 
   lifetimes: {
     attached(this: any) {
-      // 获取系统状态栏高度
-      const systemInfo = wx.getSystemInfoSync()
+      // 获取窗口信息中的状态栏高度
+      const windowInfo = wx.getWindowInfo()
       this.setData({
-        statusBarHeight: systemInfo.statusBarHeight || 0,
+        statusBarHeight: windowInfo.statusBarHeight || 0,
       })
     },
   },

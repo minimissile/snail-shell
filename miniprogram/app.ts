@@ -40,11 +40,12 @@ App<IAppOption>({
   // 获取系统信息
   getSystemInfo() {
     try {
-      const systemInfo = wx.getSystemInfoSync()
+      const deviceInfo = wx.getDeviceInfo()
+      const appBaseInfo = wx.getAppBaseInfo()
       console.log('系统信息:', {
-        platform: systemInfo.platform,
-        version: systemInfo.version,
-        SDKVersion: systemInfo.SDKVersion,
+        platform: deviceInfo.platform,
+        version: appBaseInfo.version,
+        SDKVersion: appBaseInfo.SDKVersion,
       })
     } catch (err) {
       console.error('获取系统信息失败:', err)

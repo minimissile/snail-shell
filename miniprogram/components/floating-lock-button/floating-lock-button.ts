@@ -10,10 +10,10 @@ Component({
 
   lifetimes: {
     ready(this: any) {
-      // 获取系统信息，计算右下角位置
-      const systemInfo = wx.getSystemInfoSync()
-      const windowWidth = systemInfo.windowWidth
-      const windowHeight = systemInfo.windowHeight
+      // 获取窗口信息，计算右下角位置
+      const windowInfo = wx.getWindowInfo()
+      const windowWidth = windowInfo.windowWidth
+      const windowHeight = windowInfo.windowHeight
 
       // 按钮宽高：120rpx = 120/2 = 60px
       const buttonSize = 60

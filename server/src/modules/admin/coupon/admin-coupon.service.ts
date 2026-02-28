@@ -112,10 +112,16 @@ export class AdminCouponService {
 
     // 确定目标用户
     const userWhere: any = {}
-    if (dto.userIds && dto.userIds.length > 0) {
+    if (dto.allUsers) {
+      // 全部用户，不添加筛选条件
+    } else if (dto.userIds && dto.userIds.length > 0) {
       userWhere.id = { in: dto.userIds }
+    } else if (dto.phones && dto.phones.length > 0) {
+      userWhere.phone = { in: dto.phones }
     } else if (dto.memberLevel) {
       userWhere.memberLevel = dto.memberLevel
+    } else {
+      throw new BadRequestException('请选择发放对象')
     }
 
     const users = await this.prisma.user.findMany({

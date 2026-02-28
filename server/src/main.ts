@@ -4,7 +4,9 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
 import { AppModule } from './app.module'
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule)
+  const app = await NestFactory.create(AppModule, {
+    rawBody: true, // 启用原始请求体，用于微信支付回调验签
+  })
 
   // 全局路由前缀
   app.setGlobalPrefix('v1')

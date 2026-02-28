@@ -1,8 +1,35 @@
 <view class="messages">
-  <view class="messages__empty">
-    <text class="messages__empty-text">暂无消息</text>
+  <!-- 微信支付测试区域 -->
+  <view class="messages__payment-test">
+    <view class="payment-test__title">微信支付功能测试</view>
+
+    <view class="payment-test__form">
+      <view class="payment-test__input-group">
+        <text class="payment-test__label">支付金额（分）</text>
+        <input class="payment-test__input" type="number" placeholder="请输入金额" value="{{testAmount}}"
+          bindinput="onAmountInput" />
+      </view>
+
+      <view class="payment-test__tip">
+        <text>提示：1分 = 0.01元，测试时建议使用小金额</text>
+      </view>
+
+      <t-button class="payment-test__btn" theme="primary" size="large" block loading="{{isPaying}}"
+        disabled="{{isPaying}}" bind:tap="onTestPayment">
+        {{isPaying ? '支付中...' : '发起支付'}}
+      </t-button>
+    </view>
+
+    <!-- 支付结果显示 -->
+    <view class="payment-test__result" wx:if="{{lastPayResult}}">
+      <text class="payment-test__result-label">最近支付结果：</text>
+      <text class="payment-test__result-text {{lastPayResult === '支付成功' ? 'success' : 'error'}}">
+        {{lastPayResult}}
+      </text>
+    </view>
   </view>
 </view>
 
-<!-- 智能开锁浮动按钮 -->
-<!-- <floating-lock-button /> -->
+<!-- 登录弹窗 -->
+<login-popup visible="{{showLoginPopup}}" bind:visiblechange="onLoginPopupVisibleChange"
+  bind:success="onLoginSuccess" />

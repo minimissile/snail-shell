@@ -8,8 +8,9 @@ export type BalanceRecordType = 'recharge' | 'consume' | 'refund' | 'gift'
 // 余额信息
 export interface BalanceInfo {
   balance: number
-  totalRecharge: number
-  totalConsume: number
+  cashback: number
+  consumption: number
+  points: number
 }
 
 // 余额记录

@@ -2,25 +2,29 @@
 import { get, post } from '../utils/request'
 import type { PageResult } from './store'
 
-// 优惠券状态
-export type CouponStatus = 'unused' | 'used' | 'expired'
+// 优惠券状态（后端使用 available，前端显示为 unused）
+export type CouponStatus = 'unused' | 'used' | 'expired' | 'available'
 
 // 优惠券类型
 export type CouponType = 'discount' | 'amount' | 'gift'
 
-// 优惠券信息
+// 优惠券信息（兼容后端返回字段）
 export interface CouponInfo {
   id: string
-  templateId: string
+  templateId?: string
   name: string
   type: CouponType
-  value: number
+  value?: number
+  amount?: number | null
+  discountRate?: number | null
   minAmount: number
   description: string
   status: CouponStatus
-  startTime: string
-  endTime: string
-  applicableStores: string[]
+  startTime?: string
+  endTime?: string
+  validFrom?: string
+  validTo?: string
+  applicableStores?: string[]
   usedTime?: string
   usedOrderId?: string
 }

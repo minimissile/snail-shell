@@ -98,7 +98,23 @@ const CouponList: React.FC = () => {
 
   const handleDistribute = async (values: any) => {
     try {
-      await couponApi.distribute(currentId, values)
+      const submitData: any = {}
+      if (values.allUsers) {
+        submitData.allUsers = true
+      } else if (values.memberLevel) {
+        submitData.memberLevel = values.memberLevel
+      } else if (values.phones) {
+        submitData.phones = values.phones
+          .split(',')
+          .map((s: string) => s.trim())
+          .filter(Boolean)
+      } else if (values.userIds) {
+        submitData.userIds = values.userIds
+          .split(',')
+          .map((s: string) => s.trim())
+          .filter(Boolean)
+      }
+      await couponApi.distribute(currentId, submitData)
       message.success('发放成功')
       setDistributeVisible(false)
       distributeForm.resetFields()
@@ -294,6 +310,9 @@ const CouponList: React.FC = () => {
         onOk={() => distributeForm.submit()}
       >
         <Form form={distributeForm} layout="vertical" onFinish={handleDistribute}>
+          <Form.Item name="allUsers" label="发放给全部用户" valuePropName="checked">
+            <Switch checkedChildren="是" unCheckedChildren="否" />
+          </Form.Item>
           <Form.Item name="memberLevel" label="按会员等级发放" extra="选择等级后会发放给该等级所有用户">
             <Select allowClear placeholder="选择会员等级">
               {Object.entries(MEMBER_LEVEL_MAP).map(([key, val]) => (
@@ -303,7 +322,10 @@ const CouponList: React.FC = () => {
               ))}
             </Select>
           </Form.Item>
-          <Form.Item name="userIds" label="指定用户ID" extra="多个ID用逗号分隔">
+          <Form.Item name="phones" label="按手机号发放" extra="多个手机号用逗号分隔">
+            <Input.TextArea rows={3} placeholder="输入手机号，逗号分隔，如：13800138000,13900139000" />
+          </Form.Item>
+          <Form.Item name="userIds" label="按用户ID发放" extra="多个ID用逗号分隔">
             <Input.TextArea rows={3} placeholder="输入用户ID，逗号分隔" />
           </Form.Item>
         </Form>

@@ -26,8 +26,8 @@ Page({
   onLoad(options) {
     // 获取胶囊按钮信息
     const menuButton = wx.getMenuButtonBoundingClientRect()
-    const systemInfo = wx.getSystemInfoSync()
-    const statusBarHeight = systemInfo.statusBarHeight || 0
+    const windowInfo = wx.getWindowInfo()
+    const statusBarHeight = windowInfo.statusBarHeight || 0
 
     const capsuleHeight = menuButton.height
     const navBarHeight = (menuButton.top - statusBarHeight) * 2 + capsuleHeight

@@ -69,7 +69,7 @@ Page({
 
   onLoad(options) {
     const { storeId, roomId, bedIds, checkIn, checkOut } = options
-    const systemInfo = wx.getSystemInfoSync()
+    const windowInfo = wx.getWindowInfo()
 
     // 解析日期
     const today = new Date()
@@ -80,7 +80,7 @@ Page({
     const checkOutDate = checkOut || `${tomorrow.getMonth() + 1}-${tomorrow.getDate()}`
 
     this.setData({
-      statusBarHeight: systemInfo.statusBarHeight || 0,
+      statusBarHeight: windowInfo.statusBarHeight || 0,
       storeId: storeId || '',
       roomId: roomId || '',
       bedIds: bedIds ? bedIds.split(',') : [],

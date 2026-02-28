@@ -39,6 +39,7 @@ const LoginPage: React.FC = () => {
         bodyStyle={{ padding: '40px 32px' }}
       >
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
+          <img src="/logo.png" alt="蜗壳" style={{ width: 64, height: 64, borderRadius: 12, marginBottom: 16 }} />
           <h1 style={{ fontSize: 28, fontWeight: 700, color: '#1a1a1a', margin: 0 }}>蜗壳管理后台</h1>
           <p style={{ color: '#999', marginTop: 8 }}>青旅预订平台管理系统</p>
         </div>

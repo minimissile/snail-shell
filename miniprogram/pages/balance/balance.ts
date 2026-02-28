@@ -36,8 +36,8 @@ Page({
       const balanceInfo = await balanceApi.getBalance()
       this.setData({
         balanceAmount: balanceInfo.balance.toFixed(2),
-        cashbackAmount: (balanceInfo.totalRecharge * 0.1).toFixed(2), // 返现一般是充值的一定比例
-        consumptionAmount: balanceInfo.totalConsume.toFixed(2),
+        cashbackAmount: balanceInfo.cashback.toFixed(2),
+        consumptionAmount: balanceInfo.consumption.toFixed(2),
       })
     } catch (error) {
       console.error('获取余额失败:', error)

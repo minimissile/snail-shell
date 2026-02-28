@@ -43,9 +43,9 @@ Page({
   },
 
   onLoad() {
-    const systemInfo = wx.getSystemInfoSync()
+    const windowInfo = wx.getWindowInfo()
     this.setData({
-      statusBarHeight: systemInfo.statusBarHeight || 0,
+      statusBarHeight: windowInfo.statusBarHeight || 0,
     })
     this.loadCoupons()
   },
@@ -67,14 +67,15 @@ Page({
     this.setData({ isLoading: true })
 
     try {
-      // 加载所有状态的优惠券
+      // 加载所有状态的优惠券（后端使用 available 而非 unused）
       const [unusedResult, usedResult, expiredResult] = await Promise.all([
-        couponApi.getMyCoupons({ status: 'unused', page: 1, pageSize: 50 }),
+        couponApi.getMyCoupons({ status: 'available', page: 1, pageSize: 50 }),
         couponApi.getMyCoupons({ status: 'used', page: 1, pageSize: 50 }),
         couponApi.getMyCoupons({ status: 'expired', page: 1, pageSize: 50 }),
       ])
 
-      const unusedCoupons = unusedResult.list.map((c) => this.transformCoupon(c))
+      // 后端返回 available 状态，前端显示为 unused
+      const unusedCoupons = unusedResult.list.map((c) => this.transformCoupon({ ...c, status: 'unused' }))
       const usedCoupons = usedResult.list.map((c) => this.transformCoupon(c))
       const expiredCoupons = expiredResult.list.map((c) => this.transformCoupon(c))
 
@@ -104,8 +105,8 @@ Page({
     }
   },
 
-  // 转换优惠券数据格式
-  transformCoupon(coupon: CouponInfo): CouponItem {
+  // 转换优惠券数据格式（适配后端返回的字段）
+  transformCoupon(coupon: any): CouponItem {
     const iconMap: Record<CouponType, string> = {
       discount: '/assets/figma/coupons/coupon-icon-selection.svg',
       amount: '/assets/figma/coupons/coupon-icon-homestay.svg',
@@ -118,23 +119,29 @@ Page({
       gift: '份',
     }
 
-    const startDate = new Date(coupon.startTime)
-    const endDate = new Date(coupon.endTime)
+    // 后端返回 validFrom/validTo，前端使用 startTime/endTime
+    const startDate = new Date(coupon.validFrom || coupon.startTime)
+    const endDate = new Date(coupon.validTo || coupon.endTime)
     const formatDate = (d: Date) =>
       `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
 
+    // 后端返回 amount/discountRate，前端使用 value
+    const value = coupon.value ?? coupon.amount ?? (coupon.discountRate ? coupon.discountRate * 100 : 0)
+    const type = coupon.type as CouponType
+    const status = (coupon.status === 'available' ? 'unused' : coupon.status) as CouponStatus
+
     return {
       id: coupon.id,
-      type: coupon.type,
-      status: coupon.status,
-      iconSrc: iconMap[coupon.type] || iconMap.amount,
-      amount: coupon.type === 'discount' ? (coupon.value / 10).toFixed(1) : String(coupon.value),
-      unit: unitMap[coupon.type] || '¥',
+      type,
+      status,
+      iconSrc: iconMap[type] || iconMap.amount,
+      amount: type === 'discount' ? (value / 10).toFixed(1) : String(value),
+      unit: unitMap[type] || '¥',
       title: coupon.name,
       description: coupon.description || `满${coupon.minAmount}可用`,
       validPeriod: `有效期:${formatDate(startDate)}至${formatDate(endDate)}`,
-      isExpired: coupon.status === 'expired',
-      isUsed: coupon.status === 'used',
+      isExpired: status === 'expired',
+      isUsed: status === 'used',
     }
   },
 

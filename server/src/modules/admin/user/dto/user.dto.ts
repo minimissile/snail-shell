@@ -1,5 +1,6 @@
-import { IsOptional, IsString, IsEnum } from 'class-validator'
-import { ApiPropertyOptional } from '@nestjs/swagger'
+import { IsOptional, IsString, IsEnum, IsNumber } from 'class-validator'
+import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger'
+import { Type } from 'class-transformer'
 import { PaginationDto } from '../../../../common/dto'
 
 export class QueryUsersDto extends PaginationDto {
@@ -26,19 +27,23 @@ export class UpdateMemberLevelDto {
 }
 
 export class AdjustPointsDto {
-  @ApiPropertyOptional({ description: '调整数量（正数增加，负数减少）' })
+  @ApiProperty({ description: '调整数量（正数增加，负数减少）' })
+  @IsNumber()
+  @Type(() => Number)
   amount: number
 
-  @ApiPropertyOptional({ description: '调整原因' })
+  @ApiProperty({ description: '调整原因' })
   @IsString()
   reason: string
 }
 
 export class AdjustBalanceDto {
-  @ApiPropertyOptional({ description: '调整金额（正数增加，负数减少）' })
+  @ApiProperty({ description: '调整金额（正数增加，负数减少）' })
+  @IsNumber()
+  @Type(() => Number)
   amount: number
 
-  @ApiPropertyOptional({ description: '调整原因' })
+  @ApiProperty({ description: '调整原因' })
   @IsString()
   reason: string
 }

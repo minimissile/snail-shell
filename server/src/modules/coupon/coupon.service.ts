@@ -9,7 +9,10 @@ export class CouponService {
   /**
    * 获取用户优惠券列表
    */
-  async getCoupons(userId: string, status?: string, page = 1, pageSize = 10) {
+  async getCoupons(userId: string, status?: string, page?: number, pageSize?: number) {
+    // 确保分页参数为有效数字
+    const pageNum = Number(page) || 1
+    const pageSizeNum = Number(pageSize) || 10
     const where: any = { userId }
 
     if (status === 'available') {
@@ -40,8 +43,8 @@ export class CouponService {
         where,
         include: { template: true },
         orderBy: { createdAt: 'desc' },
-        skip: (page - 1) * pageSize,
-        take: pageSize,
+        skip: (pageNum - 1) * pageSizeNum,
+        take: pageSizeNum,
       }),
       this.prisma.userCoupon.count({ where }),
     ])
@@ -62,8 +65,8 @@ export class CouponService {
           status: c.status.toLowerCase(),
         })),
         total,
-        page,
-        pageSize
+        pageNum,
+        pageSizeNum
       ),
     }
   }

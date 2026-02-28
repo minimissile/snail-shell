@@ -112,6 +112,10 @@ export class UpdateCouponStatusDto {
 }
 
 export class DistributeCouponDto {
+  @ApiPropertyOptional({ description: '是否发放给所有用户' })
+  @IsOptional()
+  allUsers?: boolean
+
   @ApiPropertyOptional({ description: '会员等级筛选' })
   @IsOptional()
   @IsString()
@@ -121,4 +125,9 @@ export class DistributeCouponDto {
   @IsOptional()
   @IsArray()
   userIds?: string[]
+
+  @ApiPropertyOptional({ description: '指定手机号列表' })
+  @IsOptional()
+  @IsArray()
+  phones?: string[]
 }

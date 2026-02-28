@@ -1,4 +1,4 @@
-import { userApi, couponApi, messageApi } from '../../api/index'
+import { userApi, messageApi } from '../../api/index'
 import { isLoggedIn } from '../../utils/auth'
 import { getProfile, setProfile } from '../../store/user'
 import type { UserProfile } from '../../store/user'
@@ -51,9 +51,8 @@ Page({
   // 加载用户数据
   async loadUserData() {
     try {
-      const [profile, coupons, unread] = await Promise.all([
+      const [profile, unread] = await Promise.all([
         userApi.getProfile().catch(() => null),
-        couponApi.getMyCoupons({ status: 'unused' }).catch(() => ({ items: [] })),
         messageApi.getUnreadCount().catch(() => ({ total: 0 })),
       ])
 
@@ -61,10 +60,6 @@ Page({
         setProfile(profile)
         this.updateUserDisplay(profile)
       }
-
-      this.setData({
-        couponCount: coupons.items?.length || 0,
-      })
 
       // 设置 tabBar 消息数量
       if (unread.total > 0) {

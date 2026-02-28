@@ -40,7 +40,7 @@ export function getMessages(params?: {
 
 // 获取未读消息数
 export function getUnreadCount(): Promise<UnreadCount> {
-  return get<UnreadCount>('/messages/unread', undefined, { needAuth: true })
+  return get<UnreadCount>('/messages/unread-count', undefined, { needAuth: true })
 }
 
 // 标记消息已读

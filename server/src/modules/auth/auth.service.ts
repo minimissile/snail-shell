@@ -139,17 +139,45 @@ export class AuthService {
   private async generateTokens(userId: string, openId: string) {
     const accessPayload = { userId, openId, type: 'access' }
     const refreshPayload = { userId, openId, type: 'refresh' }
+    const expiresInStr = this.configService.get('JWT_EXPIRES_IN', '7d')
 
     const [token, refreshToken] = await Promise.all([
       this.jwtService.signAsync(accessPayload, {
-        expiresIn: this.configService.get('JWT_EXPIRES_IN', '7d'),
+        expiresIn: expiresInStr,
       }),
       this.jwtService.signAsync(refreshPayload, {
         expiresIn: this.configService.get('JWT_REFRESH_EXPIRES_IN', '30d'),
       }),
     ])
 
-    return { token, refreshToken }
+    // 将过期时间字符串转换为秒数
+    const expiresIn = this.parseExpiresIn(expiresInStr)
+
+    return { accessToken: token, refreshToken, expiresIn }
+  }
+
+  /**
+   * 解析过期时间字符串为秒数
+   */
+  private parseExpiresIn(str: string): number {
+    const match = str.match(/^(\d+)(s|m|h|d)$/)
+    if (!match) return 7 * 24 * 60 * 60 // 默认 7 天
+
+    const value = parseInt(match[1], 10)
+    const unit = match[2]
+
+    switch (unit) {
+      case 's':
+        return value
+      case 'm':
+        return value * 60
+      case 'h':
+        return value * 60 * 60
+      case 'd':
+        return value * 24 * 60 * 60
+      default:
+        return 7 * 24 * 60 * 60
+    }
   }
 
   /**
@@ -158,17 +186,6 @@ export class AuthService {
   private async getWechatSession(code: string): Promise<WechatSession> {
     const appId = this.configService.get('WECHAT_APPID')
     const secret = this.configService.get('WECHAT_SECRET')
-
-    // 开发环境模拟（无真实微信配置时使用）
-    if (
-      process.env.NODE_ENV === 'development' &&
-      (code.startsWith('dev_') || appId === 'wx_dev_appid')
-    ) {
-      return {
-        openid: `dev_openid_${Date.now()}`,
-        session_key: 'dev_session_key',
-      }
-    }
 
     const url = `https://api.weixin.qq.com/sns/jscode2session?appid=${appId}&secret=${secret}&js_code=${code}&grant_type=authorization_code`
 
@@ -182,15 +199,6 @@ export class AuthService {
    * 调用微信获取手机号接口
    */
   private async getWechatPhoneNumber(code: string): Promise<WechatPhoneInfo> {
-    // 开发环境模拟
-    if (process.env.NODE_ENV === 'development') {
-      return {
-        phoneNumber: '+8613888888888',
-        purePhoneNumber: '13888888888',
-        countryCode: '86',
-      }
-    }
-
     const accessToken = await this.getWechatAccessToken()
     const url = `https://api.weixin.qq.com/wxa/business/getuserphonenumber?access_token=${accessToken}`
 
