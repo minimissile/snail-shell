@@ -18,7 +18,10 @@ const StoreList: React.FC = () => {
   const fetchData = async () => {
     setLoading(true)
     try {
-      const res = await storeApi.getStores(params)
+      const query = Object.fromEntries(
+        Object.entries(params).filter(([, v]) => v !== '' && v !== undefined && v !== null)
+      )
+      const res = await storeApi.getStores(query)
       setData(res.list || [])
       setTotal(res.total || 0)
     } catch {

@@ -16,10 +16,10 @@ snail-shell/
 
 ## 技术栈
 
-| 子项目 | 技术栈 |
-| --- | --- |
-| 小程序端 | 微信小程序 + TypeScript + Less + TDesign |
-| 服务端 | NestJS 10 + Prisma + MySQL + Redis + JWT |
+| 子项目   | 技术栈                                      |
+| -------- | ------------------------------------------- |
+| 小程序端 | 微信小程序 + TypeScript + Less + TDesign    |
+| 服务端   | NestJS 10 + Prisma + MySQL + Redis + JWT    |
 | 管理后台 | React 18 + Ant Design 5 + Vite + TypeScript |
 
 ## 环境要求
@@ -52,15 +52,15 @@ cp .env.example .env
 
 需要配置的关键项：
 
-| 变量 | 说明 | 示例 |
-| --- | --- | --- |
-| `DATABASE_URL` | MySQL 连接地址 | `mysql://user:pass@localhost:3306/snailshell` |
-| `REDIS_HOST` | Redis 地址 | `localhost` |
-| `REDIS_PORT` | Redis 端口 | `6379` |
-| `REDIS_PASSWORD` | Redis 密码（可选） | |
-| `JWT_SECRET` | JWT 签名密钥 | 自定义强密码字符串 |
-| `WECHAT_APPID` | 微信小程序 AppID | 微信后台获取 |
-| `WECHAT_SECRET` | 微信小程序 AppSecret | 微信后台获取 |
+| 变量             | 说明                 | 示例                                          |
+| ---------------- | -------------------- | --------------------------------------------- |
+| `DATABASE_URL`   | MySQL 连接地址       | `mysql://user:pass@localhost:3306/snailshell` |
+| `REDIS_HOST`     | Redis 地址           | `localhost`                                   |
+| `REDIS_PORT`     | Redis 端口           | `6379`                                        |
+| `REDIS_PASSWORD` | Redis 密码（可选）   |                                               |
+| `JWT_SECRET`     | JWT 签名密钥         | 自定义强密码字符串                            |
+| `WECHAT_APPID`   | 微信小程序 AppID     | 微信后台获取                                  |
+| `WECHAT_SECRET`  | 微信小程序 AppSecret | 微信后台获取                                  |
 
 ### 3. 初始化数据库
 
@@ -87,6 +87,7 @@ npm run start:prod
 ```
 
 启动后：
+
 - API 服务: `http://localhost:3000`
 - Swagger 文档: `http://localhost:3000/api-docs`
 
@@ -128,7 +129,7 @@ npm install
 ```typescript
 const config = {
   dev: {
-    baseUrl: 'http://localhost:3000/v1',  // 本地开发
+    baseUrl: 'http://localhost:3000/v1', // 本地开发
   },
   prod: {
     baseUrl: 'https://your-domain.com/v1', // 线上环境
@@ -150,13 +151,13 @@ const ENV = 'dev' as 'dev' | 'prod'
 
 ### 5. 项目页面
 
-| 页面 | 路径 | 说明 |
-| --- | --- | --- |
-| 首页 | `pages/index` | 门店列表、搜索、Banner |
-| 收藏 | `pages/favorites` | 收藏的门店 |
-| 订单 | `pages/orders` | 订单列表 |
-| 消息 | `pages/messages` | 系统消息 |
-| 我的 | `pages/mine` | 个人中心 |
+| 页面 | 路径              | 说明                   |
+| ---- | ----------------- | ---------------------- |
+| 首页 | `pages/index`     | 门店列表、搜索、Banner |
+| 收藏 | `pages/favorites` | 收藏的门店             |
+| 订单 | `pages/orders`    | 订单列表               |
+| 消息 | `pages/messages`  | 系统消息               |
+| 我的 | `pages/mine`      | 个人中心               |
 
 ---
 
@@ -185,10 +186,10 @@ npm run dev
 
 首次使用需要先执行服务端的种子脚本（见服务端第 3 步），默认管理员账号：
 
-| 字段 | 值 |
-| --- | --- |
-| 用户名 | `admin` |
-| 密码 | `admin123` |
+| 字段   | 值         |
+| ------ | ---------- |
+| 用户名 | `admin`    |
+| 密码   | `admin123` |
 
 ### 4. 生产构建
 
@@ -222,15 +223,15 @@ server {
 
 ### 5. 功能模块
 
-| 模块 | 说明 |
-| --- | --- |
-| 数据看板 | 营收、订单、用户统计图表 |
-| 门店管理 | 门店 CRUD、房型/床位管理 |
-| 订单管理 | 订单查询、退款处理、Excel 导出 |
-| 用户管理 | 用户查询、会员等级、积分/余额调整 |
-| 优惠券管理 | 优惠券模板 CRUD、批量发放 |
-| 系统配置 | 首页 Banner/标签、城市管理、协议管理 |
-| 权限管理 | 管理员 CRUD、角色管理、权限分配 |
+| 模块       | 说明                                 |
+| ---------- | ------------------------------------ |
+| 数据看板   | 营收、订单、用户统计图表             |
+| 门店管理   | 门店 CRUD、房型/床位管理             |
+| 订单管理   | 订单查询、退款处理、Excel 导出       |
+| 用户管理   | 用户查询、会员等级、积分/余额调整    |
+| 优惠券管理 | 优惠券模板 CRUD、批量发放            |
+| 系统配置   | 首页 Banner/标签、城市管理、协议管理 |
+| 权限管理   | 管理员 CRUD、角色管理、权限分配      |
 
 ---
 

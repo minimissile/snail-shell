@@ -68,7 +68,7 @@ const UserList: React.FC = () => {
       title: '余额',
       dataIndex: 'balance',
       width: 100,
-      render: (v: number) => `¥${(v || 0).toFixed(2)}`,
+      render: (v: any) => `¥${Number(v || 0).toFixed(2)}`,
     },
     {
       title: '注册时间',

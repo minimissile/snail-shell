@@ -28,7 +28,7 @@ const RoleList: React.FC = () => {
   const fetchPermissions = async () => {
     try {
       const res = await adminUserApi.getPermissions()
-      setPermissions(res || [])
+      setPermissions(res?.list || res || [])
     } catch {
       /* handled */
     }
