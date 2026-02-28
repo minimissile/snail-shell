@@ -5,18 +5,27 @@ import { get } from '../utils/request'
 export interface StoreInfo {
   id: string
   name: string
-  address: string
-  city: string
-  latitude: number
-  longitude: number
-  phone: string
+  image: string
   images: string[]
+  imageCount: number
   rating: number
+  ratingText: string
   reviewCount: number
-  lowestPrice: number
-  distance?: number
+  highlightComment: string
   tags: string[]
   features: string[]
+  details: string
+  location: {
+    address: string
+    district: string
+    lng: number
+    lat: number
+  }
+  distance?: number
+  price: number
+  originalPrice?: number
+  savedAmount: number
+  memberDiscount?: string
   isFavorite?: boolean
 }
 
@@ -78,21 +87,23 @@ export interface ReviewInfo {
 // 搜索门店参数
 export interface SearchStoresParams {
   keyword?: string
-  city?: string
-  latitude?: number
-  longitude?: number
-  checkIn?: string
-  checkOut?: string
+  cityCode?: string
+  district?: string
+  lng?: number
+  lat?: number
+  checkInDate?: string
+  checkOutDate?: string
   minPrice?: number
   maxPrice?: number
-  sortBy?: 'distance' | 'price' | 'rating'
+  sortBy?: 'distance' | 'price' | 'popularity'
+  sortOrder?: 'asc' | 'desc'
   page?: number
   pageSize?: number
 }
 
 // 分页响应
 export interface PageResult<T> {
-  items: T[]
+  list: T[]
   total: number
   page: number
   pageSize: number

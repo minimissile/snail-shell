@@ -115,6 +115,14 @@ export function request<T = any>(config: RequestConfig): Promise<T> {
       wx.showLoading({ title: loadingText, mask: true })
     }
 
+    // 过滤 undefined/null 值，防止 wx.request 将其序列化为字符串
+    let requestData = data
+    if (data && typeof data === 'object' && method === 'GET') {
+      requestData = Object.fromEntries(
+        Object.entries(data).filter(([, v]) => v !== undefined && v !== null)
+      )
+    }
+
     // 构建请求头
     const requestHeader: Record<string, string> = {
       'Content-Type': 'application/json',
@@ -132,7 +140,7 @@ export function request<T = any>(config: RequestConfig): Promise<T> {
     wx.request({
       url: `${BASE_URL}${url}`,
       method,
-      data,
+      data: requestData,
       header: requestHeader,
       timeout: API_TIMEOUT,
       success: async (res) => {

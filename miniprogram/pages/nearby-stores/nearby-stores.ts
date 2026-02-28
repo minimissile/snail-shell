@@ -76,23 +76,31 @@ Page({
     this.setData({ isLoading: true })
 
     try {
+      const sortByMap: Record<string, string> = {
+        distance: 'distance',
+        price: 'price',
+        rating: 'popularity',
+      }
+
       const params: SearchStoresParams = {
-        keyword: this.data.destination,
-        city: this.data.city,
-        sortBy: this.data.sortBy,
+        sortBy: (sortByMap[this.data.sortBy] || 'distance') as SearchStoresParams['sortBy'],
         page,
         pageSize: this.data.pageSize,
       }
 
+      if (this.data.destination) {
+        params.keyword = this.data.destination
+      }
+
       const result = await storeApi.searchStores(params)
 
-      const newList = result.items.map((store) => this.transformStoreData(store))
+      const newList = result.list.map((store) => this.transformStoreData(store))
 
       this.setData({
         storeList: isRefresh ? newList : [...this.data.storeList, ...newList],
         page: page + 1,
-        hasMore: result.items.length === this.data.pageSize,
-        isEmpty: isRefresh && result.items.length === 0,
+        hasMore: result.list.length === this.data.pageSize,
+        isEmpty: isRefresh && result.list.length === 0,
         isLoading: false,
       })
     } catch (err) {
@@ -107,20 +115,20 @@ Page({
     return {
       id: store.id,
       name: store.name,
-      image: store.images[0] || '/assets/figma/favorites/item-1.jpg',
+      image: store.image || store.images[0] || '/assets/figma/favorites/item-1.jpg',
       images: store.images,
       promotionTag: store.tags[0] || '',
       verifiedTag: store.tags[1] || '',
       isFavorite: store.isFavorite || false,
       imageCount: 1,
-      totalImages: store.images.length,
+      totalImages: store.imageCount || store.images.length,
       rating: store.rating,
       reviewCount: store.reviewCount,
-      highlightComment: store.features[0] || '',
+      highlightComment: store.highlightComment || '',
       features: store.features.slice(0, 6),
-      details: `${store.address} | ${store.distance ? `距离${store.distance}m` : ''}`,
-      price: store.lowestPrice,
-      savedAmount: Math.floor(store.lowestPrice * 0.1),
+      details: store.details || `${store.location?.address || ''} | ${store.distance ? `距离${store.distance}m` : ''}`,
+      price: store.price,
+      savedAmount: store.savedAmount || 0,
       distance: store.distance,
     }
   },

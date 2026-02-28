@@ -145,7 +145,7 @@ Page({
       }
 
       const result = await orderApi.getOrders(params)
-      const newOrders = result.items.map((order) => this.transformOrderData(order))
+      const newOrders = result.list.map((order) => this.transformOrderData(order))
 
       // 更新当前 tab 的订单列表
       const currentKey = this.data.activeKey
@@ -165,7 +165,7 @@ Page({
         ordersByIndex,
         ordersCountByIndex,
         page: (isRefresh ? 1 : this.data.page) + 1,
-        hasMore: result.items.length === this.data.pageSize,
+        hasMore: result.list.length === this.data.pageSize,
         isLoading: false,
       })
     } catch (err) {

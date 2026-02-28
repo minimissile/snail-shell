@@ -80,7 +80,7 @@ Page({
         pageSize: this.data.pageSize,
       })
 
-      const items = result.items.map((item) => this.transformFavoriteData(item))
+      const items = result.list.map((item) => this.transformFavoriteData(item))
       this.setData({
         favoritesList: items,
         isEmpty: items.length === 0,

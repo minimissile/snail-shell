@@ -73,9 +73,9 @@ Page({
         couponApi.getMyCoupons({ status: 'expired', page: 1, pageSize: 50 }),
       ])
 
-      const unusedCoupons = unusedResult.items.map((c) => this.transformCoupon(c))
-      const usedCoupons = usedResult.items.map((c) => this.transformCoupon(c))
-      const expiredCoupons = expiredResult.items.map((c) => this.transformCoupon(c))
+      const unusedCoupons = unusedResult.list.map((c) => this.transformCoupon(c))
+      const usedCoupons = usedResult.list.map((c) => this.transformCoupon(c))
+      const expiredCoupons = expiredResult.list.map((c) => this.transformCoupon(c))
 
       const allCoupons = [...unusedCoupons, ...usedCoupons, ...expiredCoupons]
 

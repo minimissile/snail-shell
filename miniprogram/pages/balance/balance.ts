@@ -60,13 +60,13 @@ Page({
       const result = await balanceApi.getBalanceRecords({ type: 'gift', pageSize: 20 })
       wx.hideLoading()
 
-      if (result.items.length === 0) {
+      if (result.list.length === 0) {
         wx.showToast({ title: '暂无返现记录', icon: 'none' })
         return
       }
 
       // 显示返现记录列表
-      const recordList = result.items.map((r) => `${r.description}: +¥${r.amount.toFixed(2)}`).join('\n')
+      const recordList = result.list.map((r) => `${r.description}: +¥${r.amount.toFixed(2)}`).join('\n')
 
       wx.showModal({
         title: '返现记录',
@@ -88,13 +88,13 @@ Page({
       const result = await balanceApi.getBalanceRecords({ pageSize: 20 })
       wx.hideLoading()
 
-      if (result.items.length === 0) {
+      if (result.list.length === 0) {
         wx.showToast({ title: '暂无余额记录', icon: 'none' })
         return
       }
 
       // 显示余额记录列表
-      const recordList = result.items
+      const recordList = result.list
         .map((r) => {
           const sign = r.type === 'consume' ? '-' : '+'
           return `${r.description}: ${sign}¥${Math.abs(r.amount).toFixed(2)}`
@@ -121,13 +121,13 @@ Page({
       const result = await balanceApi.getBalanceRecords({ type: 'consume', pageSize: 20 })
       wx.hideLoading()
 
-      if (result.items.length === 0) {
+      if (result.list.length === 0) {
         wx.showToast({ title: '暂无消费记录', icon: 'none' })
         return
       }
 
       // 显示消费记录列表
-      const recordList = result.items.map((r) => `${r.description}: -¥${Math.abs(r.amount).toFixed(2)}`).join('\n')
+      const recordList = result.list.map((r) => `${r.description}: -¥${Math.abs(r.amount).toFixed(2)}`).join('\n')
 
       wx.showModal({
         title: '消费记录',
