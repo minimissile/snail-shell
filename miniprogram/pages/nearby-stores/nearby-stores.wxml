@@ -149,4 +149,8 @@
       </view>
     </view>
   </view>
+
+  <!-- 登录弹窗 -->
+  <login-popup visible="{{showLoginPopup}}" bind:visiblechange="onLoginPopupVisibleChange"
+    bind:loginsuccess="onLoginSuccess" />
 </view>

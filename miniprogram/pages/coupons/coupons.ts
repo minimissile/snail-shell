@@ -39,6 +39,7 @@ Page({
     page: 1,
     pageSize: 20,
     hasMore: true,
+    showLoginPopup: false,
   },
 
   onLoad() {
@@ -59,7 +60,7 @@ Page({
   // 加载优惠券列表
   async loadCoupons() {
     if (!isLoggedIn()) {
-      this.setData({ isEmpty: true, allCoupons: [], displayCoupons: [] })
+      this.setData({ isEmpty: true, allCoupons: [], displayCoupons: [], showLoginPopup: true })
       return
     }
 
@@ -208,5 +209,17 @@ Page({
         }
       },
     })
+  },
+
+  // 登录弹窗显示状态变化
+  onLoginPopupVisibleChange(e: any) {
+    this.setData({ showLoginPopup: e.detail.visible })
+  },
+
+  // 登录成功
+  onLoginSuccess() {
+    this.setData({ showLoginPopup: false })
+    wx.showToast({ title: '登录成功', icon: 'success' })
+    this.loadCoupons()
   },
 })

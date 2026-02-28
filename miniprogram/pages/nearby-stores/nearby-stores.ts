@@ -36,6 +36,7 @@ Page({
     pageSize: 10,
     hasMore: true,
     sortBy: 'distance' as 'distance' | 'price' | 'rating',
+    showLoginPopup: false,
   },
 
   onLoad(options) {
@@ -212,7 +213,7 @@ Page({
 
     // 检查登录状态
     if (!isLoggedIn()) {
-      wx.showToast({ title: '请先登录', icon: 'none' })
+      this.setData({ showLoginPopup: true })
       return
     }
 
@@ -246,6 +247,17 @@ Page({
       })
       this.setData({ storeList })
     }
+  },
+
+  // 登录弹窗显示状态变化
+  onLoginPopupVisibleChange(e: any) {
+    this.setData({ showLoginPopup: e.detail.visible })
+  },
+
+  // 登录成功
+  onLoginSuccess() {
+    this.setData({ showLoginPopup: false })
+    wx.showToast({ title: '登录成功', icon: 'success' })
   },
 
   // 会员优惠点击

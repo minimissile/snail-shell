@@ -6,6 +6,7 @@
     "stats-card": "/components/stats-card/stats-card",
     "quick-actions": "/components/quick-actions/quick-actions",
     "icon-grid": "/components/icon-grid/icon-grid",
-    "floating-lock-button": "/components/floating-lock-button/floating-lock-button"
+    "floating-lock-button": "/components/floating-lock-button/floating-lock-button",
+    "login-popup": "/components/login-popup/login-popup"
   }
 }

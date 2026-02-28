@@ -28,11 +28,8 @@
           <text class="booking-card__title">{{roomType}}</text>
           <view class="booking-card__rules" bindtap="onViewAllRules">
             <text class="booking-card__rules-text">全部须知</text>
-            <image
-              class="booking-card__rules-arrow"
-              src="/assets/figma/order-form/icon-arrow-right.svg"
-              mode="aspectFit"
-            />
+            <image class="booking-card__rules-arrow" src="/assets/figma/order-form/icon-arrow-right.svg"
+              mode="aspectFit" />
           </view>
         </view>
         <text class="booking-card__details">{{roomInfo}}</text>
@@ -53,11 +50,8 @@
       <text class="booking-card__date-text">{{checkInDate}} – {{checkOutDate}}</text>
       <view class="booking-card__nights" bindtap="onChangeDate">
         <text class="booking-card__nights-text">共{{nights}}晚</text>
-        <image
-          class="booking-card__nights-arrow"
-          src="/assets/figma/order-form/icon-arrow-right-2.svg"
-          mode="aspectFit"
-        />
+        <image class="booking-card__nights-arrow" src="/assets/figma/order-form/icon-arrow-right-2.svg"
+          mode="aspectFit" />
       </view>
     </view>
 
@@ -67,11 +61,8 @@
         <text class="booking-card__policy-text">{{cancelPolicy}}</text>
       </view>
       <view class="booking-card__policy">
-        <image
-          class="booking-card__policy-icon booking-card__policy-icon--confirm"
-          src="/assets/figma/order-form/icon-clock-gray.png"
-          mode="aspectFit"
-        />
+        <image class="booking-card__policy-icon booking-card__policy-icon--confirm"
+          src="/assets/figma/order-form/icon-clock-gray.png" mode="aspectFit" />
         <text class="booking-card__policy-text booking-card__policy-text--confirm">立即确认</text>
       </view>
     </view>
@@ -103,12 +94,7 @@
         <image class="guest-card__info-icon" src="/assets/figma/order-form/icon-info.svg" mode="aspectFit" />
       </view>
       <view class="guest-card__input-wrapper">
-        <input
-          class="guest-card__input"
-          placeholder="请填写住客姓名"
-          value="{{guestName}}"
-          bindinput="onInputGuestName"
-        />
+        <input class="guest-card__input" placeholder="请填写住客姓名" value="{{guestName}}" bindinput="onInputGuestName" />
       </view>
     </view>
 
@@ -126,12 +112,8 @@
         <text class="guest-card__phone-code">{{countryCode}}</text>
         <text class="guest-card__phone-arrow"></text>
         <text class="guest-card__phone-number">{{phone}}</text>
-        <image
-          class="guest-card__phone-call"
-          src="/assets/figma/order-form/icon-phone-circle.png"
-          mode="aspectFit"
-          bindtap="onCallPhone"
-        />
+        <image class="guest-card__phone-call" src="/assets/figma/order-form/icon-phone-circle.png" mode="aspectFit"
+          bindtap="onCallPhone" />
       </view>
     </view>
   </view>
@@ -186,4 +168,8 @@
       </view>
     </view>
   </view>
+
+  <!-- 登录弹窗 -->
+  <login-popup visible="{{showLoginPopup}}" bind:visiblechange="onLoginPopupVisibleChange"
+    bind:loginsuccess="onLoginSuccess" />
 </view>

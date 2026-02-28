@@ -2,6 +2,7 @@
   "navigationBarTitleText": "订单",
   "usingComponents": {
     "navigation-bar": "/components/navigation-bar/navigation-bar",
-    "floating-lock-button": "/components/floating-lock-button/floating-lock-button"
+    "floating-lock-button": "/components/floating-lock-button/floating-lock-button",
+    "login-popup": "/components/login-popup/login-popup"
   }
 }

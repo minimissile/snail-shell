@@ -47,6 +47,7 @@ Page({
     page: 1,
     pageSize: 20,
     hasMore: true,
+    showLoginPopup: false,
   },
 
   onLoad() {
@@ -68,7 +69,7 @@ Page({
   // 加载收藏列表
   async loadFavorites() {
     if (!isLoggedIn()) {
-      this.setData({ isEmpty: true, favoritesList: [] })
+      this.setData({ isEmpty: true, favoritesList: [], showLoginPopup: true })
       return
     }
 
@@ -96,7 +97,7 @@ Page({
   // 加载足迹列表
   async loadFootprints() {
     if (!isLoggedIn()) {
-      this.setData({ isEmpty: true, footprintsList: [], footprintGroups: [] })
+      this.setData({ isEmpty: true, footprintsList: [], footprintGroups: [], showLoginPopup: true })
       return
     }
 
@@ -250,6 +251,22 @@ Page({
       })
     } else {
       wx.showToast({ title: '菜单', icon: 'none' })
+    }
+  },
+
+  // 登录弹窗显示状态变化
+  onLoginPopupVisibleChange(e: any) {
+    this.setData({ showLoginPopup: e.detail.visible })
+  },
+
+  // 登录成功
+  onLoginSuccess() {
+    this.setData({ showLoginPopup: false })
+    wx.showToast({ title: '登录成功', icon: 'success' })
+    if (this.data.activeTab === 'favorites') {
+      this.loadFavorites()
+    } else {
+      this.loadFootprints()
     }
   },
 })

@@ -64,6 +64,7 @@ Page({
 
     // 提交状态
     isSubmitting: false,
+    showLoginPopup: false,
   },
 
   onLoad(options) {
@@ -347,7 +348,7 @@ Page({
     }
 
     if (!isLoggedIn()) {
-      wx.showToast({ title: '请先登录', icon: 'none' })
+      this.setData({ showLoginPopup: true })
       return
     }
 
@@ -385,5 +386,16 @@ Page({
     } finally {
       this.setData({ isSubmitting: false })
     }
+  },
+
+  // 登录弹窗显示状态变化
+  onLoginPopupVisibleChange(e: any) {
+    this.setData({ showLoginPopup: e.detail.visible })
+  },
+
+  // 登录成功
+  onLoginSuccess() {
+    this.setData({ showLoginPopup: false })
+    wx.showToast({ title: '登录成功', icon: 'success' })
   },
 })

@@ -1,13 +1,8 @@
 <view class="favorites-page">
   <!-- 标签栏 -->
   <view class="tabs-container">
-    <view
-      wx:for="{{tabs}}"
-      wx:key="id"
-      class="tab-item {{activeTab === item.id ? 'active' : ''}}"
-      data-id="{{item.id}}"
-      bindtap="onTabChange"
-    >
+    <view wx:for="{{tabs}}" wx:key="id" class="tab-item {{activeTab === item.id ? 'active' : ''}}" data-id="{{item.id}}"
+      bindtap="onTabChange">
       <text class="tab-label">{{item.label}}</text>
       <view wx:if="{{activeTab === item.id}}" class="tab-indicator"></view>
     </view>
@@ -99,3 +94,7 @@
 
 <!-- 智能开锁浮动按钮 -->
 <!-- <floating-lock-button /> -->
+
+<!-- 登录弹窗 -->
+<login-popup visible="{{showLoginPopup}}" bind:visiblechange="onLoginPopupVisibleChange"
+  bind:loginsuccess="onLoginSuccess" />

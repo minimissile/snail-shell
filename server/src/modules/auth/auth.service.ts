@@ -159,10 +159,13 @@ export class AuthService {
     const appId = this.configService.get('WECHAT_APPID')
     const secret = this.configService.get('WECHAT_SECRET')
 
-    // 开发环境模拟
-    if (process.env.NODE_ENV === 'development' && code.startsWith('dev_')) {
+    // 开发环境模拟（无真实微信配置时使用）
+    if (
+      process.env.NODE_ENV === 'development' &&
+      (code.startsWith('dev_') || appId === 'wx_dev_appid')
+    ) {
       return {
-        openid: `dev_openid_${code}`,
+        openid: `dev_openid_${Date.now()}`,
         session_key: 'dev_session_key',
       }
     }

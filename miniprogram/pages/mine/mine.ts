@@ -1,6 +1,6 @@
 import { userApi, couponApi, messageApi } from '../../api/index'
-import { isLoggedIn, getUserInfo } from '../../utils/auth'
-import { login, getProfile, setProfile } from '../../store/user'
+import { isLoggedIn } from '../../utils/auth'
+import { getProfile, setProfile } from '../../store/user'
 import type { UserProfile } from '../../store/user'
 
 Page({
@@ -13,6 +13,7 @@ Page({
     memberType: 'general' as 'gold' | 'general',
     points: 0,
     balance: 0,
+    showLoginPopup: false,
   },
 
   onLoad() {
@@ -106,17 +107,7 @@ Page({
   // 点击头像/登录区域
   async onOpenHeaderMenu() {
     if (!isLoggedIn()) {
-      // 触发登录
-      try {
-        wx.showLoading({ title: '登录中...', mask: true })
-        const profile = await login()
-        wx.hideLoading()
-        this.updateUserDisplay(profile)
-        wx.showToast({ title: '登录成功', icon: 'success' })
-      } catch (err) {
-        wx.hideLoading()
-        wx.showToast({ title: '登录失败', icon: 'none' })
-      }
+      this.setData({ showLoginPopup: true })
       return
     }
 
@@ -214,5 +205,21 @@ Page({
     }
 
     wx.showToast({ title: key || '功能', icon: 'none' })
+  },
+
+  // 登录弹窗显示状态变化
+  onLoginPopupVisibleChange(e: any) {
+    this.setData({ showLoginPopup: e.detail.visible })
+  },
+
+  // 登录成功
+  onLoginSuccess(e: any) {
+    this.setData({ showLoginPopup: false })
+    const profile = e.detail?.userProfile
+    if (profile) {
+      this.updateUserDisplay(profile)
+    }
+    this.loadUserData()
+    wx.showToast({ title: '登录成功', icon: 'success' })
   },
 })

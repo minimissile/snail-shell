@@ -1,5 +1,7 @@
 {
   "navigationBarTitleText": "",
   "navigationStyle": "custom",
-  "usingComponents": {}
+  "usingComponents": {
+    "login-popup": "/components/login-popup/login-popup"
+  }
 }

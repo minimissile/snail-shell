@@ -1,26 +1,11 @@
 <view class="page" aria-label="订单页">
   <view class="tabs" aria-label="订单状态 Tab">
-    <scroll-view
-      class="tabs__scroll"
-      scroll-x
-      scroll-left="{{scrollLeft}}"
-      scroll-with-animation
-      show-scrollbar="{{false}}"
-      enable-flex
-      enhanced
-      aria-label="订单状态切换"
-    >
+    <scroll-view class="tabs__scroll" scroll-x scroll-left="{{scrollLeft}}" scroll-with-animation
+      show-scrollbar="{{false}}" enable-flex enhanced aria-label="订单状态切换">
       <view class="tabs__row">
-        <view
-          wx:for="{{tabs}}"
-          wx:key="key"
-          wx:for-index="i"
-          class="tabs__btn {{activeIndex === i ? 'is-active' : ''}} {{i === 0 ? 'is-first' : ''}}"
-          data-index="{{i}}"
-          bindtap="onTapTab"
-          aria-role="button"
-          aria-label="切换到{{item.label}}"
-        >
+        <view wx:for="{{tabs}}" wx:key="key" wx:for-index="i"
+          class="tabs__btn {{activeIndex === i ? 'is-active' : ''}} {{i === 0 ? 'is-first' : ''}}" data-index="{{i}}"
+          bindtap="onTapTab" aria-role="button" aria-label="切换到{{item.label}}">
           <text class="tabs__text">{{item.label}}</text>
         </view>
       </view>
@@ -40,31 +25,18 @@
 
     <view wx:else class="panel__body">
       <!-- 全部 -->
-      <scroll-view
-        wx:if="{{activeIndex === 0}}"
-        class="list-scroll"
-        scroll-y
-        enable-back-to-top
-        type="list"
-        aria-label="全部订单列表"
-      >
+      <scroll-view wx:if="{{activeIndex === 0}}" class="list-scroll" scroll-y enable-back-to-top type="list"
+        aria-label="全部订单列表">
         <view>
           <view wx:if="{{ordersCountByIndex[0] > 0}}" class="list" aria-label="订单列表">
-            <view
-              wx:for="{{ordersByIndex[0]}}"
-              wx:key="id"
-              class="orders__card"
-              wx:for-item="order"
-              aria-label="订单卡片"
-            >
+            <view wx:for="{{ordersByIndex[0]}}" wx:key="id" class="orders__card" wx:for-item="order" aria-label="订单卡片">
               <view class="orders__card-header">
                 <view class="orders__card-header-left">
                   <image class="orders__card-icon" src="/assets/figma/buildings-modern.png" mode="aspectFit" />
                   <text class="orders__card-store">{{order.storeName}}</text>
                 </view>
-                <text class="orders__card-status" style="{{order.statusColor ? 'color: ' + order.statusColor : ''}}"
-                  >{{order.status}}</text
-                >
+                <text class="orders__card-status"
+                  style="{{order.statusColor ? 'color: ' + order.statusColor : ''}}">{{order.status}}</text>
               </view>
               <view class="orders__card-divider"></view>
               <view class="orders__card-body">
@@ -83,31 +55,18 @@
       </scroll-view>
 
       <!-- 待使用 -->
-      <scroll-view
-        wx:if="{{activeIndex === 1}}"
-        class="list-scroll"
-        scroll-y
-        enable-back-to-top
-        type="list"
-        aria-label="待使用订单列表"
-      >
+      <scroll-view wx:if="{{activeIndex === 1}}" class="list-scroll" scroll-y enable-back-to-top type="list"
+        aria-label="待使用订单列表">
         <view>
           <view wx:if="{{ordersCountByIndex[1] > 0}}" class="list" aria-label="订单列表">
-            <view
-              wx:for="{{ordersByIndex[1]}}"
-              wx:key="id"
-              class="orders__card"
-              wx:for-item="order"
-              aria-label="订单卡片"
-            >
+            <view wx:for="{{ordersByIndex[1]}}" wx:key="id" class="orders__card" wx:for-item="order" aria-label="订单卡片">
               <view class="orders__card-header">
                 <view class="orders__card-header-left">
                   <image class="orders__card-icon" src="/assets/figma/buildings-modern.png" mode="aspectFit" />
                   <text class="orders__card-store">{{order.storeName}}</text>
                 </view>
-                <text class="orders__card-status" style="{{order.statusColor ? 'color: ' + order.statusColor : ''}}"
-                  >{{order.status}}</text
-                >
+                <text class="orders__card-status"
+                  style="{{order.statusColor ? 'color: ' + order.statusColor : ''}}">{{order.status}}</text>
               </view>
               <view class="orders__card-divider"></view>
               <view class="orders__card-body">
@@ -126,31 +85,18 @@
       </scroll-view>
 
       <!-- 有效单 -->
-      <scroll-view
-        wx:if="{{activeIndex === 2}}"
-        class="list-scroll"
-        scroll-y
-        enable-back-to-top
-        type="list"
-        aria-label="有效单列表"
-      >
+      <scroll-view wx:if="{{activeIndex === 2}}" class="list-scroll" scroll-y enable-back-to-top type="list"
+        aria-label="有效单列表">
         <view>
           <view wx:if="{{ordersCountByIndex[2] > 0}}" class="list" aria-label="订单列表">
-            <view
-              wx:for="{{ordersByIndex[2]}}"
-              wx:key="id"
-              class="orders__card"
-              wx:for-item="order"
-              aria-label="订单卡片"
-            >
+            <view wx:for="{{ordersByIndex[2]}}" wx:key="id" class="orders__card" wx:for-item="order" aria-label="订单卡片">
               <view class="orders__card-header">
                 <view class="orders__card-header-left">
                   <image class="orders__card-icon" src="/assets/figma/buildings-modern.png" mode="aspectFit" />
                   <text class="orders__card-store">{{order.storeName}}</text>
                 </view>
-                <text class="orders__card-status" style="{{order.statusColor ? 'color: ' + order.statusColor : ''}}"
-                  >{{order.status}}</text
-                >
+                <text class="orders__card-status"
+                  style="{{order.statusColor ? 'color: ' + order.statusColor : ''}}">{{order.status}}</text>
               </view>
               <view class="orders__card-divider"></view>
               <view class="orders__card-body">
@@ -169,23 +115,11 @@
       </scroll-view>
 
       <!-- 待支付 -->
-      <scroll-view
-        wx:if="{{activeIndex === 3}}"
-        class="list-scroll"
-        scroll-y
-        enable-back-to-top
-        type="list"
-        aria-label="待支付订单列表"
-      >
+      <scroll-view wx:if="{{activeIndex === 3}}" class="list-scroll" scroll-y enable-back-to-top type="list"
+        aria-label="待支付订单列表">
         <view>
           <view wx:if="{{ordersCountByIndex[3] > 0}}" class="list" aria-label="订单列表">
-            <view
-              wx:for="{{ordersByIndex[3]}}"
-              wx:key="id"
-              class="orders__card"
-              wx:for-item="order"
-              aria-label="订单卡片"
-            >
+            <view wx:for="{{ordersByIndex[3]}}" wx:key="id" class="orders__card" wx:for-item="order" aria-label="订单卡片">
               <view class="orders__card-header">
                 <view class="orders__card-header-left">
                   <image class="orders__card-icon" src="/assets/figma/buildings-modern.png" mode="aspectFit" />
@@ -214,31 +148,18 @@
       </scroll-view>
 
       <!-- 退款单 -->
-      <scroll-view
-        wx:if="{{activeIndex === 4}}"
-        class="list-scroll"
-        scroll-y
-        enable-back-to-top
-        type="list"
-        aria-label="退款单列表"
-      >
+      <scroll-view wx:if="{{activeIndex === 4}}" class="list-scroll" scroll-y enable-back-to-top type="list"
+        aria-label="退款单列表">
         <view>
           <view wx:if="{{ordersCountByIndex[4] > 0}}" class="list" aria-label="订单列表">
-            <view
-              wx:for="{{ordersByIndex[4]}}"
-              wx:key="id"
-              class="orders__card"
-              wx:for-item="order"
-              aria-label="订单卡片"
-            >
+            <view wx:for="{{ordersByIndex[4]}}" wx:key="id" class="orders__card" wx:for-item="order" aria-label="订单卡片">
               <view class="orders__card-header">
                 <view class="orders__card-header-left">
                   <image class="orders__card-icon" src="/assets/figma/buildings-modern.png" mode="aspectFit" />
                   <text class="orders__card-store">{{order.storeName}}</text>
                 </view>
-                <text class="orders__card-status" style="{{order.statusColor ? 'color: ' + order.statusColor : ''}}"
-                  >{{order.status}}</text
-                >
+                <text class="orders__card-status"
+                  style="{{order.statusColor ? 'color: ' + order.statusColor : ''}}">{{order.status}}</text>
               </view>
               <view class="orders__card-divider"></view>
               <view class="orders__card-body">
@@ -261,3 +182,7 @@
 
 <!-- 智能开锁浮动按钮 -->
 <!-- <floating-lock-button /> -->
+
+<!-- 登录弹窗 -->
+<login-popup visible="{{showLoginPopup}}" bind:visiblechange="onLoginPopupVisibleChange"
+  bind:loginsuccess="onLoginSuccess" />

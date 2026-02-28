@@ -78,22 +78,16 @@ async function handleTokenRefresh(): Promise<boolean> {
   }
 }
 
-// 跳转登录
+// 触发登录弹窗
 function redirectToLogin(): void {
   clearToken()
-  wx.showModal({
-    title: '提示',
-    content: '登录已过期，请重新登录',
-    showCancel: false,
-    success: () => {
-      // 可以跳转到登录页或触发登录弹窗
-      const pages = getCurrentPages()
-      const currentPage = pages[pages.length - 1]
-      if (currentPage) {
-        currentPage.setData?.({ showLoginPopup: true })
-      }
-    },
-  })
+  const pages = getCurrentPages()
+  const currentPage = pages[pages.length - 1] as any
+  if (currentPage?.data && 'showLoginPopup' in currentPage.data) {
+    currentPage.setData({ showLoginPopup: true })
+  } else {
+    wx.showToast({ title: '登录已过期，请重新登录', icon: 'none' })
+  }
 }
 
 // 主请求方法
@@ -118,9 +112,7 @@ export function request<T = any>(config: RequestConfig): Promise<T> {
     // 过滤 undefined/null 值，防止 wx.request 将其序列化为字符串
     let requestData = data
     if (data && typeof data === 'object' && method === 'GET') {
-      requestData = Object.fromEntries(
-        Object.entries(data).filter(([, v]) => v !== undefined && v !== null)
-      )
+      requestData = Object.fromEntries(Object.entries(data).filter(([, v]) => v !== undefined && v !== null))
     }
 
     // 构建请求头

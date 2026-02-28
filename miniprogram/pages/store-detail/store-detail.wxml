@@ -19,11 +19,8 @@
         <view class="store-detail__favorite-wrapper">
           <!-- Like button (40x40px) -->
           <view class="store-detail__favorite-btn" bindtap="onToggleFavorite">
-            <image
-              class="store-detail__favorite-icon"
-              src="/images/store-detail/heart-icon.svg"
-              mode="aspectFit"
-            ></image>
+            <image class="store-detail__favorite-icon" src="/images/store-detail/heart-icon.svg" mode="aspectFit">
+            </image>
           </view>
           <!-- Badge (34x22px) -->
           <view class="store-detail__favorite-badge">
@@ -42,13 +39,8 @@
     </view>
 
     <!-- 标签导航栏 - 滚动超过100px后显示 -->
-    <t-tabs
-      wx:if="{{showHeaderBg}}"
-      value="{{activeTab}}"
-      bind:change="onTabChange"
-      theme="line"
-      class="store-detail__tabs"
-    >
+    <t-tabs wx:if="{{showHeaderBg}}" value="{{activeTab}}" bind:change="onTabChange" theme="line"
+      class="store-detail__tabs">
       <t-tab-panel wx:for="{{tabs}}" wx:key="id" label="{{item.name}}" value="{{item.id}}" />
     </t-tabs>
   </view>
@@ -62,14 +54,8 @@
 
     <!-- Section 2: 房源 -->
     <view id="listing-section" class="store-detail__section" data-tab="listing">
-      <listing-tab
-        bind:bookRoom="onBookRoom"
-        bind:couponVerify="onCouponVerify"
-        bind:balance="onBalance"
-        bind:wifi="onWifi"
-        bind:selectDate="onSelectDate"
-        bind:viewCoupons="onViewCoupons"
-      />
+      <listing-tab bind:bookRoom="onBookRoom" bind:couponVerify="onCouponVerify" bind:balance="onBalance"
+        bind:wifi="onWifi" bind:selectDate="onSelectDate" bind:viewCoupons="onViewCoupons" />
     </view>
 
     <!-- Section 3: 点评 -->
@@ -89,11 +75,8 @@
 
     <!-- Section 6: 房东 -->
     <view id="landlord-section" class="store-detail__section" data-tab="landlord">
-      <landlord-tab
-        landlordData="{{landlordData}}"
-        bind:viewPage="onViewLandlordPage"
-        bind:contact="onContactLandlord"
-      />
+      <landlord-tab landlordData="{{landlordData}}" bind:viewPage="onViewLandlordPage"
+        bind:contact="onContactLandlord" />
 
       <!-- 体验流程简版卡片 (房东介绍下方) -->
       <view class="store-detail__process-simple-card">
@@ -101,11 +84,8 @@
           <text class="store-detail__process-simple-title">体验流程</text>
           <view class="store-detail__process-simple-link" bindtap="onViewAllProcess">
             <text class="store-detail__process-simple-link-text">全部流程 </text>
-            <image
-              class="store-detail__arrow-right-icon"
-              src="/images/store-detail/angle-right-small.svg"
-              mode="aspectFit"
-            ></image>
+            <image class="store-detail__arrow-right-icon" src="/images/store-detail/angle-right-small.svg"
+              mode="aspectFit"></image>
           </view>
         </view>
         <view class="store-detail__process-simple-tip">
@@ -136,13 +116,10 @@
   </view>
 
   <!-- 预订按钮 -->
-  <booking-footer
-    checkinDate="住 11-19"
-    checkoutDate="离 11-20"
-    currentPrice="{{468}}"
-    originalPrice="{{669}}"
-    bind:selectDate="onSelectDate"
-    bind:sceneSelection="onSceneSelection"
-    bind:bookNow="onBookNow"
-  />
+  <booking-footer checkinDate="住 11-19" checkoutDate="离 11-20" currentPrice="{{468}}" originalPrice="{{669}}"
+    bind:selectDate="onSelectDate" bind:sceneSelection="onSceneSelection" bind:bookNow="onBookNow" />
+
+  <!-- 登录弹窗 -->
+  <login-popup visible="{{showLoginPopup}}" bind:visiblechange="onLoginPopupVisibleChange"
+    bind:loginsuccess="onLoginSuccess" />
 </view>

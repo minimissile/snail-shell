@@ -2,13 +2,8 @@
   <!-- 标签栏 -->
   <scroll-view class="tabs-container" scroll-x enhanced show-scrollbar="{{false}}">
     <view class="tabs">
-      <view
-        wx:for="{{tabs}}"
-        wx:key="id"
-        class="tab-item {{activeTab === item.id ? 'active' : ''}}"
-        data-id="{{item.id}}"
-        bindtap="onTabChange"
-      >
+      <view wx:for="{{tabs}}" wx:key="id" class="tab-item {{activeTab === item.id ? 'active' : ''}}"
+        data-id="{{item.id}}" bindtap="onTabChange">
         <text class="tab-label">{{item.label}}({{item.count}})</text>
       </view>
     </view>
@@ -52,4 +47,8 @@
       </view>
     </view>
   </scroll-view>
+
+  <!-- 登录弹窗 -->
+  <login-popup visible="{{showLoginPopup}}" bind:visiblechange="onLoginPopupVisibleChange"
+    bind:loginsuccess="onLoginSuccess" />
 </view>

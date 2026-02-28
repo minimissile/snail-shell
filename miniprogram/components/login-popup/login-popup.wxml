@@ -1,0 +1,38 @@
+<t-popup visible="{{visible}}" placement="bottom" bind:visible-change="onVisibleChange">
+  <view class="login-popup">
+    <!-- header -->
+    <view class="login-popup__header">
+      <view class="login-popup__header-left"></view>
+      <text class="login-popup__header-title">{{currentStep === 'phone-auth' ? '绑定手机号' : '登录'}}</text>
+      <view class="login-popup__header-right">
+        <view class="login-popup__close" bindtap="onClose" aria-label="关闭">
+          <t-icon name="close" size="40rpx" color="#6b7280" />
+        </view>
+      </view>
+    </view>
+
+    <!-- Step 1: WeChat Login -->
+    <view wx:if="{{currentStep === 'wechat-login'}}" class="login-popup__content">
+      <image class="login-popup__logo" src="/assets/figma/avatar.jpg" mode="aspectFill" />
+      <text class="login-popup__title">欢迎来到蜗壳</text>
+      <text class="login-popup__desc">使用微信快速登录，享受更多服务</text>
+      <t-button theme="primary" size="large" block loading="{{isLoading}}" bindtap="onWechatLogin"
+        class="login-popup__btn">微信一键登录</t-button>
+    </view>
+
+    <!-- Step 2: Phone Auth -->
+    <view wx:elif="{{currentStep === 'phone-auth'}}" class="login-popup__content">
+      <text class="login-popup__title">绑定手机号</text>
+      <text class="login-popup__desc">绑定后可享受完整服务</text>
+      <t-button theme="primary" size="large" block open-type="getPhoneNumber" bindgetphonenumber="onGetPhoneNumber"
+        loading="{{isLoading}}" class="login-popup__btn">授权手机号</t-button>
+      <text class="login-popup__skip" bindtap="onSkipPhone">暂不绑定</text>
+    </view>
+
+    <!-- Error State -->
+    <view wx:elif="{{currentStep === 'error'}}" class="login-popup__content">
+      <text class="login-popup__error">{{errorMessage}}</text>
+      <t-button theme="primary" size="large" block bindtap="onRetry" class="login-popup__btn">重试</t-button>
+    </view>
+  </view>
+</t-popup>

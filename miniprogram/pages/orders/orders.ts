@@ -91,6 +91,7 @@ Page({
     page: 1,
     pageSize: 10,
     hasMore: true,
+    showLoginPopup: false,
   },
 
   onLoad(options: Record<string, string>) {
@@ -127,6 +128,7 @@ Page({
       this.setData({
         ordersByIndex: [[], [], [], [], []],
         ordersCountByIndex: [0, 0, 0, 0, 0],
+        showLoginPopup: true,
       })
       return
     }
@@ -314,6 +316,18 @@ Page({
 
   onRetry() {
     this.setData({ errorMessage: '', isLoading: false })
+    this.loadOrders(true)
+  },
+
+  // 登录弹窗显示状态变化
+  onLoginPopupVisibleChange(e: any) {
+    this.setData({ showLoginPopup: e.detail.visible })
+  },
+
+  // 登录成功
+  onLoginSuccess() {
+    this.setData({ showLoginPopup: false })
+    wx.showToast({ title: '登录成功', icon: 'success' })
     this.loadOrders(true)
   },
 })
