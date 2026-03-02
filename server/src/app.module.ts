@@ -21,6 +21,7 @@ import { SmartLockModule } from './modules/smart-lock/smart-lock.module'
 import { BalanceModule } from './modules/balance/balance.module'
 import { MessageModule } from './modules/message/message.module'
 import { CommonModule } from './modules/common/common.module'
+import { FootprintModule } from './modules/footprint/footprint.module'
 
 // 管理后台模块
 import { AdminModule } from './modules/admin/admin.module'

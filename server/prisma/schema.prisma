@@ -564,14 +564,58 @@ model Footprint {
   @@index([storeId])
 }
 
-// ==================== 智能门锁相关 ====================
+// ==================== 智能门锁设备管理 ====================
+
+model SmartLockDevice {
+  id            String    @id @default(cuid())
+  deviceId      String    @unique  // 蓝牙设备的唯一标识（广播名称/UUID）
+  name          String              // 设备名称（如：SNAIL-LOCK-001）
+
+  // 位置信息
+  storeId       String
+  store         Store     @relation(fields: [storeId], references: [id])
+  roomId        String?
+  room          Room?     @relation(fields: [roomId], references: [id])
+
+  // 设备信息
+  macAddress    String?   // MAC地址（Android可用）
+  firmware      String?   // 固件版本
+  battery       Int       @default(100) // 电池电量
+
+  // 蓝牙配置
+  serviceUuid   String?   // 主服务UUID
+  writeUuid     String?   // 写入特征值UUID
+  notifyUuid    String?   // 通知特征值UUID
+
+  status        DeviceStatus @default(ACTIVE)
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // 关联
+  accessList    SmartLockAccess[]
+
+  @@index([storeId])
+  @@index([deviceId])
+  @@index([roomId])
+}
+
+enum DeviceStatus {
+  ACTIVE       // 正常使用
+  OFFLINE      // 离线
+  MAINTENANCE  // 维护中
+  DISABLED     // 已停用
+}
+
+// ==================== 智能门锁访问权限 ====================
 
 model SmartLockAccess {
   id            String    @id @default(cuid())
   orderId       String    @unique
   order         Order     @relation(fields: [orderId], references: [id])
 
-  lockId        String?   // 门锁设备ID
+  deviceId      String              // 门锁设备ID（必填）
+  device        SmartLockDevice @relation(fields: [deviceId], references: [id])
 
   // 时效
   validFrom     DateTime
@@ -585,6 +629,30 @@ model SmartLockAccess {
   fingerprints  SmartLockFingerprint[]
   cards         SmartLockCard[]
   events        SmartLockEvent[]
+  bluetoothKeys BluetoothKey[]
+
+  @@index([deviceId])
+  @@index([orderId])
+}
+
+// ==================== 蓝牙开锁密钥 ====================
+
+model BluetoothKey {
+  id          String    @id @default(cuid())
+  accessId    String
+  access      SmartLockAccess @relation(fields: [accessId], references: [id], onDelete: Cascade)
+
+  key         String    // 加密密钥
+  validFrom   DateTime  // 生效时间
+  validTo     DateTime  // 过期时间
+
+  usedCount   Int       @default(0)  // 使用次数
+  isRevoked   Boolean   @default(false)  // 是否已撤销
+
+  createdAt   DateTime  @default(now())
+
+  @@index([accessId])
+  @@index([validTo])
 }
 
 model SmartLockPassword {
