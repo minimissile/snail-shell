@@ -6,16 +6,28 @@
     <view class="payment-test__form">
       <view class="payment-test__input-group">
         <text class="payment-test__label">支付金额（分）</text>
-        <input class="payment-test__input" type="number" placeholder="请输入金额" value="{{testAmount}}"
-          bindinput="onAmountInput" />
+        <input
+          class="payment-test__input"
+          type="number"
+          placeholder="请输入金额"
+          value="{{testAmount}}"
+          bindinput="onAmountInput"
+        />
       </view>
 
       <view class="payment-test__tip">
         <text>提示：1分 = 0.01元，测试时建议使用小金额</text>
       </view>
 
-      <t-button class="payment-test__btn" theme="primary" size="large" block loading="{{isPaying}}"
-        disabled="{{isPaying}}" bind:tap="onTestPayment">
+      <t-button
+        class="payment-test__btn"
+        theme="primary"
+        size="large"
+        block
+        loading="{{isPaying}}"
+        disabled="{{isPaying}}"
+        bind:tap="onTestPayment"
+      >
         {{isPaying ? '支付中...' : '发起支付'}}
       </t-button>
     </view>
@@ -31,5 +43,8 @@
 </view>
 
 <!-- 登录弹窗 -->
-<login-popup visible="{{showLoginPopup}}" bind:visiblechange="onLoginPopupVisibleChange"
-  bind:success="onLoginSuccess" />
+<login-popup
+  visible="{{showLoginPopup}}"
+  bind:visiblechange="onLoginPopupVisibleChange"
+  bind:success="onLoginSuccess"
+/>

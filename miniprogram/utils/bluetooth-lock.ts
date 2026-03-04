@@ -28,7 +28,7 @@ export class BluetoothLockManager {
         fail: (err) => {
           console.error('❌ 蓝牙初始化失败:', err)
           reject(new Error('请打开手机蓝牙'))
-        }
+        },
       })
     })
   }
@@ -56,13 +56,14 @@ export class BluetoothLockManager {
           // 监听找到设备
           wx.onBluetoothDeviceFound((res) => {
             const devices = res.devices
-            console.log('📡 发现设备:', devices.map(d => d.name || d.localName))
+            console.log(
+              '📡 发现设备:',
+              devices.map((d) => d.name || d.localName)
+            )
 
             // 查找匹配的设备
-            const targetDevice = devices.find(d => {
-              return d.name?.includes(deviceId) ||
-                     d.localName?.includes(deviceId) ||
-                     d.advertisData?.includes(deviceId)
+            const targetDevice = devices.find((d) => {
+              return d.name?.includes(deviceId) || d.localName?.includes(deviceId) || d.advertisData?.includes(deviceId)
             })
 
             if (targetDevice) {
@@ -77,7 +78,7 @@ export class BluetoothLockManager {
         fail: (err) => {
           console.error('❌ 启动蓝牙搜索失败:', err)
           reject(new Error('启动蓝牙搜索失败，请检查蓝牙权限'))
-        }
+        },
       })
     })
   }
@@ -104,7 +105,7 @@ export class BluetoothLockManager {
         fail: (err) => {
           console.error('❌ 蓝牙连接失败:', err)
           reject(new Error('连接门锁失败，请重试'))
-        }
+        },
       })
     })
   }
@@ -125,19 +126,25 @@ export class BluetoothLockManager {
 
       // 1. 获取服务
       const services = await this.getServices()
-      console.log('📋 可用服务:', services.map(s => s.uuid))
+      console.log(
+        '📋 可用服务:',
+        services.map((s) => s.uuid)
+      )
 
-      const service = services.find(s => s.uuid === this.config!.serviceUuid)
+      const service = services.find((s) => s.uuid === this.config!.serviceUuid)
       if (!service) {
         throw new Error('未找到门锁服务')
       }
 
       // 2. 获取特征值
       const characteristics = await this.getCharacteristics(service.uuid)
-      console.log('🔧 可用特征值:', characteristics.map(c => c.uuid))
+      console.log(
+        '🔧 可用特征值:',
+        characteristics.map((c) => c.uuid)
+      )
 
-      const writeChar = characteristics.find(c => c.uuid === this.config!.writeUuid)
-      const notifyChar = characteristics.find(c => c.uuid === this.config!.notifyUuid)
+      const writeChar = characteristics.find((c) => c.uuid === this.config!.writeUuid)
+      const notifyChar = characteristics.find((c) => c.uuid === this.config!.notifyUuid)
 
       if (!writeChar || !notifyChar) {
         throw new Error('未找到开锁接口')
@@ -157,7 +164,6 @@ export class BluetoothLockManager {
       console.log('📥 开锁结果:', result)
 
       return result
-
     } catch (error) {
       console.error('❌ 开锁失败:', error)
       throw error
@@ -178,7 +184,7 @@ export class BluetoothLockManager {
         fail: (err) => {
           console.error('❌ 获取服务列表失败:', err)
           reject(new Error('获取门锁服务失败'))
-        }
+        },
       })
     })
   }
@@ -198,7 +204,7 @@ export class BluetoothLockManager {
         fail: (err) => {
           console.error('❌ 获取特征值失败:', err)
           reject(new Error('获取开锁接口失败'))
-        }
+        },
       })
     })
   }
@@ -220,7 +226,7 @@ export class BluetoothLockManager {
         fail: (err) => {
           console.error('❌ 开启通知失败:', err)
           reject(new Error('开启监听失败'))
-        }
+        },
       })
     })
   }
@@ -242,7 +248,7 @@ export class BluetoothLockManager {
         fail: (err) => {
           console.error('❌ 开锁指令发送失败:', err)
           reject(new Error('发送开锁指令失败'))
-        }
+        },
       })
     })
   }
@@ -297,10 +303,10 @@ export class BluetoothLockManager {
     // 示例格式：帧头 + 命令码 + 数据长度 + 加密数据 + 校验和
 
     const payload = {
-      cmd: 0x01,              // 开锁命令
+      cmd: 0x01, // 开锁命令
       userId,
       orderId,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     }
 
     const dataStr = JSON.stringify(payload)
@@ -310,15 +316,15 @@ export class BluetoothLockManager {
     const buffer = new ArrayBuffer(encryptedData.length + 4)
     const view = new DataView(buffer)
 
-    view.setUint8(0, 0xAA)    // 帧头1
-    view.setUint8(1, 0x55)    // 帧头2
-    view.setUint8(2, encryptedData.length)  // 数据长度
+    view.setUint8(0, 0xaa) // 帧头1
+    view.setUint8(1, 0x55) // 帧头2
+    view.setUint8(2, encryptedData.length) // 数据长度
 
     for (let i = 0; i < encryptedData.length; i++) {
       view.setUint8(3 + i, encryptedData.charCodeAt(i))
     }
 
-    view.setUint8(3 + encryptedData.length, checksum)  // 校验和
+    view.setUint8(3 + encryptedData.length, checksum) // 校验和
 
     return buffer
   }
@@ -350,7 +356,7 @@ export class BluetoothLockManager {
     const view = new DataView(buffer)
 
     // 检查帧头
-    if (view.getUint8(0) !== 0xAA || view.getUint8(1) !== 0x55) {
+    if (view.getUint8(0) !== 0xaa || view.getUint8(1) !== 0x55) {
       console.log('⚠️ 帧头不匹配')
       return null
     }
@@ -365,7 +371,7 @@ export class BluetoothLockManager {
     // 获取结果码
     const resultCode = view.getUint8(3)
     console.log('📋 结果码:', resultCode)
-    return resultCode === 0x00  // 0x00 表示成功
+    return resultCode === 0x00 // 0x00 表示成功
   }
 
   /**
@@ -381,7 +387,7 @@ export class BluetoothLockManager {
         },
         fail: () => {
           console.log('⚠️ 断开蓝牙失败')
-        }
+        },
       })
     }
   }
@@ -394,7 +400,7 @@ export class BluetoothLockManager {
     wx.closeBluetoothAdapter({
       success: () => {
         console.log('✅ 蓝牙适配器已关闭')
-      }
+      },
     })
   }
 }

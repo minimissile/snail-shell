@@ -67,9 +67,7 @@
       "desc": "你的位置信息将用于搜索附近的门店"
     }
   },
-  "requiredPrivateInfos": [
-    "chooseLocation"
-  ],
+  "requiredPrivateInfos": ["chooseLocation"],
   "tabBar": {
     "color": "#6B7280",
     "selectedColor": "#F97316",

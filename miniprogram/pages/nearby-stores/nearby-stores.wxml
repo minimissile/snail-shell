@@ -79,14 +79,13 @@
 
         <!-- 标签 -->
         <view class="store-card__tags">
-
-          <view class="store-card__tag store-card__tag--verified" wx:if="{{item.verifiedTag}}">{{item.verifiedTag}}
+          <view class="store-card__tag store-card__tag--verified" wx:if="{{item.verifiedTag}}"
+            >{{item.verifiedTag}}
           </view>
 
-          <view class="store-card__tag store-card__tag--gradient" wx:if="{{item.promotionTag}}">{{item.promotionTag}}
+          <view class="store-card__tag store-card__tag--gradient" wx:if="{{item.promotionTag}}"
+            >{{item.promotionTag}}
           </view>
-
-
         </view>
 
         <!-- 收藏(点赞)按钮 -->
@@ -117,8 +116,6 @@
 
         <!-- 图片数量 -->
         <view class="store-card__count">{{item.imageCount}}/{{item.totalImages}}</view>
-
-
       </view>
 
       <!-- 房源信息 -->
@@ -128,7 +125,8 @@
         <!-- 特点标签 -->
         <!-- Property features - height:44, mode:none -->
         <view class="store-card__features">
-          <view wx:for="{{item.features}}" wx:for-item="feature" wx:key="*this" class="store-card__feature">{{feature}}
+          <view wx:for="{{item.features}}" wx:for-item="feature" wx:key="*this" class="store-card__feature"
+            >{{feature}}
           </view>
         </view>
 
@@ -151,6 +149,9 @@
   </view>
 
   <!-- 登录弹窗 -->
-  <login-popup visible="{{showLoginPopup}}" bind:visiblechange="onLoginPopupVisibleChange"
-    bind:loginsuccess="onLoginSuccess" />
+  <login-popup
+    visible="{{showLoginPopup}}"
+    bind:visiblechange="onLoginPopupVisibleChange"
+    bind:loginsuccess="onLoginSuccess"
+  />
 </view>

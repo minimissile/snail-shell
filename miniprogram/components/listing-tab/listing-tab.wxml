@@ -66,11 +66,7 @@
 
     <!-- 房型卡片 (x=16, y=856, 343x179px) -->
     <view class="listing-tab__room-card">
-      <image
-        class="listing-tab__room-image"
-        src="/images/store-detail/room-type-image.jpg"
-        mode="aspectFill"
-      ></image>
+      <image class="listing-tab__room-image" src="/images/store-detail/room-type-image.jpg" mode="aspectFill"></image>
 
       <view class="listing-tab__room-info">
         <!-- 房型名称 -->
