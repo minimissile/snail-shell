@@ -1,23 +1,19 @@
-// 门店相册页
-import type { StoreDetail } from '../../api/store'
+import { storeApi } from '../../api/index'
 
 Page({
   data: {
-    // 门店信息
     storeId: '',
-    storeInfo: null as StoreDetail | null,
-
-    // 相册数据
-    albumImages: [] as Array<{ url: string; id: string; category?: string }>,
-    page: 1,
-    pageSize: 30,
+    storeName: '',
+    activeFilter: 'all',
+    filterTabs: [] as Array<{ key: string; name: string; count: number }>,
+    albumSections: [] as Array<{ key: string; title: string; images: Array<{ id: string; url: string }> }>,
+    displaySections: [] as Array<{ key: string; title: string; images: Array<{ id: string; url: string }> }>,
+    allPreviewUrls: [] as string[],
     isLoading: false,
-    isLoadingMore: false,
-    hasMore: true,
   },
 
   onLoad(options) {
-    const storeId = options.id || ''
+    const storeId = options.storeId || options.id || ''
     this.setData({ storeId })
 
     if (storeId) {
@@ -28,68 +24,78 @@ Page({
   },
 
   onReady() {
-    // 设置标题
     wx.setNavigationBarTitle({ title: '门店相册' })
   },
 
-  // 加载相册数据
-  async loadAlbumData(storeId: string, isRefresh = false) {
-    if (this.data.isLoading || (!isRefresh && !this.data.hasMore)) return
-
-    const { page, pageSize } = this.data
-    const isLoadingMore = !isRefresh
-
-    this.setData({ isLoading: !isRefresh, isLoadingMore })
+  async loadAlbumData(storeId: string) {
+    if (this.data.isLoading) return
+    this.setData({ isLoading: true })
 
     try {
-      // 模拟API调用，实际项目中替换为真实的API调用
-      const mockImages = this.generateMockImages(page, pageSize)
+      const storeInfo = await storeApi.getStoreDetail(storeId)
+      const sections = this.buildSections(storeInfo.images || [])
+      const allPreviewUrls = sections.flatMap((section) => section.images.map((image) => image.url))
+      const filterTabs = [
+        { key: 'all', name: '全部照片', count: allPreviewUrls.length },
+        ...sections.map((section) => ({
+          key: section.key,
+          name: section.title,
+          count: section.images.length,
+        })),
+      ]
 
       this.setData({
-        albumImages: isRefresh ? mockImages : [...this.data.albumImages, ...mockImages],
-        page: page + 1,
-        hasMore: mockImages.length >= pageSize,
+        storeName: storeInfo.name || '门店相册',
+        filterTabs,
+        albumSections: sections,
+        displaySections: sections,
+        allPreviewUrls,
         isLoading: false,
-        isLoadingMore: false,
       })
     } catch (err) {
       console.error('加载相册数据失败:', err)
-      this.setData({ isLoading: false, isLoadingMore: false })
+      this.setData({ isLoading: false })
       wx.showToast({ title: '加载失败', icon: 'none' })
     }
   },
 
-  // 生成模拟图片数据
-  generateMockImages(page: number, pageSize: number) {
-    const images = []
-    const totalImages = 50 // 模拟总图片数
-    const startIndex = (page - 1) * pageSize
+  buildSections(images: string[]) {
+    const fallback = [
+      '/images/store-detail/cover-image.jpg',
+      '/images/store-detail/room-type-image.jpg',
+      '/images/store-detail/feature-image.png',
+      '/images/store-detail/map-thumbnail.png',
+      '/images/store-detail/snail.png',
+      '/images/store-detail/icon-store.png',
+    ]
+    const source = images.length > 0 ? images : fallback
+    const normalized: string[] = []
+    for (let i = 0; i < Math.max(source.length, 24); i++) {
+      normalized.push(source[i % source.length])
+    }
+    const sectionDefs = [
+      { key: 'exterior', title: '外景' },
+      { key: 'room', title: '房型' },
+      { key: 'bathroom', title: '卫浴' },
+      { key: 'living', title: '大厅' },
+    ]
+    const sections = sectionDefs.map((item) => ({
+      key: item.key,
+      title: item.title,
+      images: [] as Array<{ id: string; url: string }>,
+    }))
 
-    for (let i = 0; i < pageSize && startIndex + i < totalImages; i++) {
-      const imageIndex = startIndex + i
-      images.push({
-        url: `https://picsum.photos/seed/snail-${imageIndex}/400/400.jpg`,
-        id: `album-${imageIndex}`,
-        category: imageIndex % 3 === 0 ? 'cover' : imageIndex % 3 === 1 ? 'room' : 'facility',
+    normalized.forEach((url, index) => {
+      const section = sections[index % sections.length]
+      section.images.push({
+        id: `${section.key}-${index}`,
+        url,
       })
-    }
-    return images
+    })
+
+    return sections
   },
 
-  // 滚动到底部加载更多
-  onReachBottom() {
-    if (this.data.hasMore && !this.data.isLoadingMore) {
-      this.loadAlbumData(this.data.storeId)
-    }
-  },
-
-  // 下拉刷新
-  onPullDownRefresh() {
-    this.loadAlbumData(this.data.storeId, true)
-    wx.stopPullDownRefresh()
-  },
-
-  // 返回上一页
   onGoBack() {
     wx.navigateBack({
       delta: 1,
@@ -99,96 +105,32 @@ Page({
     })
   },
 
-  // 点击图片
+  onFilterChange(e: WechatMiniprogram.TouchEvent) {
+    const key = (e.currentTarget.dataset.key || 'all') as string
+    const { albumSections } = this.data
+    const displaySections = key === 'all' ? albumSections : albumSections.filter((section) => section.key === key)
+    this.setData({
+      activeFilter: key,
+      displaySections,
+    })
+  },
+
   onImageTap(e: WechatMiniprogram.TouchEvent) {
-    const { index } = e.currentTarget.dataset
-    const { albumImages } = this.data
+    const sectionIndex = Number(e.currentTarget.dataset.sectionIndex)
+    const imageIndex = Number(e.currentTarget.dataset.imageIndex)
+    const { displaySections, allPreviewUrls } = this.data
+    const section = displaySections[sectionIndex]
+    const currentImage = section?.images?.[imageIndex]
 
-    if (index >= 0 && index < albumImages.length) {
-      const currentImage = albumImages[index]
-
-      // 预览图片
+    if (currentImage) {
       wx.previewImage({
         current: currentImage.url,
-        urls: albumImages.map((img) => img.url),
-        success: () => {
-          console.log('图片预览成功')
-        },
+        urls: allPreviewUrls,
         fail: (err) => {
           console.error('图片预览失败:', err)
           wx.showToast({ title: '预览失败', icon: 'none' })
         },
       })
     }
-  },
-
-  // 长按图片（显示菜单）
-  onImageLongPress(e: WechatMiniprogram.TouchEvent) {
-    const { index } = e.currentTarget.dataset
-    const { albumImages } = this.data
-
-    if (index >= 0 && index < albumImages.length) {
-      const currentImage = albumImages[index]
-
-      wx.showActionSheet({
-        itemList: ['保存图片', '分享图片'],
-        success: (res) => {
-          if (res.tapIndex === 0) {
-            // 保存图片
-            this.saveImage(currentImage.url)
-          } else if (res.tapIndex === 1) {
-            // 分享图片
-            this.shareImage(currentImage.url)
-          }
-        },
-        fail: (err) => {
-          console.error('操作菜单显示失败:', err)
-        },
-      })
-    }
-  },
-
-  // 保存图片到相册
-  async saveImage(url: string) {
-    try {
-      const res = await wx.downloadFile({
-        url,
-        success: (downloadRes) => {
-          if (downloadRes.tempFilePath) {
-            wx.saveImageToPhotosAlbum({
-              filePath: downloadRes.tempFilePath,
-              success: () => {
-                wx.showToast({ title: '保存成功', icon: 'success' })
-              },
-              fail: (err) => {
-                console.error('保存图片失败:', err)
-                wx.showToast({ title: '保存失败', icon: 'none' })
-              },
-            })
-          }
-        },
-        fail: (err) => {
-          console.error('下载图片失败:', err)
-          wx.showToast({ title: '下载失败', icon: 'none' })
-        },
-      })
-    } catch (err) {
-      console.error('保存图片异常:', err)
-      wx.showToast({ title: '保存失败', icon: 'none' })
-    }
-  },
-
-  // 分享图片
-  shareImage(url: string) {
-    wx.showShareMenu({
-      withShareTicket: true,
-      menus: ['shareAppMessage'],
-      success: () => {
-        console.log('分享菜单显示成功')
-      },
-      fail: (err) => {
-        console.error('显示分享菜单失败:', err)
-      },
-    })
   },
 })

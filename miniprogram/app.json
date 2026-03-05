@@ -40,6 +40,10 @@
       "pages": ["store-detail"]
     },
     {
+      "root": "pages/store-album",
+      "pages": ["store-album"]
+    },
+    {
       "root": "pages/order-form",
       "pages": ["order-form"]
     },

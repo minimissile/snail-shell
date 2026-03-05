@@ -49,7 +49,8 @@
   <view class="store-detail__container">
     <!-- Section 1: 概览 -->
     <view id="overview-section" class="store-detail__section" data-tab="overview">
-      <overview-tab bind:videoTour="onVideoTour" bind:viewMap="onViewMap" bind:viewReviews="onViewReviews" />
+      <overview-tab bind:videoTour="onVideoTour" bind:viewMap="onViewMap" bind:viewReviews="onViewReviews"
+        bind:highlightChange="onOverviewHighlightChange" />
     </view>
 
     <!-- Section 2: 房源 -->

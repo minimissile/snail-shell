@@ -3,8 +3,8 @@ const ENV = 'dev' as 'dev' | 'prod'
 
 const config = {
   dev: {
-    baseUrl: 'http://localhost:3000/v1',
-    wsUrl: 'ws://localhost:3000',
+    baseUrl: 'http://localhost:3100/v1',
+    wsUrl: 'ws://localhost:3100',
   },
   prod: {
     baseUrl: 'https://api.snailshell.com/v1',

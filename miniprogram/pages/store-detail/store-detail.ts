@@ -359,6 +359,21 @@ Page({
     wx.showToast({ title: '实拍看房', icon: 'none' })
   },
 
+  onOverviewHighlightChange(e: WechatMiniprogram.CustomEvent<{ id: string }>) {
+    if (e.detail?.id !== 'album') return
+    const { storeId } = this.data
+    if (!storeId) {
+      wx.showToast({ title: '门店信息缺失', icon: 'none' })
+      return
+    }
+    wx.navigateTo({
+      url: `/pages/store-album/store-album?storeId=${storeId}`,
+      fail: () => {
+        wx.showToast({ title: '页面跳转失败', icon: 'none' })
+      },
+    })
+  },
+
   onViewReviews() {
     wx.showToast({ title: '查看全部点评', icon: 'none' })
   },

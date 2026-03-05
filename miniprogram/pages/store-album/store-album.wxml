@@ -1,64 +1,58 @@
 <view class="store-album">
-  <!-- 状态栏占位 -->
   <status-bar />
 
-  <!-- Header - 固定在顶部 -->
   <view class="store-album__header">
     <view class="store-album__header-content">
-      <!-- 返回按钮 -->
       <view class="store-album__back-btn" bindtap="onGoBack">
         <image class="store-album__back-icon" src="/images/store-detail/back-btn.svg" mode="aspectFit"></image>
       </view>
 
-      <!-- 标题 -->
       <view class="store-album__title">
-        <text class="store-album__title-text">门店相册</text>
+        <text class="store-album__title-text">{{storeName || '门店相册'}}</text>
       </view>
 
-      <!-- 空占位，保持平衡 -->
       <view class="store-album__placeholder"></view>
     </view>
+
+    <scroll-view class="store-album__filter" scroll-x="true" enable-flex="true" show-scrollbar="false">
+      <view
+        wx:for="{{filterTabs}}"
+        wx:key="key"
+        class="store-album__filter-item {{activeFilter === item.key ? 'store-album__filter-item--active' : ''}}"
+        bindtap="onFilterChange"
+        data-key="{{item.key}}"
+      >
+        <text class="store-album__filter-name">{{item.name}}</text>
+        <text class="store-album__filter-count">({{item.count}})</text>
+      </view>
+    </scroll-view>
   </view>
 
-  <!-- 内容区域 -->
-  <scroll-view class="store-album__content" scroll-y="true" bindscrolltolower="onReachBottom" enable-back-to-top="true">
-    <!-- 相册标题 -->
-    <view class="store-album__section-title">
-      <text class="store-album__section-title-text">全部照片</text>
-      <text class="store-album__section-count">{{albumImages.length}} 张</text>
-    </view>
+  <view class="store-album__content">
+    <view wx:for="{{displaySections}}" wx:key="key" class="store-album__section" wx:for-index="sectionIndex">
+      <view class="store-album__section-title">
+        <text class="store-album__section-title-text">{{item.title}}</text>
+        <text class="store-album__section-count">({{item.images.length}})</text>
+      </view>
 
-    <!-- 相册网格布局 -->
-    <view class="store-album__grid">
-      <block wx:for="{{albumImages}}" wx:key="index" wx:for-item="image">
-        <view class="store-album__grid-item" bindtap="onImageTap" data-index="{{index}}">
-          <t-image
-            class="store-album__image"
-            src="{{image.url}}"
-            mode="aspectFill"
-            lazyLoad="true"
-            showMenuByLongpress="true"
-            bindlongpress="onImageLongPress"
-          >
-            <image
-              class="store-album__image-placeholder"
-              src="/images/store-detail/image-placeholder.svg"
-              mode="aspectFill"
-            />
-          </t-image>
+      <view class="store-album__grid">
+        <view
+          wx:for="{{item.images}}"
+          wx:key="id"
+          wx:for-index="imageIndex"
+          class="store-album__grid-item"
+          bindtap="onImageTap"
+          data-section-index="{{sectionIndex}}"
+          data-image-index="{{imageIndex}}"
+        >
+          <image class="store-album__image" src="{{item.url}}" mode="aspectFill" lazy-load="true"></image>
         </view>
-      </block>
+      </view>
     </view>
 
-    <!-- 加载更多提示 -->
-    <view class="store-album__loading-more" wx:if="{{isLoadingMore}}">
-      <text class="store-album__loading-text">加载中...</text>
-    </view>
-
-    <!-- 空状态 -->
-    <view class="store-album__empty" wx:if="{{albumImages.length === 0 && !isLoading}}">
+    <view class="store-album__empty" wx:if="{{displaySections.length === 0 && !isLoading}}">
       <image class="store-album__empty-icon" src="/images/store-detail/empty-album.svg" mode="aspectFit" />
       <text class="store-album__empty-text">暂无照片</text>
     </view>
-  </scroll-view>
+  </view>
 </view>

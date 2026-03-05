@@ -36,7 +36,18 @@ export class AuthService {
     const session = await this.getWechatSession(dto.code)
 
     if (session.errcode) {
-      throw new UnauthorizedException(`微信登录失败: ${session.errmsg}`)
+      // 开发环境下，如果 code 无效 (errcode=40029)，则尝试 Mock 登录
+      if (process.env.NODE_ENV === 'development' && session.errcode === 40029) {
+        // eslint-disable-next-line no-console
+        console.warn('[Auth] 微信登录失败，开发环境尝试使用 Mock 登录')
+        session.openid = 'mock-openid-' + (dto.code === 'the-code' ? 'default' : dto.code)
+        session.session_key = 'mock-session-key'
+        session.unionid = 'mock-unionid-' + session.openid
+        delete session.errcode
+        delete session.errmsg
+      } else {
+        throw new UnauthorizedException(`微信登录失败: ${session.errmsg}`)
+      }
     }
 
     // 2. 查找或创建用户
@@ -65,11 +76,17 @@ export class AuthService {
     const tokens = await this.generateTokens(user.id, user.openId)
 
     // 4. 缓存 session_key (用于后续获取手机号等)
-    await this.redis.set(
-      `wx:session:${user.id}`,
-      session.session_key,
-      86400 * 7 // 7天
-    )
+    try {
+      await this.redis.set(
+        `wx:session:${user.id}`,
+        session.session_key,
+        86400 * 7 // 7天
+      )
+    } catch (error) {
+      // Redis 连接失败时，仅记录日志，不阻断登录流程
+      // eslint-disable-next-line no-console
+      console.warn('[Auth] 缓存 session_key 失败，Redis 可能未连接', error)
+    }
 
     return {
       ...tokens,
@@ -186,6 +203,17 @@ export class AuthService {
   private async getWechatSession(code: string): Promise<WechatSession> {
     const appId = this.configService.get('WECHAT_APPID')
     const secret = this.configService.get('WECHAT_SECRET')
+
+    // 如果未配置真实的 AppID/Secret，直接返回 Mock 数据
+    if (!appId || appId.startsWith('your-') || appId.startsWith('wx123456')) {
+      return {
+        openid: 'mock-openid-' + code,
+        session_key: 'mock-session-key',
+        unionid: 'mock-unionid-' + code,
+        errcode: 40029, // 标记为 code 无效，触发上层 Mock 逻辑
+        errmsg: 'AppID未配置，使用 Mock 登录',
+      }
+    }
 
     const url = `https://api.weixin.qq.com/sns/jscode2session?appid=${appId}&secret=${secret}&js_code=${code}&grant_type=authorization_code`
 

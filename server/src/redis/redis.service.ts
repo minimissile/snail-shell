@@ -15,6 +15,27 @@ export class RedisService implements OnModuleDestroy {
       port: this.configService.get('REDIS_PORT', 6379),
       password: password || undefined,
       db: Number(db),
+      retryStrategy: (times) => {
+        // 开发环境下，如果连接失败，重试3次后停止，避免刷屏
+        if (process.env.NODE_ENV === 'development' && times > 3) {
+          // eslint-disable-next-line no-console
+          console.warn('[Redis] 连接失败超过最大重试次数，已停止重试。缓存功能将不可用。')
+          return null
+        }
+        return Math.min(times * 50, 2000)
+      },
+    })
+
+    // 捕获错误防止程序崩溃
+    this.client.on('error', (err) => {
+      if (process.env.NODE_ENV === 'development') {
+        // 开发环境仅在首次连接失败时提示，后续由 retryStrategy 控制
+        // eslint-disable-next-line no-console
+        // console.error('[Redis] Client Error:', err.message)
+      } else {
+        // eslint-disable-next-line no-console
+        console.error('[Redis] Client Error:', err)
+      }
     })
   }
 

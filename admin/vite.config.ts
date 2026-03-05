@@ -12,12 +12,12 @@ export default defineConfig({
   server: {
     port: 8000,
     proxy: {
-      '/v1/admin': {
-        target: 'http://localhost:3000',
+      '/v1': {
+        target: 'http://localhost:3100',
         changeOrigin: true,
       },
       '/uploads': {
-        target: 'http://localhost:3000',
+        target: 'http://localhost:3100',
         changeOrigin: true,
       },
     },
